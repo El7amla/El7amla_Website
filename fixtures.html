@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fixtures - El7amla Fantasy League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #232f4b);
+      min-height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+    header {
+      background-color: #111827;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    header img {
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #60a5fa;
+      left: 0;
+      bottom: -4px;
+      transition: 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #60a5fa;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 25px;
+    }
+    .tab {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #004e92;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+      min-width: 40px;
+    }
+    .tab:hover {
+      background-color: #a3cef1;
+    }
+    .tab.active {
+      background-color: #004e92;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 78, 146, 0.7);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(4px);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      transition: opacity 0.3s ease;
+    }
+    th, td {
+      padding: 16px;
+      text-align: center;
+    }
+    th {
+      background-color: #1e3a8a;
+      color: #fff;
+    }
+    td {
+      background-color: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .no-fixtures, .break-message {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .no-fixtures { color: #60a5fa; }
+    .break-message { color: #e74c3c; }
+
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 18px; }
+      th, td { font-size: 14px; padding: 12px; }
+      h2 { font-size: 20px; }
+      .tab { font-size: 14px; padding: 8px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
+    <img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League
+  </h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="teams.html">Teams</a>
+    <a href="standings.html">Standings</a>
+    <a href="fixtures.html">Fixtures</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>📅 Gameweek Fixtures</h2>
+
+  <div class="tabs" id="gameweek-tabs"></div>
+
+  <table id="fixtures-table" style="display:none;">
+    <thead>
+      <tr>
+        <th>Team 1</th>
+        <th>vs</th>
+        <th>Team 2</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody id="fixtures-body"></tbody>
+  </table>
+
+  <div class="no-fixtures" id="no-fixtures" style="display:none;">
+    لا توجد مباريات لهذه الجولة.
+  </div>
+  <div class="break-message" id="break-message" style="display:none;">
+    هذه الجولة عبارة عن استراحة (Break).
+  </div>
+</div>
+
+<img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
+    authDomain: "el7amla-4fd9f.firebaseapp.com",
+    databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com",
+    projectId: "el7amla-4fd9f",
+    storageBucket: "el7amla-4fd9f.appspot.com",
+    messagingSenderId: "217269601498",
+    appId: "1:217269601498:web:327dcb513d912d54a311e3"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const tabsContainer = document.getElementById('gameweek-tabs');
+  const fixturesTable = document.getElementById('fixtures-table');
+  const fixturesBody = document.getElementById('fixtures-body');
+  const noFixturesMessage = document.getElementById('no-fixtures');
+  const breakMessage = document.getElementById('break-message');
+
+  let fixturesData = {};
+
+  function renderTabs(data) {
+    tabsContainer.innerHTML = '';
+    const weeks = Object.keys(data).sort((a, b) => +a - +b);
+
+    weeks.forEach(gw => {
+      const tab = document.createElement('button');
+      tab.classList.add('tab');
+      tab.textContent = gw;
+      tab.dataset.gameweek = gw;
+      tabsContainer.appendChild(tab);
+    });
+
+    const firstTab = tabsContainer.querySelector('.tab');
+    if (firstTab) {
+      firstTab.classList.add('active');
+      showFixtures(firstTab.dataset.gameweek);
+    }
+  }
+
+  function showFixtures(gameweek) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.tab[data-gameweek="${gameweek}"]`).classList.add('active');
+
+    fixturesBody.innerHTML = '';
+    noFixturesMessage.style.display = 'none';
+    breakMessage.style.display = 'none';
+    fixturesTable.style.display = 'none';
+
+    const data = fixturesData[gameweek];
+    if (data === "break") {
+      breakMessage.style.display = 'block';
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      noFixturesMessage.style.display = 'block';
+      return;
+    }
+
+    data.forEach(match => {
+      const row = document.createElement('tr');
+      if (match.out) {
+        const outCell = document.createElement('td');
+        outCell.colSpan = 4;
+        outCell.textContent = `Out: ${match.out}`;
+        outCell.style.fontWeight = 'bold';
+        outCell.style.color = '#f39c12';
+        row.appendChild(outCell);
+      } else {
+        row.innerHTML = `
+          <td>${match.teamA}</td>
+          <td>vs</td>
+          <td>${match.teamB}</td>
+          <td>${match.scoreA} - ${match.scoreB}</td>
+        `;
+      }
+      fixturesBody.appendChild(row);
+    });
+
+    fixturesTable.style.display = 'table';
+  }
+
+  tabsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('tab')) {
+      showFixtures(e.target.dataset.gameweek);
+    }
+  });
+
+  db.ref('fixtures').once('value').then(snapshot => {
+    fixturesData = snapshot.val();
+    renderTabs(fixturesData);
+  });
+</script>
+
+</body>
+</html>

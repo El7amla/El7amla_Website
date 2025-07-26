@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>El7amla Fantasy League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #232f4b);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      background-color: #111827;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    header img {
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #60a5fa;
+      left: 0;
+      bottom: -4px;
+      transition: 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 26px;
+      color: #60a5fa;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 20px;
+      padding-bottom: 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .cards::-webkit-scrollbar {
+      height: 6px;
+    }
+    .cards::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 10px;
+    }
+    .cards::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .card {
+      background-image: url('card_background.jpg');
+      background-size: cover;
+      background-position: center;
+      width: 220px;
+      height: 320px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: space-between;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+      flex-shrink: 0;
+    }
+
+    .card h3 {
+      margin: 0;
+      background: rgba(0,0,0,0.6);
+      padding: 5px;
+      border-radius: 6px;
+      font-size: 18px;
+    }
+
+    .player-box {
+      height: 40px;
+      overflow: hidden;
+      margin-top: 20px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 6px;
+      width: 100%;
+    }
+    .players {
+      animation: slide 5s infinite;
+      display: flex;
+      flex-direction: column;
+    }
+    .player {
+      height: 40px;
+      line-height: 40px;
+      font-weight: bold;
+    }
+    @keyframes slide {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-40px); }
+      100% { transform: translateY(0); }
+    }
+
+    .fixtures {
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fixtures h3 {
+      color: #60a5fa;
+      margin-bottom: 15px;
+    }
+    .fixtures p {
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      opacity: 0.85;
+    }
+
+    .visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 18px; }
+      h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
+    <img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League
+  </h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="teams.html">Teams</a>
+    <a href="standings.html">Standings</a>
+    <a href="fixtures.html">Fixtures</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>💬 Where Legends Compete</h2>
+  <div class="cards">
+    <div class="card"><h3>Black Tech</h3><div class="player-box"><div class="players"><div class="player">Elfiky</div><div class="player">Omar</div></div></div></div>
+    <div class="card"><h3>The Pharaohs</h3><div class="player-box"><div class="players"><div class="player">Hussein</div><div class="player">Ahmed</div></div></div></div>
+    <div class="card"><h3>Thug Life</h3><div class="player-box"><div class="players"><div class="player">Tawheed</div><div class="player">Body</div></div></div></div>
+    <div class="card"><h3>Brother's</h3><div class="player-box"><div class="players"><div class="player">Nasser</div><div class="player">Mahmoud</div></div></div></div>
+    <div class="card"><h3>The Good Guys</h3><div class="player-box"><div class="players"><div class="player">Magdy</div><div class="player">Ali</div></div></div></div>
+  </div>
+
+  <div class="fixtures" id="nextFixtures">
+    <h3>🔜 Next Gameweek Matches</h3>
+    <div id="fixturesList"></div>
+  </div>
+</div>
+
+<img src="premier_logo.png" class="footer-logo" alt="Premier Logo">
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
+    authDomain: "el7amla-4fd9f.firebaseapp.com",
+    projectId: "el7amla-4fd9f",
+    storageBucket: "el7amla-4fd9f.appspot.com",
+    messagingSenderId: "217269601498",
+    appId: "1:217269601498:web:327dcb513d912d54a311e3",
+    databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  db.ref('fixtures').once('value').then(snapshot => {
+    const data = snapshot.val();
+    const fixtureDiv = document.getElementById("fixturesList");
+    const breakWeeks = ["11", "22", "38"];
+    for (let i = 1; i <= 38; i++) {
+      const gw = data[i];
+      if (!gw || breakWeeks.includes(i.toString())) continue;
+
+      const allHaveResults = gw.every(match =>
+        match.out || (match.scoreA !== 0 || match.scoreB !== 0)
+      );
+
+      if (!allHaveResults) {
+        gw.forEach(match => {
+          if (match.out) {
+            fixtureDiv.innerHTML += `<p><strong>${match.out}</strong> is out this week</p>`;
+          } else {
+            fixtureDiv.innerHTML += `<p>${match.teamA} vs ${match.teamB} — <strong>${match.scoreA} - ${match.scoreB}</strong></p>`;
+          }
+        });
+        break;
+      }
+    }
+  });
+</script>
+
+<script src="animations.js"></script>
+
+</body>
+</html>
