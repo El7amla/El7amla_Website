@@ -162,7 +162,7 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  db.ref("teams").once("value").then(snapshot => {
+  db.ref("players_teams/teams").once("value").then(snapshot => {
     const teams = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
     const tbody = document.querySelector("#teams-table tbody");
     teams.forEach((team, i) => {
@@ -172,7 +172,7 @@
     });
   });
 
-  db.ref("players").once("value").then(snapshot => {
+  db.ref("players_teams/players").once("value").then(snapshot => {
     const players = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
     const tbody = document.querySelector("#players-table tbody");
     players.forEach((player, i) => {
@@ -188,3 +188,4 @@
 
 </body>
 </html>
+
