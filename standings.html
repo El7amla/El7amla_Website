@@ -152,60 +152,62 @@
 <!-- ✅ External JS file -->
 <script src="animations.js"></script>
 <script>
-  console.log("Firebase initialized:", firebase);
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
-    authDomain: "el7amla-4fd9f.firebaseapp.com",
-    databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com",
-    projectId: "el7amla-4fd9f",
-    storageBucket: "el7amla-4fd9f.appspot.com",
-    messagingSenderId: "217269601498",
-    appId: "1:217269601498:web:327dcb513d912d54a311e3"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log("Firebase initialized:", firebase);
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
+      authDomain: "el7amla-4fd9f.firebaseapp.com",
+      databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com",
+      projectId: "el7amla-4fd9f",
+      storageBucket: "el7amla-4fd9f.appspot.com",
+      messagingSenderId: "217269601498",
+      appId: "1:217269601498:web:327dcb513d912d54a311e3"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-  // قراءة بيانات الفرق
-  db.ref("teams").once("value").then(snapshot => {
-      console.log("Snapshot data:", snapshot.val()); // تخطيط البيانات
-      const teamsData = snapshot.val() || {};
-      const teams = Object.keys(teamsData).map(key => ({
-          name: teamsData[key].name,
-          players: teamsData[key].players,
-          points: 0 // قيمة افتراضية
-      }));
-      console.log("Processed teams:", teams); // تخطيط بعد المعالجة
-      const tbody = document.querySelector("#teams-table tbody");
-      if (tbody) {
-          teams.sort((a, b) => b.points - a.points);
-          teams.forEach((team, i) => {
-              const tr = document.createElement("tr");
-              tr.innerHTML = `<td>${i + 1}</td><td>${team.name}</td><td>${team.points}</td>`;
-              tbody.appendChild(tr);
-          });
-      } else {
-          console.error("Table body #teams-table not found!");
-      }
-  }).catch(error => {
-      console.error("Error fetching team data:", error);
-  });
+    // قراءة بيانات الفرق
+    db.ref("teams").once("value").then(snapshot => {
+        console.log("Snapshot data:", snapshot.val());
+        const teamsData = snapshot.val() || {};
+        const teams = Object.keys(teamsData).map(key => ({
+            name: teamsData[key].name,
+            players: teamsData[key].players,
+            points: 0 // قيمة افتراضية
+        }));
+        console.log("Processed teams:", teams);
+        const tbody = document.querySelector("#teams-table tbody");
+        if (tbody) {
+            teams.sort((a, b) => b.points - a.points);
+            teams.forEach((team, i) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${i + 1}</td><td>${team.name}</td><td>${team.points}</td>`;
+                tbody.appendChild(tr);
+            });
+        } else {
+            console.error("Table body #teams-table not found!");
+        }
+    }).catch(error => {
+        console.error("Error fetching team data:", error);
+    });
 
-  // قراءة بيانات اللاعبين
-  db.ref("players_teams/players").once("value").then(snapshot => {
-      console.log("Snapshot players data:", snapshot.val()); // تخطيط بيانات اللاعبين
-      const players = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
-      const tbody = document.querySelector("#players-table tbody");
-      if (tbody) {
-          players.forEach((player, i) => {
-              const tr = document.createElement("tr");
-              tr.innerHTML = `<td>${i + 1}</td><td>${player.name}</td><td>${player.points}</td>`;
-              tbody.appendChild(tr);
-          });
-      } else {
-          console.error("Table body #players-table not found!");
-      }
-  }).catch(error => {
-      console.error("Error fetching player data:", error);
+    // قراءة بيانات اللاعبين
+    db.ref("players_teams/players").once("value").then(snapshot => {
+        console.log("Snapshot players data:", snapshot.val());
+        const players = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
+        const tbody = document.querySelector("#players-table tbody");
+        if (tbody) {
+            players.forEach((player, i) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${i + 1}</td><td>${player.name}</td><td>${player.points}</td>`;
+                tbody.appendChild(tr);
+            });
+        } else {
+            console.error("Table body #players-table not found!");
+        }
+    }).catch(error => {
+        console.error("Error fetching player data:", error);
+    });
   });
 </script>
 </body>
