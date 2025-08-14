@@ -163,25 +163,33 @@
   const db = firebase.database();
 
   // قراءة بيانات الفرق
-  db.ref("players_teams/teams").once("value").then(snapshot => {
-    const teams = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
-    const tbody = document.querySelector("#teams-table tbody");
-    teams.forEach((team, i) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${i+1}</td><td>${team.name}</td><td>${team.points}</td>`;
-      tbody.appendChild(tr);
-    });
+  db.ref("teams").once("value").then(snapshot => {
+      const teamsData = snapshot.val() || {};
+      const teams = Object.keys(teamsData).map(key => ({
+          name: teamsData[key].name,
+          players: teamsData[key].players,
+          points: 0 // قيمة افتراضية لـ points لو مفيش
+      }));
+      const tbody = document.querySelector("#teams-table tbody");
+      teams.sort((a, b) => b.points - a.points); // ترتيب حسب النقاط (افتراضيًا 0)
+      teams.forEach((team, i) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${i + 1}</td><td>${team.name}</td><td>${team.points}</td>`;
+          tbody.appendChild(tr);
+      });
+  }).catch(error => {
+      console.error("Error fetching team data:", error);
   });
 
   // قراءة بيانات اللاعبين
   db.ref("players_teams/players").once("value").then(snapshot => {
-    const players = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
-    const tbody = document.querySelector("#players-table tbody");
-    players.forEach((player, i) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${i+1}</td><td>${player.name}</td><td>${player.points}</td>`;
-      tbody.appendChild(tr);
-    });
+      const players = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
+      const tbody = document.querySelector("#players-table tbody");
+      players.forEach((player, i) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${i + 1}</td><td>${player.name}</td><td>${player.points}</td>`;
+          tbody.appendChild(tr);
+      });
   });
 </script>
 
@@ -190,6 +198,3 @@
 
 </body>
 </html>
-
-
-
