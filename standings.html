@@ -1,193 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Standings - El7amla Fantasy League</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #232f4b);
-      min-height: 100vh;
-      color: white;
-      overflow-x: hidden;
-    }
-    header {
-      background-color: #111827;
-      padding: 20px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header h1 {
-      font-size: 22px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Orbitron', sans-serif;
-    }
-    header img {
-      height: 40px;
-      transition: transform 0.3s ease;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-    nav a {
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: bold;
-      position: relative;
-    }
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      background: #60a5fa;
-      left: 0;
-      bottom: -4px;
-      transition: 0.3s ease;
-    }
-    nav a:hover::after {
-      width: 100%;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 60px 20px;
-    }
-    h2 {
-      font-size: 26px;
-      text-align: center;
-      margin-bottom: 40px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-      color: #60a5fa;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 60px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(4px);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
-    th, td {
-      padding: 16px;
-      text-align: center;
-    }
-    th {
-      background-color: #1e3a8a;
-      color: #fff;
-    }
-    td {
-      background-color: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .visible {
-      opacity: 1 !important;
-      transform: translateY(0px) !important;
-    }
-    .footer-logo {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      opacity: 0.85;
-    }
-    @media (max-width: 600px) {
-      header h1 { font-size: 18px; }
-      th, td { font-size: 14px; padding: 12px; }
-      h2 { font-size: 20px; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Standings</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
-
-<header>
-  <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
-    <img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League
-  </h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="teams.html">Teams</a>
-    <a href="standings.html">Standings</a>
-    <a href="fixtures.html">Fixtures</a>
-  </nav>
-</header>
-
-<div class="container">
-  <h2 id="teams-heading">🏆 League Standings</h2>
-  <table id="teams-table">
-    <thead><tr><th>Position</th><th>Team</th><th>Points</th></tr></thead>
+  <h1>Team Standings</h1>
+  <table border="1" id="teams-table">
+    <thead>
+      <tr><th>#</th><th>Team</th><th>Points</th></tr>
+    </thead>
     <tbody></tbody>
   </table>
 
-  <h2 id="players-heading">🔥 Top Players</h2>
-  <table id="players-table">
-    <thead><tr><th>Rank</th><th>Player</th><th>Total Points</th></tr></thead>
+  <h1>Player Standings</h1>
+  <table border="1" id="players-table">
+    <thead>
+      <tr><th>#</th><th>Player</th><th>Points</th></tr>
+    </thead>
     <tbody></tbody>
   </table>
-</div>
 
-<img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
-    authDomain: "el7amla-4fd9f.firebaseapp.com",
-    databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com",
-    projectId: "el7amla-4fd9f",
-    storageBucket: "el7amla-4fd9f.appspot.com",
-    messagingSenderId: "217269601498",
-    appId: "1:217269601498:web:327dcb513d912d54a311e3"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+const firebaseConfig = {
+  apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
+  authDomain: "el7amla-4fd9f.firebaseapp.com",
+  databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com",
+  projectId: "el7amla-4fd9f",
+  storageBucket: "el7amla-4fd9f.appspot.com",
+  messagingSenderId: "217269601498",
+  appId: "1:217269601498:web:327dcb513d912d54a311e3"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  // قراءة بيانات الفرق
-  db.ref("players_teams/teams").once("value").then(snapshot => {
-    const teams = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
-    const tbody = document.querySelector("#teams-table tbody");
-    teams.forEach((team, i) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${i+1}</td><td>${team.name}</td><td>${team.points}</td>`;
-      tbody.appendChild(tr);
-    });
+async function getFPLPoints(id) {
+  const res = await fetch(`https://fantasy.premierleague.com/api/entry/${id}/`);
+  const data = await res.json();
+  return data.summary_overall_points;
+}
+
+async function updatePlayersPoints() {
+  const snapshot = await db.ref("players_teams/players").once("value");
+  const players = snapshot.val() || {};
+  for (let key in players) {
+    if (players[key].fpl_id) {
+      const points = await getFPLPoints(players[key].fpl_id);
+      await db.ref(`players_teams/players/${key}/points`).set(points);
+    }
+  }
+}
+
+function calculateTeamPoints(players, teams) {
+  for (let t in teams) teams[t].points = 0;
+  for (let p in players) {
+    const player = players[p];
+    for (let t in teams) {
+      if (teams[t].name === player.team) {
+        teams[t].points += player.points;
+      }
+    }
+  }
+}
+
+async function loadStandings() {
+  const playersSnap = await db.ref("players_teams/players").once("value");
+  const teamsSnap = await db.ref("players_teams/teams").once("value");
+  const players = playersSnap.val() || {};
+  const teams = teamsSnap.val() || {};
+
+  calculateTeamPoints(players, teams);
+
+  // Update Teams Table
+  const sortedTeams = Object.values(teams).sort((a, b) => b.points - a.points);
+  const teamBody = document.querySelector("#teams-table tbody");
+  teamBody.innerHTML = "";
+  sortedTeams.forEach((team, i) => {
+    teamBody.innerHTML += `<tr><td>${i+1}</td><td>${team.name}</td><td>${team.points}</td></tr>`;
   });
 
-  // قراءة بيانات اللاعبين
-  db.ref("players_teams/players").once("value").then(snapshot => {
-    const players = Object.values(snapshot.val() || {}).sort((a, b) => b.points - a.points);
-    const tbody = document.querySelector("#players-table tbody");
-    players.forEach((player, i) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${i+1}</td><td>${player.name}</td><td>${player.points}</td>`;
-      tbody.appendChild(tr);
-    });
+  // Update Players Table
+  const sortedPlayers = Object.values(players).sort((a, b) => b.points - a.points);
+  const playerBody = document.querySelector("#players-table tbody");
+  playerBody.innerHTML = "";
+  sortedPlayers.forEach((player, i) => {
+    playerBody.innerHTML += `<tr><td>${i+1}</td><td>${player.name}</td><td>${player.points}</td></tr>`;
   });
+}
+
+updatePlayersPoints().then(loadStandings);
 </script>
-
-<!-- ✅ External JS file -->
-<script src="animations.js"></script>
-
 </body>
 </html>
+
 
