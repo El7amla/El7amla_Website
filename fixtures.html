@@ -32,14 +32,8 @@
       gap: 10px;
       font-family: 'Orbitron', sans-serif;
     }
-    header img {
-      height: 40px;
-      transition: transform 0.3s ease;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-    }
+    header img { height: 40px; }
+    nav { display: flex; gap: 20px; }
     nav a {
       color: #93c5fd;
       text-decoration: none;
@@ -56,9 +50,7 @@
       bottom: -4px;
       transition: 0.3s ease;
     }
-    nav a:hover::after {
-      width: 100%;
-    }
+    nav a:hover::after { width: 100%; }
 
     .container {
       max-width: 1000px;
@@ -91,9 +83,7 @@
       user-select: none;
       min-width: 40px;
     }
-    .tab:hover {
-      background-color: #a3cef1;
-    }
+    .tab:hover { background-color: #a3cef1; }
     .tab.active {
       background-color: #004e92;
       color: white;
@@ -108,7 +98,6 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      transition: opacity 0.3s ease;
     }
     th, td {
       padding: 16px;
@@ -151,7 +140,7 @@
 <body>
 
 <header>
-  <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
+  <h1>
     <img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League
   </h1>
   <nav>
@@ -213,11 +202,11 @@
   const noFixturesMessage = document.getElementById('no-fixtures');
   const breakMessage = document.getElementById('break-message');
 
-  let fixturesData = {};
+  let fixturesData = [];
 
   function renderTabs(data) {
     tabsContainer.innerHTML = '';
-    const weeks = Object.keys(data).sort((a, b) => +a - +b);
+    const weeks = data.map(f => f.round);
 
     weeks.forEach(gw => {
       const tab = document.createElement('button');
@@ -243,32 +232,24 @@
     breakMessage.style.display = 'none';
     fixturesTable.style.display = 'none';
 
-    const data = fixturesData[gameweek];
-    if (data === "break") {
-      breakMessage.style.display = 'block';
-      return;
-    }
-
-    if (!data || data.length === 0) {
+    const fixtureRound = fixturesData.find(f => f.round == gameweek);
+    if (!fixtureRound || !fixtureRound.matches) {
       noFixturesMessage.style.display = 'block';
       return;
     }
 
-    data.forEach(match => {
+    fixtureRound.matches.forEach(match => {
       const row = document.createElement('tr');
-      if (match.out) {
-        const outCell = document.createElement('td');
-        outCell.colSpan = 4;
-        outCell.textContent = `Out: ${match.out}`;
-        outCell.style.fontWeight = 'bold';
-        outCell.style.color = '#f39c12';
-        row.appendChild(outCell);
+      if (match.home === "BYE" || match.away === "BYE") {
+        row.innerHTML = `<td colspan="4" style="color:#f39c12; font-weight:bold;">
+          ${match.home === "BYE" ? match.away : match.home} has a BYE this round
+        </td>`;
       } else {
         row.innerHTML = `
-          <td>${match.teamA}</td>
+          <td>${match.home}</td>
           <td>vs</td>
-          <td>${match.teamB}</td>
-          <td>${match.scoreA} - ${match.scoreB}</td>
+          <td>${match.away}</td>
+          <td>${match.scoreA || 0} - ${match.scoreB || 0}</td>
         `;
       }
       fixturesBody.appendChild(row);
@@ -284,7 +265,7 @@
   });
 
   db.ref('fixtures').once('value').then(snapshot => {
-    fixturesData = snapshot.val();
+    fixturesData = snapshot.val() || [];
     renderTabs(fixturesData);
   });
 </script>
