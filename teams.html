@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fixtures - El7amla Fantasy League</title>
+  <title>Teams - El7amla Fantasy League</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #1e1e2f, #232f4b);
       color: white;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     header {
       background-color: #111827;
@@ -21,6 +27,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.6);
       position: sticky;
       top: 0;
+      z-index: 10;
     }
     header h1 {
       font-size: 22px;
@@ -29,94 +36,152 @@
       gap: 10px;
       font-family: 'Orbitron', sans-serif;
     }
-    nav { display: flex; gap: 20px; }
+    header img {
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
     nav a {
       color: #93c5fd;
       text-decoration: none;
       font-weight: bold;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #60a5fa;
+      left: 0;
+      bottom: -4px;
+      transition: 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
     }
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
-      padding: 40px 20px;
+      padding: 60px 20px;
+      text-align: center;
     }
     h2 {
       font-size: 26px;
-      margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 40px;
       color: #60a5fa;
-      text-align: center;
     }
-    .fixture {
-      background: rgba(0,0,0,0.5);
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      text-align: center;
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-    .fixture h3 {
-      margin-bottom: 10px;
-      color: #fbbf24;
+    .card {
+      width: 300px;
+      height: 400px;
+      background-image: url('card_background.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-    .fixture p {
-      margin: 4px 0;
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      background: rgba(0,0,0,0.6);
+      padding: 5px 10px;
+      border-radius: 6px;
+    }
+    .card p {
+      font-size: 18px;
+      margin: 5px;
+      background: rgba(0,0,0,0.4);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      opacity: 0.85;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 18px;
+      }
+      .card {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+      }
+      .card h3 {
+        font-size: 20px;
+      }
+      .card p {
+        font-size: 16px;
+      }
+      h2 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
 <body>
-
-<header>
-  <h1><img src="el7amla_logo.png" alt="Logo" style="height:40px;"> Fixtures</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="teams.html">Teams</a>
-    <a href="standings.html">Standings</a>
-    <a href="fixtures.html">Fixtures</a>
-  </nav>
-</header>
-
-<div class="container">
-  <h2>Upcoming Fixtures</h2>
-  <div id="fixtures-container">Loading fixtures...</div>
-</div>
-
-<script>
-  const DATA_URL = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
-
-  async function loadFixtures() {
-    try {
-      const res = await fetch(DATA_URL);
-      const data = await res.json();
-
-      const container = document.getElementById("fixtures-container");
-      container.innerHTML = "";
-
-      // بافترض ان ملفك fixtures.json فيه جولات
-      for (const [round, matches] of Object.entries(data)) {
-        const roundDiv = document.createElement("div");
-        roundDiv.className = "fixture";
-
-        const roundTitle = document.createElement("h3");
-        roundTitle.textContent = `Round ${round}`;
-        roundDiv.appendChild(roundTitle);
-
-        matches.forEach(match => {
-          const p = document.createElement("p");
-          p.textContent = `${match.home} vs ${match.away}`;
-          roundDiv.appendChild(p);
-        });
-
-        container.appendChild(roundDiv);
-      }
-    } catch (err) {
-      document.getElementById("fixtures-container").textContent = "Failed to load fixtures.";
-      console.error("Error fetching fixtures:", err);
-    }
-  }
-
-  loadFixtures();
-</script>
-
+  <header>
+    <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
+      <img src="el7amla_logo.png" alt="Logo">
+      El7amla Fantasy League
+    </h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="teams.html">Teams</a>
+      <a href="standings.html">Standings</a>
+      <a href="fixtures.html">Fixtures</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h2>Meet the Teams</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Black Tech</h3>
+        <p>Elfiky</p>
+        <p>Omar</p>
+      </div>
+      <div class="card">
+        <h3>The Pharaohs</h3>
+        <p>Hussein</p>
+        <p>Ahmed</p>
+      </div>
+      <div class="card">
+        <h3>Thug Life</h3>
+        <p>Tawheed</p>
+        <p>Body</p>
+      </div>
+      <div class="card">
+        <h3>Brother's</h3>
+        <p>Nasser</p>
+        <p>Mahmoud</p>
+      </div>
+      <div class="card">
+        <h3>The Good Guys</h3>
+        <p>Magdy</p>
+        <p>Ali</p>
+      </div>
+    </div>
+  </div>
+  <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 </body>
 </html>
 
