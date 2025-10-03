@@ -1,6 +1,53 @@
 <script>
   // رابط ملف JSON على AWS S3 (يكون public أو فيه access policy تسمح بالتحميل)
-  const s3Url = "https://your-bucket-name.s3.amazonaws.com/points.json";
+  const s3Url = "<script>
+  // رابط ملف standings.json على الكلاود (AWS S3 مثلا)
+  const s3Url = "https://your-bucket-name.s3.amazonaws.com/standings.json";
+
+  async function loadStandings() {
+    try {
+      // جلب البيانات من الكلاود
+      const response = await fetch(s3Url);
+      if (!response.ok) throw new Error("Failed to fetch data from cloud");
+      const teamsData = await response.json();
+
+      let teams = [];
+      let players = [];
+
+      Object.values(teamsData).forEach(team => {
+        let teamPoints = 0;
+        (team.players || []).forEach(p => {
+          if (!p.points) p.points = 0;
+          players.push({ name: p.name, team: team.name, points: p.points });
+          teamPoints += p.points;
+        });
+        teams.push({ name: team.name, points: teamPoints });
+      });
+
+      // ترتيب وعرض الفرق
+      teams.sort((a,b) => b.points - a.points);
+      const tbodyTeams = document.querySelector("#teams-table tbody");
+      tbodyTeams.innerHTML = "";
+      teams.forEach((t, i) => {
+        tbodyTeams.innerHTML += `<tr><td>${i+1}</td><td>${t.name}</td><td>${t.points}</td></tr>`;
+      });
+
+      // ترتيب وعرض اللاعبين
+      players.sort((a,b) => b.points - a.points);
+      const tbodyPlayers = document.querySelector("#players-table tbody");
+      tbodyPlayers.innerHTML = "";
+      players.forEach((p, i) => {
+        tbodyPlayers.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td>${p.points}</td></tr>`;
+      });
+
+    } catch (error) {
+      console.error("Error loading standings:", error);
+    }
+  }
+
+  loadStandings();
+</script>
+";
 
   async function loadStandings() {
     try {
@@ -44,3 +91,4 @@
 
   loadStandings();
 </script>
+
