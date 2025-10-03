@@ -178,23 +178,8 @@
 
 <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 
-<!-- Firebase Scripts -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
-    authDomain: "el7amla-4fd9f.firebaseapp.com",
-    databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com",
-    projectId: "el7amla-4fd9f",
-    storageBucket: "el7amla-4fd9f.appspot.com",
-    messagingSenderId: "217269601498",
-    appId: "1:217269601498:web:327dcb513d912d54a311e3"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+  const fixturesUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
 
   const tabsContainer = document.getElementById('gameweek-tabs');
   const fixturesTable = document.getElementById('fixtures-table');
@@ -264,11 +249,19 @@
     }
   });
 
-  db.ref('fixtures').once('value').then(snapshot => {
-    fixturesData = snapshot.val() || [];
-    renderTabs(fixturesData);
-  });
+  // Fetch fixtures.json from S3
+  fetch(fixturesUrl)
+    .then(res => res.json())
+    .then(data => {
+      fixturesData = data;
+      renderTabs(fixturesData);
+    })
+    .catch(err => {
+      console.error("Error fetching fixtures:", err);
+      noFixturesMessage.style.display = 'block';
+    });
 </script>
 
 </body>
 </html>
+
