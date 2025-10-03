@@ -193,13 +193,13 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const fixturesUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
+      const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";
       const tabsContainer = document.getElementById('gameweek-tabs');
       const fixturesTable = document.getElementById('fixtures-table');
       const fixturesBody = document.getElementById('fixtures-body');
       const noFixturesMessage = document.getElementById('no-fixtures');
       const breakMessage = document.getElementById('break-message');
 
-      // فحص العناصر
       if (!tabsContainer || !fixturesTable || !fixturesBody || !noFixturesMessage || !breakMessage) {
         console.error("عنصر أو أكثر غير موجود في الصفحة");
         return;
@@ -279,7 +279,39 @@
             noFixturesMessage.style.display = 'block';
             return;
           }
-          renderTabs(fixturesData);
+
+          // Fetch individual gameweek result files from gw1 to gw38
+          const fetchPromises = [];
+          for (let gw = 1; gw <= 38; gw++) {
+            fetchPromises.push(
+              fetch(`${baseUrl}gw${gw}.json`)
+                .then(res => res.json())
+                .then(results => {
+                  const gwData = fixturesData.find(f => f.round == gw);
+                  if (gwData && results) {
+                    gwData.matches.forEach((match, index) => {
+                      const homeTeam = match.home;
+                      const awayTeam = match.away;
+                      if (results[homeTeam] && results[awayTeam]) {
+                        match.scoreA = Object.values(results[homeTeam]).reduce((sum, player) => sum + player.points, 0);
+                        match.scoreB = Object.values(results[awayTeam]).reduce((sum, player) => sum + player.points, 0);
+                      }
+                    });
+                  }
+                })
+                .catch(err => console.error(`خطأ في جلب بيانات gw${gw}:`, err))
+            );
+          }
+
+          // Wait for all gameweek data to be fetched
+          Promise.all(fetchPromises)
+            .then(() => {
+              renderTabs(fixturesData);
+            })
+            .catch(err => {
+              console.error("خطأ في جلب بيانات الجولات:", err);
+              noFixturesMessage.style.display = 'block';
+            });
         })
         .catch(err => {
           console.error("خطأ في جلب البيانات:", err);
