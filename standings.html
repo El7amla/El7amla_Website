@@ -173,30 +173,75 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // رابط ملف standings.json على AWS S3
-      const s3Url = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/standings.json";
+      const standingsUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/standings.json";
+      const fixturesUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
+      const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";
 
       async function loadStandings() {
         try {
-          // جلب البيانات من S3
-          const response = await fetch(s3Url);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const teamsData = await response.json();
+          // جلب بيانات standings.json
+          const [standingsResponse, fixturesResponse] = await Promise.all([
+            fetch(standingsUrl),
+            fetch(fixturesUrl)
+          ]);
 
-          let teams = [];
+          if (!standingsResponse.ok) throw new Error(`Failed to fetch standings: ${standingsResponse.status}`);
+          if (!fixturesResponse.ok) throw new Error(`Failed to fetch fixtures: ${fixturesResponse.status}`);
+
+          const standingsData = await standingsResponse.json();
+          const fixturesData = await fixturesResponse.json();
+
+          // تهيئة بيانات الفرق واللاعبين من standings.json
+          let teams = Object.values(standingsData).map(team => ({
+            name: team.name,
+            points: 0,
+            players: team.players || []
+          }));
           let players = [];
 
-          // معالجة البيانات
-          Object.values(teamsData).forEach(team => {
-            let teamPoints = 0;
-            (team.players || []).forEach(p => {
-              if (!p.points) p.points = 0; // افتراض قيمة افتراضية إذا لم تكن موجودة
-              players.push({ name: p.name, team: team.name, points: p.points });
-              teamPoints += p.points;
+          // جلب بيانات الجولات (gw1.json إلى gw38.json)
+          const gameweekPromises = [];
+          for (let gw = 1; gw <= 38; gw++) {
+            gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json`).then(res => res.json()).catch(err => {
+              console.warn(`Failed to fetch gw${gw}.json:`, err);
+              return {};
+            }));
+          }
+          const gameweekData = await Promise.all(gameweekPromises);
+
+          // حساب النقاط بناءً على نتائج المباريات
+          teams.forEach(team => {
+            let totalPoints = 0;
+            gameweekData.forEach((gwData, gwIndex) => {
+              const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gwIndex + 1] : [];
+              if (fixtureRound) {
+                fixtureRound.forEach(([home, away], matchIndex) => {
+                  if (gwData[home] && gwData[away]) {
+                    const homePoints = Object.values(gwData[home]).reduce((sum, p) => sum + p.points, 0);
+                    const awayPoints = Object.values(gwData[away]).reduce((sum, p) => sum + p.points, 0);
+                    if (home === team.name) {
+                      totalPoints += (homePoints > awayPoints) ? 3 : 0; // 3 نقاط للفائز
+                    } else if (away === team.name) {
+                      totalPoints += (awayPoints > homePoints) ? 3 : 0; // 3 نقاط للفائز
+                    }
+                  }
+                });
+              }
             });
-            teams.push({ name: team.name, points: teamPoints });
+            team.points += totalPoints; // إضافة النقاط من المباريات
+          });
+
+          // حساب نقطة البونص (أعلى فريق من بين الخمسة الذين حصلوا على نقاط)
+          const scoredTeams = teams.filter(t => t.points > 0).sort((a, b) => b.points - a.points);
+          if (scoredTeams.length > 0) {
+            scoredTeams[0].points += 1; // نقطة بونص للأعلى
+          }
+
+          // جمع بيانات اللاعبين
+          teams.forEach(team => {
+            team.players.forEach(p => {
+              players.push({ name: p.name, team: team.name, points: p.points + (team.points || 0) / team.players.length });
+            });
           });
 
           // ترتيب الفرق
@@ -212,7 +257,7 @@
           const tbodyPlayers = document.querySelector("#players-table tbody");
           tbodyPlayers.innerHTML = "";
           players.forEach((p, i) => {
-            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name || 'N/A'}</td><td>${p.team || 'N/A'}</td><td>${p.points || 0}</td></tr>`;
+            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name || 'N/A'}</td><td>${p.team || 'N/A'}</td><td>${p.points.toFixed(2) || 0}</td></tr>`;
           });
 
         } catch (error) {
