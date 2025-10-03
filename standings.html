@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #1e1e2f, #232f4b);
@@ -32,8 +36,13 @@
       gap: 10px;
       font-family: 'Orbitron', sans-serif;
     }
-    header img { height: 40px; }
-    nav { display: flex; gap: 20px; }
+    header img {
+      height: 40px;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
     nav a {
       color: #93c5fd;
       text-decoration: none;
@@ -50,10 +59,23 @@
       bottom: -4px;
       transition: 0.3s ease;
     }
-    nav a:hover::after { width: 100%; }
-    .container { max-width: 1000px; margin: auto; padding: 60px 20px; }
-    h2 { font-size: 26px; text-align: center; margin-bottom: 40px; color: #60a5fa; }
-    .section { margin-bottom: 50px; }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #60a5fa;
+    }
+    .section {
+      margin-bottom: 50px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -64,15 +86,42 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
       margin-bottom: 20px;
     }
-    th, td { padding: 16px; text-align: center; }
-    th { background-color: #1e3a8a; color: #fff; }
-    td { background-color: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .error-message { text-align: center; color: #e74c3c; font-size: 18px; margin-top: 20px; }
-    .footer-logo { position: fixed; bottom: 20px; right: 20px; width: 50px; opacity: 0.85; }
+    th, td {
+      padding: 16px;
+      text-align: center;
+    }
+    th {
+      background-color: #1e3a8a;
+      color: #fff;
+    }
+    td {
+      background-color: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .error-message {
+      text-align: center;
+      color: #e74c3c;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      opacity: 0.85;
+    }
     @media (max-width: 600px) {
-      header h1 { font-size: 18px; }
-      th, td { font-size: 14px; padding: 12px; }
-      h2 { font-size: 20px; }
+      header h1 {
+        font-size: 18px;
+      }
+      th, td {
+        font-size: 14px;
+        padding: 12px;
+      }
+      h2 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -89,10 +138,8 @@
       <a href="fixtures.html">Fixtures</a>
     </nav>
   </header>
-
   <div class="container">
     <h2>🏆 Standings</h2>
-
     <div class="section">
       <h3 style="text-align: center; color: #60a5fa; margin-bottom: 20px;">Teams Ranking</h3>
       <table id="teams-table">
@@ -106,7 +153,6 @@
         <tbody></tbody>
       </table>
     </div>
-
     <div class="section">
       <h3 style="text-align: center; color: #60a5fa; margin-bottom: 20px;">Players Ranking</h3>
       <table id="players-table">
@@ -121,17 +167,141 @@
         <tbody></tbody>
       </table>
     </div>
-
-    <div id="error-message" class="error-message" style="display:none;">
-      خطأ في تحميل البيانات. يرجى المحاولة لاحقًا أو تحقق من إعدادات السحابة.
-    </div>
+    <div id="error-message" class="error-message" style="display:none;">خطأ في تحميل البيانات. يرجى المحاولة لاحقًا أو تحقق من إعدادات السحابة.</div>
   </div>
-
   <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 
-  <!-- External script (deferred) to avoid inline scripts and CSP issues -->
-  <script src="standings.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const standingsUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/standings.json";
+      const fixturesUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
+      const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";
+
+      async function loadStandings() {
+        try {
+          // جلب بيانات standings.json و fixtures.json
+          const [standingsResponse, fixturesResponse] = await Promise.all([
+            fetch(standingsUrl),
+            fetch(fixturesUrl)
+          ]);
+
+          if (!standingsResponse.ok) throw new Error(`Failed to fetch standings: ${standingsResponse.status}`);
+          if (!fixturesResponse.ok) throw new Error(`Failed to fetch fixtures: ${fixturesResponse.status}`);
+
+          const standingsData = await standingsResponse.json();
+          const fixturesData = await fixturesResponse.json();
+
+          // تهيئة بيانات الفرق واللاعبين من standings.json
+          let teams = Object.values(standingsData).map(team => ({
+            name: team.name,
+            points: 0,
+            players: team.players || []
+          }));
+          let players = [];
+
+          // جلب بيانات الجولات (gw1.json إلى gw38.json)
+          const gameweekPromises = [];
+          for (let gw = 1; gw <= 38; gw++) {
+            gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json`).then(res => res.json()).catch(err => {
+              console.warn(`Failed to fetch gw${gw}.json:`, err);
+              return {};
+            }));
+          }
+          const gameweekData = await Promise.all(gameweekPromises);
+
+          // حساب النقاط بناءً على نتائج المباريات
+          teams.forEach(team => {
+            let totalPoints = 0;
+            gameweekData.forEach((gwData, gwIndex) => {
+              const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gwIndex + 1] : [];
+              if (fixtureRound) {
+                fixtureRound.forEach(([home, away], matchIndex) => {
+                  if (gwData[home] && gwData[away]) {
+                    const homePoints = Object.values(gwData[home]).reduce((sum, p) => sum + p.points, 0);
+                    const awayPoints = Object.values(gwData[away]).reduce((sum, p) => sum + p.points, 0);
+                    if (home === team.name) {
+                      if (homePoints > awayPoints) totalPoints += 3; // 3 نقاط للفائز
+                      else if (homePoints === awayPoints) totalPoints += 1; // نقطة للتعادل
+                    } else if (away === team.name) {
+                      if (awayPoints > homePoints) totalPoints += 3; // 3 نقاط للفائز
+                      else if (awayPoints === homePoints) totalPoints += 1; // نقطة للتعادل
+                    }
+                  }
+                });
+              }
+            });
+            team.points += totalPoints; // إضافة النقاط من المباريات
+          });
+
+          // حساب نقطة البونص (أعلى فريق من بين الخمسة الذين حصلوا على نقاط في كل جولة)
+          gameweekData.forEach((gwData, gwIndex) => {
+            const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gwIndex + 1] : [];
+            if (fixtureRound) {
+              const scoredTeamsThisRound = teams
+                .filter(t => {
+                  const match = fixtureRound.find(m => m[0] === t.name || m[1] === t.name);
+                  if (match) {
+                    const homePoints = gwData[match[0]] ? Object.values(gwData[match[0]]).reduce((sum, p) => sum + p.points, 0) : 0;
+                    const awayPoints = gwData[match[1]] ? Object.values(gwData[match[1]]).reduce((sum, p) => sum + p.points, 0) : 0;
+                    return homePoints > 0 || awayPoints > 0;
+                  }
+                  return false;
+                })
+                .map(t => {
+                  const match = fixtureRound.find(m => m[0] === t.name || m[1] === t.name);
+                  const homePoints = gwData[match[0]] ? Object.values(gwData[match[0]]).reduce((sum, p) => sum + p.points, 0) : 0;
+                  const awayPoints = gwData[match[1]] ? Object.values(gwData[match[1]]).reduce((sum, p) => sum + p.points, 0) : 0;
+                  return { name: t.name, points: (match[0] === t.name ? homePoints : awayPoints) };
+                })
+                .sort((a, b) => b.points - a.points)
+                .slice(0, 5);
+
+              if (scoredTeamsThisRound.length > 0) {
+                const topTeam = scoredTeamsThisRound[0];
+                const teamObj = teams.find(t => t.name === topTeam.name);
+                if (teamObj) teamObj.points += 1; // نقطة بونص لأعلى فريق
+              }
+            }
+          });
+
+          // جمع بيانات اللاعبين مع توزيع النقاط
+          teams.forEach(team => {
+            team.players.forEach(p => {
+              const playerPoints = p.points || 0;
+              const teamBonusPoints = team.points || 0;
+              const pointsPerPlayer = teamBonusPoints / team.players.length;
+              players.push({
+                name: p.name,
+                team: team.name,
+                points: playerPoints + pointsPerPlayer
+              });
+            });
+          });
+
+          // ترتيب الفرق
+          teams.sort((a, b) => b.points - a.points);
+          const tbodyTeams = document.querySelector("#teams-table tbody");
+          tbodyTeams.innerHTML = "";
+          teams.forEach((t, i) => {
+            tbodyTeams.innerHTML += `<tr><td>${i + 1}</td><td>${t.name || 'N/A'}</td><td>${t.points.toFixed(2) || 0}</td></tr>`;
+          });
+
+          // ترتيب اللاعبين
+          players.sort((a, b) => b.points - a.points);
+          const tbodyPlayers = document.querySelector("#players-table tbody");
+          tbodyPlayers.innerHTML = "";
+          players.forEach((p, i) => {
+            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name || 'N/A'}</td><td>${p.team || 'N/A'}</td><td>${p.points.toFixed(2) || 0}</td></tr>`;
+          });
+
+        } catch (error) {
+          console.error("Error loading standings:", error);
+          document.getElementById('error-message').style.display = 'block';
+        }
+      }
+
+      loadStandings();
+    });
+  </script>
 </body>
 </html>
-
-
