@@ -167,49 +167,52 @@
         <tbody></tbody>
       </table>
     </div>
-    <div id="error-message" class="error-message" style="display:none;">خطأ في تحميل البيانات. يرجى المحاولة لاحقًا.</div>
+    <div id="error-message" class="error-message" style="display:none;">خطأ في تحميل البيانات. يرجى المحاولة لاحقًا أو تحقق من إعدادات السحابة.</div>
   </div>
   <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // رابط ملف standings.json على AWS S3 (بناءً على الروابط السابقة)
+      // رابط ملف standings.json على AWS S3
       const s3Url = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/standings.json";
 
       async function loadStandings() {
         try {
           // جلب البيانات من S3
           const response = await fetch(s3Url);
-          if (!response.ok) throw new Error("Failed to fetch S3 data");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
           const teamsData = await response.json();
 
           let teams = [];
           let players = [];
 
+          // معالجة البيانات
           Object.values(teamsData).forEach(team => {
             let teamPoints = 0;
             (team.players || []).forEach(p => {
-              if (!p.points) p.points = 0;
+              if (!p.points) p.points = 0; // افتراض قيمة افتراضية إذا لم تكن موجودة
               players.push({ name: p.name, team: team.name, points: p.points });
               teamPoints += p.points;
             });
             teams.push({ name: team.name, points: teamPoints });
           });
 
-          // ترتيب وعرض الفرق
+          // ترتيب الفرق
           teams.sort((a, b) => b.points - a.points);
           const tbodyTeams = document.querySelector("#teams-table tbody");
           tbodyTeams.innerHTML = "";
           teams.forEach((t, i) => {
-            tbodyTeams.innerHTML += `<tr><td>${i + 1}</td><td>${t.name}</td><td>${t.points}</td></tr>`;
+            tbodyTeams.innerHTML += `<tr><td>${i + 1}</td><td>${t.name || 'N/A'}</td><td>${t.points || 0}</td></tr>`;
           });
 
-          // ترتيب وعرض اللاعبين
+          // ترتيب اللاعبين
           players.sort((a, b) => b.points - a.points);
           const tbodyPlayers = document.querySelector("#players-table tbody");
           tbodyPlayers.innerHTML = "";
           players.forEach((p, i) => {
-            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name}</td><td>${p.team}</td><td>${p.points}</td></tr>`;
+            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name || 'N/A'}</td><td>${p.team || 'N/A'}</td><td>${p.points || 0}</td></tr>`;
           });
 
         } catch (error) {
