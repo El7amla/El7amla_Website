@@ -1,94 +1,225 @@
-<script>
-  // رابط ملف JSON على AWS S3 (يكون public أو فيه access policy تسمح بالتحميل)
-  const s3Url = "<script>
-  // رابط ملف standings.json على الكلاود (AWS S3 مثلا)
-  const s3Url = "https://your-bucket-name.s3.amazonaws.com/standings.json";
-
-  async function loadStandings() {
-    try {
-      // جلب البيانات من الكلاود
-      const response = await fetch(s3Url);
-      if (!response.ok) throw new Error("Failed to fetch data from cloud");
-      const teamsData = await response.json();
-
-      let teams = [];
-      let players = [];
-
-      Object.values(teamsData).forEach(team => {
-        let teamPoints = 0;
-        (team.players || []).forEach(p => {
-          if (!p.points) p.points = 0;
-          players.push({ name: p.name, team: team.name, points: p.points });
-          teamPoints += p.points;
-        });
-        teams.push({ name: team.name, points: teamPoints });
-      });
-
-      // ترتيب وعرض الفرق
-      teams.sort((a,b) => b.points - a.points);
-      const tbodyTeams = document.querySelector("#teams-table tbody");
-      tbodyTeams.innerHTML = "";
-      teams.forEach((t, i) => {
-        tbodyTeams.innerHTML += `<tr><td>${i+1}</td><td>${t.name}</td><td>${t.points}</td></tr>`;
-      });
-
-      // ترتيب وعرض اللاعبين
-      players.sort((a,b) => b.points - a.points);
-      const tbodyPlayers = document.querySelector("#players-table tbody");
-      tbodyPlayers.innerHTML = "";
-      players.forEach((p, i) => {
-        tbodyPlayers.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td>${p.points}</td></tr>`;
-      });
-
-    } catch (error) {
-      console.error("Error loading standings:", error);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standings - El7amla Fantasy League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-  }
-
-  loadStandings();
-</script>
-";
-
-  async function loadStandings() {
-    try {
-      // جلب البيانات من S3
-      const response = await fetch(s3Url);
-      if (!response.ok) throw new Error("Failed to fetch S3 data");
-      const teamsData = await response.json();
-
-      let teams = [];
-      let players = [];
-
-      Object.values(teamsData).forEach(team => {
-        let teamPoints = 0;
-        (team.players || []).forEach(p => {
-          if (!p.points) p.points = 0;
-          players.push({ name: p.name, team: team.name, points: p.points });
-          teamPoints += p.points;
-        });
-        teams.push({ name: team.name, points: teamPoints });
-      });
-
-      // sort & render teams
-      teams.sort((a,b) => b.points - a.points);
-      const tbodyTeams = document.querySelector("#teams-table tbody");
-      tbodyTeams.innerHTML = "";
-      teams.forEach((t, i) => {
-        tbodyTeams.innerHTML += `<tr><td>${i+1}</td><td>${t.name}</td><td>${t.points}</td></tr>`;
-      });
-
-      // sort & render players
-      players.sort((a,b) => b.points - a.points);
-      const tbodyPlayers = document.querySelector("#players-table tbody");
-      tbodyPlayers.innerHTML = "";
-      players.forEach((p, i) => {
-        tbodyPlayers.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td>${p.points}</td></tr>`;
-      });
-    } catch (error) {
-      console.error("Error loading standings:", error);
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #232f4b);
+      min-height: 100vh;
+      color: white;
+      overflow-x: hidden;
     }
-  }
+    header {
+      background-color: #111827;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    header img {
+      height: 40px;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #60a5fa;
+      left: 0;
+      bottom: -4px;
+      transition: 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #60a5fa;
+    }
+    .section {
+      margin-bottom: 50px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(4px);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 16px;
+      text-align: center;
+    }
+    th {
+      background-color: #1e3a8a;
+      color: #fff;
+    }
+    td {
+      background-color: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .error-message {
+      text-align: center;
+      color: #e74c3c;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      opacity: 0.85;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 18px;
+      }
+      th, td {
+        font-size: 14px;
+        padding: 12px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>
+      <img src="el7amla_logo.png" alt="Logo">
+      El7amla Fantasy League
+    </h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="teams.html">Teams</a>
+      <a href="standings.html">Standings</a>
+      <a href="fixtures.html">Fixtures</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h2>🏆 Standings</h2>
+    <div class="section">
+      <h3 style="text-align: center; color: #60a5fa; margin-bottom: 20px;">Teams Ranking</h3>
+      <table id="teams-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="section">
+      <h3 style="text-align: center; color: #60a5fa; margin-bottom: 20px;">Players Ranking</h3>
+      <table id="players-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Team</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="error-message" class="error-message" style="display:none;">خطأ في تحميل البيانات. يرجى المحاولة لاحقًا.</div>
+  </div>
+  <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 
-  loadStandings();
-</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // رابط ملف standings.json على AWS S3 (بناءً على الروابط السابقة)
+      const s3Url = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/standings.json";
 
+      async function loadStandings() {
+        try {
+          // جلب البيانات من S3
+          const response = await fetch(s3Url);
+          if (!response.ok) throw new Error("Failed to fetch S3 data");
+          const teamsData = await response.json();
+
+          let teams = [];
+          let players = [];
+
+          Object.values(teamsData).forEach(team => {
+            let teamPoints = 0;
+            (team.players || []).forEach(p => {
+              if (!p.points) p.points = 0;
+              players.push({ name: p.name, team: team.name, points: p.points });
+              teamPoints += p.points;
+            });
+            teams.push({ name: team.name, points: teamPoints });
+          });
+
+          // ترتيب وعرض الفرق
+          teams.sort((a, b) => b.points - a.points);
+          const tbodyTeams = document.querySelector("#teams-table tbody");
+          tbodyTeams.innerHTML = "";
+          teams.forEach((t, i) => {
+            tbodyTeams.innerHTML += `<tr><td>${i + 1}</td><td>${t.name}</td><td>${t.points}</td></tr>`;
+          });
+
+          // ترتيب وعرض اللاعبين
+          players.sort((a, b) => b.points - a.points);
+          const tbodyPlayers = document.querySelector("#players-table tbody");
+          tbodyPlayers.innerHTML = "";
+          players.forEach((p, i) => {
+            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name}</td><td>${p.team}</td><td>${p.points}</td></tr>`;
+          });
+
+        } catch (error) {
+          console.error("Error loading standings:", error);
+          document.getElementById('error-message').style.display = 'block';
+        }
+      }
+
+      loadStandings();
+    });
+  </script>
+</body>
+</html>
