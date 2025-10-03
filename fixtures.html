@@ -1,94 +1,116 @@
-<script>
-  const fixturesUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fixtures</title>
+</head>
+<body>
+  <div id="gameweek-tabs"></div>
+  <table id="fixtures-table" style="display: none;">
+    <tbody id="fixtures-body"></tbody>
+  </table>
+  <div id="no-fixtures" style="display: none;">لا توجد مباريات</div>
+  <div id="break-message" style="display: none;">جولة استراحة</div>
 
-  const tabsContainer = document.getElementById('gameweek-tabs');
-  const fixturesTable = document.getElementById('fixtures-table');
-  const fixturesBody = document.getElementById('fixtures-body');
-  const noFixturesMessage = document.getElementById('no-fixtures');
-  const breakMessage = document.getElementById('break-message');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const fixturesUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json";
+      const tabsContainer = document.getElementById('gameweek-tabs');
+      const fixturesTable = document.getElementById('fixtures-table');
+      const fixturesBody = document.getElementById('fixtures-body');
+      const noFixturesMessage = document.getElementById('no-fixtures');
+      const breakMessage = document.getElementById('break-message');
 
-  let fixturesData = {};
-
-  function renderTabs(data) {
-    tabsContainer.innerHTML = '';
-    const weeks = Object.keys(data); // rounds are keys "1", "2", "3"...
-
-    weeks.forEach(gw => {
-      const tab = document.createElement('button');
-      tab.classList.add('tab');
-      tab.textContent = gw;
-      tab.dataset.gameweek = gw;
-      tabsContainer.appendChild(tab);
-    });
-
-    const firstTab = tabsContainer.querySelector('.tab');
-    if (firstTab) {
-      firstTab.classList.add('active');
-      showFixtures(firstTab.dataset.gameweek);
-    }
-  }
-
-  function showFixtures(gameweek) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelector(`.tab[data-gameweek="${gameweek}"]`).classList.add('active');
-
-    fixturesBody.innerHTML = '';
-    noFixturesMessage.style.display = 'none';
-    breakMessage.style.display = 'none';
-    fixturesTable.style.display = 'none';
-
-    const matches = fixturesData[gameweek];
-    if (!matches) {
-      noFixturesMessage.style.display = 'block';
-      return;
-    }
-
-    matches.forEach(match => {
-      const row = document.createElement('tr');
-      const home = match[0];
-      const away = match[1];
-
-      if (home === "BYE" || away === "BYE") {
-        row.innerHTML = `<td colspan="4" style="color:#f39c12; font-weight:bold;">
-          ${home === "BYE" ? away : home} has a BYE this round
-        </td>`;
-      } else if (home === "BYE" && away === "BYE") {
-        row.innerHTML = `<td colspan="4" style="color:#e74c3c; font-weight:bold;">
-          هذه الجولة عبارة عن استراحة (Break)
-        </td>`;
-      } else {
-        row.innerHTML = `
-          <td>${home}</td>
-          <td>vs</td>
-          <td>${away}</td>
-          <td>-</td>
-        `;
+      if (!tabsContainer || !fixturesTable || !fixturesBody || !noFixturesMessage || !breakMessage) {
+        console.error("عنصر أو أكثر غير موجود في الصفحة");
+        return;
       }
-      fixturesBody.appendChild(row);
+
+      let fixturesData = {};
+
+      function renderTabs(data) {
+        tabsContainer.innerHTML = '';
+        const weeks = Object.keys(data);
+
+        weeks.forEach(gw => {
+          const tab = document.createElement('button');
+          tab.classList.add('tab');
+          tab.textContent = gw;
+          tab.dataset.gameweek = gw;
+          tabsContainer.appendChild(tab);
+        });
+
+        const firstTab = tabsContainer.querySelector('.tab');
+        if (firstTab) {
+          firstTab.classList.add('active');
+          showFixtures(firstTab.dataset.gameweek);
+        }
+      }
+
+      function showFixtures(gameweek) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.tab[data-gameweek="${gameweek}"]`).classList.add('active');
+
+        fixturesBody.innerHTML = '';
+        noFixturesMessage.style.display = 'none';
+        breakMessage.style.display = 'none';
+        fixturesTable.style.display = 'none';
+
+        const matches = fixturesData[gameweek];
+        if (!matches) {
+          noFixturesMessage.style.display = 'block';
+          return;
+        }
+
+        matches.forEach(match => {
+          const row = document.createElement('tr');
+          const home = match[0];
+          const away = match[1];
+
+          if (home === "BYE" || away === "BYE") {
+            row.innerHTML = `<td colspan="4" style="color:#f39c12; font-weight:bold;">
+              ${home === "BYE" ? away : home} لديه استراحة هذه الجولة
+            </td>`;
+          } else if (home === "BYE" && away === "BYE") {
+            row.innerHTML = `<td colspan="4" style="color:#e74c3c; font-weight:bold;">
+              هذه الجولة عبارة عن استراحة
+            </td>`;
+          } else {
+            row.innerHTML = `
+              <td>${home}</td>
+              <td>vs</td>
+              <td>${away}</td>
+              <td>-</td>
+            `;
+          }
+          fixturesBody.appendChild(row);
+        });
+
+        fixturesTable.style.display = 'table';
+      }
+
+      tabsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab')) {
+          showFixtures(e.target.dataset.gameweek);
+        }
+      });
+
+      fetch(fixturesUrl)
+        .then(res => res.json())
+        .then(data => {
+          console.log("البيانات:", data);
+          fixturesData = data.fixtures;
+          if (!fixturesData) {
+            console.error("مفتاح 'fixtures' غير موجود في البيانات");
+            noFixturesMessage.style.display = 'block';
+            return;
+          }
+          renderTabs(fixturesData);
+        })
+        .catch(err => {
+          console.error("خطأ في جلب البيانات:", err);
+          noFixturesMessage.style.display = 'block';
+        });
     });
-
-    fixturesTable.style.display = 'table';
-  }
-
-  tabsContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('tab')) {
-      showFixtures(e.target.dataset.gameweek);
-    }
-  });
-
-  // Fetch fixtures.json from S3
-  fetch(fixturesUrl)
-    .then(res => res.json())
-    .then(data => {
-      fixturesData = data.fixtures; // take "fixtures" object
-      renderTabs(fixturesData);
-    })
-    .catch(err => {
-      console.error("Error fetching fixtures:", err);
-      noFixturesMessage.style.display = 'block';
-    });
-</script>
-
+  </script>
 </body>
 </html>
-
