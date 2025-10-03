@@ -20,8 +20,25 @@
       const noFixturesMessage = document.getElementById('no-fixtures');
       const breakMessage = document.getElementById('break-message');
 
-      if (!tabsContainer || !fixturesTable || !fixturesBody || !noFixturesMessage || !breakMessage) {
-        console.error("عنصر أو أكثر غير موجود في الصفحة");
+      // فحص العناصر
+      if (!tabsContainer) {
+        console.error("العنصر 'gameweek-tabs' غير موجود");
+        return;
+      }
+      if (!fixturesTable) {
+        console.error("العنصر 'fixtures-table' غير موجود");
+        return;
+      }
+      if (!fixturesBody) {
+        console.error("العنصر 'fixtures-body' غير موجود");
+        return;
+      }
+      if (!noFixturesMessage) {
+        console.error("العنصر 'no-fixtures' غير موجود");
+        return;
+      }
+      if (!breakMessage) {
+        console.error("العنصر 'break-message' غير موجود");
         return;
       }
 
@@ -97,7 +114,7 @@
       fetch(fixturesUrl)
         .then(res => res.json())
         .then(data => {
-          console.log("البيانات:", data);
+          console.log("البيانات المجلوبة:", data); // للتأكد من البيانات
           fixturesData = data.fixtures;
           if (!fixturesData) {
             console.error("مفتاح 'fixtures' غير موجود في البيانات");
