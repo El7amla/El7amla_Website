@@ -276,12 +276,13 @@
           });
 
           // حساب نقاط اللاعبين من المباريات الملعوبة (الجولات 1-6)
-     teams.forEach(team => {
+    teams.forEach(team => {
   team.players.forEach(p => {
     let playerTotalPoints = 0;
-    gameweekData.forEach((gwData) => {
-      if (gwData[team.name] && gwData[team.name][p.name]) {
-        playerTotalPoints += gwData[team.name][p.name].points || 0;
+    gameweekData.forEach(gwData => {
+      const teamData = gwData[team.name];
+      if (teamData && teamData[p.id]) { // البحث بالـ ID
+        playerTotalPoints += teamData[p.id].points || 0;
       }
     });
     players.push({
@@ -291,6 +292,7 @@
     });
   });
 });
+
 
 
 
@@ -322,6 +324,7 @@
   </script>
 </body>
 </html>
+
 
 
 
