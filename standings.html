@@ -303,12 +303,19 @@
           });
 
           // ترتيب اللاعبين
-          players.sort((a, b) => b.points - a.points);
-          const tbodyPlayers = document.querySelector("#players-table tbody");
-          tbodyPlayers.innerHTML = "";
-          players.forEach((p, i) => {
-            tbodyPlayers.innerHTML += `<tr><td>${i + 1}</td><td>${p.name}</td><td>${p.team}</td><td>${Math.floor(p.points) || 0}</td></tr>`;
-          });
+         players.sort((a, b) => b.points - a.points);
+
+// عرض جدول اللاعبين
+const tbodyPlayers = document.querySelector("#players-table tbody");
+tbodyPlayers.innerHTML = "";
+players.forEach((p, i) => {
+  tbodyPlayers.innerHTML += `<tr>
+    <td>${i + 1}</td>
+    <td>${p.name}</td>
+    <td>${p.team}</td>
+    <td>${p.points}</td>
+  </tr>`;
+});
 
         } catch (error) {
           console.error("Error loading standings:", error);
@@ -322,6 +329,7 @@
   </script>
 </body>
 </html>
+
 
 
 
