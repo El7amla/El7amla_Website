@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #1e1e2f, #232f4b);
@@ -25,10 +29,26 @@
       top: 0;
       z-index: 10;
     }
-    header h1 { font-size: 22px; display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; }
-    header img { height: 40px; }
-    nav { display: flex; gap: 20px; }
-    nav a { color: #93c5fd; text-decoration: none; font-weight: bold; position: relative; }
+    header h1 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    header img {
+      height: 40px;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
     nav a::after {
       content: "";
       position: absolute;
@@ -39,10 +59,23 @@
       bottom: -4px;
       transition: 0.3s ease;
     }
-    nav a:hover::after { width: 100%; }
-    .container { max-width: 1000px; margin: auto; padding: 60px 20px; }
-    h2 { font-size: 26px; text-align: center; margin-bottom: 40px; color: #60a5fa; }
-    .section { margin-bottom: 50px; }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #60a5fa;
+    }
+    .section {
+      margin-bottom: 50px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -53,15 +86,42 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
       margin-bottom: 20px;
     }
-    th, td { padding: 16px; text-align: center; }
-    th { background-color: #1e3a8a; color: #fff; }
-    td { background-color: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .error-message { text-align: center; color: #e74c3c; font-size: 18px; margin-top: 20px; }
-    .footer-logo { position: fixed; bottom: 20px; right: 20px; width: 50px; opacity: 0.85; }
+    th, td {
+      padding: 16px;
+      text-align: center;
+    }
+    th {
+      background-color: #1e3a8a;
+      color: #fff;
+    }
+    td {
+      background-color: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .error-message {
+      text-align: center;
+      color: #e74c3c;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .footer-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      opacity: 0.85;
+    }
     @media (max-width: 600px) {
-      header h1 { font-size: 18px; }
-      th, td { font-size: 14px; padding: 12px; }
-      h2 { font-size: 20px; }
+      header h1 {
+        font-size: 18px;
+      }
+      th, td {
+        font-size: 14px;
+        padding: 12px;
+      }
+      h2 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -84,7 +144,11 @@
       <h3 style="text-align: center; color: #60a5fa; margin-bottom: 20px;">Teams Ranking</h3>
       <table id="teams-table">
         <thead>
-          <tr><th>Rank</th><th>Team</th><th>Points</th></tr>
+          <tr>
+            <th>Rank</th>
+            <th>Team</th>
+            <th>Points</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -93,7 +157,12 @@
       <h3 style="text-align: center; color: #60a5fa; margin-bottom: 20px;">Players Ranking</h3>
       <table id="players-table">
         <thead>
-          <tr><th>Rank</th><th>Player</th><th>Team</th><th>Points</th></tr>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Team</th>
+            <th>Points</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </table>
@@ -110,88 +179,148 @@
 
       async function loadStandings() {
         try {
+          // جلب بيانات league.json و fixtures.json
           const [leagueResponse, fixturesResponse] = await Promise.all([
-            fetch(leagueUrl), fetch(fixturesUrl)
+            fetch(leagueUrl),
+            fetch(fixturesUrl)
           ]);
+
           if (!leagueResponse.ok) throw new Error(`Failed to fetch league: ${leagueResponse.status}`);
           if (!fixturesResponse.ok) throw new Error(`Failed to fetch fixtures: ${fixturesResponse.status}`);
 
           const leagueData = await leagueResponse.json();
           const fixturesData = await fixturesResponse.json();
 
-          let teams = Object.entries(leagueData.teams).map(([teamName, teamData]) => ({
-            name: teamName,
-            points: 0,
-            players: Object.entries(teamData.players).map(([playerName, playerId]) => ({
-              name: playerName,
-              id: playerId,
-              points: 0
-            }))
-          }));
+          console.log("League Data:", leagueData);
+          console.log("Fixtures Data:", fixturesData);
+
+          // تهيئة بيانات الفرق واللاعبين من league.json (نقاط أساسية = 0)
+        let teams = Object.entries(leagueData.teams).map(([teamName, teamData]) => ({
+  name: teamName,
+  points: 0,
+  players: Object.entries(teamData.players).map(([playerName, playerId]) => ({
+    name: playerName,
+    id: playerId,  // مهم جدًا عشان نسحب النقاط من gwX.json
+    points: 0
+  }))
+}));
+
+          if (teams.length === 0) throw new Error("No teams found in league data");
 
           let players = [];
 
-          // جلب بيانات الجولات
+          // جلب بيانات الجولات (gw1.json إلى gw6.json فقط)
           const gameweekPromises = [];
-          for (let gw = 1; gw <= 7; gw++) {
-            gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json`).then(res => res.json()).catch(err => {
-              console.warn(`Failed to fetch gw${gw}.json:`, err); return {};
-            }));
-          }
+         for (let gw = 1; gw <= 7; gw++) { // زيادة الحد الأقصى للجولات ل7
+  gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json`).then(res => res.json()).catch(err => {
+    console.warn(`Failed to fetch gw${gw}.json:`, err);
+    return {};
+  }));
+}
+
           const gameweekData = await Promise.all(gameweekPromises);
 
-          // حساب نقاط اللاعبين
+          // حساب النقاط بناءً على نتائج المباريات (الجولات 1-6)
           teams.forEach(team => {
-            team.players.forEach(p => {
-              let playerTotalPoints = 0;
-              gameweekData.forEach(gwData => {
-                const teamData = gwData[team.name];
-                if (teamData && teamData[p.id]) {
-                  playerTotalPoints += teamData[p.id].points || 0;
-                }
-              });
-              p.points = playerTotalPoints;
+            let totalPoints = 0;
+            gameweekData.forEach((gwData, gwIndex) => {
+              const gw = gwIndex + 1;
+              const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gw] : [];
+              if (fixtureRound && Array.isArray(fixtureRound)) {
+                fixtureRound.forEach(([home, away]) => {
+                  if (gwData[home] && gwData[away]) {
+                    const homePoints = Object.values(gwData[home]).reduce((sum, p) => sum + (p.points || 0), 0);
+                    const awayPoints = Object.values(gwData[away]).reduce((sum, p) => sum + (p.points || 0), 0);
+                    if (home === team.name) {
+                      if (homePoints > awayPoints) totalPoints += 3; // 3 نقاط للفائز
+                      else if (homePoints === awayPoints) totalPoints += 1; // نقطة للتعادل
+                    } else if (away === team.name) {
+                      if (awayPoints > homePoints) totalPoints += 3; // 3 نقاط للفائز
+                      else if (awayPoints === homePoints) totalPoints += 1; // نقطة للتعادل
+                    }
+                  }
+                });
+              }
             });
+            team.points += totalPoints; // إضافة النقاط من المباريات
           });
 
-          // إعادة إنشاء مصفوفة اللاعبين لعرضها
-          players = [];
-          teams.forEach(team => {
-            team.players.forEach(p => {
-              players.push({
-                name: p.name,
-                team: team.name,
-                points: p.points
-              });
-            });
+          // حساب نقطة البونص (أعلى فريق من بين الخمسة الذين حصلوا على نقاط في كل جولة)
+          gameweekData.forEach((gwData, gwIndex) => {
+            const gw = gwIndex + 1;
+            const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gw] : [];
+            if (fixtureRound && Array.isArray(fixtureRound)) {
+              const scoredTeamsThisRound = teams
+                .filter(t => {
+                  const match = fixtureRound.find(m => m[0] === t.name || m[1] === t.name);
+                  if (match) {
+                    const homePoints = gwData[match[0]] ? Object.values(gwData[match[0]]).reduce((sum, p) => sum + (p.points || 0), 0) : 0;
+                    const awayPoints = gwData[match[1]] ? Object.values(gwData[match[1]]).reduce((sum, p) => sum + (p.points || 0), 0) : 0;
+                    return homePoints > 0 || awayPoints > 0;
+                  }
+                  return false;
+                })
+                .map(t => {
+                  const match = fixtureRound.find(m => m[0] === t.name || m[1] === t.name);
+                  const homePoints = gwData[match[0]] ? Object.values(gwData[match[0]]).reduce((sum, p) => sum + (p.points || 0), 0) : 0;
+                  const awayPoints = gwData[match[1]] ? Object.values(gwData[match[1]]).reduce((sum, p) => sum + (p.points || 0), 0) : 0;
+                  return { name: t.name, points: (match[0] === t.name ? homePoints : awayPoints) };
+                })
+                .sort((a, b) => b.points - a.points)
+                .slice(0, 5);
+
+              if (scoredTeamsThisRound.length > 0) {
+                const topTeam = scoredTeamsThisRound[0];
+                const teamObj = teams.find(t => t.name === topTeam.name);
+                if (teamObj) teamObj.points += 1; // نقطة بونص لأعلى فريق
+              }
+            }
           });
 
-          // ترتيب وعرض الفرق
-          teams.sort((a,b)=>b.points-a.points);
+          // حساب نقاط اللاعبين من المباريات الملعوبة (الجولات 1-6)
+  teams.forEach(team => {
+  team.players.forEach(p => {
+    let playerTotalPoints = 0;
+    gameweekData.forEach(gwData => {
+      const teamData = gwData[team.name];
+      if (teamData && teamData[p.id]) { // البحث بالـ ID فقط
+        playerTotalPoints += teamData[p.id].points || 0; // إضافة النقاط الصحيحة
+      }
+    });
+    p.points = playerTotalPoints; // نخزن النقاط داخل اللاعب
+  });
+});
+
+
+
+
+          // ترتيب الفرق
+          teams.sort((a, b) => b.points - a.points);
           const tbodyTeams = document.querySelector("#teams-table tbody");
           tbodyTeams.innerHTML = "";
-          teams.forEach((t,i)=>{
-            tbodyTeams.innerHTML += `<tr><td>${i+1}</td><td>${t.name}</td><td>${t.points}</td></tr>`;
+          teams.forEach((t, i) => {
+            tbodyTeams.innerHTML += `<tr><td>${i + 1}</td><td>${t.name}</td><td>${Math.floor(t.points) || 0}</td></tr>`;
           });
 
-          // ترتيب وعرض اللاعبين
-          players.sort((a,b)=>b.points-a.points);
-          const tbodyPlayers = document.querySelector("#players-table tbody");
-          tbodyPlayers.innerHTML = "";
-          players.forEach((p,i)=>{
-            tbodyPlayers.innerHTML += `<tr>
-              <td>${i+1}</td>
-              <td>${p.name}</td>
-              <td>${p.team}</td>
-              <td>${p.points}</td>
-            </tr>`;
-          });
+          // ترتيب اللاعبين
+         players.sort((a, b) => b.points - a.points);
+
+// عرض جدول اللاعبين
+const tbodyPlayers = document.querySelector("#players-table tbody");
+tbodyPlayers.innerHTML = "";
+players.forEach((p, i) => {
+  tbodyPlayers.innerHTML += `<tr>
+    <td>${i + 1}</td>
+    <td>${p.name}</td>
+    <td>${p.team}</td>
+    <td>${p.points}</td>
+  </tr>`;
+});
 
         } catch (error) {
           console.error("Error loading standings:", error);
-          const errorMsg = document.getElementById('error-message');
-          errorMsg.style.display = 'block';
-          errorMsg.textContent += ` - التفاصيل: ${error.message}`;
+          document.getElementById('error-message').style.display = 'block';
+          document.getElementById('error-message').textContent += ` - التفاصيل: ${error.message}`;
         }
       }
 
