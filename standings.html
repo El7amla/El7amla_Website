@@ -195,14 +195,16 @@
           console.log("Fixtures Data:", fixturesData);
 
           // تهيئة بيانات الفرق واللاعبين من league.json (نقاط أساسية = 0)
-          let teams = Object.entries(leagueData.teams).map(([teamName, teamData]) => ({
-            name: teamName,
-            points: 0,
-            players: Object.entries(teamData.players).map(([playerName]) => ({
-              name: playerName,
-              points: 0 // النقاط تُحسب من gwX.json فقط
-            }))
-          }));
+        let teams = Object.entries(leagueData.teams).map(([teamName, teamData]) => ({
+  name: teamName,
+  points: 0,
+  players: Object.entries(teamData.players).map(([playerName, playerId]) => ({
+    name: playerName,
+    id: playerId,  // مهم جدًا عشان نسحب النقاط من gwX.json
+    points: 0
+  }))
+}));
+
           if (teams.length === 0) throw new Error("No teams found in league data");
 
           let players = [];
@@ -324,6 +326,7 @@
   </script>
 </body>
 </html>
+
 
 
 
