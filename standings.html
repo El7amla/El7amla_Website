@@ -209,12 +209,13 @@
 
           // جلب بيانات الجولات (gw1.json إلى gw6.json فقط)
           const gameweekPromises = [];
-          for (let gw = 1; gw <= 6; gw++) {
-            gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json`).then(res => res.json()).catch(err => {
-              console.warn(`Failed to fetch gw${gw}.json:`, err);
-              return {};
-            }));
-          }
+         for (let gw = 1; gw <= 7; gw++) { // زيادة الحد الأقصى للجولات ل7
+  gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json`).then(res => res.json()).catch(err => {
+    console.warn(`Failed to fetch gw${gw}.json:`, err);
+    return {};
+  }));
+}
+
           const gameweekData = await Promise.all(gameweekPromises);
 
           // حساب النقاط بناءً على نتائج المباريات (الجولات 1-6)
@@ -321,5 +322,6 @@
   </script>
 </body>
 </html>
+
 
 
