@@ -71,37 +71,12 @@
       color: #60a5fa;
     }
 
-    .cards {
-      display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 20px;
-      padding-bottom: 20px;
-    }
-
-    .card {
-      background-image: url('card_background.jpg');
-      background-size: cover;
-      background-position: center;
-      width: 220px;
-      height: 320px;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    #countdown {
       text-align: center;
-      justify-content: space-between;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .card h3 {
-      background: rgba(0,0,0,0.6);
-      padding: 5px;
-      border-radius: 6px;
-      font-size: 18px;
+      font-size: 22px;
+      color: #fbbf24;
+      margin-bottom: 20px;
+      font-weight: bold;
     }
 
     .fixtures {
@@ -169,13 +144,7 @@
 <div class="container">
   <h2>💬 Where Legends Compete</h2>
 
-  <div class="cards">
-    <div class="card"><h3>Black Tech</h3><p>Elfiky & Omar</p></div>
-    <div class="card"><h3>The Pharaohs</h3><p>Hussein & Ahmed</p></div>
-    <div class="card"><h3>Thug Life</h3><p>Tawheed & Body</p></div>
-    <div class="card"><h3>Brother's</h3><p>Nasser & Mahmoud</p></div>
-    <div class="card"><h3>The Good Guys</h3><p>Magdy & Ali</p></div>
-  </div>
+  <div id="countdown">Loading next match countdown...</div>
 
   <div class="fixtures" id="nextFixtures">
     <h3 style="text-align:center; color:#93c5fd;">🔜 Next Gameweek Matches</h3>
@@ -186,42 +155,28 @@
 <img src="premier_logo.png" class="footer-logo" alt="Premier Logo">
 
 <script>
+  // 🔹 جلب بيانات fixtures من S3
   fetch("https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json")
   .then(response => response.json())
   .then(data => {
     const fixtures = data.fixtures;
     const fixtureDiv = document.getElementById("fixturesList");
-    const breakWeeks = ["11", "22", "38"];
-    let nextGW = null;
 
-    // نحدد الجولة القادمة اللي لسه ملعبتش
-    for (let i = 1; i <= 38; i++) {
-      const gw = fixtures[i];
-      if (!gw || breakWeeks.includes(i.toString())) continue;
-
-      const allPlayed = gw.every(match => 
-        (Array.isArray(match) && match[2] !== undefined && (match[2] !== "")) || 
-        (typeof match === "string" && match.includes("BYE"))
-      );
-
-      if (!allPlayed) {
-        nextGW = { number: i, matches: gw };
-        break;
-      }
-    }
+    const nextGWNumber = 8; // الجولة الجاية
+    const nextGW = fixtures[nextGWNumber];
 
     if (!nextGW) {
-      fixtureDiv.innerHTML = "<p style='text-align:center;'>⚽ All gameweeks completed!</p>";
+      fixtureDiv.innerHTML = "<p style='text-align:center;'>⚽ No upcoming fixtures found.</p>";
       return;
     }
 
     fixtureDiv.innerHTML = `
       <h4 style="text-align:center; margin:15px 0; color:#60a5fa;">
-        🏆 Gameweek ${nextGW.number}
+        🏆 Gameweek ${nextGWNumber} - Starts Sat 18 Oct, 14:30
       </h4>
     `;
 
-    nextGW.matches.forEach(match => {
+    nextGW.forEach(match => {
       if (Array.isArray(match)) {
         if (match.includes("BYE")) {
           fixtureDiv.innerHTML += `
@@ -246,6 +201,28 @@
     console.error("Error loading fixtures:", err);
     document.getElementById("fixturesList").innerHTML = "<p>⚠️ Unable to load fixtures data.</p>";
   });
+
+  // 🔹 عداد الجولة الجاية
+  const countDownDate = new Date("Oct 18, 2025 14:30:00").getTime();
+  const countdownElement = document.getElementById("countdown");
+
+  const interval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    if (distance <= 0) {
+      clearInterval(interval);
+      countdownElement.innerHTML = "🏁 Matches have started!";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownElement.innerHTML = `🕒 Next Gameweek Starts In: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
 </script>
 
 </body>
