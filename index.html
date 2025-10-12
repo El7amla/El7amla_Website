@@ -233,33 +233,35 @@
     appId: "1:217269601498:web:327dcb513d912d54a311e3",
     databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com"
   };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  db.ref('fixtures').once('value').then(snapshot => {
-    const data = snapshot.val();
+ fetch("https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json")
+  .then(response => response.json())
+  .then(data => {
+    const fixtures = data.fixtures;
     const fixtureDiv = document.getElementById("fixturesList");
     const breakWeeks = ["11", "22", "38"];
+
+    // نحدد الجولة القادمة اللي لسه ملعبتش
     for (let i = 1; i <= 38; i++) {
-      const gw = data[i];
+      const gw = fixtures[i];
       if (!gw || breakWeeks.includes(i.toString())) continue;
 
-      const allHaveResults = gw.every(match =>
-        match.out || (match.scoreA !== 0 || match.scoreB !== 0)
-      );
-
-      if (!allHaveResults) {
-        gw.forEach(match => {
-          if (match.out) {
-            fixtureDiv.innerHTML += `<p><strong>${match.out}</strong> is out this week</p>`;
-          } else {
-            fixtureDiv.innerHTML += `<p>${match.teamA} vs ${match.teamB} — <strong>${match.scoreA} - ${match.scoreB}</strong></p>`;
-          }
-        });
-        break;
-      }
+      // أول جولة لسه ملعبتش هي اللي نعرضها
+      fixtureDiv.innerHTML = `<h4>Gameweek ${i}</h4>`;
+      gw.forEach(match => {
+        if (match.includes("BYE")) {
+          fixtureDiv.innerHTML += `<p><strong>${match[0] === "BYE" ? match[1] : match[0]}</strong> is out this week</p>`;
+        } else {
+          fixtureDiv.innerHTML += `<p>${match[0]} vs ${match[1]}</p>`;
+        }
+      });
+      break;
     }
+  })
+  .catch(err => {
+    console.error("Error loading fixtures:", err);
+    document.getElementById("fixturesList").innerHTML = "<p>⚠️ Unable to load fixtures data.</p>";
   });
+
 </script>
 
 <script src="animations.js"></script>
