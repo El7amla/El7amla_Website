@@ -5,8 +5,6 @@
   <title>El7amla Fantasy League</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -36,7 +34,6 @@
     }
     header img {
       height: 40px;
-      transition: transform 0.3s ease;
     }
     nav {
       display: flex;
@@ -72,9 +69,6 @@
       margin-bottom: 40px;
       font-size: 26px;
       color: #60a5fa;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
     }
 
     .cards {
@@ -83,18 +77,6 @@
       overflow-x: auto;
       gap: 20px;
       padding-bottom: 20px;
-      scroll-snap-type: x mandatory;
-    }
-
-    .cards::-webkit-scrollbar {
-      height: 6px;
-    }
-    .cards::-webkit-scrollbar-thumb {
-      background-color: #888;
-      border-radius: 10px;
-    }
-    .cards::-webkit-scrollbar-track {
-      background: transparent;
     }
 
     .card {
@@ -112,42 +94,14 @@
       text-align: center;
       justify-content: space-between;
       color: #fff;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
       flex-shrink: 0;
     }
 
     .card h3 {
-      margin: 0;
       background: rgba(0,0,0,0.6);
       padding: 5px;
       border-radius: 6px;
       font-size: 18px;
-    }
-
-    .player-box {
-      height: 40px;
-      overflow: hidden;
-      margin-top: 20px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 6px;
-      width: 100%;
-    }
-    .players {
-      animation: slide 5s infinite;
-      display: flex;
-      flex-direction: column;
-    }
-    .player {
-      height: 40px;
-      line-height: 40px;
-      font-weight: bold;
-    }
-    @keyframes slide {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-40px); }
-      100% { transform: translateY(0); }
     }
 
     .fixtures {
@@ -155,21 +109,38 @@
       backdrop-filter: blur(4px);
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
       width: 90%;
       margin: auto;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
     }
 
-    .fixtures h3 {
-      color: #60a5fa;
-      margin-bottom: 15px;
+    .fixture-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      padding: 12px 18px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      font-size: 16px;
+      transition: transform 0.2s ease;
     }
-    .fixtures p {
+
+    .fixture-card:hover {
+      transform: scale(1.03);
+    }
+
+    .out-card {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.6);
+      text-align: center;
+      color: #fca5a5;
       font-weight: bold;
-      margin: 5px 0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .footer-logo {
@@ -179,22 +150,12 @@
       width: 50px;
       opacity: 0.85;
     }
-
-    .visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 18px; }
-      h2 { font-size: 20px; }
-    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
+  <h1>
     <img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League
   </h1>
   <nav>
@@ -207,16 +168,17 @@
 
 <div class="container">
   <h2>💬 Where Legends Compete</h2>
+
   <div class="cards">
-    <div class="card"><h3>Black Tech</h3><div class="player-box"><div class="players"><div class="player">Elfiky</div><div class="player">Omar</div></div></div></div>
-    <div class="card"><h3>The Pharaohs</h3><div class="player-box"><div class="players"><div class="player">Hussein</div><div class="player">Ahmed</div></div></div></div>
-    <div class="card"><h3>Thug Life</h3><div class="player-box"><div class="players"><div class="player">Tawheed</div><div class="player">Body</div></div></div></div>
-    <div class="card"><h3>Brother's</h3><div class="player-box"><div class="players"><div class="player">Nasser</div><div class="player">Mahmoud</div></div></div></div>
-    <div class="card"><h3>The Good Guys</h3><div class="player-box"><div class="players"><div class="player">Magdy</div><div class="player">Ali</div></div></div></div>
+    <div class="card"><h3>Black Tech</h3><p>Elfiky & Omar</p></div>
+    <div class="card"><h3>The Pharaohs</h3><p>Hussein & Ahmed</p></div>
+    <div class="card"><h3>Thug Life</h3><p>Tawheed & Body</p></div>
+    <div class="card"><h3>Brother's</h3><p>Nasser & Mahmoud</p></div>
+    <div class="card"><h3>The Good Guys</h3><p>Magdy & Ali</p></div>
   </div>
 
   <div class="fixtures" id="nextFixtures">
-    <h3>🔜 Next Gameweek Matches</h3>
+    <h3 style="text-align:center; color:#93c5fd;">🔜 Next Gameweek Matches</h3>
     <div id="fixturesList"></div>
   </div>
 </div>
@@ -224,47 +186,67 @@
 <img src="premier_logo.png" class="footer-logo" alt="Premier Logo">
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtt4hW2nXcdDhPtXsy3NY0oljMF1Qa0-U",
-    authDomain: "el7amla-4fd9f.firebaseapp.com",
-    projectId: "el7amla-4fd9f",
-    storageBucket: "el7amla-4fd9f.appspot.com",
-    messagingSenderId: "217269601498",
-    appId: "1:217269601498:web:327dcb513d912d54a311e3",
-    databaseURL: "https://el7amla-4fd9f-default-rtdb.firebaseio.com"
-  };
- fetch("https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json")
+  fetch("https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json")
   .then(response => response.json())
   .then(data => {
     const fixtures = data.fixtures;
     const fixtureDiv = document.getElementById("fixturesList");
     const breakWeeks = ["11", "22", "38"];
+    let nextGW = null;
 
     // نحدد الجولة القادمة اللي لسه ملعبتش
     for (let i = 1; i <= 38; i++) {
       const gw = fixtures[i];
       if (!gw || breakWeeks.includes(i.toString())) continue;
 
-      // أول جولة لسه ملعبتش هي اللي نعرضها
-      fixtureDiv.innerHTML = `<h4>Gameweek ${i}</h4>`;
-      gw.forEach(match => {
-        if (match.includes("BYE")) {
-          fixtureDiv.innerHTML += `<p><strong>${match[0] === "BYE" ? match[1] : match[0]}</strong> is out this week</p>`;
-        } else {
-          fixtureDiv.innerHTML += `<p>${match[0]} vs ${match[1]}</p>`;
-        }
-      });
-      break;
+      const allPlayed = gw.every(match => 
+        (Array.isArray(match) && match[2] !== undefined && (match[2] !== "")) || 
+        (typeof match === "string" && match.includes("BYE"))
+      );
+
+      if (!allPlayed) {
+        nextGW = { number: i, matches: gw };
+        break;
+      }
     }
+
+    if (!nextGW) {
+      fixtureDiv.innerHTML = "<p style='text-align:center;'>⚽ All gameweeks completed!</p>";
+      return;
+    }
+
+    fixtureDiv.innerHTML = `
+      <h4 style="text-align:center; margin:15px 0; color:#60a5fa;">
+        🏆 Gameweek ${nextGW.number}
+      </h4>
+    `;
+
+    nextGW.matches.forEach(match => {
+      if (Array.isArray(match)) {
+        if (match.includes("BYE")) {
+          fixtureDiv.innerHTML += `
+            <div class="out-card">
+              ${match[0] === "BYE" ? match[1] : match[0]} <br>
+              <span style="color:#9ca3af;">Out this week</span>
+            </div>
+          `;
+        } else {
+          fixtureDiv.innerHTML += `
+            <div class="fixture-card">
+              <span style="font-weight:600; color:#93c5fd;">${match[0]}</span>
+              <span style="color:#e5e7eb;">⚽</span>
+              <span style="font-weight:600; color:#93c5fd;">${match[1]}</span>
+            </div>
+          `;
+        }
+      }
+    });
   })
   .catch(err => {
     console.error("Error loading fixtures:", err);
     document.getElementById("fixturesList").innerHTML = "<p>⚠️ Unable to load fixtures data.</p>";
   });
-
 </script>
-
-<script src="animations.js"></script>
 
 </body>
 </html>
