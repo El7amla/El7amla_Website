@@ -272,19 +272,21 @@
             }
           });
 
-        teams.forEach(team => {
+       teams.forEach(team => {
   team.players.forEach(p => {
     let playerTotalPoints = 0;
 
     gameweekData.forEach((gwData, gwIndex) => {
       const gw = gwIndex + 1;
       const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gw] : [];
-      // نتاكد إن الفريق فعلاً عنده ماتش في الجولة
-      const match = fixtureRound.find(m => m[0] === team.name || m[1] === team.name);
 
-      if (match && gwData[team.name] && gwData[team.name][p.id]) {
-        const playerPts = gwData[team.name][p.id].points || 0;
-        playerTotalPoints += playerPts;
+      // نجيب الماتش اللي الفريق لعب فيه في الجولة دي فقط
+      const match = fixtureRound.find(m => m[0] === team.name || m[1] === team.name);
+      if (!match) return; // الفريق ما لعبش الجولة دي
+
+      // لو الفريق عنده بيانات في الجولة و اللاعب موجود فعلاً
+      if (gwData[team.name] && gwData[team.name][p.id]) {
+        playerTotalPoints += gwData[team.name][p.id].points || 0;
       }
     });
 
@@ -295,6 +297,7 @@
     });
   });
 });
+
 
 
           teams.sort((a, b) => b.points - a.points);
@@ -323,4 +326,5 @@
   </script>
 </body>
 </html>
+
 
