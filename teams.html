@@ -46,7 +46,6 @@
     .container { max-width: 1000px; margin: auto; padding: 60px 20px; text-align: center; }
     h2 { font-size: 26px; margin-bottom: 30px; color: #60a5fa; }
 
-    /* Input section */
     .id-input {
       margin-bottom: 40px;
     }
@@ -69,11 +68,8 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-    button:hover {
-      background-color: #1d4ed8;
-    }
+    button:hover { background-color: #1d4ed8; }
 
-    /* Team pitch */
     .pitch {
       background: url('https://upload.wikimedia.org/wikipedia/commons/6/60/Soccer_Field_Transparant.svg');
       background-size: cover;
@@ -92,10 +88,11 @@
       color: #fff;
       font-size: 14px;
       font-weight: 600;
-      width: 100px;
+      width: 120px;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
+    .player span { display: block; font-size: 12px; color: #93c5fd; }
 
     .footer-logo {
       position: fixed;
@@ -106,7 +103,7 @@
     }
 
     @media (max-width: 600px) {
-      .player { width: 80px; font-size: 12px; }
+      .player { width: 90px; font-size: 12px; }
     }
   </style>
 </head>
@@ -130,13 +127,14 @@
       <input type="number" id="teamId" placeholder="Enter your FPL ID" />
       <button onclick="loadTeam()">Show My Team</button>
     </div>
-
     <div id="teamArea"></div>
   </div>
 
   <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 
   <script>
+    const proxy = "https://cors-anywhere.herokuapp.com/";
+
     async function loadTeam() {
       const id = document.getElementById("teamId").value.trim();
       const teamDiv = document.getElementById("teamArea");
@@ -148,30 +146,36 @@
       teamDiv.innerHTML = "<p>Loading team...</p>";
 
       try {
-        // Get current Gameweek dynamically
-        const bootstrap = await fetch("https://fantasy.premierleague.com/api/bootstrap-static/").then(r => r.json());
-        const currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
+        // Get bootstrap data (players, teams, events)
+        const bootstrap = await fetch(proxy + "https://fantasy.premierleague.com/api/bootstrap-static/").then(r => r.json());
 
-        // Get team data
-        const picksData = await fetch(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentGW}/picks/`).then(r => r.json());
+        // Get last event played
+        const lastEvent = bootstrap.events.slice().reverse().find(e => e.finished)?.id || 1;
+
+        // Get team picks
+        const picksData = await fetch(proxy + `https://fantasy.premierleague.com/api/entry/${id}/event/${lastEvent}/picks/`).then(r => r.json());
+
         const elements = bootstrap.elements;
+        const teams = bootstrap.teams;
 
-        // Group players by position
         const gk = [], def = [], mid = [], fwd = [];
         picksData.picks.forEach(p => {
           const player = elements.find(e => e.id === p.element);
-          if (player.element_type === 1) gk.push(player);
-          else if (player.element_type === 2) def.push(player);
-          else if (player.element_type === 3) mid.push(player);
-          else if (player.element_type === 4) fwd.push(player);
+          if (!player) return;
+          const teamName = teams.find(t => t.id === player.team)?.name;
+          const playerInfo = `${player.web_name} (${teamName}) - ${p.points} pts`;
+          if (player.element_type === 1) gk.push(playerInfo);
+          else if (player.element_type === 2) def.push(playerInfo);
+          else if (player.element_type === 3) mid.push(playerInfo);
+          else if (player.element_type === 4) fwd.push(playerInfo);
         });
 
         teamDiv.innerHTML = `
           <div class="pitch">
-            <div class="line">${gk.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
-            <div class="line">${def.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
-            <div class="line">${mid.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
-            <div class="line">${fwd.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
+            <div class="line">${gk.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
+            <div class="line">${def.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
+            <div class="line">${mid.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
+            <div class="line">${fwd.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
           </div>
         `;
       } catch (err) {
