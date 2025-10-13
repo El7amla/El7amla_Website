@@ -6,11 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #1e1e2f, #232f4b);
@@ -36,80 +32,71 @@
       gap: 10px;
       font-family: 'Orbitron', sans-serif;
     }
-    header img {
-      height: 40px;
-      transition: transform 0.3s ease;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-    }
+    header img { height: 40px; transition: transform 0.3s ease; }
+    nav { display: flex; gap: 20px; }
     nav a {
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: bold;
-      position: relative;
+      color: #93c5fd; text-decoration: none; font-weight: bold; position: relative;
     }
     nav a::after {
-      content: "";
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      background: #60a5fa;
-      left: 0;
-      bottom: -4px;
-      transition: 0.3s ease;
+      content: ""; position: absolute; width: 0%; height: 2px; background: #60a5fa;
+      left: 0; bottom: -4px; transition: 0.3s ease;
     }
-    nav a:hover::after {
-      width: 100%;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    h2 {
-      font-size: 26px;
-      text-align: center;
+    nav a:hover::after { width: 100%; }
+
+    .container { max-width: 1000px; margin: auto; padding: 60px 20px; text-align: center; }
+    h2 { font-size: 26px; margin-bottom: 30px; color: #60a5fa; }
+
+    /* Input section */
+    .id-input {
       margin-bottom: 40px;
-      color: #60a5fa;
     }
-    .cards {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+    input[type="number"] {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      width: 200px;
+      margin-right: 10px;
     }
-    .card {
-      width: 300px;
-      height: 400px;
-      background-image: url('card_background.jpg');
-      background-size: cover;
-      background-position: center;
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2563eb;
       color: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-    .card h3 {
-      font-size: 22px;
-      margin-bottom: 20px;
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Team pitch */
+    .pitch {
+      background: url('https://upload.wikimedia.org/wikipedia/commons/6/60/Soccer_Field_Transparant.svg');
+      background-size: cover;
+      border-radius: 15px;
+      padding: 40px 20px;
+      display: grid;
+      gap: 30px;
+      justify-items: center;
+    }
+    .line { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .player {
       background: rgba(0,0,0,0.6);
-      padding: 5px 10px;
-      border-radius: 6px;
+      border: 2px solid #60a5fa;
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
-    .card p {
-      font-size: 18px;
-      margin: 5px;
-      background: rgba(0,0,0,0.4);
-      padding: 4px 10px;
-      border-radius: 4px;
-    }
+
     .footer-logo {
       position: fixed;
       bottom: 20px;
@@ -117,30 +104,15 @@
       width: 50px;
       opacity: 0.85;
     }
+
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 18px;
-      }
-      .card {
-        width: 90%;
-        height: auto;
-        padding: 20px;
-      }
-      .card h3 {
-        font-size: 20px;
-      }
-      .card p {
-        font-size: 16px;
-      }
-      h2 {
-        font-size: 22px;
-      }
+      .player { width: 80px; font-size: 12px; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 20px;">
+    <h1>
       <img src="el7amla_logo.png" alt="Logo">
       El7amla Fantasy League
     </h1>
@@ -151,37 +123,62 @@
       <a href="fixtures.html">Fixtures</a>
     </nav>
   </header>
+
   <div class="container">
-    <h2>Meet the Teams</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Black Tech</h3>
-        <p>Elfiky</p>
-        <p>Omar</p>
-      </div>
-      <div class="card">
-        <h3>The Pharaohs</h3>
-        <p>Hussein</p>
-        <p>Ahmed</p>
-      </div>
-      <div class="card">
-        <h3>Thug Life</h3>
-        <p>Tawheed</p>
-        <p>Body</p>
-      </div>
-      <div class="card">
-        <h3>Brother's</h3>
-        <p>Nasser</p>
-        <p>Mahmoud</p>
-      </div>
-      <div class="card">
-        <h3>The Good Guys</h3>
-        <p>Magdy</p>
-        <p>Ali</p>
-      </div>
+    <h2>View Your Fantasy Team</h2>
+    <div class="id-input">
+      <input type="number" id="teamId" placeholder="Enter your FPL ID" />
+      <button onclick="loadTeam()">Show My Team</button>
     </div>
+
+    <div id="teamArea"></div>
   </div>
+
   <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
+
+  <script>
+    async function loadTeam() {
+      const id = document.getElementById("teamId").value.trim();
+      const teamDiv = document.getElementById("teamArea");
+      if (!id) {
+        teamDiv.innerHTML = "<p>Please enter a valid ID.</p>";
+        return;
+      }
+
+      teamDiv.innerHTML = "<p>Loading team...</p>";
+
+      try {
+        // Get current Gameweek dynamically
+        const bootstrap = await fetch("https://fantasy.premierleague.com/api/bootstrap-static/").then(r => r.json());
+        const currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
+
+        // Get team data
+        const picksData = await fetch(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentGW}/picks/`).then(r => r.json());
+        const elements = bootstrap.elements;
+
+        // Group players by position
+        const gk = [], def = [], mid = [], fwd = [];
+        picksData.picks.forEach(p => {
+          const player = elements.find(e => e.id === p.element);
+          if (player.element_type === 1) gk.push(player);
+          else if (player.element_type === 2) def.push(player);
+          else if (player.element_type === 3) mid.push(player);
+          else if (player.element_type === 4) fwd.push(player);
+        });
+
+        teamDiv.innerHTML = `
+          <div class="pitch">
+            <div class="line">${gk.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
+            <div class="line">${def.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
+            <div class="line">${mid.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
+            <div class="line">${fwd.map(p => `<div class="player">${p.web_name}</div>`).join('')}</div>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        teamDiv.innerHTML = "<p>⚠️ Error loading team. Please check your ID or try again later.</p>";
+      }
+    }
+  </script>
 </body>
 </html>
-
