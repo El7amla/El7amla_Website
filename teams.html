@@ -173,6 +173,14 @@
   </div>
 
   <script>
+    const PROXY = "https://corsproxy.io/?";
+
+    async function fetchJSON(url) {
+      const res = await fetch(PROXY + encodeURIComponent(url));
+      if (!res.ok) throw new Error("Failed to fetch data");
+      return await res.json();
+    }
+
     async function loadTeam() {
       const id = document.getElementById("managerId").value.trim();
       const errorDiv = document.getElementById("error");
@@ -186,26 +194,33 @@
       }
 
       try {
-        // Using a stable proxy to bypass CORS
-        const proxy = "https://api.allorigins.win/raw?url=";
-        const url = proxy + encodeURIComponent(`https://fantasy.premierleague.com/api/entry/${id}/event/8/picks/`);
+        // Get bootstrap data
+        const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
+        const currentEvent = bootstrap.events.find(e => e.is_current)?.id || bootstrap.events.find(e => !e.finished)?.id || 1;
 
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("Failed to load data");
+        // Get entry picks
+        const picksData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`);
+        const picks = picksData.picks || [];
 
-        const data = await res.json();
+        if (picks.length === 0) {
+          errorDiv.textContent = "⚠️ No picks available for this team.";
+          return;
+        }
 
-        const playerIds = data.picks.map(p => p.element);
-        const bootstrap = await fetch(proxy + encodeURIComponent("https://fantasy.premierleague.com/api/bootstrap-static/"));
-        const allData = await bootstrap.json();
+        // map element id -> element
+        const elementsMap = {};
+        bootstrap.elements.forEach(e => elementsMap[e.id] = e);
 
-        const players = allData.elements.filter(p => playerIds.includes(p.id));
-
-        // Formation based on positions
-        const gk = players.filter(p => p.element_type === 1);
-        const def = players.filter(p => p.element_type === 2);
-        const mid = players.filter(p => p.element_type === 3);
-        const fwd = players.filter(p => p.element_type === 4);
+        const gk = [], def = [], mid = [], fwd = [];
+        picks.forEach(p => {
+          const el = elementsMap[p.element];
+          if (!el) return;
+          const player = { ...el, is_captain: p.is_captain };
+          if (el.element_type === 1) gk.push(player);
+          else if (el.element_type === 2) def.push(player);
+          else if (el.element_type === 3) mid.push(player);
+          else fwd.push(player);
+        });
 
         const rows = [gk, def, mid, fwd];
         rows.forEach(row => {
@@ -215,9 +230,10 @@
             const pl = document.createElement("div");
             pl.classList.add("player");
             pl.innerHTML = `
-              <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.code}.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
-              <div class="player-name">${p.web_name}</div>
-              <div class="player-team">${allData.teams[p.team - 1].name}</div>
+              <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.code}.png" 
+                   onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+              <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
+              <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
             `;
             div.appendChild(pl);
           });
