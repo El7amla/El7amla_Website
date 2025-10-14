@@ -6,157 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #0a0a1a, #1a1f3b);
-      color: #fff;
-      min-height: 100vh;
-    }
-
-    header {
-      background: #0f172a;
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    }
-
-    header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 22px;
-      color: #60a5fa;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    header img {
-      height: 40px;
-    }
-
-    nav a {
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: bold;
-      margin-left: 25px;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #fff;
-    }
-
-    .container {
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .container h2 {
-      color: #60a5fa;
-      margin-bottom: 10px;
-    }
-
-    #gwInfo {
-      color: #a5b4fc;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    input[type="text"] {
-      padding: 10px 15px;
-      border-radius: 6px;
-      border: none;
-      width: 200px;
-      outline: none;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      background-color: #2563eb;
-      color: white;
-      font-size: 15px;
-      margin-left: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #1d4ed8;
-    }
-
-    #pitch {
-      margin-top: 20px;
-      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-      border-radius: 16px;
-      padding: 40px 20px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
-      display: grid;
-      grid-template-rows: repeat(4, auto);
-      gap: 20px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .player {
-      background: #1e40af;
-      border-radius: 10px;
-      padding: 10px;
-      width: 100px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      transition: 0.3s;
-    }
-
-    .player:hover {
-      background: #3b82f6;
-      transform: translateY(-3px);
-    }
-
-    .player img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .player-name {
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 6px;
-    }
-
-    .player-team {
-      font-size: 11px;
-      color: #dbeafe;
-    }
-
-    #error {
-      color: #f87171;
-      margin-top: 15px;
-    }
-
-    @media (max-width: 600px) {
-      .player {
-        width: 80px;
-      }
-      .player img {
-        width: 50px;
-        height: 50px;
-      }
-    }
+    body { font-family: 'Inter', sans-serif; margin: 0; background: linear-gradient(135deg, #0a0a1a, #1a1f3b); color: #fff; min-height: 100vh; }
+    header { background: #0f172a; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
+    header h1 { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #60a5fa; display: flex; align-items: center; gap: 10px; }
+    header img { height: 40px; }
+    nav a { color: #93c5fd; text-decoration: none; font-weight: bold; margin-left: 25px; transition: 0.3s; }
+    nav a:hover { color: #fff; }
+    .container { text-align: center; padding: 40px 20px; }
+    .container h2 { color: #60a5fa; margin-bottom: 10px; }
+    #gwInfo { color: #a5b4fc; margin-bottom: 20px; font-weight: 600; }
+    input[type="text"] { padding: 10px 15px; border-radius: 6px; border: none; width: 200px; outline: none; font-size: 16px; }
+    button { padding: 10px 20px; border: none; border-radius: 6px; background-color: #2563eb; color: white; font-size: 15px; margin-left: 10px; cursor: pointer; transition: 0.3s; }
+    button:hover { background-color: #1d4ed8; }
+    #pitch { margin-top: 20px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); border-radius: 16px; padding: 40px 20px; box-shadow: 0 0 30px rgba(0,0,0,0.6); display: grid; grid-template-rows: auto; gap: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
+    .row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .player { background: #1e40af; border-radius: 10px; padding: 10px; width: 100px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
+    .player:hover { background: #3b82f6; transform: translateY(-3px); }
+    .player img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+    .player-name { font-size: 13px; font-weight: 600; margin-top: 6px; }
+    .player-team { font-size: 11px; color: #dbeafe; }
+    .player-points { font-size: 12px; margin-top: 4px; color: #facc15; font-weight: 600; }
+    #error { color: #f87171; margin-top: 15px; }
+    .bench-label { color: #93c5fd; margin-bottom: 10px; font-weight: 600; text-decoration: underline; }
+    @media (max-width: 600px) { .player { width: 80px; } .player img { width: 50px; height: 50px; } }
   </style>
 </head>
 <body>
@@ -197,60 +69,61 @@
       errorDiv.textContent = "";
       gwInfo.textContent = "";
 
-      if (!id) {
-        errorDiv.textContent = "⚠️ Please enter your ID.";
-        return;
-      }
+      if (!id) { errorDiv.textContent = "⚠️ Please enter your ID."; return; }
 
       try {
-        // Get bootstrap data
         const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
-        const currentEvent = bootstrap.events.find(e => e.is_current)?.id || bootstrap.events.find(e => !e.finished)?.id || 1;
-
-        // Show current GW info
+        const currentEvent = bootstrap.events.find(e=>e.is_current)?.id || bootstrap.events.find(e=>!e.finished)?.id || 1;
         gwInfo.textContent = `Team Formation — GW ${currentEvent}`;
 
-        // Get entry picks
+        const entryData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/`);
+        gwInfo.textContent = `${entryData.player_first_name} ${entryData.player_last_name} — GW ${currentEvent}`;
+
         const picksData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`);
         const picks = picksData.picks || [];
 
-        if (picks.length === 0) {
-          errorDiv.textContent = "⚠️ No picks available for this team.";
-          return;
-        }
+        if (!picks.length) { errorDiv.textContent = "⚠️ No picks available for this team."; return; }
 
-        // map element id -> element
-        const elementsMap = {};
-        bootstrap.elements.forEach(e => elementsMap[e.id] = e);
+        const elementsMap = {}; bootstrap.elements.forEach(e=>elementsMap[e.id]=e);
 
-        const gk = [], def = [], mid = [], fwd = [];
-        picks.forEach(p => {
+        // Separate starters (position 1-11) and bench
+        const starters = [], bench = [];
+        picks.forEach(p=>{
           const el = elementsMap[p.element];
           if (!el) return;
-          const player = { ...el, is_captain: p.is_captain };
-          if (el.element_type === 1) gk.push(player);
-          else if (el.element_type === 2) def.push(player);
-          else if (el.element_type === 3) mid.push(player);
-          else fwd.push(player);
+          const player = { ...el, is_captain: p.is_captain, multiplier: p.multiplier };
+          if (p.position <= 11) starters.push(player);
+          else bench.push(player);
         });
 
-        const rows = [gk, def, mid, fwd];
-        rows.forEach(row => {
+        function renderRow(players){
           const div = document.createElement("div");
           div.classList.add("row");
-          row.forEach(p => {
+          players.forEach(p=>{
+            const points = (p.stats?.total_points || 0) * (p.multiplier || 1);
             const pl = document.createElement("div");
             pl.classList.add("player");
             pl.innerHTML = `
               <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.code}.png" 
                    onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
-              <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
-              <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
+              <div class="player-name">${p.web_name}${p.is_captain?" (C)":""}</div>
+              <div class="player-team">${bootstrap.teams[p.team-1]?.name || ''}</div>
+              <div class="player-points">${points} pts</div>
             `;
             div.appendChild(pl);
           });
           pitch.appendChild(div);
-        });
+        }
+
+        renderRow(starters);
+
+        if (bench.length) {
+          const benchLabel = document.createElement("div");
+          benchLabel.classList.add("bench-label");
+          benchLabel.textContent = "Bench";
+          pitch.appendChild(benchLabel);
+          renderRow(bench);
+        }
 
       } catch (err) {
         console.error(err);
