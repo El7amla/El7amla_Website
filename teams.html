@@ -18,17 +18,43 @@
     input[type="text"] { padding: 10px 15px; border-radius: 6px; border: none; width: 200px; outline: none; font-size: 16px; }
     button { padding: 10px 20px; border: none; border-radius: 6px; background-color: #2563eb; color: white; font-size: 15px; margin-left: 10px; cursor: pointer; transition: 0.3s; }
     button:hover { background-color: #1d4ed8; }
-    #pitch { margin-top: 20px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); border-radius: 16px; padding: 40px 20px; box-shadow: 0 0 30px rgba(0,0,0,0.6); display: grid; grid-template-rows: auto; gap: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
-    .row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    .player { background: #1e40af; border-radius: 10px; padding: 10px; width: 100px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.3s; }
-    .player:hover { background: #3b82f6; transform: translateY(-3px); }
-    .player img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-    .player-name { font-size: 13px; font-weight: 600; margin-top: 6px; }
-    .player-team { font-size: 11px; color: #dbeafe; }
-    .player-points { font-size: 12px; margin-top: 4px; color: #facc15; font-weight: 600; }
-    #error { color: #f87171; margin-top: 15px; }
-    .bench-label { color: #93c5fd; margin-bottom: 10px; font-weight: 600; text-decoration: underline; }
-    @media (max-width: 600px) { .player { width: 80px; } .player img { width: 50px; height: 50px; } }
+    
+    #pitch { 
+      margin-top: 20px; 
+      background: linear-gradient(180deg,#1b5e20,#2c7d32); 
+      border-radius: 16px; 
+      padding: 20px; 
+      box-shadow: 0 0 30px rgba(0,0,0,0.6); 
+      position: relative; 
+      width: 100%; max-width: 900px; 
+      height: 520px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+
+    .player-card {
+      position: absolute; 
+      transform: translate(-50%, -50%);
+      background: linear-gradient(180deg, rgba(15,23,42,0.9), rgba(2,6,23,0.6));
+      border: 1px solid rgba(96,165,250,0.18);
+      padding: 8px 10px; 
+      border-radius: 10px; 
+      min-width: 100px; 
+      text-align: center;
+      font-weight: 700; 
+      color: #fff; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    }
+    .player-name { font-size: 14px; display: block; }
+    .player-team { font-size: 12px; color: #cfe9ff; margin-top: 2px; }
+    .player-points { font-size: 12px; color: #facc15; margin-top: 4px; }
+
+    .bench-container { margin-top: 550px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .bench-label { width: 100%; text-align:center; margin-bottom:8px; color:#93c5fd; font-weight:600; text-decoration:underline; }
+
+    @media (max-width: 600px) {
+      .player-card { min-width: 80px; padding: 6px; font-size:12px; }
+    }
   </style>
 </head>
 <body>
@@ -49,10 +75,17 @@
     <button onclick="loadTeam()">Show My Team</button>
     <div id="error"></div>
     <div id="pitch"></div>
+    <div class="bench-container" id="bench"></div>
   </div>
 
   <script>
     const PROXY = "https://corsproxy.io/?";
+    const POS_ZONES = {
+      1: [{top:85,left:50}], // GK
+      2: [{top:65,left:15},{top:65,left:35},{top:65,left:65},{top:65,left:85}], // DEF
+      3: [{top:45,left:10},{top:45,left:30},{top:45,left:50},{top:45,left:70},{top:45,left:90}], // MID
+      4: [{top:25,left:30},{top:25,left:50},{top:25,left:70}] // FWD
+    };
 
     async function fetchJSON(url) {
       const res = await fetch(PROXY + encodeURIComponent(url));
@@ -64,8 +97,10 @@
       const id = document.getElementById("managerId").value.trim();
       const errorDiv = document.getElementById("error");
       const pitch = document.getElementById("pitch");
+      const benchDiv = document.getElementById("bench");
       const gwInfo = document.getElementById("gwInfo");
       pitch.innerHTML = "";
+      benchDiv.innerHTML = "";
       errorDiv.textContent = "";
       gwInfo.textContent = "";
 
@@ -74,7 +109,7 @@
       try {
         const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
         const currentEvent = bootstrap.events.find(e=>e.is_current)?.id || bootstrap.events.find(e=>!e.finished)?.id || 1;
-        gwInfo.textContent = `Team Formation — GW ${currentEvent}`;
+        gwInfo.textContent = `Loading Team for GW ${currentEvent}...`;
 
         const entryData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/`);
         gwInfo.textContent = `${entryData.player_first_name} ${entryData.player_last_name} — GW ${currentEvent}`;
@@ -86,7 +121,6 @@
 
         const elementsMap = {}; bootstrap.elements.forEach(e=>elementsMap[e.id]=e);
 
-        // Separate starters (position 1-11) and bench
         const starters = [], bench = [];
         picks.forEach(p=>{
           const el = elementsMap[p.element];
@@ -96,36 +130,60 @@
           else bench.push(player);
         });
 
-        function renderRow(players){
-          const div = document.createElement("div");
-          div.classList.add("row");
-          players.forEach(p=>{
-            const points = (p.stats?.total_points || 0) * (p.multiplier || 1);
-            const pl = document.createElement("div");
-            pl.classList.add("player");
-            pl.innerHTML = `
-              <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.code}.png" 
-                   onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
-              <div class="player-name">${p.web_name}${p.is_captain?" (C)":""}</div>
-              <div class="player-team">${bootstrap.teams[p.team-1]?.name || ''}</div>
-              <div class="player-points">${points} pts</div>
-            `;
-            div.appendChild(pl);
+        function renderOnPitch(players) {
+          const grouped = {1:[],2:[],3:[],4:[]};
+          players.forEach(p=>grouped[p.element_type].push(p));
+
+          Object.keys(grouped).forEach(typeKey=>{
+            const type = Number(typeKey);
+            const zone = POS_ZONES[type] || POS_ZONES[4];
+            const pls = grouped[type];
+            pls.forEach((pl, idx)=>{
+              let slot;
+              if (pls.length <= zone.length) slot = zone[idx];
+              else { // spread horizontally
+                const first = zone[0]; const last = zone[zone.length-1];
+                const leftNum = Number(first.left) + (Number(last.left)-Number(first.left))*(idx/(pls.length-1));
+                slot = {top:first.top,left:leftNum};
+              }
+              const div = document.createElement("div");
+              div.className = "player-card";
+              const points = (pl.stats?.total_points || 0) * (pl.multiplier || 1);
+              div.style.top = slot.top + "%";
+              div.style.left = slot.left + "%";
+              div.innerHTML = `
+                <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${pl.code}.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+                <div class="player-name">${pl.web_name}${pl.is_captain?" (C)":""}</div>
+                <div class="player-team">${bootstrap.teams[pl.team-1]?.name||''}</div>
+                <div class="player-points">${points} pts</div>
+              `;
+              pitch.appendChild(div);
+            });
           });
-          pitch.appendChild(div);
         }
 
-        renderRow(starters);
+        renderOnPitch(starters);
 
         if (bench.length) {
           const benchLabel = document.createElement("div");
-          benchLabel.classList.add("bench-label");
+          benchLabel.className = "bench-label";
           benchLabel.textContent = "Bench";
-          pitch.appendChild(benchLabel);
-          renderRow(bench);
+          benchDiv.appendChild(benchLabel);
+          bench.forEach(p=>{
+            const div = document.createElement("div");
+            div.className = "player-card";
+            const points = (p.stats?.total_points || 0)*(p.multiplier||1);
+            div.innerHTML = `
+              <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.code}.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+              <div class="player-name">${p.web_name}${p.is_captain?" (C)":""}</div>
+              <div class="player-team">${bootstrap.teams[p.team-1]?.name||''}</div>
+              <div class="player-points">${points} pts</div>
+            `;
+            benchDiv.appendChild(div);
+          });
         }
 
-      } catch (err) {
+      } catch(err) {
         console.error(err);
         errorDiv.textContent = "⚠️ Error loading team. Please check your ID or try again later.";
       }
