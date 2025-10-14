@@ -1,186 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Teams - El7amla Fantasy League</title>
+  <meta charset="UTF-8" />
+  <title>View Team - El7amla Fantasy League</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #232f4b);
+      background-color: #0b132b;
       color: white;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    header {
-      background-color: #111827;
-      padding: 20px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header h1 {
-      font-size: 22px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
       font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
-    header img { height: 40px; transition: transform 0.3s ease; }
-    nav { display: flex; gap: 20px; }
-    nav a {
-      color: #93c5fd; text-decoration: none; font-weight: bold; position: relative;
+    .navbar {
+      background-color: #1c2541;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    nav a::after {
-      content: ""; position: absolute; width: 0%; height: 2px; background: #60a5fa;
-      left: 0; bottom: -4px; transition: 0.3s ease;
-    }
-    nav a:hover::after { width: 100%; }
-
-    .container { max-width: 1000px; margin: auto; padding: 60px 20px; text-align: center; }
-    h2 { font-size: 26px; margin-bottom: 30px; color: #60a5fa; }
-
-    .id-input {
-      margin-bottom: 40px;
-    }
-    input[type="number"] {
-      padding: 10px 15px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
       font-size: 16px;
+    }
+    .navbar a:hover {
+      color: #00aaff;
+    }
+    .container {
+      margin-top: 80px;
+    }
+    input {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
       width: 200px;
-      margin-right: 10px;
     }
     button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #2563eb;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover { background-color: #1d4ed8; }
-
-    .pitch {
-      background: url('https://upload.wikimedia.org/wikipedia/commons/6/60/Soccer_Field_Transparant.svg');
-      background-size: cover;
-      border-radius: 15px;
-      padding: 40px 20px;
-      display: grid;
-      gap: 30px;
-      justify-items: center;
-    }
-    .line { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    .player {
-      background: rgba(0,0,0,0.6);
-      border: 2px solid #60a5fa;
-      border-radius: 10px;
       padding: 8px 12px;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      width: 120px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      margin-left: 10px;
     }
-    .player span { display: block; font-size: 12px; color: #93c5fd; }
-
-    .footer-logo {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      opacity: 0.85;
+    button:hover {
+      background-color: #0056b3;
     }
-
-    @media (max-width: 600px) {
-      .player { width: 90px; font-size: 12px; }
+    .error {
+      color: #ffcc00;
+      margin-top: 20px;
+    }
+    .team-container {
+      margin-top: 40px;
+      text-align: left;
+      display: inline-block;
+      background: #1c2541;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px #00aaff;
+    }
+    .player {
+      margin: 5px 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>
-      <img src="el7amla_logo.png" alt="Logo">
-      El7amla Fantasy League
-    </h1>
-    <nav>
+  <div class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="El7amla Fantasy League" style="height:40px; vertical-align:middle;">
+      <span style="font-size:18px; font-weight:bold;">El7amla Fantasy League</span>
+    </div>
+    <div>
       <a href="index.html">Home</a>
       <a href="teams.html">Teams</a>
       <a href="standings.html">Standings</a>
       <a href="fixtures.html">Fixtures</a>
-    </nav>
-  </header>
+    </div>
+  </div>
 
   <div class="container">
     <h2>View Your Fantasy Team</h2>
-    <div class="id-input">
-      <input type="number" id="teamId" placeholder="Enter your FPL ID" />
-      <button onclick="loadTeam()">Show My Team</button>
-    </div>
-    <div id="teamArea"></div>
+    <input type="text" id="teamId" placeholder="Enter your FPL ID" />
+    <button onclick="loadTeam()">Show My Team</button>
+    <div id="message" class="error"></div>
+    <div id="teamContainer" class="team-container"></div>
   </div>
 
-  <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
-
   <script>
-    const proxy = "https://cors-anywhere.herokuapp.com/";
-
     async function loadTeam() {
-      const id = document.getElementById("teamId").value.trim();
-      const teamDiv = document.getElementById("teamArea");
-      if (!id) {
-        teamDiv.innerHTML = "<p>Please enter a valid ID.</p>";
+      const teamId = document.getElementById("teamId").value.trim();
+      const message = document.getElementById("message");
+      const container = document.getElementById("teamContainer");
+      container.innerHTML = "";
+      message.textContent = "";
+
+      if (!teamId) {
+        message.textContent = "⚠️ Please enter your FPL Team ID.";
         return;
       }
 
-      teamDiv.innerHTML = "<p>Loading team...</p>";
-
       try {
-        // Get bootstrap data (players, teams, events)
-        const bootstrap = await fetch(proxy + "https://fantasy.premierleague.com/api/bootstrap-static/").then(r => r.json());
+        message.textContent = "Loading team data...";
 
-        // Get last event played
-        const lastEvent = bootstrap.events.slice().reverse().find(e => e.finished)?.id || 1;
+        // ✅ استخدم AllOrigins API بدلاً من cors-anywhere
+        const baseUrl = "https://api.allorigins.win/raw?url=";
 
-        // Get team picks
-        const picksData = await fetch(proxy + `https://fantasy.premierleague.com/api/entry/${id}/event/${lastEvent}/picks/`).then(r => r.json());
+        const teamRes = await fetch(`${baseUrl}https://fantasy.premierleague.com/api/entry/${teamId}/`);
+        if (!teamRes.ok) throw new Error("Team not found");
+        const teamData = await teamRes.json();
 
-        const elements = bootstrap.elements;
-        const teams = bootstrap.teams;
+        const picksRes = await fetch(`${baseUrl}https://fantasy.premierleague.com/api/entry/${teamId}/event/${teamData.current_event}/picks/`);
+        if (!picksRes.ok) throw new Error("Error loading picks");
+        const picksData = await picksRes.json();
 
-        const gk = [], def = [], mid = [], fwd = [];
-        picksData.picks.forEach(p => {
-          const player = elements.find(e => e.id === p.element);
-          if (!player) return;
-          const teamName = teams.find(t => t.id === player.team)?.name;
-          const playerInfo = `${player.web_name} (${teamName}) - ${p.points} pts`;
-          if (player.element_type === 1) gk.push(playerInfo);
-          else if (player.element_type === 2) def.push(playerInfo);
-          else if (player.element_type === 3) mid.push(playerInfo);
-          else if (player.element_type === 4) fwd.push(playerInfo);
+        const staticRes = await fetch(`${baseUrl}https://fantasy.premierleague.com/api/bootstrap-static/`);
+        const staticData = await staticRes.json();
+
+        message.textContent = "";
+
+        container.innerHTML = `<h3>${teamData.name} (${teamData.player_first_name} ${teamData.player_last_name})</h3>`;
+
+        const players = picksData.picks.map(p => {
+          const playerInfo = staticData.elements.find(e => e.id === p.element);
+          const teamInfo = staticData.teams.find(t => t.id === playerInfo.team);
+          return `${playerInfo.web_name} - ${teamInfo.name} (${playerInfo.element_type === 1 ? "GK" : playerInfo.element_type === 2 ? "DEF" : playerInfo.element_type === 3 ? "MID" : "FWD"})`;
         });
 
-        teamDiv.innerHTML = `
-          <div class="pitch">
-            <div class="line">${gk.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
-            <div class="line">${def.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
-            <div class="line">${mid.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
-            <div class="line">${fwd.map(p => `<div class="player"><span>${p}</span></div>`).join('')}</div>
-          </div>
-        `;
-      } catch (err) {
-        console.error(err);
-        teamDiv.innerHTML = "<p>⚠️ Error loading team. Please check your ID or try again later.</p>";
+        players.forEach(p => {
+          const div = document.createElement("div");
+          div.classList.add("player");
+          div.textContent = p;
+          container.appendChild(div);
+        });
+
+      } catch (error) {
+        console.error(error);
+        message.textContent = "⚠️ Error loading team. Please check your ID or try again later.";
       }
     }
   </script>
