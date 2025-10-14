@@ -4,41 +4,41 @@
   <meta charset="UTF-8" />
   <title>El7amla Fantasy League</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #232f4b);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a1a, #1a1f3b);
       color: white;
       min-height: 100vh;
       overflow-x: hidden;
     }
+
     header {
-      background-color: #111827;
-      padding: 20px 30px;
+      background-color: #0f172a;
+      padding: 18px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
       position: sticky;
       top: 0;
       z-index: 10;
     }
+
     header h1 {
+      font-family: 'Orbitron', sans-serif;
       font-size: 22px;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Orbitron', sans-serif;
+      color: #60a5fa;
     }
-    header img {
-      height: 40px;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-    }
+
+    header img { height: 40px; }
+
+    nav { display: flex; gap: 20px; }
     nav a {
       color: #93c5fd;
       text-decoration: none;
@@ -55,9 +55,7 @@
       bottom: -4px;
       transition: 0.3s ease;
     }
-    nav a:hover::after {
-      width: 100%;
-    }
+    nav a:hover::after { width: 100%; }
 
     .container {
       padding: 60px 20px;
@@ -67,55 +65,68 @@
     h2 {
       text-align: center;
       margin-bottom: 40px;
-      font-size: 26px;
+      font-size: 28px;
       color: #60a5fa;
     }
 
     #countdown {
       text-align: center;
       font-size: 22px;
-      color: #fbbf24;
-      margin-bottom: 20px;
+      color: #facc15;
+      margin-bottom: 30px;
       font-weight: bold;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
     }
 
     .fixtures {
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(4px);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      width: 90%;
+      background: linear-gradient(180deg, rgba(30,41,59,0.9), rgba(15,23,42,0.8));
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+      width: 95%;
       margin: auto;
+      backdrop-filter: blur(5px);
+    }
+
+    .fixtures h3 {
+      text-align: center;
+      color: #60a5fa;
+      margin-bottom: 25px;
+      font-size: 22px;
+      font-weight: 600;
     }
 
     .fixture-card {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(255,255,255,0.08);
-      padding: 12px 18px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      font-size: 16px;
-      transition: transform 0.2s ease;
+      background: linear-gradient(90deg, rgba(37,99,235,0.2), rgba(96,165,250,0.2));
+      padding: 18px 25px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+      transition: transform 0.2s, background 0.3s;
+      font-size: 18px;
+      font-weight: 600;
+      color: #e0f2fe;
     }
 
     .fixture-card:hover {
       transform: scale(1.03);
+      background: linear-gradient(90deg, rgba(37,99,235,0.3), rgba(96,165,250,0.3));
     }
 
     .out-card {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid rgba(239, 68, 68, 0.6);
+      background: rgba(239,68,68,0.25);
+      border: 1px solid rgba(239,68,68,0.6);
       text-align: center;
       color: #fca5a5;
       font-weight: bold;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-size: 18px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
     }
 
     .footer-logo {
@@ -124,6 +135,10 @@
       right: 20px;
       width: 50px;
       opacity: 0.85;
+    }
+
+    @media (max-width: 700px) {
+      .fixture-card, .out-card { font-size: 16px; padding: 14px 18px; }
     }
   </style>
 </head>
@@ -143,11 +158,10 @@
 
 <div class="container">
   <h2>💬 Where Legends Compete</h2>
-
   <div id="countdown">Loading next match countdown...</div>
 
   <div class="fixtures" id="nextFixtures">
-    <h3 style="text-align:center; color:#93c5fd;">🔜 Next Gameweek Matches</h3>
+    <h3>🔜 Next Gameweek Matches</h3>
     <div id="fixturesList"></div>
   </div>
 </div>
@@ -155,14 +169,12 @@
 <img src="premier_logo.png" class="footer-logo" alt="Premier Logo">
 
 <script>
-  // 🔹 جلب بيانات fixtures من S3
   fetch("https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/fixtures.json")
-  .then(response => response.json())
+  .then(res => res.json())
   .then(data => {
     const fixtures = data.fixtures;
     const fixtureDiv = document.getElementById("fixturesList");
-
-    const nextGWNumber = 8; // الجولة الجاية
+    const nextGWNumber = 8;
     const nextGW = fixtures[nextGWNumber];
 
     if (!nextGW) {
@@ -171,7 +183,7 @@
     }
 
     fixtureDiv.innerHTML = `
-      <h4 style="text-align:center; margin:15px 0; color:#60a5fa;">
+      <h4 style="text-align:center; margin:20px 0; color:#60a5fa;">
         🏆 Gameweek ${nextGWNumber} - Starts Sat 18 Oct, 14:30
       </h4>
     `;
@@ -181,16 +193,16 @@
         if (match.includes("BYE")) {
           fixtureDiv.innerHTML += `
             <div class="out-card">
-              ${match[0] === "BYE" ? match[1] : match[0]} <br>
-              <span style="color:#9ca3af;">Out this week</span>
+              ${match[0] === "BYE" ? match[1] : match[0]}<br>
+              <span style="color:#f87171;">Out this week</span>
             </div>
           `;
         } else {
           fixtureDiv.innerHTML += `
             <div class="fixture-card">
-              <span style="font-weight:600; color:#93c5fd;">${match[0]}</span>
-              <span style="color:#e5e7eb;">⚽</span>
-              <span style="font-weight:600; color:#93c5fd;">${match[1]}</span>
+              <span>${match[0]}</span>
+              <span>⚽</span>
+              <span>${match[1]}</span>
             </div>
           `;
         }
@@ -202,7 +214,7 @@
     document.getElementById("fixturesList").innerHTML = "<p>⚠️ Unable to load fixtures data.</p>";
   });
 
-  // 🔹 عداد الجولة الجاية
+  // Countdown
   const countDownDate = new Date("Oct 18, 2025 14:30:00").getTime();
   const countdownElement = document.getElementById("countdown");
 
@@ -216,10 +228,10 @@
       return;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((distance % (1000*60)) / 1000);
 
     countdownElement.innerHTML = `🕒 Next Gameweek Starts In: ${days}d ${hours}h ${minutes}m ${seconds}s`;
   }, 1000);
