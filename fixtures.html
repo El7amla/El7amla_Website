@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>Fixtures - El7amla Fantasy League</title>
-  <link rel="icon" href="premier_logo.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
@@ -80,7 +79,7 @@
       min-width: 40px;
     }
     .tab:hover { background-color: #a3cef1; }
-    .tab.active { background-color: #004e92; color: white; box-shadow: 0 4px 8px rgba(0,78,146,0.7); }
+    .tab.active { background-color: #004e92; color: white; box-shadow: 0 4px 8px rgba(0, 78, 146, 0.7); }
 
     table {
       width: 100%;
@@ -158,6 +157,11 @@
       const noFixturesMessage = document.getElementById('no-fixtures');
       const breakMessage = document.getElementById('break-message');
 
+      if (!tabsContainer || !fixturesTable || !fixturesBody || !noFixturesMessage || !breakMessage) {
+        console.error("عنصر أو أكثر غير موجود في الصفحة");
+        return;
+      }
+
       let fixturesData = [];
 
       function renderTabs(data) {
@@ -170,6 +174,7 @@
           tab.dataset.gameweek = gw;
           tabsContainer.appendChild(tab);
         });
+
         const firstTab = tabsContainer.querySelector('.tab');
         if (firstTab) {
           firstTab.classList.add('active');
@@ -221,11 +226,47 @@
       fetch(fixturesUrl)
         .then(res => res.json())
         .then(data => {
+          console.log("البيانات المجلوبة:", data);
           fixturesData = data.fixtures ? Object.keys(data.fixtures).map(round => ({
             round,
             matches: data.fixtures[round].map(([home, away]) => ({ home, away, scoreA: 0, scoreB: 0 }))
           })) : data;
-          renderTabs(fixturesData);
+          if (!fixturesData || fixturesData.length === 0) {
+            console.error("لا توجد بيانات مباريات");
+            noFixturesMessage.style.display = 'block';
+            return;
+          }
+
+          // Fetch individual gameweek result files from gw1 to gw38
+          const fetchPromises = [];
+          for (let gw = 1; gw <= 38; gw++) {
+            fetchPromises.push(
+              fetch(`${baseUrl}gw${gw}.json`)
+                .then(res => res.json())
+                .then(results => {
+                  const gwData = fixturesData.find(f => f.round == gw);
+                  if (gwData && results) {
+                    gwData.matches.forEach((match, index) => {
+                      const homeTeam = match.home;
+                      const awayTeam = match.away;
+                      if (results[homeTeam] && results[awayTeam]) {
+                        match.scoreA = Object.values(results[homeTeam]).reduce((sum, player) => sum + player.points, 0);
+                        match.scoreB = Object.values(results[awayTeam]).reduce((sum, player) => sum + player.points, 0);
+                      }
+                    });
+                  }
+                })
+                .catch(err => console.error(`خطأ في جلب بيانات gw${gw}:`, err))
+            );
+          }
+
+          // Wait for all gameweek data to be fetched
+          Promise.all(fetchPromises)
+            .then(() => { renderTabs(fixturesData); })
+            .catch(err => {
+              console.error("خطأ في جلب بيانات الجولات:", err);
+              noFixturesMessage.style.display = 'block';
+            });
         })
         .catch(err => {
           console.error("خطأ في جلب البيانات:", err);
