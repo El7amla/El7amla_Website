@@ -55,7 +55,13 @@
 
     .container h2 {
       color: #60a5fa;
+      margin-bottom: 10px;
+    }
+
+    #gwInfo {
+      color: #a5b4fc;
       margin-bottom: 20px;
+      font-weight: 600;
     }
 
     input[type="text"] {
@@ -84,7 +90,7 @@
     }
 
     #pitch {
-      margin-top: 40px;
+      margin-top: 20px;
       background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
       border-radius: 16px;
       padding: 40px 20px;
@@ -166,6 +172,7 @@
 
   <div class="container">
     <h2>View Your Fantasy Team</h2>
+    <div id="gwInfo"></div>
     <input type="text" id="managerId" placeholder="Enter Your FPL ID">
     <button onclick="loadTeam()">Show My Team</button>
     <div id="error"></div>
@@ -185,8 +192,10 @@
       const id = document.getElementById("managerId").value.trim();
       const errorDiv = document.getElementById("error");
       const pitch = document.getElementById("pitch");
+      const gwInfo = document.getElementById("gwInfo");
       pitch.innerHTML = "";
       errorDiv.textContent = "";
+      gwInfo.textContent = "";
 
       if (!id) {
         errorDiv.textContent = "⚠️ Please enter your ID.";
@@ -197,6 +206,9 @@
         // Get bootstrap data
         const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
         const currentEvent = bootstrap.events.find(e => e.is_current)?.id || bootstrap.events.find(e => !e.finished)?.id || 1;
+
+        // Show current GW info
+        gwInfo.textContent = `Team Formation — GW ${currentEvent}`;
 
         // Get entry picks
         const picksData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`);
