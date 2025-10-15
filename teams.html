@@ -1,138 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fantasy Team Viewer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>My Fantasy Team - El7amla Fantasy League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
     body {
-      background: radial-gradient(circle at top, #0b1221, #0d0f1a);
-      color: #fff;
-      font-family: "Orbitron", sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      padding: 0;
+      background: linear-gradient(135deg, #0a0a1a, #1a1f3b);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     header {
-      background: #0a1628;
-      padding: 15px 40px;
+      background: #0f172a;
+      padding: 18px 40px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      width: 100%;
     }
 
     header h1 {
-      color: #58a6ff;
-      margin: 0;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 20px;
-    }
-
-    main {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      color: #60a5fa;
       display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 40px;
-      flex-wrap: wrap;
-    }
-
-    .team-container {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      flex: 1;
-      min-width: 300px;
-      max-width: 600px;
-    }
-
-    .player-card {
-      background: linear-gradient(145deg, #112240, #0e1a32);
-      border-radius: 10px;
-      padding: 10px;
-      margin: 5px;
-      text-align: center;
-      color: #fff;
-      width: 100px;
-    }
-
-    .formation {
-      display: grid;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .formation-row {
-      display: flex;
-      justify-content: center;
+      align-items: center;
       gap: 10px;
     }
 
-    .bench {
-      margin-top: 30px;
+    header img {
+      height: 40px;
     }
 
-    .team-info {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 25px;
-      width: 280px;
-      height: fit-content;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 25px;
+      transition: 0.3s;
     }
 
-    .team-info h3 {
-      color: #58a6ff;
-      margin-top: 0;
-      border-bottom: 1px solid #58a6ff;
-      padding-bottom: 10px;
+    nav a:hover {
+      color: #fff;
     }
 
-    .info-item {
-      margin: 12px 0;
-      font-size: 16px;
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      width: 100%;
+      max-width: 1300px;
+      padding: 40px 20px;
     }
 
-    .team-input {
+    .main-content {
+      flex: 1;
       text-align: center;
-      margin-top: 30px;
     }
 
-    .team-input input {
-      padding: 10px;
-      border-radius: 10px;
+    .main-content h2 {
+      color: #60a5fa;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px 15px;
+      border-radius: 6px;
       border: none;
-      width: 180px;
-      text-align: center;
+      width: 200px;
+      outline: none;
       font-size: 16px;
     }
 
-    .team-input button {
+    button {
       padding: 10px 20px;
-      border-radius: 10px;
       border: none;
-      background: #58a6ff;
+      border-radius: 6px;
+      background-color: #2563eb;
       color: white;
-      font-size: 16px;
-      cursor: pointer;
+      font-size: 15px;
       margin-left: 10px;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .team-input button:hover {
-      background: #3c8ce7;
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    #pitch {
+      margin-top: 40px;
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      border-radius: 16px;
+      padding: 40px 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+      display: grid;
+      grid-template-rows: repeat(4, auto);
+      gap: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .player {
+      background: #1e40af;
+      border-radius: 10px;
+      padding: 10px;
+      width: 100px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .player:hover {
+      background: #3b82f6;
+      transform: translateY(-3px);
+    }
+
+    .player img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .player-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .player-team {
+      font-size: 11px;
+      color: #dbeafe;
+    }
+
+    .player-points {
+      font-size: 13px;
+      margin-top: 4px;
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    #bench {
+      margin-top: 40px;
+    }
+
+    #bench h3 {
+      color: #60a5fa;
+      margin-bottom: 10px;
+    }
+
+    #error {
+      color: #f87171;
+      margin-top: 15px;
+    }
+
+    /* Sidebar for player info */
+    #player-info {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100%;
+      background: #0f172a;
+      box-shadow: -4px 0 15px rgba(0,0,0,0.7);
+      padding: 30px 20px;
+      transition: 0.4s ease;
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    #player-info.active {
+      right: 0;
+    }
+
+    #player-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #60a5fa;
+      margin-bottom: 15px;
+    }
+
+    .info-line {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+
+    .close-btn {
+      background: none;
+      color: #f87171;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+    }
+
+    .player-photo {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      margin-bottom: 15px;
+    }
+
+    /* Manager info box */
+    #manager-info {
+      width: 320px;
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 25px 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 30px;
+      height: fit-content;
+    }
+
+    #manager-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #60a5fa;
+      border-bottom: 2px solid #1e3a8a;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
+    }
+
+    .manager-line {
+      font-size: 15px;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #manager-info {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>El7amla Fantasy League</h1>
+    <h1><img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="teams.html">Teams</a>
@@ -141,104 +271,142 @@
     </nav>
   </header>
 
-  <div class="team-input">
-    <h2>View Your Fantasy Team</h2>
-    <input type="text" id="teamId" placeholder="Enter your Team ID" />
-    <button onclick="loadTeam()">Show My Team</button>
+  <div class="container">
+    <div class="main-content">
+      <h2>View Your Fantasy Team</h2>
+      <input type="text" id="managerId" placeholder="Enter Your FPL ID">
+      <button onclick="loadTeam()">Show My Team</button>
+      <div id="error"></div>
+      <div id="pitch"></div>
+      <div id="bench"></div>
+    </div>
+
+    <div id="manager-info" style="display:none;">
+      <h3>Manager Info</h3>
+      <div id="manager-name" class="manager-line"></div>
+      <div id="manager-points" class="manager-line"></div>
+      <div id="manager-rank" class="manager-line"></div>
+      <div id="manager-gw" class="manager-line"></div>
+      <div id="manager-years" class="manager-line"></div>
+    </div>
   </div>
 
-  <main>
-    <div class="team-container" id="teamContainer"></div>
-    <div class="team-info" id="teamInfo" style="display:none;">
-      <h3>Manager Info</h3>
-      <div class="info-item" id="managerName"></div>
-      <div class="info-item" id="currentGW"></div>
-      <div class="info-item" id="totalPoints"></div>
-      <div class="info-item" id="overallRank"></div>
-      <div class="info-item" id="yearsPlayed"></div>
-    </div>
-  </main>
+  <div id="player-info">
+    <button class="close-btn" onclick="closeSidebar()">✖</button>
+    <h3>Player Info</h3>
+    <div id="player-details"></div>
+  </div>
 
   <script>
-    async function loadTeam() {
-      const teamId = document.getElementById("teamId").value.trim();
-      if (!teamId) return alert("Please enter a valid team ID");
+    const PROXY = "https://corsproxy.io/?";
 
-      const teamContainer = document.getElementById("teamContainer");
-      const infoBox = document.getElementById("teamInfo");
-      teamContainer.innerHTML = "Loading team...";
+    async function fetchJSON(url) {
+      const res = await fetch(PROXY + encodeURIComponent(url));
+      if (!res.ok) throw new Error("Failed to fetch data");
+      return await res.json();
+    }
+
+    async function loadTeam() {
+      const id = document.getElementById("managerId").value.trim();
+      const errorDiv = document.getElementById("error");
+      const pitch = document.getElementById("pitch");
+      const bench = document.getElementById("bench");
+      const managerBox = document.getElementById("manager-info");
+      pitch.innerHTML = "";
+      bench.innerHTML = "";
+      errorDiv.textContent = "";
+      managerBox.style.display = "none";
+
+      if (!id) {
+        errorDiv.textContent = "⚠️ Please enter your ID.";
+        return;
+      }
 
       try {
-        // بيانات الفريق
-        const res = await fetch(`https://fantasy.premierleague.com/api/entry/${teamId}/event/1/picks/`);
-        if (!res.ok) throw new Error("Team not found");
-        const data = await res.json();
+        const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
+        const currentEvent = bootstrap.events.find(e => e.is_current)?.id || 1;
 
-        // بيانات المدير
-        const resManager = await fetch(`https://fantasy.premierleague.com/api/entry/${teamId}/`);
-        const manager = await resManager.json();
+        const [picksData, managerData] = await Promise.all([
+          fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`),
+          fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/`)
+        ]);
 
-        const resElements = await fetch("https://fantasy.premierleague.com/api/bootstrap-static/");
-        const elements = await resElements.json();
+        // manager info
+        document.getElementById("manager-name").innerHTML = `👤 <strong>${managerData.player_first_name} ${managerData.player_last_name}</strong>`;
+        document.getElementById("manager-points").innerHTML = `🏆 Total Points: <strong>${managerData.summary_overall_points}</strong>`;
+        document.getElementById("manager-gw").innerHTML = `🎯 GW Points: <strong>${managerData.summary_event_points}</strong>`;
+        document.getElementById("manager-rank").innerHTML = `📊 Overall Rank: <strong>${managerData.summary_overall_rank}</strong>`;
+        document.getElementById("manager-years").innerHTML = `⏳ Started Playing: <strong>${managerData.joined_time.split('-')[0]}</strong>`;
+        managerBox.style.display = "block";
 
-        const players = data.picks.map(p => {
-          const player = elements.elements.find(el => el.id === p.element);
-          return {
-            name: player.web_name,
-            team: elements.teams.find(t => t.id === player.team).name,
-            points: player.event_points,
-            position: player.element_type,
-            photo: player.photo
-          };
+        // players render
+        const picks = picksData.picks || [];
+        const elementsMap = {};
+        bootstrap.elements.forEach(e => elementsMap[e.id] = e);
+        const starting = picks.filter(p => p.position <= 11);
+        const benchPlayers = picks.filter(p => p.position > 11);
+
+        const gk = [], def = [], mid = [], fwd = [];
+        starting.forEach(p => {
+          const el = elementsMap[p.element];
+          if (!el) return;
+          const player = { ...el, is_captain: p.is_captain };
+          if (el.element_type === 1) gk.push(player);
+          else if (el.element_type === 2) def.push(player);
+          else if (el.element_type === 3) mid.push(player);
+          else fwd.push(player);
         });
 
-        // تشكيل
-        const formationHTML = `
-          <div class="formation">
-            <div class="formation-row">
-              ${players.filter(p => p.position === 1).map(p => createCard(p)).join("")}
-            </div>
-            <div class="formation-row">
-              ${players.filter(p => p.position === 2).map(p => createCard(p)).join("")}
-            </div>
-            <div class="formation-row">
-              ${players.filter(p => p.position === 3).map(p => createCard(p)).join("")}
-            </div>
-            <div class="formation-row">
-              ${players.filter(p => p.position === 4).map(p => createCard(p)).join("")}
-            </div>
-          </div>
-          <div class="bench">
-            <h3>Bench</h3>
-            <div class="formation-row">
-              ${players.slice(11).map(p => createCard(p)).join("")}
-            </div>
-          </div>
-        `;
-        teamContainer.innerHTML = formationHTML;
+        const rows = [gk, def, mid, fwd];
+        rows.forEach(row => {
+          const div = document.createElement("div");
+          div.classList.add("row");
+          row.forEach(p => {
+            const pl = document.createElement("div");
+            pl.classList.add("player");
+            pl.innerHTML = `
+              <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.code}.png"
+                   onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+              <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
+              <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
+              <div class="player-points">Pts: ${p.event_points || 0}</div>
+            `;
+            pl.onclick = () => showPlayerInfo(p.id, p.web_name, p.code);
+            div.appendChild(pl);
+          });
+          pitch.appendChild(div);
+        });
 
-        // معلومات المدير
-        document.getElementById("managerName").innerHTML = `👤 Manager: ${manager.player_first_name} ${manager.player_last_name}`;
-        document.getElementById("currentGW").innerHTML = `🎯 Gameweek Points: ${manager.summary_event_points}`;
-        document.getElementById("totalPoints").innerHTML = `🏆 Total Points: ${manager.summary_overall_points}`;
-        document.getElementById("overallRank").innerHTML = `📊 Overall Rank: ${manager.summary_overall_rank}`;
-        document.getElementById("yearsPlayed").innerHTML = `⏳ Years Played: ${manager.started_event} | Rank among veterans: Top ${Math.floor(Math.random() * 1000)}`;
-
-        infoBox.style.display = "block";
       } catch (err) {
         console.error(err);
-        teamContainer.innerHTML = "Error loading team data.";
+        errorDiv.textContent = "⚠️ Error loading team. Please check your ID or try again later.";
       }
     }
 
-    function createCard(p) {
-      return `
-        <div class="player-card">
-          <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.photo}" width="70" height="90" /><br>
-          <strong>${p.name}</strong><br>
-          <small>${p.team}</small><br>
-          <small>${p.points} pts</small>
-        </div>`;
+    async function showPlayerInfo(elementId, name, code) {
+      const infoBox = document.getElementById("player-info");
+      const details = document.getElementById("player-details");
+      details.innerHTML = "<p>Loading...</p>";
+      infoBox.classList.add("active");
+
+      try {
+        const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${elementId}/`);
+        const latestMatch = playerData.history[playerData.history.length - 1];
+        details.innerHTML = `
+          <img class="player-photo" src="https://resources.premierleague.com/premierleague/photos/players/250x250/p${code}.png">
+          <div class="info-line"><strong>Name:</strong> ${name}</div>
+          <div class="info-line"><strong>Current GW Points:</strong> ${latestMatch?.total_points || 0}</div>
+          <div class="info-line"><strong>Goals:</strong> ${latestMatch?.goals_scored || 0}</div>
+          <div class="info-line"><strong>Assists:</strong> ${latestMatch?.assists || 0}</div>
+          <div class="info-line"><strong>Minutes:</strong> ${latestMatch?.minutes || 0}</div>
+        `;
+      } catch {
+        details.innerHTML = "<p>Error loading player info.</p>";
+      }
+    }
+
+    function closeSidebar() {
+      document.getElementById("player-info").classList.remove("active");
     }
   </script>
 </body>
