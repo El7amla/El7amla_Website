@@ -186,6 +186,13 @@
       right: 15px;
     }
 
+    .player-photo {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      margin-bottom: 15px;
+    }
+
     @media (max-width: 600px) {
       .player {
         width: 80px;
@@ -286,7 +293,7 @@
               <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
               <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
             `;
-            pl.onclick = () => showPlayerInfo(p.id);
+            pl.onclick = () => showPlayerInfo(p.element, p.web_name, p.code);
             div.appendChild(pl);
           });
           pitch.appendChild(div);
@@ -298,20 +305,25 @@
       }
     }
 
-    async function showPlayerInfo(playerId) {
+    async function showPlayerInfo(elementId, name, code) {
       const infoBox = document.getElementById("player-info");
       const details = document.getElementById("player-details");
       details.innerHTML = "<p>Loading...</p>";
       infoBox.classList.add("active");
 
       try {
-        const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${playerId}/`);
-        const player = playerData.history[0];
-        const pastSeasons = playerData.seasons?.map(s => `<div>${s.season_name}: Rank ${s.rank}</div>`).join('') || "No history available";
+        const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${elementId}/`);
+
+        const latestMatch = playerData.history[playerData.history.length - 1];
+        const pastSeasons = playerData.history_past
+          .map(s => `<div>${s.season_name}: Rank <strong>${s.rank}</strong></div>`)
+          .join('') || "<div>No previous seasons data.</div>";
 
         details.innerHTML = `
-          <div class="info-line"><strong>Player:</strong> ${playerData.history_past[0]?.name || "Unknown"}</div>
-          <div class="info-line"><strong>Current GW Points:</strong> ${player?.total_points || 0}</div>
+          <img class="player-photo" src="https://resources.premierleague.com/premierleague/photos/players/250x250/p${code}.png" 
+               onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+          <div class="info-line"><strong>Name:</strong> ${name}</div>
+          <div class="info-line"><strong>Current GW Points:</strong> ${latestMatch?.total_points || 0}</div>
           <div class="info-line"><strong>Previous Seasons:</strong><br>${pastSeasons}</div>
         `;
       } catch (e) {
