@@ -175,55 +175,6 @@
       margin-top: 15px;
     }
 
-    /* Sidebar for player info */
-    #player-info {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 350px;
-      height: 100%;
-      background: #0f172a;
-      box-shadow: -4px 0 15px rgba(0,0,0,0.7);
-      padding: 30px 20px;
-      transition: 0.4s ease;
-      overflow-y: auto;
-      z-index: 999;
-    }
-
-    #player-info.active {
-      right: 0;
-    }
-
-    #player-info h3 {
-      font-family: 'Orbitron', sans-serif;
-      color: #60a5fa;
-      margin-bottom: 15px;
-    }
-
-    .info-line {
-      margin: 10px 0;
-      font-size: 15px;
-    }
-
-    .close-btn {
-      background: none;
-      color: #f87171;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      position: absolute;
-      top: 10px;
-      right: 15px;
-    }
-
-    .player-photo {
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);
-      margin-bottom: 15px;
-    }
-
-    /* Manager info box */
     #manager-info {
       width: 320px;
       background: #0f172a;
@@ -285,16 +236,10 @@
       <h3>Manager Info</h3>
       <div id="manager-name" class="manager-line"></div>
       <div id="manager-points" class="manager-line"></div>
-      <div id="manager-rank" class="manager-line"></div>
       <div id="manager-gw" class="manager-line"></div>
+      <div id="manager-rank" class="manager-line"></div>
       <div id="manager-years" class="manager-line"></div>
     </div>
-  </div>
-
-  <div id="player-info">
-    <button class="close-btn" onclick="closeSidebar()">✖</button>
-    <h3>Player Info</h3>
-    <div id="player-details"></div>
   </div>
 
   <script>
@@ -326,20 +271,25 @@
         const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
         const currentEvent = bootstrap.events.find(e => e.is_current)?.id || 1;
 
-        const [picksData, managerData] = await Promise.all([
+        const [picksData, managerData, historyData] = await Promise.all([
           fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`),
-          fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/`)
+          fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/`),
+          fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/history/`)
         ]);
 
-        // manager info
+        // 🧑‍💼 Manager info
+        const seasons = historyData.past || [];
+        const totalSeasons = seasons.length;
+        const bestRank = seasons.length ? Math.min(...seasons.map(s => s.rank)) : managerData.summary_overall_rank;
+
         document.getElementById("manager-name").innerHTML = `👤 <strong>${managerData.player_first_name} ${managerData.player_last_name}</strong>`;
         document.getElementById("manager-points").innerHTML = `🏆 Total Points: <strong>${managerData.summary_overall_points}</strong>`;
         document.getElementById("manager-gw").innerHTML = `🎯 GW Points: <strong>${managerData.summary_event_points}</strong>`;
         document.getElementById("manager-rank").innerHTML = `📊 Overall Rank: <strong>${managerData.summary_overall_rank}</strong>`;
-        document.getElementById("manager-years").innerHTML = `⏳ Started Playing: <strong>${managerData.joined_time.split('-')[0]}</strong>`;
+        document.getElementById("manager-years").innerHTML = `📅 Seasons Played: <strong>${totalSeasons}</strong> | 🥇 Best Rank: <strong>${bestRank}</strong>`;
         managerBox.style.display = "block";
 
-        // players render
+        // 🎽 Players render
         const picks = picksData.picks || [];
         const elementsMap = {};
         bootstrap.elements.forEach(e => elementsMap[e.id] = e);
@@ -350,7 +300,9 @@
         starting.forEach(p => {
           const el = elementsMap[p.element];
           if (!el) return;
-          const player = { ...el, is_captain: p.is_captain };
+          let pts = el.event_points || 0;
+          if (p.is_captain) pts *= 2;
+          const player = { ...el, points: pts, is_captain: p.is_captain };
           if (el.element_type === 1) gk.push(player);
           else if (el.element_type === 2) def.push(player);
           else if (el.element_type === 3) mid.push(player);
@@ -369,44 +321,37 @@
                    onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
               <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
               <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
-              <div class="player-points">Pts: ${p.event_points || 0}</div>
+              <div class="player-points">Pts: ${p.points}</div>
             `;
-            pl.onclick = () => showPlayerInfo(p.id, p.web_name, p.code);
             div.appendChild(pl);
           });
           pitch.appendChild(div);
         });
 
+        // 🪑 Bench
+        bench.innerHTML = "<h3>Bench</h3>";
+        const benchRow = document.createElement("div");
+        benchRow.classList.add("row");
+        benchPlayers.forEach(p => {
+          const el = elementsMap[p.element];
+          if (!el) return;
+          const pl = document.createElement("div");
+          pl.classList.add("player");
+          pl.innerHTML = `
+            <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${el.code}.png"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+            <div class="player-name">${el.web_name}</div>
+            <div class="player-team">${bootstrap.teams[el.team - 1]?.name || ''}</div>
+            <div class="player-points">Pts: ${el.event_points || 0}</div>
+          `;
+          benchRow.appendChild(pl);
+        });
+        bench.appendChild(benchRow);
+
       } catch (err) {
         console.error(err);
         errorDiv.textContent = "⚠️ Error loading team. Please check your ID or try again later.";
       }
-    }
-
-    async function showPlayerInfo(elementId, name, code) {
-      const infoBox = document.getElementById("player-info");
-      const details = document.getElementById("player-details");
-      details.innerHTML = "<p>Loading...</p>";
-      infoBox.classList.add("active");
-
-      try {
-        const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${elementId}/`);
-        const latestMatch = playerData.history[playerData.history.length - 1];
-        details.innerHTML = `
-          <img class="player-photo" src="https://resources.premierleague.com/premierleague/photos/players/250x250/p${code}.png">
-          <div class="info-line"><strong>Name:</strong> ${name}</div>
-          <div class="info-line"><strong>Current GW Points:</strong> ${latestMatch?.total_points || 0}</div>
-          <div class="info-line"><strong>Goals:</strong> ${latestMatch?.goals_scored || 0}</div>
-          <div class="info-line"><strong>Assists:</strong> ${latestMatch?.assists || 0}</div>
-          <div class="info-line"><strong>Minutes:</strong> ${latestMatch?.minutes || 0}</div>
-        `;
-      } catch {
-        details.innerHTML = "<p>Error loading player info.</p>";
-      }
-    }
-
-    function closeSidebar() {
-      document.getElementById("player-info").classList.remove("active");
     }
   </script>
 </body>
