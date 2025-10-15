@@ -140,6 +140,22 @@
       color: #dbeafe;
     }
 
+    .player-points {
+      font-size: 13px;
+      margin-top: 4px;
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    #bench {
+      margin-top: 40px;
+    }
+
+    #bench h3 {
+      color: #60a5fa;
+      margin-bottom: 10px;
+    }
+
     #error {
       color: #f87171;
       margin-top: 15px;
@@ -224,6 +240,7 @@
     <button onclick="loadTeam()">Show My Team</button>
     <div id="error"></div>
     <div id="pitch"></div>
+    <div id="bench"></div>
   </div>
 
   <!-- Sidebar for player info -->
@@ -246,7 +263,9 @@
       const id = document.getElementById("managerId").value.trim();
       const errorDiv = document.getElementById("error");
       const pitch = document.getElementById("pitch");
+      const bench = document.getElementById("bench");
       pitch.innerHTML = "";
+      bench.innerHTML = "";
       errorDiv.textContent = "";
 
       if (!id) {
@@ -257,9 +276,9 @@
       try {
         const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
         const currentEvent = bootstrap.events.find(e => e.is_current)?.id || bootstrap.events.find(e => !e.finished)?.id || 1;
-
         const picksData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`);
         const picks = picksData.picks || [];
+        const playerPoints = picksData.entry_history?.points_on_bench || {};
 
         if (picks.length === 0) {
           errorDiv.textContent = "⚠️ No picks available for this team.";
@@ -269,11 +288,14 @@
         const elementsMap = {};
         bootstrap.elements.forEach(e => elementsMap[e.id] = e);
 
+        const starting = picks.filter(p => p.position <= 11);
+        const benchPlayers = picks.filter(p => p.position > 11);
+
         const gk = [], def = [], mid = [], fwd = [];
-        picks.forEach(p => {
+        starting.forEach(p => {
           const el = elementsMap[p.element];
           if (!el) return;
-          const player = { ...el, is_captain: p.is_captain };
+          const player = { ...el, is_captain: p.is_captain, is_vice: p.is_vice_captain };
           if (el.element_type === 1) gk.push(player);
           else if (el.element_type === 2) def.push(player);
           else if (el.element_type === 3) mid.push(player);
@@ -292,12 +314,44 @@
                    onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
               <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
               <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
+              <div class="player-points" id="points-${p.id}">Loading...</div>
             `;
             pl.onclick = () => showPlayerInfo(p.element, p.web_name, p.code);
             div.appendChild(pl);
           });
           pitch.appendChild(div);
         });
+
+        // Bench section
+        const benchDiv = document.createElement("div");
+        benchDiv.innerHTML = "<h3>Bench</h3>";
+        const benchRow = document.createElement("div");
+        benchRow.classList.add("row");
+        benchPlayers.forEach(p => {
+          const el = elementsMap[p.element];
+          if (!el) return;
+          const bp = document.createElement("div");
+          bp.classList.add("player");
+          bp.innerHTML = `
+            <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p${el.code}.png" 
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+            <div class="player-name">${el.web_name}</div>
+            <div class="player-team">${bootstrap.teams[el.team - 1]?.name || ''}</div>
+            <div class="player-points" id="points-${el.id}">Loading...</div>
+          `;
+          bp.onclick = () => showPlayerInfo(el.id, el.web_name, el.code);
+          benchRow.appendChild(bp);
+        });
+        benchDiv.appendChild(benchRow);
+        bench.appendChild(benchDiv);
+
+        // Fetch player points for current GW
+        for (const p of picks) {
+          const el = elementsMap[p.element];
+          const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${p.element}/`);
+          const latest = playerData.history[playerData.history.length - 1];
+          document.getElementById(`points-${el.id}`).textContent = `${latest?.total_points || 0} pts`;
+        }
 
       } catch (err) {
         console.error(err);
@@ -313,18 +367,21 @@
 
       try {
         const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${elementId}/`);
-
         const latestMatch = playerData.history[playerData.history.length - 1];
-        const pastSeasons = playerData.history_past
-          .map(s => `<div>${s.season_name}: Rank <strong>${s.rank}</strong></div>`)
-          .join('') || "<div>No previous seasons data.</div>";
+        const pastSeasons = playerData.history_past?.length
+          ? playerData.history_past.map(s => `<div>${s.season_name}: <strong>${s.total_points}</strong> pts</div>`).join('')
+          : "<div>No previous seasons data.</div>";
 
         details.innerHTML = `
           <img class="player-photo" src="https://resources.premierleague.com/premierleague/photos/players/250x250/p${code}.png" 
                onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
           <div class="info-line"><strong>Name:</strong> ${name}</div>
           <div class="info-line"><strong>Current GW Points:</strong> ${latestMatch?.total_points || 0}</div>
-          <div class="info-line"><strong>Previous Seasons:</strong><br>${pastSeasons}</div>
+          <div class="info-line"><strong>Minutes:</strong> ${latestMatch?.minutes || 0}</div>
+          <div class="info-line"><strong>Goals:</strong> ${latestMatch?.goals_scored || 0}</div>
+          <div class="info-line"><strong>Assists:</strong> ${latestMatch?.assists || 0}</div>
+          <div class="info-line"><strong>Clean Sheets:</strong> ${latestMatch?.clean_sheets || 0}</div>
+          <div class="info-line"><strong>Past Seasons:</strong><br>${pastSeasons}</div>
         `;
       } catch (e) {
         console.error(e);
