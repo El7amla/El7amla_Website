@@ -12,6 +12,7 @@
       background: linear-gradient(135deg, #0a0a1a, #1a1f3b);
       color: #fff;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     header {
@@ -95,6 +96,7 @@
       max-width: 900px;
       margin-left: auto;
       margin-right: auto;
+      position: relative;
     }
 
     .row {
@@ -112,6 +114,7 @@
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       transition: 0.3s;
+      cursor: pointer;
     }
 
     .player:hover {
@@ -142,6 +145,47 @@
       margin-top: 15px;
     }
 
+    /* Sidebar */
+    #player-info {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100%;
+      background: #0f172a;
+      box-shadow: -4px 0 15px rgba(0,0,0,0.7);
+      padding: 30px 20px;
+      transition: 0.4s ease;
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    #player-info.active {
+      right: 0;
+    }
+
+    #player-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #60a5fa;
+      margin-bottom: 15px;
+    }
+
+    .info-line {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+
+    .close-btn {
+      background: none;
+      color: #f87171;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+    }
+
     @media (max-width: 600px) {
       .player {
         width: 80px;
@@ -149,6 +193,9 @@
       .player img {
         width: 50px;
         height: 50px;
+      }
+      #player-info {
+        width: 100%;
       }
     }
   </style>
@@ -170,6 +217,13 @@
     <button onclick="loadTeam()">Show My Team</button>
     <div id="error"></div>
     <div id="pitch"></div>
+  </div>
+
+  <!-- Sidebar for player info -->
+  <div id="player-info">
+    <button class="close-btn" onclick="closeSidebar()">✖</button>
+    <h3>Player Info</h3>
+    <div id="player-details"></div>
   </div>
 
   <script>
@@ -194,11 +248,9 @@
       }
 
       try {
-        // Get bootstrap data
         const bootstrap = await fetchJSON("https://fantasy.premierleague.com/api/bootstrap-static/");
         const currentEvent = bootstrap.events.find(e => e.is_current)?.id || bootstrap.events.find(e => !e.finished)?.id || 1;
 
-        // Get entry picks
         const picksData = await fetchJSON(`https://fantasy.premierleague.com/api/entry/${id}/event/${currentEvent}/picks/`);
         const picks = picksData.picks || [];
 
@@ -207,7 +259,6 @@
           return;
         }
 
-        // map element id -> element
         const elementsMap = {};
         bootstrap.elements.forEach(e => elementsMap[e.id] = e);
 
@@ -235,6 +286,7 @@
               <div class="player-name">${p.web_name}${p.is_captain ? " (C)" : ""}</div>
               <div class="player-team">${bootstrap.teams[p.team - 1]?.name || ''}</div>
             `;
+            pl.onclick = () => showPlayerInfo(p.id);
             div.appendChild(pl);
           });
           pitch.appendChild(div);
@@ -244,6 +296,32 @@
         console.error(err);
         errorDiv.textContent = "⚠️ Error loading team. Please check your ID or try again later.";
       }
+    }
+
+    async function showPlayerInfo(playerId) {
+      const infoBox = document.getElementById("player-info");
+      const details = document.getElementById("player-details");
+      details.innerHTML = "<p>Loading...</p>";
+      infoBox.classList.add("active");
+
+      try {
+        const playerData = await fetchJSON(`https://fantasy.premierleague.com/api/element-summary/${playerId}/`);
+        const player = playerData.history[0];
+        const pastSeasons = playerData.seasons?.map(s => `<div>${s.season_name}: Rank ${s.rank}</div>`).join('') || "No history available";
+
+        details.innerHTML = `
+          <div class="info-line"><strong>Player:</strong> ${playerData.history_past[0]?.name || "Unknown"}</div>
+          <div class="info-line"><strong>Current GW Points:</strong> ${player?.total_points || 0}</div>
+          <div class="info-line"><strong>Previous Seasons:</strong><br>${pastSeasons}</div>
+        `;
+      } catch (e) {
+        console.error(e);
+        details.innerHTML = "<p>Error loading player info.</p>";
+      }
+    }
+
+    function closeSidebar() {
+      document.getElementById("player-info").classList.remove("active");
     }
   </script>
 </body>
