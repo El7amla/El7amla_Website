@@ -160,11 +160,6 @@
       const noFixturesMessage = document.getElementById('no-fixtures');
       const breakMessage = document.getElementById('break-message');
 
-      if (!tabsContainer || !fixturesTable || !fixturesBody || !noFixturesMessage || !breakMessage) {
-        console.error("عنصر أو أكثر غير موجود في الصفحة");
-        return;
-      }
-
       let fixturesData = [];
 
       function renderTabs(data) {
@@ -229,21 +224,21 @@
       fetch(fixturesUrl)
         .then(res => res.json())
         .then(data => {
-          console.log("البيانات المجلوبة:", data);
           fixturesData = data.fixtures ? Object.keys(data.fixtures).map(round => ({
             round,
             matches: data.fixtures[round].map(([home, away]) => ({ home, away, scoreA: 0, scoreB: 0 }))
           })) : data;
+
           if (!fixturesData || fixturesData.length === 0) {
-            console.error("لا توجد بيانات مباريات");
             noFixturesMessage.style.display = 'block';
             return;
           }
 
+          // تعديل بسيط: نسحب فقط لحد الجولة 9
           const fetchPromises = [];
           for (let gw = 1; gw <= 9; gw++) {
             fetchPromises.push(
-              fetch(`${baseUrl}gw${gw}.json`)
+              fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`)
                 .then(res => res.json())
                 .then(results => {
                   const gwData = fixturesData.find(f => f.round == gw);
@@ -262,12 +257,7 @@
             );
           }
 
-          Promise.all(fetchPromises)
-            .then(() => { renderTabs(fixturesData); })
-            .catch(err => {
-              console.error("خطأ في جلب بيانات الجولات:", err);
-              noFixturesMessage.style.display = 'block';
-            });
+          Promise.all(fetchPromises).then(() => renderTabs(fixturesData));
         })
         .catch(err => {
           console.error("خطأ في جلب البيانات:", err);
