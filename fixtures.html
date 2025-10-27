@@ -241,7 +241,7 @@
           }
 
           const fetchPromises = [];
-          for (let gw = 1; gw <= 38; gw++) {
+          for (let gw = 1; gw <= 9; gw++) {
             fetchPromises.push(
               fetch(`${baseUrl}gw${gw}.json`)
                 .then(res => res.json())
