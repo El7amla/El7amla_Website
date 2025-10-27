@@ -14,7 +14,17 @@
       color: white;
       overflow-x: hidden;
     }
-    header { background-color: #111827; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.6); position: sticky; top: 0; z-index: 10; }
+    header {
+      background-color: #111827;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
     header h1 { font-size: 22px; display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; }
     header img { height: 40px; }
     nav { display: flex; gap: 20px; }
@@ -63,7 +73,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <div id="error-message" class="error-message" style="display:none;">خطأ في تحميل البيانات.</div>
+    <div id="error-message" class="error-message" style="display:none;">خطأ في تحميل البيانات. يرجى المحاولة لاحقًا أو تحقق من إعدادات السحابة.</div>
   </div>
   <img src="premier_logo.png" class="footer-logo" alt="Premier League Logo" />
 
@@ -86,55 +96,79 @@
           players: Object.entries(teamData.players).map(([playerName, playerId]) => ({ name: playerName, id: playerId, points: 0 }))
         }));
 
-        let players = [];
+        if (teams.length === 0) throw new Error("No teams found in league data");
 
-        // تحميل جميع جولات اللاعبين
+        let players = [];
+        const totalGameweeks = 9; // تعديل ليشمل جميع الجولات
         const gameweekPromises = [];
-        for (let gw = 1; gw <= 9; gw++) {
-          gameweekPromises.push(fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`).then(r => r.json()).catch(() => ({})));
+        for (let gw = 1; gw <= totalGameweeks; gw++) {
+          gameweekPromises.push(
+            fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`)
+              .then(res => res.json())
+              .catch(err => { console.warn(`Failed to fetch gw${gw}.json:`, err); return {}; })
+          );
         }
         const gameweeks = await Promise.all(gameweekPromises);
 
-        // حساب نقاط اللاعبين لكل فريق
+        // حساب نقاط الفرق
+        teams.forEach(team => {
+          let totalPoints = 0;
+          gameweeks.forEach((gwData, gwIndex) => {
+            const gw = gwIndex + 1;
+            const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gw] : [];
+            if (fixtureRound && Array.isArray(fixtureRound)) {
+              const match = fixtureRound.find(m => m[0] === team.name || m[1] === team.name);
+              if (!match) return;
+              const homePoints = gwData[match[0]] ? Object.values(gwData[match[0]]).reduce((s, p) => s + (p.points || 0), 0) : 0;
+              const awayPoints = gwData[match[1]] ? Object.values(gwData[match[1]]).reduce((s, p) => s + (p.points || 0), 0) : 0;
+              if (match[0] === team.name) { totalPoints += homePoints > awayPoints ? 3 : homePoints === awayPoints ? 1 : 0; }
+              else { totalPoints += awayPoints > homePoints ? 3 : awayPoints === homePoints ? 1 : 0; }
+            }
+          });
+          team.points = totalPoints;
+        });
+
+        // نقاط إضافية للفرق الأعلى في كل جولة
+        gameweeks.forEach((gwData, gwIndex) => {
+          const gw = gwIndex + 1;
+          const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gw] : [];
+          if (fixtureRound && Array.isArray(fixtureRound)) {
+            const scoredTeams = teams.map(t => {
+              const match = fixtureRound.find(m => m[0] === t.name || m[1] === t.name);
+              if (!match) return { name: t.name, points: 0 };
+              const homePoints = gwData[match[0]] ? Object.values(gwData[match[0]]).reduce((s,p)=>s+(p.points||0),0) : 0;
+              const awayPoints = gwData[match[1]] ? Object.values(gwData[match[1]]).reduce((s,p)=>s+(p.points||0),0) : 0;
+              return { name: t.name, points: match[0]===t.name?homePoints:awayPoints };
+            }).sort((a,b)=>b.points - a.points);
+            if (scoredTeams[0]) {
+              const topTeam = teams.find(t => t.name === scoredTeams[0].name);
+              if (topTeam) topTeam.points += 1; // Bonus
+            }
+          }
+        });
+
+        // حساب نقاط اللاعبين
         teams.forEach(team => {
           team.players.forEach(p => {
             let total = 0;
-            gameweeks.forEach(gwData => {
+            gameweeks.forEach((gwData, gwIndex) => {
+              const gw = gwIndex + 1;
+              const fixtureRound = fixturesData.fixtures ? fixturesData.fixtures[gw] : [];
+              const match = fixtureRound.find(m => m[0] === team.name || m[1] === team.name);
+              if (!match) return;
               if (gwData[team.name] && gwData[team.name][p.id]) total += gwData[team.name][p.id].points || 0;
             });
-            p.points = total;
             players.push({ name: p.name, team: team.name, points: total });
           });
         });
 
-        // حساب نقاط الفرق بناء على مجموع لاعبيها
-        teams.forEach(team => {
-          team.points = team.players.reduce((sum, p) => sum + p.points, 0);
-        });
-
-        // إضافة نقاط البونص لأفضل فريق في كل جولة
-        gameweeks.forEach((gwData, idx) => {
-          const gw = idx + 1;
-          let maxPoints = 0;
-          let topTeams = [];
-          teams.forEach(team => {
-            const teamPoints = team.players.reduce((sum, p) => {
-              if (gwData[team.name] && gwData[team.name][p.id]) return sum + (gwData[team.name][p.id].points || 0);
-              return sum;
-            }, 0);
-            if (teamPoints > maxPoints) { maxPoints = teamPoints; topTeams = [team]; }
-            else if (teamPoints === maxPoints) { topTeams.push(team); }
-          });
-          topTeams.forEach(t => t.points += 1);
-        });
-
-        // ترتيب الفرق
+        // عرض الفرق
         teams.sort((a,b)=>b.points - a.points);
         const tbodyTeams = document.querySelector("#teams-table tbody");
         tbodyTeams.innerHTML = "";
         teams.forEach((t,i)=>tbodyTeams.innerHTML+=`<tr><td>${i+1}</td><td>${t.name}</td><td>${t.points}</td></tr>`);
 
-        // ترتيب اللاعبين
+        // عرض اللاعبين
         players.sort((a,b)=>b.points - a.points);
         const tbodyPlayers = document.querySelector("#players-table tbody");
         tbodyPlayers.innerHTML = "";
