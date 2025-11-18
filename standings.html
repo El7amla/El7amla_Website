@@ -1,5 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standings - El7amla Fantasy League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #232f4b);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #111827;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
+    header h1 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+      color: #60a5fa;
+    }
+    header img { height: 40px; }
+    nav { display: flex; gap: 20px; }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      color: #60a5fa;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    th {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    td { background: rgba(255,255,255,0.03); }
+    #error-message {
+      margin-top: 25px;
+      color: #f87171;
+      font-size: 18px;
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>
+    <img src="el7amla_logo.png" alt="Logo">
+    El7amla Fantasy League
+  </h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="teams.html">Teams</a>
+    <a href="standings.html">Standings</a>
+    <a href="fixtures.html">Fixtures</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>🏆 League Standings</h2>
+
+  <table id="teams-table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Team</th>
+        <th>Total Points</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2 style="margin-top:55px;">🎖 Player Ranking</h2>
+
+  <table id="players-table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Player</th>
+        <th>Team</th>
+        <th>Total Points</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="error-message">حدث خطأ أثناء تحميل البيانات.</div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
   const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";
   const fixturesUrl = baseUrl + "fixtures.json";
@@ -11,131 +135,133 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const [fixturesRes, leagueRes] = await Promise.all([
-      fetch(fixturesUrl + '?t=' + Date.now()),
-      fetch(leagueUrl + '?t=' + Date.now())
+      fetch(fixturesUrl + "?t=" + Date.now()),
+      fetch(leagueUrl + "?t=" + Date.now())
     ]);
-
-    if (!fixturesRes.ok || !leagueRes.ok) throw new Error("فشل تحميل البيانات");
 
     const fixturesRaw = await fixturesRes.json();
     const leagueData = await leagueRes.json();
 
+    // بيانات الفرق
+    const teamStats = {};
+    for (const t of Object.keys(leagueData.teams)) {
+      teamStats[t] = { points: 0 };
+    }
+
+    // تجهيز الجولة
     const rounds = fixturesRaw.fixtures
       ? Object.entries(fixturesRaw.fixtures).map(([round, matches]) => ({
-          round,
-          matches: matches.map(([home, away]) => ({
-            home,
-            away,
-            scoreA: 0,
-            scoreB: 0
-          }))
+          round: parseInt(round),
+          matches: matches.map(([home, away]) => ({ home, away }))
         }))
       : [];
 
-    const teamStats = {};
+    // حساب النقاط من نتائج fixtures
+    for (const round of rounds) {
+      const gw = round.round;
 
-    // Create team list
-    for (const teamName of Object.keys(leagueData.teams)) {
-      teamStats[teamName] = { points: 0 };
-    }
-
-    // Load GW scores ONLY for real played GWs
-    for (let gw = 1; gw <= 38; gw++) {
+      let gwJson;
       try {
-        const res = await fetch(baseUrl + `gw${gw}.json?t=${Date.now()}`);
+        const res = await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`);
         if (!res.ok) continue;
-        const gwData = await res.json();
+        gwJson = await res.json();
+      } catch {
+        continue;
+      }
 
-        const fixtureRound = rounds.find(r => r.round == gw);
-        if (!fixtureRound) continue;
+      const gwScores = {};
 
-        // Fix: ONLY count round if it has actual results (scoreA != 0 || scoreB != 0)
-        let roundHasRealData = false;
+      for (const match of round.matches) {
+        const home = match.home;
+        const away = match.away;
 
-        fixtureRound.matches.forEach(match => {
-          if (match.home === "BYE" || match.away === "BYE") return;
+        if (home === "BYE" || away === "BYE") continue;
 
-          const homePlayers = gwData[match.home];
-          const awayPlayers = gwData[match.away];
+        const homeScore = Object.values(gwJson[home] || {})
+          .reduce((sum, p) => sum + (p.points || 0), 0);
 
-          if (!homePlayers || !awayPlayers) return;
+        const awayScore = Object.values(gwJson[away] || {})
+          .reduce((sum, p) => sum + (p.points || 0), 0);
 
-          match.scoreA = Object.values(homePlayers).reduce((sum, p) => sum + (p.points || 0), 0);
-          match.scoreB = Object.values(awayPlayers).reduce((sum, p) => sum + (p.points || 0), 0);
+        gwScores[home] = homeScore;
+        gwScores[away] = awayScore;
 
-          // Detect REAL GW (not empty)
-          if (match.scoreA !== 0 || match.scoreB !== 0) {
-            roundHasRealData = true;
-          }
-        });
-
-        // If round has no actual results → skip it ENTIRELY
-        if (!roundHasRealData) {
-          fixtureRound.skip = true;
-          continue;
-        }
-
-      } catch (e) {}
-    }
-
-    // Now calculate points
-    rounds.forEach(round => {
-      if (round.skip) return;
-
-      let gwScores = {};
-
-      round.matches.forEach(match => {
-        if (match.home === "BYE" || match.away === "BYE") return;
-
-        const homeScore = match.scoreA || 0;
-        const awayScore = match.scoreB || 0;
-
-        // Skip empty rounds
-        if (homeScore === 0 && awayScore === 0) return;
-
-        gwScores[match.home] = homeScore;
-        gwScores[match.away] = awayScore;
-
-        if (homeScore > awayScore) {
-          teamStats[match.home].points += 3;
-        } else if (awayScore > homeScore) {
-          teamStats[match.away].points += 3;
-        } else {
-          teamStats[match.home].points += 1;
-          teamStats[match.away].points += 1;
-        }
-      });
-
-      // Apply bonus ONLY if valid round
-      const scoreValues = Object.values(gwScores);
-      if (scoreValues.length === 0) return;
-
-      const maxScore = Math.max(...scoreValues);
-
-      for (const team in gwScores) {
-        if (gwScores[team] === maxScore) {
-          teamStats[team].points += 1;
+        if (homeScore > awayScore) teamStats[home].points += 3;
+        else if (awayScore > homeScore) teamStats[away].points += 3;
+        else {
+          teamStats[home].points += 1;
+          teamStats[away].points += 1;
         }
       }
-    });
 
-    // Sort teams
-    const teamsList = Object.entries(teamStats)
-      .map(([team, stats]) => ({team, points: stats.points}))
+      // Bonus point
+      const maxScore = Math.max(...Object.values(gwScores));
+      for (const t in gwScores) {
+        if (gwScores[t] === maxScore) teamStats[t].points += 1;
+      }
+    }
+
+    // ترتيب الفرق
+    const sortedTeams = Object.entries(teamStats)
+      .map(([name, d]) => ({ name, points: d.points }))
       .sort((a, b) => b.points - a.points);
 
-    teamsTbody.innerHTML = teamsList.map((t, i) => `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${t.team}</td>
-        <td>${t.points}</td>
-      </tr>
-    `).join("");
+    teamsTbody.innerHTML = sortedTeams
+      .map((t, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${t.name}</td>
+          <td>${t.points}</td>
+        </tr>
+      `)
+      .join("");
+
+    // ترتيب اللاعبين (شغال زي الأول)
+    const playerPoints = {};
+
+    for (const [teamName, teamInfo] of Object.entries(leagueData.teams)) {
+      for (const [playerName, pid] of Object.entries(teamInfo.players)) {
+        playerPoints[pid] = { name: playerName, team: teamName, points: 0 };
+      }
+    }
+
+    // سحب نقاط اللاعبين من gw files
+    for (let gw = 1; gw <= 38; gw++) {
+      try {
+        const res = await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`);
+        if (!res.ok) continue;
+        const data = await res.json();
+
+        for (const [teamName, players] of Object.entries(data)) {
+          for (const [pid, info] of Object.entries(players)) {
+            if (playerPoints[pid]) {
+              playerPoints[pid].points += info.points || 0;
+            }
+          }
+        }
+      } catch { continue; }
+    }
+
+    const sortedPlayers = Object.values(playerPoints)
+      .sort((a, b) => b.points - a.points);
+
+    playersTbody.innerHTML = sortedPlayers
+      .map((p, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${p.name}</td>
+          <td>${p.team}</td>
+          <td>${p.points}</td>
+        </tr>
+      `)
+      .join("");
 
   } catch (err) {
-    console.error(err);
+    console.log(err);
     errorDiv.style.display = "block";
   }
-
 });
 </script>
+
+</body>
+</html>
