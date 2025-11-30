@@ -131,7 +131,7 @@
   </header>
 
   <div class="container">
-    <h2>📅 Gameweek Fixtures</h2>
+    <h2>Gameweek Fixtures</h2>
     <div class="tabs" id="gameweek-tabs"></div>
     <table id="fixtures-table" style="display:none;">
       <thead>
@@ -158,109 +158,113 @@
       const fixturesTable = document.getElementById('fixtures-table');
       const fixturesBody = document.getElementById('fixtures-body');
       const noFixturesMessage = document.getElementById('no-fixtures');
-      const breakMessage = document.getElementById('break-message');
 
       let fixturesData = [];
 
-      function renderTabs(data) {
+      function renderTabs() {
         tabsContainer.innerHTML = '';
-        const weeks = data.map(f => f.round);
-        weeks.forEach(gw => {
-          const tab = document.createElement('button');
-          tab.classList.add('tab');
-          tab.textContent = gw;
-          tab.dataset.gameweek = gw;
-          tabsContainer.appendChild(tab);
+        fixturesData.forEach(item => {
+          const btn = document.createElement('button');
+          btn.className = 'tab';
+          btn.textContent = `GW${item.round}`;
+          btn.dataset.gw = item.round;
+          tabsContainer.appendChild(btn);
         });
-
-        const firstTab = tabsContainer.querySelector('.tab');
-        if (firstTab) {
-          firstTab.classList.add('active');
-          showFixtures(firstTab.dataset.gameweek);
+        if (fixturesData.length > 0) {
+          tabsContainer.firstElementChild.classList.add('active');
+          showFixtures(fixturesData[0].round);
         }
       }
 
-      function showFixtures(gameweek) {
+      function showFixtures(gw) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelector(`.tab[data-gameweek="${gameweek}"]`).classList.add('active');
+        document.querySelector(`.tab[data-gw="${gw}"]`).classList.add('active');
 
         fixturesBody.innerHTML = '';
-        noFixturesMessage.style.display = 'none';
-        breakMessage.style.display = 'none';
         fixturesTable.style.display = 'none';
+        noFixturesMessage.style.display = 'none';
 
-        const fixtureRound = fixturesData.find(f => f.round == gameweek);
-        if (!fixtureRound || !fixtureRound.matches) {
+        const round = fixturesData.find(r => r.round == gw);
+        if (!round || !round.matches || round.matches.length === 0) {
           noFixturesMessage.style.display = 'block';
           return;
         }
 
-        fixtureRound.matches.forEach(match => {
-          const row = document.createElement('tr');
+        round.matches.forEach(match => {
+          const tr = document.createElement('tr');
           if (match.home === "BYE" || match.away === "BYE") {
-            row.innerHTML = `<td colspan="4" style="color:#f39c12; font-weight:bold;">
+            tr.innerHTML = `<td colspan="4" style="color:#f39c12;font-weight:bold;">
               ${match.home === "BYE" ? match.away : match.home} لديه استراحة هذه الجولة
             </td>`;
           } else {
-            row.innerHTML = `
+            const scoreA = (match.scoreA || 0);
+            const scoreB = (match.scoreB || 0);
+            tr.innerHTML = `
               <td>${match.home}</td>
               <td>vs</td>
               <td>${match.away}</td>
-              <td>${match.scoreA || 0} - ${match.scoreB || 0}</td>
+              <td>${scoreA} - ${scoreB}</td>
             `;
           }
-          fixturesBody.appendChild(row);
+          fixturesBody.appendChild(tr);
         });
-
         fixturesTable.style.display = 'table';
       }
 
-      tabsContainer.addEventListener('click', (e) => {
+      tabsContainer.addEventListener('click', e => {
         if (e.target.classList.contains('tab')) {
-          showFixtures(e.target.dataset.gameweek);
+          showFixtures(e.target.dataset.gw);
         }
       });
 
-      fetch(fixturesUrl)
-        .then(res => res.json())
-        .then(data => {
-          fixturesData = data.fixtures ? Object.keys(data.fixtures).map(round => ({
-            round,
-            matches: data.fixtures[round].map(([home, away]) => ({ home, away, scoreA: 0, scoreB: 0 }))
-          })) : data;
-
-          if (!fixturesData || fixturesData.length === 0) {
-            noFixturesMessage.style.display = 'block';
-            return;
+      // جلب fixtures.json
+      fetch(fixturesUrl + "?t=" + Date.now())
+        .then(r => r.json())
+        .then(raw => {
+          // تحويل البنية القديمة للجديدة
+          if (raw.fixtures) {
+            fixturesData = Object.keys(raw.fixtures).map(k => ({
+              round: parseInt(k),
+              matches: raw.fixtures[k].map(p => ({
+                home: p[0],
+                away: p[1],
+                scoreA: 0,
+                scoreB: 0
+              }))
+            })).sort((a,b) => a.round - b.round);
+          } else {
+            fixturesData = raw.sort((a,b) => a.round - b.round);
           }
 
-          // تعديل بسيط: نسحب فقط لحد الجولة 9
-          const fetchPromises = [];
-          for (let gw = 1; gw <= 9; gw++) {
-            fetchPromises.push(
+          // جلب كل الـ 36 جولة تلقائيًا
+          const promises = [];
+          for (let gw = 1; gw <= 36; gw++) {
+            promises.push(
               fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`)
-                .then(res => res.json())
-                .then(results => {
-                  const gwData = fixturesData.find(f => f.round == gw);
-                  if (gwData && results) {
-                    gwData.matches.forEach((match) => {
-                      const homeTeam = match.home;
-                      const awayTeam = match.away;
-                      if (results[homeTeam] && results[awayTeam]) {
-                        match.scoreA = Object.values(results[homeTeam]).reduce((sum, player) => sum + player.points, 0);
-                        match.scoreB = Object.values(results[awayTeam]).reduce((sum, player) => sum + player.points, 0);
+                .then(res => res.ok ? res.json() : {})
+                .then(data => {
+                  const round = fixturesData.find(r => r.round === gw);
+                  if (round) {
+                    round.matches.forEach(m => {
+                      if (m.home !== "BYE" && m.away !== "BYE") {
+                        const homePoints = Object.values(data[m.home] || {})
+                          .reduce((s, p) => s + (typeof p === 'object' ? (p.points || 0) : (p || 0)), 0);
+                        const awayPoints = Object.values(data[m.away] || {})
+                          .reduce((s, p) => s + (typeof p === 'object' ? (p.points || 0) : (p || 0)), 0);
+                        m.scoreA = homePoints;
+                        m.scoreB = awayPoints;
                       }
                     });
                   }
                 })
-                .catch(err => console.error(`خطأ في جلب بيانات gw${gw}:`, err))
+                .catch(() => {}) // لو الملف مش موجود يعدي
             );
           }
 
-          Promise.all(fetchPromises).then(() => renderTabs(fixturesData));
+          Promise.all(promises).then(() => renderTabs());
         })
-        .catch(err => {
-          console.error("خطأ في جلب البيانات:", err);
+        .catch(() => {
+          noFixturesMessage.textContent = "فيه مشكلة في جلب البيانات";
           noFixturesMessage.style.display = 'block';
         });
     });
