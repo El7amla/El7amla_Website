@@ -34,65 +34,25 @@
     }
     header img { height: 40px; }
     nav { display: flex; gap: 20px; }
-    nav a {
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    h2 {
-      font-size: 26px;
-      margin-bottom: 30px;
-      color: #60a5fa;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-    th, td {
-      padding: 14px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    th {
-      background-color: #1e3a8a;
-      color: white;
-    }
+    nav a { color: #93c5fd; text-decoration: none; font-weight: bold; }
+    .container { max-width: 1100px; margin: auto; padding: 40px 20px; text-align: center; }
+    h2 { font-size: 26px; margin-bottom: 30px; color: #60a5fa; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+    th, td { padding: 14px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    th { background-color: #1e3a8a; color: white; }
     td { background: rgba(255,255,255,0.03); }
     tr:hover td { background: rgba(96,165,250,0.15); }
     .rank-1 td { background: linear-gradient(90deg, #ffd700, #ffb300) !important; color:#111; font-weight:bold; }
     .rank-2 td { background: linear-gradient(90deg, #c0c0c0, #a0a0a0) !important; color:#111; }
     .rank-3 td { background: linear-gradient(90deg, #cd7f32, #a0522d) !important; color:#111; }
-
-    #error-message {
-      margin-top: 25px;
-      color: #f87171;
-      font-size: 18px;
-      display: none;
-    }
-    .loading {
-      font-size: 20px;
-      padding: 40px;
-    }
+    #error-message { margin-top: 25px; color: #f87171; font-size: 18px; display: none; }
+    .loading { font-size: 20px; padding: 40px; }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>
-    <img src="el7amla_logo.png" alt="Logo">
-    El7amla Fantasy League
-  </h1>
+  <h1><img src="el7amla_logo.png" alt="Logo"> El7amla Fantasy League</h1>
   <nav>
     <a href="index.html">Home</a>
     <a href="teams.html">Teams</a>
@@ -122,7 +82,7 @@
     <tbody></tbody>
   </table>
 
-  <h2 style="margin-top:55px;">ترتيب اللاعبين</h2>
+  <h2 style="margin-top:55px;">ترتيب اللاعبين (فقط الجولات اللي لعبوها)</h2>
 
   <table id="players-table">
     <thead>
@@ -141,113 +101,72 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";
+  const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";  
   const loading = document.getElementById("loading");
   const teamsTbody = document.querySelector("#teams-table tbody");
   const playersTbody = document.querySelector("#players-table tbody");
-  const errorDiv = document.getElementById("error-message");
+ tenia  const errorDiv = document.getElementById("error-message");
 
-  const teamStats = {}; // الإحصائيات الكاملة لكل فريق
+  const teamStats = {};
 
   try {
-    // 1. جلب league.json (أسماء الفرق واللاعبين)
-    const leagueRes = await fetch(baseUrl + "league.json?t=" + Date.now());
-    if (!leagueRes.ok) throw new Error("league.json not found");
-    const leagueData = await leagueRes.json();
+    // 1. جلب league.json
+    const leagueData = await (await fetch(baseUrl + "league.json?t=" + Date.now())).json();
 
-    Object.keys(leagueData.teams || {}).forEach(name => {
-      teamStats[name] = {
-        played: 0,
-        won: 0,
-        draw: 0,
-        lost: 0,
-        matchPoints: 0,
-        bonus: 0
-      };
+    // تهيئة إحصائيات الفرق
+    Object.keys(leagueData.teams || {}).forEach(t => {
+      teamStats[t] = { played:0, won:0, draw:0, lost:0, matchPoints:0, bonus:0 };
     });
 
-    // 2. جلب fixtures.json
-    const fixRes = await fetch(baseUrl + "fixtures.json?t=" + Date.now());
-    if (!fixRes.ok) throw new Error("fixtures.json not found");
-    const fixRaw = await fixRes.json();
+    // 2. جلب fixtures
+    const fixRaw = await (await fetch(baseUrl + "fixtures.json?t=" + Date.now())).json();
+    const rounds = fixRaw.fixtures ? Object.keys(fixRaw.fixtures).map(k => ({ round: +k, matches: fixRaw.fixtures[k] })) : [];
 
-    const rounds = fixRaw.fixtures
-      ? Object.keys(fixRaw.fixtures).map(k => ({ round: parseInt(k), matches: fixRaw.fixtures[k] }))
-      : [];
-
-    // 3. لكل جولة نحسب النتايج والبونص
+    // 3. حساب كل جولة
     for (const r of rounds) {
       const gw = r.round;
       let gwData = null;
+      try { gwData = await (await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`)).json(); } catch(e) {}
 
-      try {
-        const res = await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`);
-        if (res.ok) gwData = await res.json();
-      } catch (e) { /* مفيش ملف → نكمل */ }
-
-      // لو مفيش بيانات الجولة → نتخطاها
       if (!gwData) continue;
 
-      const gwScores = {}; // نقاط كل تيم في الجولة دي
+      const gwScores = {};
       let maxScore = -1;
-      let topTeams = [];
+      let topTeam = null;
 
-      // حساب نقاط كل تيم (حتى اللي عنده باي)
       Object.entries(gwData).forEach(([team, players]) => {
         const pts = Object.values(players).reduce((s, p) => s + (p.points || p || 0), 0);
         gwScores[team] = pts;
-        if (pts > maxScore) {
-          maxScore = pts;
-          topTeams = [team];
-        } else if (pts === maxScore) {
-          topTeams.push(team);
-        }
+        if (pts > maxScore) { maxScore = pts; topTeam = team; }
+        else if (pts === maxScore) topTeam = null; // تعادل في الصدارة → مفيش بونص
       });
 
-      // منح البونص لو فيه تيم واحد بس أعلى
-      if (topTeams.length === 1) {
-        const winner = topTeams[0];
-        if (teamStats[winner]) teamStats[winner].bonus += 1;
-      }
+      if (topTeam && teamStats[topTeam]) teamStats[topTeam].bonus += 1;
 
-      // حساب نتايج الماتشات
       r.matches.forEach(m => {
         const home = m[0] ?? m.home;
         const away = m[1] ?? m.away;
         if (home === "BYE" || away === "BYE") return;
 
-        const homePts = gwScores[home] || 0;
-        const awayPts = gwScores[away] || 0;
+        const hPts = gwScores[home] || 0;
+        const aPts = gwScores[away] || 0;
 
-        if (teamStats[home]) teamStats[home].played++;
-        if (teamStats[away]) teamStats[away].played++;
+        teamStats[home].played++;
+        teamStats[away].played++;
 
-        if (homePts > awayPts) {
-          teamStats[home].won++;
-          teamStats[home].matchPoints += 3;
-        } else if (awayPts > homePts) {
-          teamStats[away].won++;
-          teamStats[away].matchPoints += 3;
-        } else if (homePts === awayPts && homePts > 0) {
-          teamStats[home].draw++;
-          teamStats[away].draw++;
-          teamStats[home].matchPoints += 1;
-          teamStats[away].matchPoints += 1;
-        }
+        if (hPts > aPts) { teamStats[home].won++; teamStats[home].matchPoints += 3; }
+        else if (aPts > hPts) { teamStats[away].won++; teamStats[away].matchPoints += 3; }
+        else if (hPts > 0) { teamStats[home].draw++; teamStats[away].draw++; teamStats[home].matchPoints += 1; teamStats[away].matchPoints += 1; }
       });
     }
 
-    // 4. ترتيب الفرق
+    // عرض الفرق
     const sortedTeams = Object.entries(teamStats)
-      .map(([name, s]) => ({
-        name,
-        ...s,
-        total: s.matchPoints + s.bonus
-      }))
-      .sort((a, b) => b.total - a.total || b.matchPoints - a.matchPoints || b.bonus - a.bonus || a.name.localeCompare(b.name));
+      .map(([n, s]) => ({ name: n, ...s, total: s.matchPoints + s.bonus }))
+      .sort((a,b) => b.total - a.total || b.matchPoints - a.matchPoints || a.name.localeCompare(b.name));
 
-    teamsTbody.innerHTML = sortedTeams.map((t, i) => `
-      <tr class="${i < 3 ? 'rank-' + (i+1) : ''}">
+    teamsTbody.innerHTML = sortedTeams.map((t,i) => `
+      <tr class="${i<3?'rank-'+(i+1):''}">
         <td>${i+1}</td>
         <td>${t.name}</td>
         <td>${t.played}</td>
@@ -257,46 +176,43 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>${t.matchPoints}</td>
         <td>${t.bonus}</td>
         <td><strong>${t.total}</strong></td>
-      </tr>
-    `).join('');
+      </tr>`).join('');
 
-    // 5. ترتيب اللاعبين
-    const playerPoints = {};
+    // === ترتيب اللاعبين (الجديد الصحيح 100%) ===
+    const playerMap = {}; // playerId → { name, team, points }
 
-    // أولًا نأخذ أسماء اللاعبين من league.json
+    // جمع أسماء اللاعبين من league.json
     Object.entries(leagueData.teams || {}).forEach(([team, info]) => {
-      Object.entries(info.players || {}).forEach(([playerName, playerId]) => {
-        playerPoints[playerId] = { name: playerName, team, points: 0 };
+      Object.entries(info.players || {}).forEach(([name, id]) => {
+        playerMap[id] = { name, team, points: 0 };
       });
     });
 
-    // ثم نجمع نقاطهم من كل الجولات
+    // جمع نقاط اللاعبين من كل gw (فقط الجولات اللي لعبوها)
     for (let gw = 1; gw <= 38; gw++) {
       try {
-        const res = await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`);
-        if (!res.ok) continue;
-        const data = await res.json();
+        const data = await (await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`)).json();
         Object.entries(data).forEach(([team, players]) => {
           Object.entries(players).forEach(([pid, p]) => {
-            if (playerPoints[pid]) {
-              playerPoints[pid].points += (p.points || p || 0);
+            if (playerMap[pid]) {
+              const pts = typeof p === 'object' ? (p.points || 0) : (p || 0);
+              playerMap[pid].points += pts;
             }
           });
         });
-      } catch (e) {}
+      } catch(e) {}
     }
 
-    const sortedPlayers = Object.values(playerPoints)
-      .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
+    const sortedPlayers = Object.values(playerMap)
+      .sort((a,b) => b.points - a.points || a.name.localeCompare(b.name));
 
-    playersTbody.innerHTML = sortedPlayers.map((p, i) => `
+    playersTbody.innerHTML = sortedPlayers.map((p,i) => `
       <tr>
         <td>${i+1}</td>
         <td>${p.name}</td>
         <td>${p.team}</td>
         <td>${p.points}</td>
-      </tr>
-    `).join('');
+      </tr>`).join('');
 
     loading.style.display = "none";
 
@@ -307,6 +223,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 </script>
-
 </body>
 </html>
