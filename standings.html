@@ -20,6 +20,9 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     header h1 {
       font-size: 22px;
@@ -66,15 +69,23 @@
       color: white;
     }
     td { background: rgba(255,255,255,0.03); }
+    tr:hover td { background: rgba(96,165,250,0.15); }
+    .rank-1 td { background: linear-gradient(90deg, #ffd700, #ffb300) !important; color:#111; font-weight:bold; }
+    .rank-2 td { background: linear-gradient(90deg, #c0c0c0, #a0a0a0) !important; color:#111; }
+    .rank-3 td { background: linear-gradient(90deg, #cd7f32, #a0522d) !important; color:#111; }
+
     #error-message {
       margin-top: 25px;
       color: #f87171;
       font-size: 18px;
-      display:none;
+      display: none;
+    }
+    .loading {
+      font-size: 20px;
+      padding: 40px;
     }
   </style>
 </head>
-
 <body>
 
 <header>
@@ -91,28 +102,35 @@
 </header>
 
 <div class="container">
-  <h2>🏆 League Standings</h2>
+  <h2>ترتيب الدوري</h2>
+  <div class="loading" id="loading">جاري تحميل الترتيب...</div>
 
   <table id="teams-table">
     <thead>
       <tr>
-        <th>Rank</th>
-        <th>Team</th>
-        <th>Total Points</th>
+        <th>المركز</th>
+        <th>الفريق</th>
+        <th>لعب</th>
+        <th>فوز</th>
+        <th>تعادل</th>
+        <th>خسارة</th>
+        <th>نقاط الماتشات</th>
+        <th>بونص</th>
+        <th><strong>الإجمالي</strong></th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
 
-  <h2 style="margin-top:55px;">🎖 Player Ranking</h2>
+  <h2 style="margin-top:55px;">ترتيب اللاعبين</h2>
 
   <table id="players-table">
     <thead>
       <tr>
-        <th>Rank</th>
-        <th>Player</th>
-        <th>Team</th>
-        <th>Total Points</th>
+        <th>المركز</th>
+        <th>اللاعب</th>
+        <th>الفريق</th>
+        <th>النقاط</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -123,169 +141,155 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-
   const baseUrl = "https://el7amla-fpl-3107-2025.s3.us-east-1.amazonaws.com/fpl_data/";
-  const fixturesUrl = baseUrl + "fixtures.json?t=" + Date.now();
-  const leagueUrl = baseUrl + "league.json?t=" + Date.now();
-
+  const loading = document.getElementById("loading");
   const teamsTbody = document.querySelector("#teams-table tbody");
   const playersTbody = document.querySelector("#players-table tbody");
   const errorDiv = document.getElementById("error-message");
 
+  const teamStats = {}; // الإحصائيات الكاملة لكل فريق
+
   try {
-    const [fixturesRes, leagueRes] = await Promise.all([
-      fetch(fixturesUrl),
-      fetch(leagueUrl)
-    ]);
-
-    if (!fixturesRes.ok) throw new Error("Failed to load fixtures.json");
-    if (!leagueRes.ok) throw new Error("Failed to load league.json");
-
-    const fixturesRaw = await fixturesRes.json();
+    // 1. جلب league.json (أسماء الفرق واللاعبين)
+    const leagueRes = await fetch(baseUrl + "league.json?t=" + Date.now());
+    if (!leagueRes.ok) throw new Error("league.json not found");
     const leagueData = await leagueRes.json();
 
-    // init teams
-    const teamStats = {};
-    for (const teamName of Object.keys(leagueData.teams || {})) {
-      teamStats[teamName] = { points: 0 };
-    }
+    Object.keys(leagueData.teams || {}).forEach(name => {
+      teamStats[name] = {
+        played: 0,
+        won: 0,
+        draw: 0,
+        lost: 0,
+        matchPoints: 0,
+        bonus: 0
+      };
+    });
 
-    // build rounds array preserving numeric order
-    const rounds = fixturesRaw.fixtures
-      ? Object.entries(fixturesRaw.fixtures)
-          .map(([round, matches]) => ({ round: parseInt(round, 10), matches }))
-          .filter(r => !Number.isNaN(r.round))
-          .sort((a,b) => a.round - b.round)
+    // 2. جلب fixtures.json
+    const fixRes = await fetch(baseUrl + "fixtures.json?t=" + Date.now());
+    if (!fixRes.ok) throw new Error("fixtures.json not found");
+    const fixRaw = await fixRes.json();
+
+    const rounds = fixRaw.fixtures
+      ? Object.keys(fixRaw.fixtures).map(k => ({ round: parseInt(k), matches: fixRaw.fixtures[k] }))
       : [];
 
-    // loop rounds and calculate results only for rounds that have gw file and valid results
-    for (const roundObj of rounds) {
-      const gw = roundObj.round;
-      if (!gw || !Array.isArray(roundObj.matches) || roundObj.matches.length === 0) continue;
+    // 3. لكل جولة نحسب النتايج والبونص
+    for (const r of rounds) {
+      const gw = r.round;
+      let gwData = null;
 
-      // fetch gw file
-      let gwJson;
       try {
         const res = await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`);
-        if (!res.ok) {
-          console.warn(`gw${gw}.json not available (status ${res.status}), skipping GW${gw}`);
-          continue; // skip this GW if no file
+        if (res.ok) gwData = await res.json();
+      } catch (e) { /* مفيش ملف → نكمل */ }
+
+      // لو مفيش بيانات الجولة → نتخطاها
+      if (!gwData) continue;
+
+      const gwScores = {}; // نقاط كل تيم في الجولة دي
+      let maxScore = -1;
+      let topTeams = [];
+
+      // حساب نقاط كل تيم (حتى اللي عنده باي)
+      Object.entries(gwData).forEach(([team, players]) => {
+        const pts = Object.values(players).reduce((s, p) => s + (p.points || p || 0), 0);
+        gwScores[team] = pts;
+        if (pts > maxScore) {
+          maxScore = pts;
+          topTeams = [team];
+        } else if (pts === maxScore) {
+          topTeams.push(team);
         }
-        gwJson = await res.json();
-      } catch (e) {
-        console.warn(`Error fetching gw${gw}.json:`, e);
-        continue;
-      }
+      });
 
-      // compute team totals for this GW, but only for matches that actually have data
-      const gwScores = {}; // team -> numeric score (sum of player points)
-
-      for (const matchArr of roundObj.matches) {
-        // matches might be [home, away] or objects depending on your fixtures file
-        let home, away;
-        if (Array.isArray(matchArr)) {
-          [home, away] = matchArr;
-        } else {
-          home = matchArr.home;
-          away = matchArr.away;
-        }
-
-        if (!home || !away) continue;
-        if (home === "BYE" || away === "BYE") continue;
-
-        const homePlayers = gwJson[home];
-        const awayPlayers = gwJson[away];
-
-        // must have both teams in gwJson to consider the match played
-        if (!homePlayers || !awayPlayers) {
-          // one or both teams missing in this gw file -> treat as not-played / skip
-          console.warn(`GW${gw}: missing data for ${home} or ${away} (skipping match)`);
-          continue;
-        }
-
-        const homeScore = Object.values(homePlayers).reduce((s, p) => s + (p.points || 0), 0);
-        const awayScore = Object.values(awayPlayers).reduce((s, p) => s + (p.points || 0), 0);
-
-        gwScores[home] = homeScore;
-        gwScores[away] = awayScore;
-
-        // award match result points (3/1/0)
-        if (homeScore > awayScore) {
-          if (teamStats[home]) teamStats[home].points += 3;
-          if (teamStats[away] && teamStats[away].points !== undefined) teamStats[away].points += 0;
-        } else if (awayScore > homeScore) {
-          if (teamStats[away]) teamStats[away].points += 3;
-          if (teamStats[home] && teamStats[home].points !== undefined) teamStats[home].points += 0;
-        } else { // draw
-          if (teamStats[home]) teamStats[home].points += 1;
-          if (teamStats[away]) teamStats[away].points += 1;
-        }
-      } // end matches loop
-
-      // bonus: only if we have at least one team score and a unique top
-      const teamNames = Object.keys(gwScores);
-      if (teamNames.length === 0) {
-        // nothing to award for this GW
-        continue;
-      }
-      const maxScore = Math.max(...teamNames.map(t => gwScores[t]));
-      const topTeams = teamNames.filter(t => gwScores[t] === maxScore);
-
+      // منح البونص لو فيه تيم واحد بس أعلى
       if (topTeams.length === 1) {
-        const top = topTeams[0];
-        if (teamStats[top]) {
-          teamStats[top].points += 1; // single bonus point
-        }
-      } else {
-        // tie for top -> no bonus (change here if you prefer to give all tied teams the bonus)
-        console.info(`GW${gw} tie for top (${topTeams.join(',')}) — no single bonus awarded`);
+        const winner = topTeams[0];
+        if (teamStats[winner]) teamStats[winner].bonus += 1;
       }
-    } // end rounds loop
 
-    // prepare teams table
+      // حساب نتايج الماتشات
+      r.matches.forEach(m => {
+        const home = m[0] ?? m.home;
+        const away = m[1] ?? m.away;
+        if (home === "BYE" || away === "BYE") return;
+
+        const homePts = gwScores[home] || 0;
+        const awayPts = gwScores[away] || 0;
+
+        if (teamStats[home]) teamStats[home].played++;
+        if (teamStats[away]) teamStats[away].played++;
+
+        if (homePts > awayPts) {
+          teamStats[home].won++;
+          teamStats[home].matchPoints += 3;
+        } else if (awayPts > homePts) {
+          teamStats[away].won++;
+          teamStats[away].matchPoints += 3;
+        } else if (homePts === awayPts && homePts > 0) {
+          teamStats[home].draw++;
+          teamStats[away].draw++;
+          teamStats[home].matchPoints += 1;
+          teamStats[away].matchPoints += 1;
+        }
+      });
+    }
+
+    // 4. ترتيب الفرق
     const sortedTeams = Object.entries(teamStats)
-      .map(([name, d]) => ({ name, points: d.points || 0 }))
-      .sort((a,b) => b.points - a.points || a.name.localeCompare(b.name));
+      .map(([name, s]) => ({
+        name,
+        ...s,
+        total: s.matchPoints + s.bonus
+      }))
+      .sort((a, b) => b.total - a.total || b.matchPoints - a.matchPoints || b.bonus - a.bonus || a.name.localeCompare(b.name));
 
-    teamsTbody.innerHTML = sortedTeams.map((t,i) => `
-      <tr>
+    teamsTbody.innerHTML = sortedTeams.map((t, i) => `
+      <tr class="${i < 3 ? 'rank-' + (i+1) : ''}">
         <td>${i+1}</td>
         <td>${t.name}</td>
-        <td>${t.points}</td>
+        <td>${t.played}</td>
+        <td>${t.won}</td>
+        <td>${t.draw}</td>
+        <td>${t.played - t.won - t.draw}</td>
+        <td>${t.matchPoints}</td>
+        <td>${t.bonus}</td>
+        <td><strong>${t.total}</strong></td>
       </tr>
     `).join('');
 
-    // players ranking: sum player points across gw files (only if player exists in league)
+    // 5. ترتيب اللاعبين
     const playerPoints = {};
-    for (const [teamName, teamInfo] of Object.entries(leagueData.teams || {})) {
-      for (const [playerName, playerId] of Object.entries(teamInfo.players || {})) {
-        playerPoints[playerId] = { name: playerName, team: teamName, points: 0 };
-      }
-    }
 
-    // determine maxGW available by trying sequentially until missing (but safe up to 38)
+    // أولًا نأخذ أسماء اللاعبين من league.json
+    Object.entries(leagueData.teams || {}).forEach(([team, info]) => {
+      Object.entries(info.players || {}).forEach(([playerName, playerId]) => {
+        playerPoints[playerId] = { name: playerName, team, points: 0 };
+      });
+    });
+
+    // ثم نجمع نقاطهم من كل الجولات
     for (let gw = 1; gw <= 38; gw++) {
       try {
         const res = await fetch(`${baseUrl}gw${gw}.json?t=${Date.now()}`);
         if (!res.ok) continue;
-        const gwData = await res.json();
-        for (const [teamName, players] of Object.entries(gwData)) {
-          for (const [pid, pdata] of Object.entries(players)) {
+        const data = await res.json();
+        Object.entries(data).forEach(([team, players]) => {
+          Object.entries(players).forEach(([pid, p]) => {
             if (playerPoints[pid]) {
-              playerPoints[pid].points += (pdata.points || 0);
+              playerPoints[pid].points += (p.points || p || 0);
             }
-          }
-        }
-      } catch (e) {
-        // skip missing/invalid gw
-        continue;
-      }
+          });
+        });
+      } catch (e) {}
     }
 
     const sortedPlayers = Object.values(playerPoints)
-      .sort((a,b) => b.points - a.points || a.name.localeCompare(b.name));
+      .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
 
-    playersTbody.innerHTML = sortedPlayers.map((p,i) => `
+    playersTbody.innerHTML = sortedPlayers.map((p, i) => `
       <tr>
         <td>${i+1}</td>
         <td>${p.name}</td>
@@ -294,10 +298,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       </tr>
     `).join('');
 
+    loading.style.display = "none";
+
   } catch (err) {
-    console.error("Standings error:", err);
+    console.error(err);
+    loading.style.display = "none";
     errorDiv.style.display = "block";
-    errorDiv.textContent = "حدث خطأ أثناء تحميل أو معالجة البيانات. افتح Console لرؤية التفاصيل.";
   }
 });
 </script>
