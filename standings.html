@@ -2,37 +2,67 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>ترتيب الدوري لايف - El7amla 2v2 Fantasy League</title>
+  <title>ترتيب الدوري لايف - El7amla 2v2 Fantasy 2025/26</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Orbitron&display=swap" rel="stylesheet">
   <style>
-    body {font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:white;margin:0;padding:0;min-height:100vh;}
-    header {background:#111827;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 32px rgba(0,0,0,0.8);position:sticky;top:0;z-index:100;}
-    header h1 {font-family:'Orbitron',sans-serif;color:#60a5fa;font-size:26px;display:flex;align-items:center;gap:12px;margin:0;}
-    header img {height:50px;}
-    nav a {color:#93c5fd;text-decoration:none;font-weight:bold;margin:0 15px;font-size:18px;}
-    nav a:hover {color:#60a5fa;}
-    .container {max-width:1100px;margin:40px auto;padding:20px;text-align:center;}
-    h2 {color:#60a5fa;font-size:30px;margin-bottom:30px;}
-    .live {background:#22c55e;color:white;padding:8px 16px;border-radius:50px;font-size:14px;animation:pulse 2s infinite;}
-    @keyframes pulse {0%,100%{opacity:1}50%{opacity:0.7}}
-    table {width:100%;border-collapse:collapse;background:rgba(255,255,255,0.05);border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.6);margin:30px 0;}
-    th {background:#1e3a8a;padding:16px;font-size:18px;}
-    td {padding:14px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.1);}
-    tr:hover td {background:rgba(96,165,250,0.2);}
-    .rank-1 td {background:linear-gradient(90deg,#ffd700,#ffb300)!important;color:#000;font-weight:bold;}
-    .rank-2 td {background:linear-gradient(90deg,#c0c0c0,#a0a0a0)!important;color:#000;}
-    .rank-3 td {background:linear-gradient(90deg,#cd7f32,#a0522d)!important;color:#000;}
-    .loading {font-size:24px;color:#60a5fa;padding:60px;background:rgba(0,0,0,0.3);border-radius:16px;margin:40px 0;}
-    .update {text-align:center;color:#94a3b8;font-size:15px;margin:20px 0;}
+    body {font-family:'Cairo',sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:0;}
+    header {background:#1e293b;padding:20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
+    h1 {color:#60a5fa;font-family:'Orbitron',sans-serif;margin:0;font-size:28px;}
+    .container {max-width:1100px;margin:30px auto;padding:20px;}
+    h2 {color:#60a5fa;text-align:center;margin:40px 0 20px;font-size:26px;}
+    .live {background:#22c55e;color:white;padding:6px 14px;border-radius:30px;font-size:13px;margin-right:10px;}
+    table {width:100%;border-collapse:collapse;background:#1e293b;border-radius:12px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,0.5);margin-bottom:50px;}
+    th {background:#1e40af;color:white;padding:16px;font-weight:bold;}
+    td {padding:14px;text-align:center;background:#162033;}
+    tr:hover td {background:#1e40af;}
+    .rank-1 td {background:linear-gradient(90deg,#ffd700,#facc15)!important;color:#000;font-weight:bold;font-size:18px;}
+    .rank-2 td {background:linear-gradient(90deg,#e5e7eb,#9ca3af)!important;color:#000;}
+    .rank-3 td {background:linear-gradient(90deg,#fcd34d,#f59e0b)!important;color:#000;}
+    .loading {text-align:center;padding:60px;font-size:24px;color:#60a5fa;background:#1e293b;border-radius:12px;margin:50px 0;}
+    .update {text-align:center;color:#94a3b8;margin:20px 0;font-size:14px;}
   </style>
 </head>
 <body>
 
-<header... (نفس الـ header والـ container اللي فوق)
+<header>
+  <h1>El7amla 2v2 Fantasy League 2025/26</h1>
+</header>
+
+<div class="container">
+  <h2><span class="live">لايف</span> ترتيب الفرق</h2>
+  <div id="loading" class="loading">جاري سحب النقاط مباشرة من FPL...</div>
+  <div id="update" class="update"></div>
+
+  <table id="teams-table" style="display:none;">
+    <thead>
+      <tr>
+        <th>المركز</th>
+        <th>الفريق</th>
+        <th>لعب</th>
+        <th>فوز</th>
+        <th>تعادل</th>
+        <th>خسارة</th>
+        <th>نقاط الماتشات</th>
+        <th>بونص</th>
+        <th>الإجمالي</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>ترتيب اللاعبين</h2>
+  <table id="players-table" style="display:none;">
+    <thead>
+      <tr><th>المركز</th><th>اللاعب</th><th>الفريق</th><th>النقاط</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <script>
-// بيانات الفرق واللاعبين
+// === بيانات الدوري (من league.json + fixtures.json) ===
 const TEAMS = {
   "Black Tech":   { players: { "Elfiky": 7002106, "Omar": 1216533 } },
   "The Pharaohs": { players: { "Hussein": 275539, "Ahmed": 1545049 } },
@@ -41,35 +71,36 @@ const TEAMS = {
   "Boys":         { players: { "Ali": 8703485, "Magdy": 5857198 } }
 };
 
-// جدول المباريات (حط كل الـ 38 جولة هنا)
+// جدول المباريات كامل 38 جولة (نفس اللي في الكود البايثون بتاعك)
 const FIXTURES = {
-  "1": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-  "2": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-  "3": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-  "4": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-  "5": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-  "6": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-  "7": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-  "8": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-  "9": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-  "10": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-  // أضف باقي الجولات من 11 لحد 38 من الـ fixtures.json اللي عندك
-  "38": [["BYE", "BYE"]]
+  // الـ 5 جولات الأساسية تتكرر 7 مرات (35 جولة)
+  ...Array.from({length:7}, (_, i) => i*5).reduce((acc, start) => {
+    const block = {
+      [start+1]: [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
+      [start+2]: [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
+      [start+3]: [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
+      [start+4]: [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
+      [start+5]: [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]]
+    };
+    return {...acc, ...block};
+  }, {}),
+  // جولات الراحة
+  11: [["BYE","BYE"]], 22: [["BYE","BYE"]], 38: [["BYE","BYE"]]
 };
 
 const PROXY = "https://api.allorigins.win/raw?url=";
 const FPL = "https://fantasy.premierleague.com/api";
 
 async function fetchFPL(url) {
-  const res = await fetch(PROXY + encodeURIComponent(url));
-  if (!res.ok) throw new Error("FPL connection failed");
-  return await res.json();
+  const r = await fetch(PROXY + encodeURIComponent(url));
+  if (!r.ok) throw new Error("FPL error");
+  return r.json();
 }
 
-async function updateStandings() {
+async function update() {
   const loading = document.getElementById("loading");
-  const teamsTbody = document.querySelector("#teams-table tbody");
-  const playersTbody = document.querySelector("#players-table tbody");
+  const teamsBody = document.querySelector("#teams-table tbody");
+  const playersBody = document.querySelector("#players-table tbody");
   const updateDiv = document.getElementById("update");
 
   loading.style.display = "block";
@@ -77,101 +108,102 @@ async function updateStandings() {
   document.getElementById("players-table").style.display = "none";
 
   try {
-    // 1. جلب الجولة الحالية
     const bootstrap = await fetchFPL(`${FPL}/bootstrap-static/`);
-    const currentGW = bootstrap.events.find(e => e.is_current)?.id || bootstrap.events[bootstrap.events.length-1].id;
+    const currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
 
-    // 2. إحصائيات الفرق واللاعبين
     const stats = {};
-    const playerPoints = {};
-    const historyCache = {}; // ← ده اللي كان ناقص!
+    const players = {};
 
-    Object.keys(TEAMS).forEach(t => stats[t] = {played:0,won:0,draw:0,lost:0,matchPts:0,bonus:0});
+    // تهيئة
+    Object.keys(TEAMS).forEach(t => {
+      stats[t] = {played:0,won:0,draw:0,lost:0,matchPts:0,bonus:0};
+    });
 
-    // جلب تاريخ كل لاعب مرة واحدة بس
-    for (const team of Object.keys(TEAMS)) {
-      for (const [pName, id] of Object.entries(TEAMS[team].players)) {
-        playerPoints[id] = {name: pName, team, points: 0};
+    // جلب تاريخ كل لاعب مرة واحدة
+    const historyCache = {};
+    for (const team in TEAMS) {
+      for (const [name, id] of Object.entries(TEAMS[team].players)) {
+        players[id] = {name, team, points:0};
         try {
           const data = await fetchFPL(`${FPL}/entry/${id}/history/`);
-          historyCache[id] = data;
-        } catch(e) {
-          historyCache[id] = {current: []};
-        }
+          historyCache[id] = data.current || [];
+        } catch(e) { historyCache[id] = []; }
       }
     }
 
-    // حساب كل جولة من 1 لحد الجولة الحالية
+    // حساب كل جولة
     for (let gw = 1; gw <= currentGW; gw++) {
-      const gwScores = {};
-      let maxScore = -1;
-      let topTeam = null;
+      const scores = {};
+      let max = -1, bonusTeam = null;
 
-      // نقاط كل فريق في الجولة دي
-      for (const team of Object.keys(TEAMS)) {
-        let score = 0;
+      // نقاط الفرق في الجولة
+      for (const team in TEAMS) {
+        let pts = 0;
         for (const id of Object.values(TEAMS[team].players)) {
-          const gwData = historyCache[id].current.find(h => h.event === gw);
-          const pts = gwData ? gwData.points : 0;
-          score += pts;
-          playerPoints[id].points += pts;
+          const entry = historyCache[id].find(h => h.event === gw);
+          const p = entry ? entry.points : 0;
+          pts += p;
+          players[id].points += p;
         }
-        gwScores[team] = score;
-
-        if (score > maxScore) { maxScore = score; topTeam = team; }
-        else if (score === maxScore) topTeam = null;
+        scores[team] = pts;
+        if (pts > max) { max = pts; bonusTeam = team; }
+        else if (pts === max) bonusTeam = null;
       }
 
       // بونص
-      if (topTeam && maxScore > 0) stats[topTeam].bonus += 1;
+      if (bonusTeam) stats[bonusTeam].bonus += 1;
 
       // نتايج الماتشات
       const matches = FIXTURES[gw] || [];
-      for (const m of matches) {
-        const home = m[0], away = m[1];
-        if (home === "BYE" || away === "BYE") continue;
-        const h = gwScores[home] || 0, a = gwScores[away] || 0;
-        stats[home].played++; stats[away].played++;
-        if (h > a) { stats[home].won++; stats[home].matchPts += 3; }
-        else if (a > h) { stats[away].won++; stats[away].matchPts += 3; }
-        else if (h > 0 || a > 0) { stats[home].draw++; stats[away].draw++; stats[home].matchPts++; stats[away].matchPts++; }
+      for (const [t1, t2] of matches) {
+        if (t1 === "BYE" || t2 === "BYE") continue;
+        const s1 = scores[t1] || 0, s2 = scores[t2] || 0;
+        stats[t1].played++; stats[t2].played++;
+        if (s1 > s2) { stats[t1].won++; stats[t1].matchPts += 3; }
+        else if (s2 > s1) { stats[t2].won++; stats[t2].matchPts += 3; }
+        else if (s1 > 0 || s2 > 0) {
+          stats[t1].draw++; stats[t2].draw++;
+          stats[t1].matchPts += 1; stats[t2].matchPts += 1;
+        }
       }
     }
 
-    // عرض الفرق
+    // ترتيب الفرق
     const sortedTeams = Object.entries(stats)
       .map(([n,s]) => ({name:n, ...s, lost:s.played-s.won-s.draw, total:s.matchPts+s.bonus}))
       .sort((a,b) => b.total - a.total || b.matchPts - a.matchPts);
 
-    teamsTbody.innerHTML = "";
+    teamsBody.innerHTML = "";
     sortedTeams.forEach((t,i) => {
       const tr = document.createElement("tr");
       if(i<3) tr.className = `rank-${i+1}`;
       tr.innerHTML = `<td>${i+1}</td><td>${t.name}</td><td>${t.played}</td><td>${t.won}</td><td>${t.draw}</td><td>${t.lost}</td><td>${t.matchPts}</td><td>${t.bonus}</td><td><strong>${t.total}</strong></td>`;
-      teamsTbody.appendChild(tr);
+      teamsBody.appendChild(tr);
     });
 
-    // عرض اللاعبين
-    const sortedPlayers = Object.values(playerPoints).sort((a,b) => b.points - a.points);
-    playersTbody.innerHTML = "";
+    // ترتيب اللاعبين
+    const sortedPlayers = Object.values(players)
+      .sort((a,b) => b.points - a.points || a.name.localeCompare(b.name));
+
+    playersBody.innerHTML = "";
     sortedPlayers.forEach((p,i) => {
-      playersTbody.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td>${p.points}</td></tr>`;
+      playersBody.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td><strong>${p.points}</strong></td></tr>`;
     });
 
+    // إظهار الجداول
     loading.style.display = "none";
     document.getElementById("teams-table").style.display = "table";
     document.getElementById("players-table").style.display = "table";
-    updateDiv.innerText = `آخر تحديث: ${new Date().toLocaleString("ar-EG")} - الجولة ${currentGW}`;
+    updateDiv.textContent = `آخر تحديث: ${new Date().toLocaleString("ar-EG")} | الجولة ${currentGW}`;
 
-  } catch (err) {
-    console.error(err);
-    loading.innerHTML = "في مشكلة مؤقتة في الاتصال بـ FPL<br>جاري المحاولة مرة أخرى...";
+  } catch (e) {
+    console.error(e);
+    loading.textContent = "خطأ في الاتصال بـ FPL... جاري المحاولة";
   }
 }
 
-// تحديث تلقائي
-setInterval(updateStandings, 60000);
-updateStandings(); // أول تشغيل
+setInterval(update, 60000);
+update(); // تشغيل فوري
 </script>
 </body>
 </html>
