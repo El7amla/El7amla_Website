@@ -25,16 +25,13 @@
   </style>
 </head>
 <body>
-
 <header>
   <h1>El7amla 2v2 Fantasy League 2025/26</h1>
 </header>
-
 <div class="container">
   <h2><span class="live">لايف</span> ترتيب الفرق</h2>
   <div id="loading" class="loading">جاري سحب النقاط مباشرة من FPL...</div>
   <div id="update" class="update"></div>
-
   <table id="teams-table" style="display:none;">
     <thead>
       <tr>
@@ -51,7 +48,6 @@
     </thead>
     <tbody></tbody>
   </table>
-
   <h2>ترتيب اللاعبين</h2>
   <table id="players-table" style="display:none;">
     <thead>
@@ -60,17 +56,15 @@
     <tbody></tbody>
   </table>
 </div>
-
 <script>
 // === بيانات الدوري (من league.json + fixtures.json) ===
 const TEAMS = {
-  "Black Tech":   { players: { "Elfiky": 7002106, "Omar": 1216533 } },
+  "Black Tech": { players: { "Elfiky": 7002106, "Omar": 1216533 } },
   "The Pharaohs": { players: { "Hussein": 275539, "Ahmed": 1545049 } },
-  "Smokers":      { players: { "Body": 1679155, "Tawheed": 2208753 } },
-  "Falcons":      { players: { "Nasser": 2134302, "Mahmoud": 8656672 } },
-  "Boys":         { players: { "Ali": 8703485, "Magdy": 5857198 } }
+  "Smokers": { players: { "Body": 1679155, "Tawheed": 2208753 } },
+  "Falcons": { players: { "Nasser": 2134302, "Mahmoud": 8656672 } },
+  "Boys": { players: { "Ali": 8703485, "Magdy": 5857198 } }
 };
-
 // جدول المباريات كامل 38 جولة (نفس اللي في الكود البايثون بتاعك)
 const FIXTURES = {
   // الـ 5 جولات الأساسية تتكرر 7 مرات (35 جولة)
@@ -87,9 +81,10 @@ const FIXTURES = {
   // جولات الراحة
   11: [["BYE","BYE"]], 22: [["BYE","BYE"]], 38: [["BYE","BYE"]]
 };
-
 const PROXY = "https://api.allorigins.win/raw?url=";
 const FPL = "https://fantasy.premierleague.com/api";
+const CACHE_KEY = 'fpl_data_cache';
+const CACHE_EXPIRATION = 24 * 60 * 60 * 1000; // 24 ساعة
 
 async function fetchFPL(url) {
   const r = await fetch(PROXY + encodeURIComponent(url));
@@ -97,113 +92,145 @@ async function fetchFPL(url) {
   return r.json();
 }
 
+function getCachedData() {
+  const cached = localStorage.getItem(CACHE_KEY);
+  if (cached) {
+    const { data, timestamp } = JSON.parse(cached);
+    if (Date.now() - timestamp < CACHE_EXPIRATION) {
+      return data;
+    }
+  }
+  return null;
+}
+
+function setCachedData(data) {
+  localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
+}
+
 async function update() {
   const loading = document.getElementById("loading");
   const teamsBody = document.querySelector("#teams-table tbody");
   const playersBody = document.querySelector("#players-table tbody");
   const updateDiv = document.getElementById("update");
-
   loading.style.display = "block";
   document.getElementById("teams-table").style.display = "none";
   document.getElementById("players-table").style.display = "none";
 
   try {
-    const bootstrap = await fetchFPL(`${FPL}/bootstrap-static/`);
-    const currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
+    let bootstrap = getCachedData()?.bootstrap;
+    let histories = getCachedData()?.histories;
+    let currentGW;
 
-    const stats = {};
-    const players = {};
+    if (!bootstrap || !histories) {
+      bootstrap = await fetchFPL(`${FPL}/bootstrap-static/`);
+      currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
 
-    // تهيئة
-    Object.keys(TEAMS).forEach(t => {
-      stats[t] = {played:0,won:0,draw:0,lost:0,matchPts:0,bonus:0};
-    });
+      const playerIds = Object.values(TEAMS).flatMap(t => Object.values(t.players));
+      const historyPromises = playerIds.map(id => fetchFPL(`${FPL}/entry/${id}/history/`));
+      const historyData = await Promise.all(historyPromises);
+      histories = {};
+      playerIds.forEach((id, index) => {
+        histories[id] = historyData[index].current || [];
+      });
 
-    // جلب تاريخ كل لاعب مرة واحدة
-    const historyCache = {};
-    for (const team in TEAMS) {
-      for (const [name, id] of Object.entries(TEAMS[team].players)) {
-        players[id] = {name, team, points:0};
-        try {
-          const data = await fetchFPL(`${FPL}/entry/${id}/history/`);
-          historyCache[id] = data.current || [];
-        } catch(e) { historyCache[id] = []; }
-      }
+      setCachedData({ bootstrap, histories });
+    } else {
+      currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
     }
 
-    // حساب كل جولة
-    for (let gw = 1; gw <= currentGW; gw++) {
-      const scores = {};
-      let max = -1, bonusTeam = null;
+    const stats = {};
+    const playersStats = {};
+    Object.keys(TEAMS).forEach(t => {
+      stats[t] = {played:0, won:0, draw:0, lost:0, matchPts:0, bonus:0};
+    });
+    Object.entries(TEAMS).forEach(([team, {players: teamPlayers}]) => {
+      Object.entries(teamPlayers).forEach(([name, id]) => {
+        playersStats[id] = {name, team, points:0};
+      });
+    });
 
-      // نقاط الفرق في الجولة
+    for (let gw = 1; gw <= currentGW; gw++) {
+      const matches = FIXTURES[gw] || [];
+      const scoredTeams = [];
+
       for (const team in TEAMS) {
-        let pts = 0;
+        const hasMatch = matches.some(match => match.includes(team) && !match.includes("BYE"));
+        if (!hasMatch) continue;
+
+        let teamPoints = 0;
         for (const id of Object.values(TEAMS[team].players)) {
-          const entry = historyCache[id].find(h => h.event === gw);
+          const entry = histories[id].find(h => h.event === gw);
           const p = entry ? entry.points : 0;
-          pts += p;
-          players[id].points += p;
+          teamPoints += p;
+          playersStats[id].points += p; // إضافة نقاط اللاعب فقط إذا الفريق لعب
         }
-        scores[team] = pts;
-        if (pts > max) { max = pts; bonusTeam = team; }
-        else if (pts === max) bonusTeam = null;
+
+        if (teamPoints > 0) {
+          scoredTeams.push({ team, points: teamPoints });
+        }
       }
 
-      // بونص
-      if (bonusTeam) stats[bonusTeam].bonus += 1;
+      scoredTeams.sort((a, b) => b.points - a.points);
+      const topTeams = scoredTeams.slice(0, 5);
+      if (topTeams.length > 0) {
+        stats[topTeams[0].team].bonus += 1;
+      }
 
-      // نتايج الماتشات
-      const matches = FIXTURES[gw] || [];
       for (const [t1, t2] of matches) {
         if (t1 === "BYE" || t2 === "BYE") continue;
-        const s1 = scores[t1] || 0, s2 = scores[t2] || 0;
+        const s1 = scoredTeams.find(s => s.team === t1)?.points || 0;
+        const s2 = scoredTeams.find(s => s.team === t2)?.points || 0;
         stats[t1].played++; stats[t2].played++;
-        if (s1 > s2) { stats[t1].won++; stats[t1].matchPts += 3; }
-        else if (s2 > s1) { stats[t2].won++; stats[t2].matchPts += 3; }
-        else if (s1 > 0 || s2 > 0) {
+        if (s1 > s2) { stats[t1].won++; stats[t1].matchPts += 3; stats[t2].lost++; }
+        else if (s2 > s1) { stats[t2].won++; stats[t2].matchPts += 3; stats[t1].lost++; }
+        else { 
           stats[t1].draw++; stats[t2].draw++;
           stats[t1].matchPts += 1; stats[t2].matchPts += 1;
         }
       }
     }
 
-    // ترتيب الفرق
     const sortedTeams = Object.entries(stats)
-      .map(([n,s]) => ({name:n, ...s, lost:s.played-s.won-s.draw, total:s.matchPts+s.bonus}))
-      .sort((a,b) => b.total - a.total || b.matchPts - a.matchPts);
-
+      .map(([n, s]) => ({name: n, ...s, total: s.matchPts + s.bonus}))
+      .sort((a, b) => b.total - a.total || b.matchPts - a.matchPts);
     teamsBody.innerHTML = "";
-    sortedTeams.forEach((t,i) => {
+    sortedTeams.forEach((t, i) => {
       const tr = document.createElement("tr");
-      if(i<3) tr.className = `rank-${i+1}`;
-      tr.innerHTML = `<td>${i+1}</td><td>${t.name}</td><td>${t.played}</td><td>${t.won}</td><td>${t.draw}</td><td>${t.lost}</td><td>${t.matchPts}</td><td>${t.bonus}</td><td><strong>${t.total}</strong></td>`;
+      if (i < 3) tr.className = `rank-${i+1}`;
+      tr.innerHTML = `<td>${i+1}</td><td>${t.name}</td><td>${t.played}</td><td>${t.won}</td><td>${t.draw}</td><td>${t.played - t.won - t.draw}</td><td>${t.matchPts}</td><td>${t.bonus}</td><td><strong>${t.total}</strong></td>`;
       teamsBody.appendChild(tr);
     });
 
-    // ترتيب اللاعبين
-    const sortedPlayers = Object.values(players)
-      .sort((a,b) => b.points - a.points || a.name.localeCompare(b.name));
-
+    const sortedPlayers = Object.values(playersStats)
+      .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
     playersBody.innerHTML = "";
-    sortedPlayers.forEach((p,i) => {
+    sortedPlayers.forEach((p, i) => {
       playersBody.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td><strong>${p.points}</strong></td></tr>`;
     });
 
-    // إظهار الجداول
     loading.style.display = "none";
     document.getElementById("teams-table").style.display = "table";
     document.getElementById("players-table").style.display = "table";
     updateDiv.textContent = `آخر تحديث: ${new Date().toLocaleString("ar-EG")} | الجولة ${currentGW}`;
-
   } catch (e) {
     console.error(e);
     loading.textContent = "خطأ في الاتصال بـ FPL... جاري المحاولة";
   }
 }
 
-setInterval(update, 60000);
-update(); // تشغيل فوري
+function scheduleNextUpdate() {
+  const now = new Date();
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+  const timeToMidnight = nextMidnight - now;
+  setTimeout(() => {
+    localStorage.removeItem(CACHE_KEY); // إزالة الكاش لإجبار التحديث
+    update();
+    scheduleNextUpdate();
+  }, timeToMidnight);
+}
+
+update();
+scheduleNextUpdate();
 </script>
 </body>
 </html>
