@@ -22,11 +22,20 @@
     .rank-3 td {background:linear-gradient(90deg,#fcd34d,#f59e0b)!important;color:#000;}
     .loading {text-align:center;padding:60px;font-size:24px;color:#60a5fa;background:#1e293b;border-radius:12px;margin:50px 0;}
     .update {text-align:center;color:#94a3b8;margin:20px 0;font-size:14px;}
+    nav {display: flex; justify-content: center; gap: 30px; margin-top: 15px;}
+    nav a {color: #60a5fa; text-decoration: none; font-weight: bold; font-size: 18px;}
+    nav a:hover {text-decoration: underline; color: #93c5fd;}
   </style>
 </head>
 <body>
 <header>
   <h1>El7amla 2v2 Fantasy League 2025/26</h1>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="teams.html">الفرق</a>
+    <a href="standings.html">الترتيب</a>
+    <a href="fixtures.html">المباريات</a>
+  </nav>
 </header>
 <div class="container">
   <h2><span class="live">لايف</span> ترتيب الفرق</h2>
@@ -51,13 +60,18 @@
   <h2>ترتيب اللاعبين</h2>
   <table id="players-table" style="display:none;">
     <thead>
-      <tr><th>المركز</th><th>اللاعب</th><th>الفريق</th><th>النقاط</th></tr>
+      <tr>
+        <th>المركز</th>
+        <th>اللاعب</th>
+        <th>الفريق</th>
+        <th>النقاط</th>
+      </tr>
     </thead>
     <tbody></tbody>
   </table>
 </div>
 <script>
-// === بيانات الدوري (من league.json + fixtures.json) ===
+// بيانات الفرق واللاعبين
 const TEAMS = {
   "Black Tech": { players: { "Elfiky": 7002106, "Omar": 1216533 } },
   "The Pharaohs": { players: { "Hussein": 275539, "Ahmed": 1545049 } },
@@ -65,9 +79,9 @@ const TEAMS = {
   "Falcons": { players: { "Nasser": 2134302, "Mahmoud": 8656672 } },
   "Boys": { players: { "Ali": 8703485, "Magdy": 5857198 } }
 };
-// جدول المباريات كامل 38 جولة (نفس اللي في الكود البايثون بتاعك)
+
+// جدول المباريات الكامل (38 جولة)
 const FIXTURES = {
-  // الـ 5 جولات الأساسية تتكرر 7 مرات (35 جولة)
   ...Array.from({length:7}, (_, i) => i*5).reduce((acc, start) => {
     const block = {
       [start+1]: [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
@@ -78,18 +92,20 @@ const FIXTURES = {
     };
     return {...acc, ...block};
   }, {}),
-  // جولات الراحة
-  11: [["BYE","BYE"]], 22: [["BYE","BYE"]], 38: [["BYE","BYE"]]
+  11: [["BYE","BYE"]],
+  22: [["BYE","BYE"]],
+  38: [["BYE","BYE"]]
 };
+
 const PROXY = "https://api.allorigins.win/raw?url=";
 const FPL = "https://fantasy.premierleague.com/api";
 const CACHE_KEY = 'fpl_data_cache';
 const CACHE_EXPIRATION = 24 * 60 * 60 * 1000; // 24 ساعة
 
 async function fetchFPL(url) {
-  const r = await fetch(PROXY + encodeURIComponent(url));
-  if (!r.ok) throw new Error("FPL error");
-  return r.json();
+  const response = await fetch(PROXY + encodeURIComponent(url));
+  if (!response.ok) throw new Error("خطأ في جلب البيانات من FPL");
+  return response.json();
 }
 
 function getCachedData() {
@@ -112,6 +128,7 @@ async function update() {
   const teamsBody = document.querySelector("#teams-table tbody");
   const playersBody = document.querySelector("#players-table tbody");
   const updateDiv = document.getElementById("update");
+
   loading.style.display = "block";
   document.getElementById("teams-table").style.display = "none";
   document.getElementById("players-table").style.display = "none";
@@ -122,113 +139,178 @@ async function update() {
     let currentGW;
 
     if (!bootstrap || !histories) {
+      // جلب بيانات الدوري العامة
       bootstrap = await fetchFPL(`${FPL}/bootstrap-static/`);
-      currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
+      currentGW = bootstrap.events.find(e => e.is_current)?.id || 
+                   bootstrap.events.filter(e => e.finished).length || 1;
 
-      const playerIds = Object.values(TEAMS).flatMap(t => Object.values(t.players));
-      const historyPromises = playerIds.map(id => fetchFPL(`${FPL}/entry/${id}/history/`));
-      const historyData = await Promise.all(historyPromises);
+      // جلب تاريخ كل لاعب
+      const playerIds = Object.values(TEAMS).flatMap(team => Object.values(team.players));
+      const historyPromises = playerIds.map(id => 
+        fetchFPL(`${FPL}/entry/${id}/history/`).catch(() => ({current: []}))
+      );
+      const historyResponses = await Promise.all(historyPromises);
+
       histories = {};
       playerIds.forEach((id, index) => {
-        histories[id] = historyData[index].current || [];
+        histories[id] = historyResponses[index].current || [];
       });
 
+      // حفظ في الكاش
       setCachedData({ bootstrap, histories });
     } else {
-      currentGW = bootstrap.events.find(e => e.is_current)?.id || 1;
+      currentGW = bootstrap.events.find(e => e.is_current)?.id || 
+                   bootstrap.events.filter(e => e.finished).length || 1;
     }
 
+    // تهيئة الإحصائيات
     const stats = {};
     const playersStats = {};
-    Object.keys(TEAMS).forEach(t => {
-      stats[t] = {played:0, won:0, draw:0, lost:0, matchPts:0, bonus:0};
+    Object.keys(TEAMS).forEach(team => {
+      stats[team] = {played: 0, won: 0, draw: 0, lost: 0, matchPts: 0, bonus: 0};
     });
-    Object.entries(TEAMS).forEach(([team, {players: teamPlayers}]) => {
-      Object.entries(teamPlayers).forEach(([name, id]) => {
-        playersStats[id] = {name, team, points:0};
+    Object.entries(TEAMS).forEach(([teamName, team]) => {
+      Object.entries(team.players).forEach(([playerName, playerId]) => {
+        playersStats[playerId] = {name: playerName, team: teamName, points: 0};
       });
     });
 
+    // معالجة كل جولة حتى الجولة الحالية
     for (let gw = 1; gw <= currentGW; gw++) {
       const matches = FIXTURES[gw] || [];
       const scoredTeams = [];
 
+      // حساب نقاط كل فريق في الجولة (حتى لو في راحة)
       for (const team in TEAMS) {
-        const hasMatch = matches.some(match => match.includes(team) && !match.includes("BYE"));
-        if (!hasMatch) continue;
-
+        const hasMatch = matches.some(m => m.includes(team) && !m.includes("BYE"));
         let teamPoints = 0;
-        for (const id of Object.values(TEAMS[team].players)) {
-          const entry = histories[id].find(h => h.event === gw);
-          const p = entry ? entry.points : 0;
-          teamPoints += p;
-          playersStats[id].points += p; // إضافة نقاط اللاعب فقط إذا الفريق لعب
-        }
 
-        if (teamPoints > 0) {
-          scoredTeams.push({ team, points: teamPoints });
+        for (const playerId of Object.values(TEAMS[team].players)) {
+          const entry = histories[playerId].find(h => h.event === gw);
+          const pointsThisGW = entry ? entry.points : 0;
+          teamPoints += pointsThisGW;
+
+          // نقاط اللاعبين تُحسب فقط في الجولات اللي فريقهم لعب فيها
+          if (hasMatch) {
+            playersStats[playerId].points += pointsThisGW;
+          }
         }
+        scoredTeams.push({team, points: teamPoints});
       }
 
-      scoredTeams.sort((a, b) => b.points - a.points);
-      const topTeams = scoredTeams.slice(0, 5);
-      if (topTeams.length > 0) {
-        stats[topTeams[0].team].bonus += 1;
+      // حساب البونص: أعلى فريق في الجولة (حتى لو في راحة)
+      const teamsWithPoints = scoredTeams.filter(s => s.points > 0);
+      if (teamsWithPoints.length > 0) {
+        teamsWithPoints.sort((a, b) => b.points - a.points);
+        const topPoints = teamsWithPoints[0].points;
+        const topTeams = teamsWithPoints.filter(t => t.points === topPoints);
+        if (topTeams.length === 1) {
+          stats[topTeams[0].team].bonus += 1;
+        }
+        // لو تعادل أكتر من فريق → مفيش بونص
       }
 
+      // حساب نتائج المباريات (فقط الفرق اللي لعبت)
       for (const [t1, t2] of matches) {
         if (t1 === "BYE" || t2 === "BYE") continue;
-        const s1 = scoredTeams.find(s => s.team === t1)?.points || 0;
-        const s2 = scoredTeams.find(s => s.team === t2)?.points || 0;
-        stats[t1].played++; stats[t2].played++;
-        if (s1 > s2) { stats[t1].won++; stats[t1].matchPts += 3; stats[t2].lost++; }
-        else if (s2 > s1) { stats[t2].won++; stats[t2].matchPts += 3; stats[t1].lost++; }
-        else { 
-          stats[t1].draw++; stats[t2].draw++;
-          stats[t1].matchPts += 1; stats[t2].matchPts += 1;
+
+        const score1 = scoredTeams.find(s => s.team === t1)?.points || 0;
+        const score2 = scoredTeams.find(s => s.team === t2)?.points || 0;
+
+        stats[t1].played++;
+        stats[t2].played++;
+
+        if (score1 > score2) {
+          stats[t1].won++;
+          stats[t1].matchPts += 3;
+          stats[t2].lost++;
+        } else if (score2 > score1) {
+          stats[t2].won++;
+          stats[t2].matchPts += 3;
+          stats[t1].lost++;
+        } else {
+          stats[t1].draw++;
+          stats[t2].draw++;
+          stats[t1].matchPts += 1;
+          stats[t2].matchPts += 1;
         }
       }
     }
 
+    // ترتيب الفرق
     const sortedTeams = Object.entries(stats)
-      .map(([n, s]) => ({name: n, ...s, total: s.matchPts + s.bonus}))
-      .sort((a, b) => b.total - a.total || b.matchPts - a.matchPts);
+      .map(([name, s]) => ({
+        name,
+        played: s.played,
+        won: s.won,
+        draw: s.draw,
+        lost: s.played - s.won - s.draw,
+        matchPts: s.matchPts,
+        bonus: s.bonus,
+        total: s.matchPts + s.bonus
+      }))
+      .sort((a, b) => b.total - a.total || b.matchPts - a.matchPts || b.bonus - a.bonus);
+
     teamsBody.innerHTML = "";
-    sortedTeams.forEach((t, i) => {
-      const tr = document.createElement("tr");
-      if (i < 3) tr.className = `rank-${i+1}`;
-      tr.innerHTML = `<td>${i+1}</td><td>${t.name}</td><td>${t.played}</td><td>${t.won}</td><td>${t.draw}</td><td>${t.played - t.won - t.draw}</td><td>${t.matchPts}</td><td>${t.bonus}</td><td><strong>${t.total}</strong></td>`;
-      teamsBody.appendChild(tr);
+    sortedTeams.forEach((team, index) => {
+      const row = document.createElement("tr");
+      if (index < 3) row.className = `rank-${index + 1}`;
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${team.name}</td>
+        <td>${team.played}</td>
+        <td>${team.won}</td>
+        <td>${team.draw}</td>
+        <td>${team.lost}</td>
+        <td>${team.matchPts}</td>
+        <td>${team.bonus}</td>
+        <td><strong>${team.total}</strong></td>
+      `;
+      teamsBody.appendChild(row);
     });
 
+    // ترتيب اللاعبين
     const sortedPlayers = Object.values(playersStats)
       .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
+
     playersBody.innerHTML = "";
-    sortedPlayers.forEach((p, i) => {
-      playersBody.innerHTML += `<tr><td>${i+1}</td><td>${p.name}</td><td>${p.team}</td><td><strong>${p.points}</strong></td></tr>`;
+    sortedPlayers.forEach((player, index) => {
+      playersBody.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${player.name}</td>
+          <td>${player.team}</td>
+          <td><strong>${player.points}</strong></td>
+        </tr>
+      `;
     });
 
+    // إظهار الجداول وتحديث وقت التحديث
     loading.style.display = "none";
     document.getElementById("teams-table").style.display = "table";
     document.getElementById("players-table").style.display = "table";
-    updateDiv.textContent = `آخر تحديث: ${new Date().toLocaleString("ar-EG")} | الجولة ${currentGW}`;
-  } catch (e) {
-    console.error(e);
-    loading.textContent = "خطأ في الاتصال بـ FPL... جاري المحاولة";
+    updateDiv.textContent = `آخر تحديث: ${new Date().toLocaleString("ar-EG")} | الجولة الحالية: ${currentGW}`;
+
+  } catch (error) {
+    console.error(error);
+    loading.textContent = "خطأ في الاتصال بـ FPL... جاري المحاولة مرة أخرى";
   }
 }
 
+// جدولة التحديث اليومي (كل يوم الساعة 00:00)
 function scheduleNextUpdate() {
   const now = new Date();
   const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-  const timeToMidnight = nextMidnight - now;
+  const timeUntilMidnight = nextMidnight - now;
+
   setTimeout(() => {
-    localStorage.removeItem(CACHE_KEY); // إزالة الكاش لإجبار التحديث
+    localStorage.removeItem(CACHE_KEY); // مسح الكاش لجلب بيانات جديدة
     update();
-    scheduleNextUpdate();
-  }, timeToMidnight);
+    scheduleNextUpdate(); // جدولة اليوم التالي
+  }, timeUntilMidnight);
 }
 
+// تشغيل فوري عند فتح الصفحة
 update();
 scheduleNextUpdate();
 </script>
