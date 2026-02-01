@@ -7,148 +7,239 @@
   <link rel="icon" href="data:,">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Orbitron&display=swap" rel="stylesheet">
   <style>
-    body {font-family:'Cairo',sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:0;}
-    header {background:#1e293b;padding:20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
-    h1 {color:#60a5fa;font-family:'Orbitron',sans-serif;margin:0;font-size:28px;}
-    .container {max-width:1100px;margin:30px auto;padding:20px;}
-    h2 {color:#60a5fa;text-align:center;margin:40px 0 20px;font-size:26px;}
-    .live {background:#22c55e;color:white;padding:6px 14px;border-radius:30px;font-size:13px;margin-right:10px;}
-    table {width:100%;border-collapse:collapse;background:#1e293b;border-radius:12px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,0.5);margin-bottom:50px;}
-    th {background:#1e40af;color:white;padding:16px;font-weight:bold;}
-    td {padding:14px;text-align:center;background:#162033;}
-    tr:hover td {background:#1e40af;}
-    .rank-1 td {background:linear-gradient(90deg,#ffd700,#facc15)!important;color:#000;font-weight:bold;font-size:18px;}
-    .rank-2 td {background:linear-gradient(90deg,#e5e7eb,#9ca3af)!important;color:#000;}
-    .rank-3 td {background:linear-gradient(90deg,#fcd34d,#f59e0b)!important;color:#000;}
-    .loading {text-align:center;padding:60px;font-size:24px;color:#60a5fa;background:#1e293b;border-radius:12px;margin:50px 0;}
-    .update {text-align:center;color:#94a3b8;margin:20px 0;font-size:14px;}
-    nav {display: flex; justify-content: center; gap: 30px; margin-top: 15px;}
-    nav a {color: #60a5fa; text-decoration: none; font-weight: bold; font-size: 18px;}
-    nav a:hover {text-decoration: underline; color: #93c5fd;}
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1e293b;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    h1 {
+      color: #60a5fa;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      font-size: 28px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    h2 {
+      color: #60a5fa;
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 26px;
+    }
+    .live {
+      background: #22c55e;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      margin-right: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      margin-bottom: 50px;
+    }
+    th {
+      background: #1e40af;
+      color: white;
+      padding: 16px;
+      font-weight: bold;
+    }
+    td {
+      padding: 14px;
+      text-align: center;
+      background: #162033;
+    }
+    tr:hover td {
+      background: #1e40af;
+    }
+    .rank-1 td {
+      background: linear-gradient(90deg, #ffd700, #facc15) !important;
+      color: #000;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .rank-2 td {
+      background: linear-gradient(90deg, #e5e7eb, #9ca3af) !important;
+      color: #000;
+    }
+    .rank-3 td {
+      background: linear-gradient(90deg, #fcd34d, #f59e0b) !important;
+      color: #000;
+    }
+    .loading {
+      text-align: center;
+      padding: 60px;
+      font-size: 24px;
+      color: #60a5fa;
+      background: #1e293b;
+      border-radius: 12px;
+      margin: 50px 0;
+    }
+    .update {
+      text-align: center;
+      color: #94a3b8;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+    }
+    nav a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      color: #93c5fd;
+    }
   </style>
 </head>
 <body>
-<header>
-  <h1>El7amla 2v2 Fantasy League 2025/26</h1>
-  <nav>
-    <a href="index.html">الرئيسية</a>
-    <a href="teams.html">الفرق</a>
-    <a href="standings.html">الترتيب</a>
-    <a href="fixtures.html">المباريات</a>
-  </nav>
-</header>
-<div class="container">
-  <h2><span class="live">لايف</span> ترتيب الفرق</h2>
-  <div id="loading" class="loading">جاري تحميل الترتيب...</div>
-  <div id="update" class="update"></div>
-  <table id="teams-table" style="display:none;">
-    <thead>
-      <tr>
-        <th>المركز</th>
-        <th>الفريق</th>
-        <th>لعب</th>
-        <th>فوز</th>
-        <th>تعادل</th>
-        <th>خسارة</th>
-        <th>نقاط الماتشات</th>
-        <th>بونص</th>
-        <th>الإجمالي</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <h2>ترتيب اللاعبين</h2>
-  <table id="players-table" style="display:none;">
-    <thead>
-      <tr>
-        <th>المركز</th>
-        <th>اللاعب</th>
-        <th>الفريق</th>
-        <th>النقاط</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+  <header>
+    <h1>El7amla 2v2 Fantasy League 2025/26</h1>
+    <nav>
+      <a href="index.html">الرئيسية</a>
+      <a href="teams.html">الفرق</a>
+      <a href="standings.html">الترتيب</a>
+      <a href="fixtures.html">المباريات</a>
+    </nav>
+  </header>
 
-<script>
-  // رابط ملف الترتيب على GitHub (غيّر اسم المستخدم/الريبو لو الرابط مختلف)
-  const DATA_URL = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/data/current_standings.json";
+  <div class="container">
+    <h2><span class="live">لايف</span> ترتيب الفرق</h2>
+    <div id="loading" class="loading">جاري تحميل الترتيب...</div>
+    <div id="update" class="update"></div>
 
-  async function loadStandings() {
-    const loading = document.getElementById("loading");
-    const updateDiv = document.getElementById("update");
-    const teamsBody = document.querySelector("#teams-table tbody");
-    const playersBody = document.querySelector("#players-table tbody");
+    <table id="teams-table" style="display:none;">
+      <thead>
+        <tr>
+          <th>المركز</th>
+          <th>الفريق</th>
+          <th>لعب</th>
+          <th>فوز</th>
+          <th>تعادل</th>
+          <th>خسارة</th>
+          <th>نقاط الماتشات</th>
+          <th>بونص</th>
+          <th>الإجمالي</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-    loading.style.display = "block";
-    document.getElementById("teams-table").style.display = "none";
-    document.getElementById("players-table").style.display = "none";
+    <h2>ترتيب اللاعبين</h2>
+    <table id="players-table" style="display:none;">
+      <thead>
+        <tr>
+          <th>المركز</th>
+          <th>اللاعب</th>
+          <th>الفريق</th>
+          <th>النقاط</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-    try {
-      // إضافة ?v=... عشان يتجنب الكاش القديم في المتصفح
-      const res = await fetch(DATA_URL + '?v=' + Date.now());
-      if (!res.ok) {
-        throw new Error("فشل جلب ملف الترتيب");
-      }
-      const data = await res.json();
+  <script>
+    // رابط ملف الترتيب الثابت على GitHub
+    const DATA_URL = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/data/current_standings.json";
 
-      // عرض الفرق
-      teamsBody.innerHTML = "";
-      if (data.teams && Array.isArray(data.teams) && data.teams.length > 0) {
-        data.teams.forEach((t, i) => {
-          const tr = document.createElement("tr");
-          if (i < 3) tr.className = `rank-${i+1}`;
-          tr.innerHTML = `
-            <td>${i + 1}</td>
-            <td>${t.name || "غير محدد"}</td>
-            <td>${t.played || 0}</td>
-            <td>${t.won || 0}</td>
-            <td>${t.draw || 0}</td>
-            <td>${t.lost || 0}</td>
-            <td>${t.matchPts || 0}</td>
-            <td>${t.bonus || 0}</td>
-            <td><strong>${t.total || 0}</strong></td>
-          `;
-          teamsBody.appendChild(tr);
-        });
-      } else {
-        teamsBody.innerHTML = '<tr><td colspan="9" style="text-align:center;">لا توجد بيانات للفرق بعد</td></tr>';
-      }
+    async function loadStandings() {
+      const loading = document.getElementById("loading");
+      const updateDiv = document.getElementById("update");
+      const teamsBody = document.querySelector("#teams-table tbody");
+      const playersBody = document.querySelector("#players-table tbody");
 
-      // عرض اللاعبين
-      playersBody.innerHTML = "";
-      if (data.players && Array.isArray(data.players) && data.players.length > 0) {
-        data.players.forEach((p, i) => {
-          playersBody.innerHTML += `
-            <tr>
+      loading.style.display = "block";
+      document.getElementById("teams-table").style.display = "none";
+      document.getElementById("players-table").style.display = "none";
+
+      try {
+        // إضافة timestamp لتجنب الكاش
+        const res = await fetch(DATA_URL + '?v=' + Date.now());
+        if (!res.ok) {
+          throw new Error("فشل جلب ملف الترتيب");
+        }
+        const data = await res.json();
+
+        // عرض الفرق
+        teamsBody.innerHTML = "";
+        if (data.teams && Array.isArray(data.teams) && data.teams.length > 0) {
+          data.teams.forEach((t, i) => {
+            const tr = document.createElement("tr");
+            if (i < 3) tr.className = `rank-${i+1}`;
+            tr.innerHTML = `
               <td>${i + 1}</td>
-              <td>${p.name || "غير محدد"}</td>
-              <td>${p.team || "غير محدد"}</td>
-              <td><strong>${p.points || 0}</strong></td>
-            </tr>
-          `;
-        });
-      } else {
-        playersBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد بيانات للاعبين بعد</td></tr>';
+              <td>${t.name || "غير محدد"}</td>
+              <td>${t.played || 0}</td>
+              <td>${t.won || 0}</td>
+              <td>${t.draw || 0}</td>
+              <td>${t.lost || 0}</td>
+              <td>${t.matchPts || 0}</td>
+              <td>${t.bonus || 0}</td>
+              <td><strong>${t.total || 0}</strong></td>
+            `;
+            teamsBody.appendChild(tr);
+          });
+        } else {
+          teamsBody.innerHTML = '<tr><td colspan="9" style="text-align:center;">لا توجد بيانات للفرق بعد</td></tr>';
+        }
+
+        // عرض اللاعبين
+        playersBody.innerHTML = "";
+        if (data.players && Array.isArray(data.players) && data.players.length > 0) {
+          data.players.forEach((p, i) => {
+            playersBody.innerHTML += `
+              <tr>
+                <td>${i + 1}</td>
+                <td>${p.name || "غير محدد"}</td>
+                <td>${p.team || "غير محدد"}</td>
+                <td><strong>${p.points || 0}</strong></td>
+              </tr>
+            `;
+          });
+        } else {
+          playersBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد بيانات للاعبين بعد</td></tr>';
+        }
+
+        // إظهار الجداول وإخفاء التحميل
+        loading.style.display = "none";
+        document.getElementById("teams-table").style.display = "table";
+        document.getElementById("players-table").style.display = "table";
+
+        // وقت التحديث والجولة
+        updateDiv.textContent = `آخر تحديث: ${data.last_updated || "غير محدد"} | الجولة ${data.current_gw || "?"}`;
+
+      } catch (err) {
+        console.error("خطأ أثناء التحميل:", err);
+        loading.textContent = "خطأ في تحميل الترتيب، حاول لاحقًا";
       }
-
-      // إخفاء التحميل وإظهار الجداول
-      loading.style.display = "none";
-      document.getElementById("teams-table").style.display = "table";
-      document.getElementById("players-table").style.display = "table";
-
-      // عرض وقت التحديث
-      updateDiv.textContent = `آخر تحديث: ${data.last_updated || "غير محدد"} | الجولة ${data.current_gw || "?"}`;
-
-    } catch (err) {
-      console.error("خطأ أثناء تحميل الترتيب:", err);
-      loading.textContent = "خطأ في تحميل الترتيب، حاول مرة أخرى لاحقًا";
     }
-  }
 
-  // تشغيل الدالة لما الصفحة تتحمل
-  document.addEventListener("DOMContentLoaded", loadStandings);
-</script>
+    // تشغيل الدالة عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", loadStandings);
+  </script>
 </body>
 </html>
