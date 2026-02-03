@@ -1,17 +1,7 @@
 {
   "current_gw": 24,
-  "last_updated": "2026-02-02 23:16:49",
+  "last_updated": "2026-02-03 23:17:33",
   "teams": [
-    {
-      "name": "Falcons",
-      "played": 18,
-      "won": 11,
-      "draw": 0,
-      "lost": 7,
-      "matchPts": 33,
-      "bonus": 5,
-      "total": 38
-    },
     {
       "name": "Smokers",
       "played": 18,
@@ -21,6 +11,16 @@
       "matchPts": 33,
       "bonus": 4,
       "total": 37
+    },
+    {
+      "name": "Falcons",
+      "played": 18,
+      "won": 10,
+      "draw": 0,
+      "lost": 8,
+      "matchPts": 30,
+      "bonus": 5,
+      "total": 35
     },
     {
       "name": "Boys",
@@ -33,6 +33,16 @@
       "total": 29
     },
     {
+      "name": "The Pharaohs",
+      "played": 17,
+      "won": 8,
+      "draw": 0,
+      "lost": 9,
+      "matchPts": 24,
+      "bonus": 4,
+      "total": 28
+    },
+    {
       "name": "Black Tech",
       "played": 17,
       "won": 7,
@@ -41,48 +51,38 @@
       "matchPts": 21,
       "bonus": 6,
       "total": 27
-    },
-    {
-      "name": "The Pharaohs",
-      "played": 17,
-      "won": 7,
-      "draw": 0,
-      "lost": 10,
-      "matchPts": 21,
-      "bonus": 4,
-      "total": 25
     }
   ],
   "players": [
     {
       "name": "Elfiky",
       "team": "Black Tech",
-      "points": 1295
-    },
-    {
-      "name": "Hussein",
-      "team": "The Pharaohs",
-      "points": 1238
+      "points": 1299
     },
     {
       "name": "Tawheed",
       "team": "Smokers",
-      "points": 1233
+      "points": 1248
+    },
+    {
+      "name": "Hussein",
+      "team": "The Pharaohs",
+      "points": 1247
     },
     {
       "name": "Omar",
       "team": "Black Tech",
-      "points": 1226
+      "points": 1232
     },
     {
       "name": "Nasser",
       "team": "Falcons",
-      "points": 1226
+      "points": 1228
     },
     {
       "name": "Ali",
       "team": "Boys",
-      "points": 1205
+      "points": 1214
     },
     {
       "name": "Magdy",
@@ -90,19 +90,19 @@
       "points": 1179
     },
     {
-      "name": "Mahmoud",
-      "team": "Falcons",
-      "points": 1166
-    },
-    {
       "name": "Body",
       "team": "Smokers",
-      "points": 1162
+      "points": 1168
+    },
+    {
+      "name": "Mahmoud",
+      "team": "Falcons",
+      "points": 1168
     },
     {
       "name": "Ahmed",
       "team": "The Pharaohs",
-      "points": 1093
+      "points": 1099
     }
   ]
 }
