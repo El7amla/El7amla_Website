@@ -1,6 +1,6 @@
 {
   "current_gw": 26,
-  "last_updated": "2026-02-11 23:20:47",
+  "last_updated": "2026-02-12 23:17:51",
   "teams": [
     {
       "name": "Falcons",
@@ -57,52 +57,52 @@
     {
       "name": "Elfiky",
       "team": "Black Tech",
-      "points": 1388
+      "points": 1404
     },
     {
       "name": "Omar",
       "team": "Black Tech",
-      "points": 1364
+      "points": 1373
     },
     {
       "name": "Nasser",
       "team": "Falcons",
-      "points": 1357
+      "points": 1369
     },
     {
       "name": "Tawheed",
       "team": "Smokers",
-      "points": 1340
+      "points": 1354
     },
     {
       "name": "Hussein",
       "team": "The Pharaohs",
-      "points": 1320
+      "points": 1330
     },
     {
       "name": "Ali",
       "team": "Boys",
-      "points": 1314
+      "points": 1329
     },
     {
       "name": "Body",
       "team": "Smokers",
-      "points": 1283
+      "points": 1303
     },
     {
       "name": "Magdy",
       "team": "Boys",
-      "points": 1277
+      "points": 1293
     },
     {
       "name": "Mahmoud",
       "team": "Falcons",
-      "points": 1267
+      "points": 1288
     },
     {
       "name": "Ahmed",
       "team": "The Pharaohs",
-      "points": 1179
+      "points": 1183
     }
   ]
 }
