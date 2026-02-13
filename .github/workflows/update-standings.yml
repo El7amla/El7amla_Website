@@ -43,7 +43,10 @@ jobs:
   run: |
     git config user.name "GitHub Action Bot"
     git config user.email "action@github.com"
-    git pull --rebase origin main   # ← السطر الجديد ده هو الحل
+    # سحب التغييرات الجديدة بأمان (حتى لو في تعارض بسيط)
+    git fetch origin
+    git reset --hard origin/main
+    # إضافة الملف الجديد
     git add data/current_standings.json
     git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
-    git push
+    git push origin HEAD:main --force-with-lease
