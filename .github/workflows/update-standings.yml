@@ -44,16 +44,10 @@ jobs:
     git config user.name "GitHub Action Bot"
     git config user.email "action@github.com"
     
-    # سحب آخر نسخة من الريبو بأمان
-    git fetch origin
-    git checkout main
-    git reset --hard origin/main
+    # سحب التغييرات ودمجها بأمان
+    git pull origin main --allow-unrelated-histories --rebase || echo "Pull failed, continuing anyway"
     
-    # إضافة الملف اللي اتغير
     git add data/current_standings.json
-    
-    # لو في تغييرات → commit
     git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
     
-    # push بقوة لكن بأمان (لو حد غيرك عمل push في نفس اللحظة، هيفشل بس مش هيضر)
-    git push origin HEAD:main --force-with-lease || echo "Push failed due to concurrent change - will retry next run"
+    git push origin HEAD:main || echo "Push failed, will retry next time"
