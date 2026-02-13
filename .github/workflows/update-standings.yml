@@ -5,8 +5,6 @@ on:
     # كل يوم الساعة 1:00 صباحًا بتوقيت مصر تقريبًا
     # (23:00 UTC = 01:00 EET)
     - cron: '0 23 * * *'
-  
-  # يسمحلك تشغله يدوي من الـ Actions tab
   workflow_dispatch:
 
 jobs:
@@ -14,40 +12,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. جلب الريبو كله
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. تثبيت Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # 3. تثبيت المكتبات المطلوبة (requests بس في الحالة دي)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests
 
-      # 4. تشغيل السكريبت
       - name: Run update_standings script
-        run: |
-          # لو الملف في مجلد scripts/
-          python scripts/update_standings.py
-          # لو الملف في الجذر (مش داخل مجلد)
-          # python update_standings.py
+        run: python scripts/update_standings.py   # ← غيّر المسار لو الملف مش في scripts/
 
-      # 5. حفظ التغييرات ورفعها على الريبو
-     - name: Commit and push changes
-  run: |
-    git config user.name "GitHub Action Bot"
-    git config user.email "action@github.com"
-    
-    # سحب التغييرات ودمجها بأمان
-    git pull origin main --allow-unrelated-histories --rebase || echo "Pull failed, continuing anyway"
-    
-    git add data/current_standings.json
-    git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
-    
-    git push origin HEAD:main || echo "Push failed, will retry next time"
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Action Bot"
+          git config user.email "action@github.com"
+          git fetch origin
+          git checkout main
+          git reset --hard origin/main
+          git add data/current_standings.json
+          git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push origin HEAD:main --force-with-lease || echo "Push failed - will retry next run"
