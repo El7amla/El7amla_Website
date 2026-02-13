@@ -40,9 +40,10 @@ jobs:
 
       # 5. حفظ التغييرات ورفعها على الريبو
       - name: Commit and push changes
-        run: |
-          git config user.name "GitHub Action Bot"
-          git config user.email "action@github.com"
-          git add data/current_standings.json
-          git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
-          git push
+  run: |
+    git config user.name "GitHub Action Bot"
+    git config user.email "action@github.com"
+    git pull --rebase origin main   # ← أضف السطر ده عشان يسحب التغييرات الجديدة
+    git add data/current_standings.json
+    git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+    git push
