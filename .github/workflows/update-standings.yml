@@ -2,8 +2,7 @@ name: Update Fantasy Standings Daily
 
 on:
   schedule:
-    # كل يوم الساعة 1:00 صباحًا بتوقيت مصر تقريبًا
-    # (23:00 UTC = 01:00 EET)
+    # كل يوم الساعة 1:00 صباحًا بتوقيت مصر تقريبًا (23:00 UTC)
     - cron: '0 23 * * *'
   workflow_dispatch:
 
@@ -26,7 +25,7 @@ jobs:
           pip install requests
 
       - name: Run update_standings script
-        run: python scripts/update_standings.py   # ← غيّر المسار لو الملف مش في scripts/
+        run: python scripts/update_standings.py
 
       - name: Commit and push changes
         run: |
