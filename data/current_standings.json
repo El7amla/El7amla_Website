@@ -1,6 +1,6 @@
 {
   "current_gw": 26,
-  "last_updated": "2026-02-12 23:17:51",
+  "last_updated": "2026-02-13 21:06:43",
   "teams": [
     {
       "name": "Falcons",
@@ -8,9 +8,12 @@
       "won": 11,
       "draw": 0,
       "lost": 9,
+      "gf": 2178,
+      "ga": 2206,
+      "gd": -28,
       "matchPts": 33,
-      "bonus": 6,
-      "total": 39
+      "bonus": 5,
+      "total": 38
     },
     {
       "name": "Smokers",
@@ -18,9 +21,12 @@
       "won": 11,
       "draw": 0,
       "lost": 8,
+      "gf": 2139,
+      "ga": 2086,
+      "gd": 53,
       "matchPts": 33,
-      "bonus": 4,
-      "total": 37
+      "bonus": 3,
+      "total": 36
     },
     {
       "name": "Black Tech",
@@ -28,6 +34,9 @@
       "won": 9,
       "draw": 0,
       "lost": 10,
+      "gf": 2172,
+      "ga": 2083,
+      "gd": 89,
       "matchPts": 27,
       "bonus": 7,
       "total": 34
@@ -38,6 +47,9 @@
       "won": 9,
       "draw": 0,
       "lost": 10,
+      "gf": 2039,
+      "ga": 2064,
+      "gd": -25,
       "matchPts": 27,
       "bonus": 5,
       "total": 32
@@ -48,6 +60,9 @@
       "won": 8,
       "draw": 0,
       "lost": 11,
+      "gf": 2101,
+      "ga": 2190,
+      "gd": -89,
       "matchPts": 24,
       "bonus": 4,
       "total": 28
