@@ -1,18 +1,38 @@
-- name: Commit and push changes
-  run: |
-    git config user.name "GitHub Action Bot"
-    git config user.email "action@github.com"
-    
-    # سحب آخر نسخة من الريبو وإعادة تهيئة البيئة المحلية
-    git fetch origin
-    git checkout main
-    git reset --hard origin/main
-    
-    # إضافة الملف الجديد
-    git add data/current_standings.json
-    
-    # commit لو في تغييرات
-    git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
-    
-    # push بقوة لكن بأمان (لو حد غيرك عمل push في نفس اللحظة، هيفشل بس مش هيضر)
-    git push origin HEAD:main --force-with-lease || echo "Push failed - will retry next run"
+name: Update Fantasy Standings Daily
+
+on:
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run update_standings script
+        run: python scripts/update_standings.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Action Bot"
+          git config user.email "action@github.com"
+          git fetch origin
+          git checkout main
+          git reset --hard origin/main
+          git add data/current_standings.json
+          git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push origin HEAD:main --force-with-lease || echo "Push failed - will retry next run"
