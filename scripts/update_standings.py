@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # ==============================================
-# بيانات الفرق واللاعبين (ثابتة)
+#  بيانات الفرق واللاعبين (ثابتة)
 # ==============================================
 
 TEAMS = {
@@ -58,7 +58,7 @@ def calculate_standings():
     print(f"الجولة الحالية/الأخيرة: {current_gw}")
 
     team_stats = {
-        team: {"name": team, "played": 0, "won": 0, "draw": 0, "lost": 0, "matchPts": 0, "bonus": 0, "total": 0}
+        team: {"name": team, "played": 0, "won": 0, "draw": 0, "lost": 0, "gf": 0, "ga": 0, "gd": 0, "matchPts": 0, "bonus": 0, "total": 0}
         for team in TEAMS
     }
 
@@ -69,7 +69,8 @@ def calculate_standings():
 
     for gw in range(1, current_gw + 1):
         team_points_this_gw = {}
-        played_this_gw = set()  # الفرق اللي لعبت فعلاً في الجولة دي
+        scored_teams_this_gw = []
+        played_this_gw = set()
 
         # تحديد الفرق اللي لعبت في الجولة دي
         if gw in FIXTURES:
@@ -86,19 +87,24 @@ def calculate_standings():
             for pid in data["players"].values():
                 pts = get_player_points(pid, gw)
                 total += pts
-                # ← التعديل المهم: نضيف نقاط اللاعب فقط لو فريقه لعب في الجولة دي
                 if team in played_this_gw:
                     player_stats[pid]["points"] += pts
             team_points_this_gw[team] = total
 
-        # البونص: أعلى فريق في الجولة (حتى لو في راحة)
-        if team_points_this_gw:
-            max_score = max(team_points_this_gw.values())
-            top_teams = [t for t, s in team_points_this_gw.items() if s == max_score]
-            if len(top_teams) == 1:
-                team_stats[top_teams[0]]["bonus"] += 1
+            if team in played_this_gw and total > 0:
+                scored_teams_this_gw.append({"team": team, "points": total})
 
-        # نتائج المباريات (فقط للي لعبوا)
+        # البونص: أعلى فريق من الـ 5 فرق اللي لعبت ولها نقاط > 0
+        if scored_teams_this_gw:
+            scored_teams_this_gw.sort(key=lambda x: -x["points"])
+            top_teams = scored_teams_this_gw[:5]
+            if top_teams:
+                max_score = top_teams[0]["points"]
+                tops = [t for t in top_teams if t["points"] == max_score]
+                if len(tops) == 1:
+                    team_stats[tops[0]["team"]]["bonus"] += 1
+
+        # نتائج المباريات
         if gw in FIXTURES:
             for match in FIXTURES[gw]:
                 t1, t2 = match
@@ -109,6 +115,11 @@ def calculate_standings():
 
                 team_stats[t1]["played"] += 1
                 team_stats[t2]["played"] += 1
+
+                team_stats[t1]["gf"] += s1
+                team_stats[t1]["ga"] += s2
+                team_stats[t2]["gf"] += s2
+                team_stats[t2]["ga"] += s1
 
                 if s1 > s2:
                     team_stats[t1]["won"] += 1
@@ -124,14 +135,15 @@ def calculate_standings():
                     team_stats[t1]["matchPts"] += 1
                     team_stats[t2]["matchPts"] += 1
 
-    # تحديث الإجمالي
-    for t in team_stats:
-        team_stats[t]["total"] = team_stats[t]["matchPts"] + team_stats[t]["bonus"]
+    # تحديث GD وtotal
+    for team in team_stats:
+        team_stats[team]["gd"] = team_stats[team]["gf"] - team_stats[team]["ga"]
+        team_stats[team]["total"] = team_stats[team]["matchPts"] + team_stats[team]["bonus"]
 
-    # ترتيب الفرق
+    # ترتيب الفرق مع tiebreakers: total, matchPts, gd, gf, won
     sorted_teams = sorted(
         team_stats.values(),
-        key=lambda x: (-x["total"], -x["matchPts"])
+        key=lambda x: (-x["total"], -x["matchPts"], -x["gd"], -x["gf"], -x["won"])
     )
 
     # ترتيب اللاعبين
