@@ -39,14 +39,21 @@ jobs:
           # python update_standings.py
 
       # 5. حفظ التغييرات ورفعها على الريبو
-      - name: Commit and push changes
+     - name: Commit and push changes
   run: |
     git config user.name "GitHub Action Bot"
     git config user.email "action@github.com"
-    # سحب التغييرات الجديدة بأمان (حتى لو في تعارض بسيط)
+    
+    # سحب آخر نسخة من الريبو بأمان
     git fetch origin
+    git checkout main
     git reset --hard origin/main
-    # إضافة الملف الجديد
+    
+    # إضافة الملف اللي اتغير
     git add data/current_standings.json
+    
+    # لو في تغييرات → commit
     git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
-    git push origin HEAD:main --force-with-lease
+    
+    # push بقوة لكن بأمان (لو حد غيرك عمل push في نفس اللحظة، هيفشل بس مش هيضر)
+    git push origin HEAD:main --force-with-lease || echo "Push failed due to concurrent change - will retry next run"
