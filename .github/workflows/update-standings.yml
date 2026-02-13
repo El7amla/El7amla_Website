@@ -2,20 +2,20 @@ name: Update Fantasy Standings Daily
 
 on:
   schedule:
-    - cron: '0 23 * * *' # يعمل يومياً الساعة 11 مساءً بتوقيت UTC
-  workflow_dispatch: # يتيح لك تشغيل الأكشن يدوياً للتجربة
+    - cron: '0 23 * * *'
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # التأكد من أن الأكشن لديه صلاحية الكتابة في الريبوزيتوري
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # مهم جداً لجلب تاريخ الـ Git بالكامل وتجنب مشاكل الـ Rebase
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -32,21 +32,13 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          # إعداد هوية البوت
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # جلب آخر التعديلات ودمجها مع النسخة الحالية لتفادي الـ Conflict
           git pull origin main --rebase
-          
-          # إضافة الملف الذي تم تحديثه
           git add data/current_standings.json
-          
-          # التحقق إذا كان هناك تغييرات حقيقية قبل عمل Commit
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
             git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')"
-            # الـ Push العادي الآن سيعمل لأننا قمنا بعمل Rebase
             git push origin HEAD:main
           fi
