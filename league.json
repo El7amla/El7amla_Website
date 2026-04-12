@@ -1,0 +1,34 @@
+{
+  "teams": {
+    "Black Tech": {
+      "players": {
+        "Elfiky": 7002106,
+        "Omar": 1216533
+      }
+    },
+    "The Pharaohs": {
+      "players": {
+        "Hussein": 275539,
+        "Ahmed": 1545049
+      }
+    },
+    "Smokers": {
+      "players": {
+        "Body": 1679155,
+        "Tawheed": 2208753
+      }
+    },
+    "Falcons": {
+      "players": {
+        "Nasser": 2134302,
+        "Mahmoud": 8656672
+      }
+    },
+    "Boys": {
+      "players": {
+        "Ali": 8703485,
+        "Magdy": 5857198
+      }
+    }
+  }
+}
