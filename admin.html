@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - El7amla League</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f172a;
+      --card:     #1e293b;
+      --border:   #334155;
+      --blue:     #3b82f6;
+      --blue-dk:  #1d4ed8;
+      --green:    #22c55e;
+      --red:      #ef4444;
+      --gold:     #fbbf24;
+      --text:     #f1f5f9;
+      --muted:    #94a3b8;
+      --input-bg: #0f172a;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: linear-gradient(90deg, #0f172a, #1e3a5f, #0f172a);
+      border-bottom: 2px solid var(--blue);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topbar h1 { font-size: 1.3rem; font-weight: 900; color: var(--blue); }
+    .topbar small { display: block; font-size: 0.72rem; color: var(--muted); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 10px; border: none;
+      font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-blue  { background: var(--blue);  color: #fff; }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-red   { background: var(--red);   color: #fff; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .btn:hover { opacity: .85; transform: translateY(-1px); }
+    .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .section-title {
+      font-size: 1.1rem; font-weight: 900;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .badge-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ── FORM FIELDS ── */
+    label { font-size: 0.82rem; color: var(--muted); display: block; margin-bottom: 5px; }
+    input, select {
+      width: 100%; padding: 9px 13px;
+      background: var(--input-bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Cairo', sans-serif; font-size: 0.88rem;
+      outline: none; transition: border .2s;
+      direction: ltr;
+    }
+    input:focus, select:focus { border-color: var(--blue); }
+    input[type=number] { -moz-appearance: textfield; }
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    @media(max-width:640px) {
+      .grid-2,.grid-3,.grid-4,.grid-6 { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── TEAM ROW ── */
+    .team-row {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 16px; margin-bottom: 12px;
+    }
+    .team-row-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .team-row-name { font-weight: 900; font-size: 1rem; }
+    .team-rank { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── PLAYER ROW ── */
+    .player-row {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+    }
+    .player-row-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    /* ── TOKEN SECTION ── */
+    .token-section {
+      background: rgba(251,191,36,.06);
+      border: 1px solid rgba(251,191,36,.25);
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 24px;
+    }
+    .token-section h3 { color: var(--gold); font-size: 0.95rem; margin-bottom: 10px; }
+    .token-row { display: flex; gap: 10px; align-items: flex-end; }
+    .token-row > div { flex: 1; }
+
+    /* ── STATUS ── */
+    .status-bar {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 24px;
+      font-size: 0.88rem; font-weight: 700;
+      display: none; align-items: center; gap: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.5);
+      z-index: 999; min-width: 260px; justify-content: center;
+      animation: slideUp .3s ease;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform: translateX(-50%) translateY(12px); }
+      to   { opacity:1; transform: translateX(-50%) translateY(0); }
+    }
+    .status-bar.success { border-color: var(--green); color: var(--green); }
+    .status-bar.error   { border-color: var(--red);   color: var(--red);   }
+    .status-bar.loading { border-color: var(--blue);  color: var(--blue);  }
+
+    /* ── META BAR ── */
+    .meta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .meta-field { flex: 1; min-width: 140px; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    .preview-box {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px; font-size: 0.75rem; color: var(--muted);
+      font-family: monospace; direction: ltr; white-space: pre-wrap;
+      max-height: 200px; overflow-y: auto; margin-top: 16px;
+    }
+
+    .spinner-inline {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin .7s linear infinite; display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .add-btn {
+      width: 100%; padding: 10px;
+      background: rgba(59,130,246,.1); border: 1px dashed rgba(59,130,246,.4);
+      border-radius: 10px; color: var(--blue); font-family: 'Cairo', sans-serif;
+      font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      transition: all .2s; margin-top: 4px;
+    }
+    .add-btn:hover { background: rgba(59,130,246,.2); }
+
+    .remove-btn {
+      background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
+      color: var(--red); padding: 5px 10px; border-radius: 7px;
+      font-size: 0.75rem; cursor: pointer; border: none; font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+    }
+    .remove-btn:hover { background: rgba(239,68,68,.2); }
+
+    .info-box {
+      background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2);
+      border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+      font-size: 0.82rem; color: #93c5fd; line-height: 1.6;
+    }
+
+    .tab-row { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .tab {
+      padding: 10px 22px; font-family: 'Cairo', sans-serif; font-weight: 700;
+      font-size: 0.88rem; cursor: pointer; background: none; border: none;
+      color: var(--muted); border-bottom: 3px solid transparent; transition: all .2s;
+    }
+    .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>⚙️ لوحة تحكم El7amla</h1>
+    <small>Admin Panel — تحديث بيانات الترتيب</small>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn btn-ghost" onclick="loadCurrentData()">🔄 تحميل البيانات الحالية</button>
+    <button class="btn btn-green" id="save-btn" onclick="saveToGitHub()">💾 حفظ على GitHub</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TOKEN -->
+  <div class="token-section">
+    <h3>🔑 GitHub Personal Access Token</h3>
+    <div class="info-box">
+      محتاج token عشان تقدر تحفظ. اعمله من:
+      <strong>GitHub → Settings → Developer Settings → Personal Access Tokens → Tokens (classic)</strong>
+      — اديله صلاحية <strong>repo</strong>. بيتحفظ في المتصفح فقط ومش بيتبعت لأي مكان.
+    </div>
+    <div class="token-row">
+      <div>
+        <label>GitHub Token</label>
+        <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+      </div>
+      <button class="btn btn-blue" onclick="saveToken()">حفظ Token</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-row">
+    <button class="tab active" onclick="switchTab('teams')">🏆 الفرق</button>
+    <button class="tab" onclick="switchTab('players')">⚡ اللاعبين</button>
+    <button class="tab" onclick="switchTab('meta')">📅 الجولة والتاريخ</button>
+    <button class="tab" onclick="switchTab('preview')">👁️ معاينة JSON</button>
+  </div>
+
+  <!-- ═══ TAB: TEAMS ═══ -->
+  <div id="tab-teams">
+    <div class="section">
+      <div class="section-title">
+        <div class="badge-icon" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">🏆</div>
+        ترتيب الفرق — الجولة الحالية
+      </div>
+      <div class="info-box">
+        الفرق مرتبة تلقائياً حسب الإجمالي. أدخل البيانات وسيتم ترتيبها عند الحفظ.
+      </div>
+      <div id="teams-container"></div>
+      <button class="add-btn" onclick="addTeam()">+ إضافة فريق</button>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: PLAYERS ═══ -->
+  <div id="tab-players" style="display:none">
+    <div class="section">
+      <div class="section-title">
+        <div class="badge-icon" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">⚡</div>
+        ترتيب اللاعبين
+      </div>
+      <div class="info-box">
+        اللاعبين بيتربطوا بفرقهم تلقائياً. أدخل اسم اللاعب والفريق والنقاط.
+      </div>
+      <div id="players-container"></div>
+      <button class="add-btn" onclick="addPlayer()">+ إضافة لاعب</button>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: META ═══ -->
+  <div id="tab-meta" style="display:none">
+    <div class="section">
+      <div class="section-title">📅 معلومات الجولة</div>
+      <div class="grid-2">
+        <div>
+          <label>رقم الجولة الحالية</label>
+          <input type="number" id="meta-gw" value="32" min="1" max="38" />
+        </div>
+        <div>
+          <label>تاريخ آخر تحديث</label>
+          <input type="text" id="meta-updated" placeholder="2026-04-12 20:00:00" />
+        </div>
+      </div>
+      <button class="btn btn-blue" style="margin-top:16px" onclick="setNow()">⏰ استخدام الوقت الحالي</button>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: PREVIEW ═══ -->
+  <div id="tab-preview" style="display:none">
+    <div class="section">
+      <div class="section-title">👁️ معاينة JSON قبل الحفظ</div>
+      <button class="btn btn-ghost" onclick="refreshPreview()">🔄 تحديث المعاينة</button>
+      <div class="preview-box" id="json-preview">اضغط "تحديث المعاينة" لعرض البيانات</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar" id="status-bar"></div>
+
+<script>
+  /* ═══════════════════════════════════════════
+     CONFIG
+  ═══════════════════════════════════════════ */
+  const REPO_OWNER = 'El7amla';
+  const REPO_NAME  = 'El7amla_WebSite';
+  const FILE_PATH  = 'data/current_standings.json';
+  const BRANCH     = 'main';
+
+  const TEAM_NAMES = ['Falcons', 'Smokers', 'Black Tech', 'Boys', 'The Pharaohs'];
+
+  /* ═══════════════════════════════════════════
+     STATE
+  ═══════════════════════════════════════════ */
+  let teams   = [];
+  let players = [];
+  let fileSHA = '';    // needed for GitHub update
+
+  /* ═══════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════ */
+  window.onload = () => {
+    const saved = localStorage.getItem('gh_token_el7amla');
+    if (saved) document.getElementById('gh-token').value = saved;
+    setNow();
+    loadCurrentData();
+  };
+
+  function saveToken() {
+    const t = document.getElementById('gh-token').value.trim();
+    if (!t) return showStatus('أدخل الـ Token أولاً', 'error');
+    localStorage.setItem('gh_token_el7amla', t);
+    showStatus('✅ تم حفظ الـ Token', 'success');
+  }
+
+  /* ═══════════════════════════════════════════
+     TABS
+  ═══════════════════════════════════════════ */
+  function switchTab(name) {
+    ['teams','players','meta','preview'].forEach(t => {
+      document.getElementById(`tab-${t}`).style.display = (t === name) ? '' : 'none';
+    });
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    if (name === 'preview') refreshPreview();
+  }
+
+  /* ═══════════════════════════════════════════
+     LOAD FROM GITHUB
+  ═══════════════════════════════════════════ */
+  async function loadCurrentData() {
+    showStatus('⏳ جارٍ تحميل البيانات…', 'loading');
+    try {
+      const token = document.getElementById('gh-token').value.trim();
+      const headers = { 'Accept': 'application/vnd.github.v3+json' };
+      if (token) headers['Authorization'] = `token ${token}`;
+
+      const res = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}&t=${Date.now()}`,
+        { headers }
+      );
+      if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
+      const file = await res.json();
+      fileSHA = file.sha;
+
+      const data = JSON.parse(atob(file.content.replace(/\n/g, '')));
+
+      teams   = data.teams   || [];
+      players = data.players || [];
+
+      document.getElementById('meta-gw').value      = data.current_gw   || 32;
+      document.getElementById('meta-updated').value  = data.last_updated || '';
+
+      renderTeams();
+      renderPlayers();
+      showStatus('✅ تم تحميل البيانات من GitHub', 'success');
+    } catch (e) {
+      console.error(e);
+      // fallback — init empty forms
+      if (teams.length === 0) initDefaultTeams();
+      if (players.length === 0) initDefaultPlayers();
+      renderTeams();
+      renderPlayers();
+      showStatus('⚠️ تعذّر التحميل من GitHub — جرّب بدون token أو تحقق من الاتصال', 'error');
+    }
+  }
+
+  function initDefaultTeams() {
+    teams = TEAM_NAMES.map(name => ({
+      name, played:0, won:0, draw:0, lost:0, matchPts:0, bonus:0, total:0
+    }));
+  }
+
+  function initDefaultPlayers() {
+    players = [
+      { name:'', team:'Falcons', points:0 },
+      { name:'', team:'Falcons', points:0 },
+    ];
+  }
+
+  /* ═══════════════════════════════════════════
+     RENDER TEAMS
+  ═══════════════════════════════════════════ */
+  function renderTeams() {
+    const c = document.getElementById('teams-container');
+    c.innerHTML = '';
+    teams.forEach((t, i) => c.appendChild(buildTeamRow(t, i)));
+  }
+
+  function buildTeamRow(t, i) {
+    const div = document.createElement('div');
+    div.className = 'team-row';
+    div.dataset.idx = i;
+    div.innerHTML = `
+      <div class="team-row-header">
+        <div>
+          <div class="team-row-name">#${i+1} — <span class="t-name-label">${t.name || 'فريق جديد'}</span></div>
+        </div>
+        <button class="remove-btn" onclick="removeTeam(${i})">🗑 حذف</button>
+      </div>
+      <div class="grid-2" style="margin-bottom:12px">
+        <div>
+          <label>اسم الفريق</label>
+          <input type="text" value="${t.name}" placeholder="Falcons"
+            oninput="updateTeam(${i},'name',this.value)" />
+        </div>
+        <div>
+          <label>لعب (Played)</label>
+          <input type="number" value="${t.played}" min="0"
+            oninput="updateTeam(${i},'played',+this.value)" />
+        </div>
+      </div>
+      <div class="grid-4" style="margin-bottom:12px">
+        <div>
+          <label>فوز (Won)</label>
+          <input type="number" value="${t.won}" min="0"
+            oninput="updateTeam(${i},'won',+this.value);autoCalc(${i})" />
+        </div>
+        <div>
+          <label>تعادل (Draw)</label>
+          <input type="number" value="${t.draw}" min="0"
+            oninput="updateTeam(${i},'draw',+this.value);autoCalc(${i})" />
+        </div>
+        <div>
+          <label>خسارة (Lost)</label>
+          <input type="number" value="${t.lost}" min="0"
+            oninput="updateTeam(${i},'lost',+this.value)" />
+        </div>
+        <div>
+          <label>نقاط الماتشات</label>
+          <input type="number" value="${t.matchPts}" min="0"
+            oninput="updateTeam(${i},'matchPts',+this.value);autoCalc(${i})"
+            id="matchPts-${i}" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>بونص</label>
+          <input type="number" value="${t.bonus}" min="0"
+            oninput="updateTeam(${i},'bonus',+this.value);autoCalc(${i})" />
+        </div>
+        <div>
+          <label>الإجمالي (حساب تلقائي)</label>
+          <input type="number" value="${t.total}" id="total-${i}" style="color:#60a5fa;font-weight:900"
+            oninput="updateTeam(${i},'total',+this.value)" />
+        </div>
+      </div>`;
+    return div;
+  }
+
+  function updateTeam(i, field, val) {
+    teams[i][field] = val;
+    // update label
+    if (field === 'name') {
+      const rows = document.querySelectorAll('.team-row');
+      if (rows[i]) {
+        const label = rows[i].querySelector('.t-name-label');
+        if (label) label.textContent = val || 'فريق جديد';
+      }
+    }
+  }
+
+  function autoCalc(i) {
+    const t = teams[i];
+    // matchPts = won*3 + draw*1  (auto suggestion — user can override)
+    const auto = (t.won * 3) + (t.draw * 1);
+    // only auto-fill if not manually set or zero
+    if (!t._matchPtsManual) {
+      t.matchPts = auto;
+      const el = document.getElementById(`matchPts-${i}`);
+      if (el) el.value = auto;
+    }
+    t.total = (t.matchPts || 0) + (t.bonus || 0);
+    const el2 = document.getElementById(`total-${i}`);
+    if (el2) el2.value = t.total;
+  }
+
+  function addTeam() {
+    teams.push({ name:'', played:0, won:0, draw:0, lost:0, matchPts:0, bonus:0, total:0 });
+    renderTeams();
+    document.querySelector('#teams-container .team-row:last-child')?.scrollIntoView({behavior:'smooth'});
+  }
+
+  function removeTeam(i) {
+    teams.splice(i, 1);
+    renderTeams();
+  }
+
+  /* ═══════════════════════════════════════════
+     RENDER PLAYERS
+  ═══════════════════════════════════════════ */
+  function renderPlayers() {
+    const c = document.getElementById('players-container');
+    c.innerHTML = '';
+    players.forEach((p, i) => c.appendChild(buildPlayerRow(p, i)));
+  }
+
+  function buildPlayerRow(p, i) {
+    const div = document.createElement('div');
+    div.className = 'player-row';
+    // build team options from current teams list
+    const teamOpts = buildTeamOpts(p.team);
+    div.innerHTML = `
+      <div class="player-row-header">
+        <div style="font-weight:700">#${i+1} — ${p.name || 'لاعب جديد'}</div>
+        <button class="remove-btn" onclick="removePlayer(${i})">🗑 حذف</button>
+      </div>
+      <div class="grid-3">
+        <div>
+          <label>اسم اللاعب</label>
+          <input type="text" value="${p.name}" placeholder="الاسم"
+            oninput="updatePlayer(${i},'name',this.value);rerenderPlayerHeader(this,${i})" />
+        </div>
+        <div>
+          <label>الفريق</label>
+          <select onchange="updatePlayer(${i},'team',this.value)">${teamOpts}</select>
+        </div>
+        <div>
+          <label>النقاط</label>
+          <input type="number" value="${p.points}" min="0"
+            oninput="updatePlayer(${i},'points',+this.value)" />
+        </div>
+      </div>`;
+    return div;
+  }
+
+  function buildTeamOpts(selected) {
+    // use current teams list, fallback to defaults
+    const names = teams.length > 0 ? teams.map(t => t.name).filter(Boolean) : TEAM_NAMES;
+    return names.map(n => `<option value="${n}" ${n===selected?'selected':''}>${n}</option>`).join('');
+  }
+
+  function rerenderPlayerHeader(input, i) {
+    const row = input.closest('.player-row');
+    if (row) {
+      const hdr = row.querySelector('.player-row-header div');
+      if (hdr) hdr.textContent = `#${i+1} — ${input.value || 'لاعب جديد'}`;
+    }
+  }
+
+  function updatePlayer(i, field, val) {
+    players[i][field] = val;
+  }
+
+  function addPlayer() {
+    const firstTeam = teams[0]?.name || TEAM_NAMES[0];
+    players.push({ name:'', team: firstTeam, points:0 });
+    renderPlayers();
+    document.querySelector('#players-container .player-row:last-child')?.scrollIntoView({behavior:'smooth'});
+  }
+
+  function removePlayer(i) {
+    players.splice(i, 1);
+    renderPlayers();
+  }
+
+  /* ═══════════════════════════════════════════
+     META
+  ═══════════════════════════════════════════ */
+  function setNow() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    const str = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    document.getElementById('meta-updated').value = str;
+  }
+
+  /* ═══════════════════════════════════════════
+     BUILD JSON
+  ═══════════════════════════════════════════ */
+  function buildJSON() {
+    // sort teams by total desc
+    const sortedTeams = [...teams]
+      .filter(t => t.name)
+      .sort((a,b) => b.total - a.total)
+      .map(t => ({
+        name: t.name,
+        played: t.played,
+        won: t.won,
+        draw: t.draw,
+        lost: t.lost,
+        matchPts: t.matchPts,
+        bonus: t.bonus,
+        total: t.total
+      }));
+
+    // sort players by points desc
+    const sortedPlayers = [...players]
+      .filter(p => p.name)
+      .sort((a,b) => b.points - a.points)
+      .map(p => ({ name: p.name, team: p.team, points: p.points }));
+
+    return {
+      current_gw:   parseInt(document.getElementById('meta-gw').value) || 32,
+      last_updated: document.getElementById('meta-updated').value,
+      teams:   sortedTeams,
+      players: sortedPlayers
+    };
+  }
+
+  function refreshPreview() {
+    document.getElementById('json-preview').textContent =
+      JSON.stringify(buildJSON(), null, 2);
+  }
+
+  /* ═══════════════════════════════════════════
+     SAVE TO GITHUB
+  ═══════════════════════════════════════════ */
+  async function saveToGitHub() {
+    const token = document.getElementById('gh-token').value.trim();
+    if (!token) return showStatus('❌ أدخل GitHub Token أولاً', 'error');
+
+    const btn = document.getElementById('save-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-inline"></span> جارٍ الحفظ…';
+    showStatus('⏳ جارٍ الحفظ على GitHub…', 'loading');
+
+    try {
+      const data = buildJSON();
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+
+      // get latest SHA if we don't have it
+      if (!fileSHA) {
+        const r = await fetch(
+          `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`,
+          { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
+        );
+        if (r.ok) { const f = await r.json(); fileSHA = f.sha; }
+      }
+
+      const body = {
+        message: `Update standings — GW${data.current_gw} — ${data.last_updated}`,
+        content,
+        branch: BRANCH,
+      };
+      if (fileSHA) body.sha = fileSHA;
+
+      const res = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || res.status);
+      }
+
+      const result = await res.json();
+      fileSHA = result.content?.sha || '';
+
+      showStatus(`✅ تم الحفظ بنجاح — الجولة ${data.current_gw}`, 'success');
+    } catch(e) {
+      console.error(e);
+      showStatus(`❌ فشل الحفظ: ${e.message}`, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '💾 حفظ على GitHub';
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     STATUS
+  ═══════════════════════════════════════════ */
+  let statusTimer = null;
+  function showStatus(msg, type='loading') {
+    const bar = document.getElementById('status-bar');
+    bar.className = `status-bar ${type}`;
+    bar.innerHTML = msg;
+    bar.style.display = 'flex';
+    clearTimeout(statusTimer);
+    if (type !== 'loading') {
+      statusTimer = setTimeout(() => { bar.style.display = 'none'; }, 4000);
+    }
+  }
+</script>
+</body>
+</html>
