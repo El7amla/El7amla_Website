@@ -1,108 +1,123 @@
 {
-  "current_gw": 32,
-  "last_updated": "2026-04-12 03:18:19",
+  "current_gw": 31,
+  "last_updated": "2026-04-12 01:49:45",
   "teams": [
     {
-      "name": "Falcons",
-      "played": 20,
-      "won": 11,
-      "draw": 0,
+      "name": "Boys",
+      "played": 23,
+      "won": 12,
+      "draw": 2,
       "lost": 9,
-      "matchPts": 33,
-      "bonus": 5,
-      "total": 38
+      "gf": 2530,
+      "ga": 2534,
+      "gd": -4,
+      "matchPts": 38,
+      "bonus": 6,
+      "total": 44
     },
     {
       "name": "Smokers",
-      "played": 19,
-      "won": 11,
-      "draw": 0,
-      "lost": 8,
-      "matchPts": 33,
-      "bonus": 3,
-      "total": 36
+      "played": 24,
+      "won": 12,
+      "draw": 1,
+      "lost": 11,
+      "gf": 2714,
+      "ga": 2744,
+      "gd": -30,
+      "matchPts": 37,
+      "bonus": 7,
+      "total": 44
     },
     {
       "name": "Black Tech",
-      "played": 19,
-      "won": 9,
-      "draw": 0,
-      "lost": 10,
-      "matchPts": 27,
+      "played": 23,
+      "won": 11,
+      "draw": 1,
+      "lost": 11,
+      "gf": 2707,
+      "ga": 2602,
+      "gd": 105,
+      "matchPts": 34,
       "bonus": 7,
-      "total": 34
+      "total": 41
     },
     {
-      "name": "Boys",
-      "played": 19,
-      "won": 9,
-      "draw": 0,
-      "lost": 10,
-      "matchPts": 27,
-      "bonus": 5,
-      "total": 32
+      "name": "Falcons",
+      "played": 23,
+      "won": 11,
+      "draw": 1,
+      "lost": 11,
+      "gf": 2656,
+      "ga": 2593,
+      "gd": 63,
+      "matchPts": 34,
+      "bonus": 6,
+      "total": 40
     },
     {
       "name": "The Pharaohs",
-      "played": 19,
-      "won": 8,
-      "draw": 0,
-      "lost": 11,
-      "matchPts": 24,
-      "bonus": 4,
-      "total": 28
+      "played": 23,
+      "won": 9,
+      "draw": 1,
+      "lost": 13,
+      "gf": 2513,
+      "ga": 2647,
+      "gd": -134,
+      "matchPts": 28,
+      "bonus": 5,
+      "total": 33
     }
   ],
   "players": [
     {
       "name": "Elfiky",
       "team": "Black Tech",
-      "points": 1404
-    },
-    {
-      "name": "Omar",
-      "team": "Black Tech",
-      "points": 1373
+      "points": 1369
     },
     {
       "name": "Nasser",
       "team": "Falcons",
-      "points": 1369
-    },
-    {
-      "name": "Tawheed",
-      "team": "Smokers",
-      "points": 1354
-    },
-    {
-      "name": "Hussein",
-      "team": "The Pharaohs",
-      "points": 1330
-    },
-    {
-      "name": "Ali",
-      "team": "Boys",
-      "points": 1329
+      "points": 1365
     },
     {
       "name": "Body",
       "team": "Smokers",
-      "points": 1303
+      "points": 1359
     },
     {
-      "name": "Magdy",
+      "name": "Tawheed",
+      "team": "Smokers",
+      "points": 1355
+    },
+    {
+      "name": "Omar",
+      "team": "Black Tech",
+      "points": 1338
+    },
+    {
+      "name": "Hussein",
+      "team": "The Pharaohs",
+      "points": 1323
+    },
+    {
+      "name": "Ali",
       "team": "Boys",
-      "points": 1293
+      "points": 1299
     },
     {
       "name": "Mahmoud",
       "team": "Falcons",
-      "points": 1288
+      "points": 1291
+    },
+    {
+      "name": "Magdy",
+      "team": "Boys",
+      "points": 1231
     },
     {
       "name": "Ahmed",
       "team": "The Pharaohs",
-      "points": 1183
+      "points": 1190
     }
   ]
 }
