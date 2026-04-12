@@ -1,44 +1,39 @@
-name: Update Fantasy Standings Daily
+name: Update Standings
 
 on:
+  # Run daily at 23:00 UTC (1 AM Cairo time)
   schedule:
-    - cron: '0 23 * * *'
+    - cron: "0 23 * * *"
+
+  # Allow manual trigger from GitHub Actions tab
   workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write   # needed to push current_standings.json
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.12"
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+        run: pip install requests
 
-      - name: Run update_standings script
+      - name: Run standings updater
         run: python scripts/update_standings.py
 
-      - name: Commit and push changes
+      - name: Commit and push updated standings
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull origin main --rebase
+          git config user.name  "El7amla Bot"
+          git config user.email "bot@el7amla.local"
           git add data/current_standings.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Auto-update standings $(date +'%Y-%m-%d %H:%M')"
-            git push origin HEAD:main
-          fi
+          # Only commit if there are changes
+          git diff --cached --quiet || git commit -m "Auto-update standings [skip ci]"
+          git push
