@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Fetch full history so rebase works correctly
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,6 +37,9 @@ jobs:
           git config user.name  "El7amla Bot"
           git config user.email "bot@el7amla.local"
           git add data/current_standings.json
-          # Only commit if there are changes
-          git diff --cached --quiet || git commit -m "Auto-update standings [skip ci]"
-          git push
+          # Only commit if there are actual changes
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Auto-update standings [skip ci]"
+          # Pull latest remote changes with rebase to avoid conflicts
+          git pull --rebase origin main
+          git push origin main
