@@ -23,12 +23,16 @@
       --red:          #ef4444;
       --purple:       #a855f7;
       --nav-h:        68px;
+      --row-hover:    rgba(59,130,246,.08);
+      --rank1-bg:     linear-gradient(90deg,rgba(251,191,36,.12),rgba(251,191,36,.03));
+      --rank2-bg:     linear-gradient(90deg,rgba(203,213,225,.09),rgba(203,213,225,.02));
+      --rank3-bg:     linear-gradient(90deg,rgba(205,124,62,.11),rgba(205,124,62,.02));
     }
 
     html { scroll-behavior: smooth; }
     body { font-family:'Cairo',sans-serif; background:var(--bg-primary); color:var(--text-primary); min-height:100vh; direction:rtl; }
 
-    /* ── NAVBAR (same across all pages) ── */
+    /* ══ NAVBAR ══ */
     .site-nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); background:rgba(15,23,42,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); z-index:1000; display:flex; align-items:center; padding:0 20px; }
     .nav-inner { max-width:1200px; margin:0 auto; width:100%; display:flex; align-items:center; }
     .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; margin-left:auto; flex-shrink:0; }
@@ -43,130 +47,119 @@
     .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; margin-right:auto; background:none; border:none; }
     .hamburger span { display:block; width:24px; height:2px; background:var(--text-primary); border-radius:2px; }
 
-    /* ── PAGE ── */
+    /* ══ PAGE ══ */
     .page-wrap { max-width:1200px; margin:0 auto; padding:calc(var(--nav-h) + 28px) 16px 60px; }
-
-    /* ── PAGE HEADER ── */
     .page-header { text-align:center; margin-bottom:28px; }
     .page-title { font-family:'Orbitron',sans-serif; font-size:clamp(1.1rem,3.5vw,1.9rem); font-weight:900; background:linear-gradient(90deg,#60a5fa,#f1f5f9,#60a5fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
     .page-sub { font-size:.85rem; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; }
 
-    /* ── SELECTOR PANEL ── */
-    .selector-panel {
-      background:var(--bg-card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:22px 24px;
-      margin-bottom:24px;
-      box-shadow:0 4px 24px rgba(0,0,0,.35);
+    /* ══ TEAM SELECTOR CARDS ══ */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
     }
-    .selector-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .field label { font-size:.8rem; color:var(--text-muted); display:block; margin-bottom:6px; font-weight:600; }
-    select {
-      width:100%; padding:10px 14px;
-      background:var(--bg-primary);
-      border:1px solid var(--border);
-      border-radius:9px;
-      color:var(--text-primary);
-      font-family:'Cairo',sans-serif; font-size:.9rem;
-      outline:none; cursor:pointer;
-      transition:border-color .2s;
-      direction:rtl;
+    .team-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
-    select:focus { border-color:var(--blue-accent); }
-    select:disabled { opacity:.4; cursor:not-allowed; }
+    .team-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.4); }
+    .team-card.active { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.5); }
+    .team-card-em   { font-size: 2.2rem; }
+    .team-card-name { font-weight: 800; font-size: .85rem; }
+    .team-card-sub  { font-size: .7rem; color: var(--text-muted); }
 
-    /* ── MAIN LAYOUT ── */
-    .teams-layout { display:grid; grid-template-columns:280px 1fr; gap:20px; align-items:start; }
-
-    /* ── INFO CARD ── */
-    .info-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,.4); position:sticky; top:calc(var(--nav-h) + 12px); }
-    .info-hdr { padding:14px 18px; font-weight:800; font-size:.88rem; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
-    .player-avatar { width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2rem; margin:18px auto 12px; border:3px solid var(--border); }
-    .p-big-name { text-align:center; font-size:1.2rem; font-weight:900; margin-bottom:4px; }
-    .p-team-lbl { text-align:center; margin-bottom:14px; }
-
-    .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
-    .stat-cell { background:var(--bg-card); padding:13px 10px; text-align:center; }
-    .stat-val { font-family:'Orbitron',sans-serif; font-size:1.25rem; font-weight:900; line-height:1; margin-bottom:4px; }
-    .stat-lbl { font-size:.7rem; color:var(--text-muted); line-height:1.3; }
-    .stat-full { grid-column:1 / -1; }
-    .c-gw   { color:var(--green); }
-    .c-blue { color:var(--blue-accent); }
-    .c-gold { color:var(--gold); }
-    .c-purple { color:var(--purple); }
-
-    /* team pill */
-    .team-pill { display:inline-block; padding:2px 12px; border-radius:20px; font-size:.76rem; font-weight:700; background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25); color:#93c5fd; }
-
-    /* ── SQUAD CARD ── */
-    .squad-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,.4); }
-    .squad-hdr { padding:13px 18px; background:linear-gradient(90deg,#1d4ed8,#2563eb); font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:space-between; }
-
-    /* PITCH */
-    .pitch {
-      background: linear-gradient(180deg,
-        #14532d 0%,#166534 8%,#15803d 16%,#166534 24%,
-        #15803d 32%,#166534 40%,#15803d 48%,#166534 56%,
-        #15803d 64%,#166534 72%,#15803d 80%,#166534 88%,#14532d 100%);
-      padding:18px 12px 12px;
-      min-height:460px;
-      position:relative;
+    /* ══ SUMMARY ROW ══ */
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
     }
-    /* center line */
-    .pitch::before { content:''; position:absolute; top:50%; left:10%; right:10%; height:2px; background:rgba(255,255,255,.15); }
-    /* center circle */
-    .pitch::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:80px; height:80px; border:2px solid rgba(255,255,255,.15); border-radius:50%; }
-
-    .pitch-section { position:relative; z-index:1; margin-bottom:6px; }
-    .pitch-label { text-align:center; font-size:.62rem; font-weight:700; letter-spacing:2px; color:rgba(255,255,255,.45); text-transform:uppercase; margin-bottom:5px; }
-    .pitch-row { display:flex; justify-content:center; gap:6px; flex-wrap:wrap; }
-
-    /* PLAYER TILE */
-    .ptile { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:62px; cursor:default; }
-    .pshirt {
-      width:46px; height:46px; border-radius:10px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:.72rem; font-weight:900; letter-spacing:.5px;
-      border:2px solid rgba(255,255,255,.2);
-      position:relative; transition:transform .15s;
+    .sum-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 12px;
+      text-align: center;
     }
-    .ptile:hover .pshirt { transform:scale(1.08); }
-    .capt-badge { position:absolute; top:-7px; right:-7px; width:18px; height:18px; border-radius:50%; background:var(--gold); color:#78350f; font-size:.58rem; font-weight:900; display:flex; align-items:center; justify-content:center; }
-    .vc-badge   { position:absolute; top:-7px; right:-7px; width:18px; height:18px; border-radius:50%; background:var(--silver,#cbd5e1); color:#1e293b; font-size:.58rem; font-weight:900; display:flex; align-items:center; justify-content:center; }
-    .pname  { font-size:.62rem; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.8); max-width:66px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; }
-    .ppts   { font-family:'Orbitron',sans-serif; font-size:.6rem; font-weight:700; padding:1px 5px; border-radius:4px; background:rgba(0,0,0,.5); color:#fff; }
-    .ppts.hi { background:rgba(34,197,94,.7); }
-    .ppts.lo { background:rgba(239,68,68,.5); }
+    .sum-val { font-family:'Orbitron',sans-serif; font-size: 1.4rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .sum-lbl { font-size: .72rem; color: var(--text-muted); }
 
-    /* position shirt colours */
-    .pos-gk  { background:#b45309; }
-    .pos-def { background:#1d4ed8; }
-    .pos-mid { background:#15803d; }
-    .pos-fwd { background:#b91c1c; }
-    .pos-bch { background:#374151; }
+    /* ══ TABLE ══ */
+    .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+    .section-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+    .section-title { font-size:1.2rem; font-weight:900; }
+    .section-title small { display:block; font-size:.73rem; font-weight:400; color:var(--text-muted); margin-top:1px; }
 
-    /* BENCH */
-    .bench-wrap { background:rgba(0,0,0,.3); border-top:2px dashed rgba(255,255,255,.1); padding:10px 12px; position:relative; z-index:1; }
-    .bench-lbl  { text-align:center; font-size:.62rem; letter-spacing:2px; color:rgba(255,255,255,.35); margin-bottom:7px; text-transform:uppercase; }
-    .bench-row  { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .table-wrap { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 30px rgba(0,0,0,.4); }
+    table { width:100%; border-collapse:collapse; font-size:.88rem; }
+    thead tr { background:linear-gradient(90deg,#1d4ed8,#2563eb); }
+    thead th { padding:13px 12px; text-align:center; font-weight:700; font-size:.78rem; letter-spacing:.4px; color:#e0eaff; white-space:nowrap; }
+    tbody tr { border-bottom:1px solid rgba(51,65,85,.6); transition:background .18s; }
+    tbody tr:last-child { border-bottom:none; }
+    tbody tr:hover { background:var(--row-hover); }
+    tbody tr.win-row  { background:linear-gradient(90deg,rgba(34,197,94,.10),rgba(34,197,94,.02)); }
+    tbody tr.draw-row { background:linear-gradient(90deg,rgba(251,191,36,.10),rgba(251,191,36,.02)); }
+    tbody tr.loss-row { background:linear-gradient(90deg,rgba(239,68,68,.08),rgba(239,68,68,.02)); }
+    tbody tr.bye-row  { opacity:.55; }
+    tbody tr.win-row:hover  { background:linear-gradient(90deg,rgba(34,197,94,.17),rgba(34,197,94,.05)); }
+    tbody tr.draw-row:hover { background:linear-gradient(90deg,rgba(251,191,36,.17),rgba(251,191,36,.05)); }
+    tbody tr.loss-row:hover { background:linear-gradient(90deg,rgba(239,68,68,.14),rgba(239,68,68,.04)); }
+    tbody td { padding:12px 12px; text-align:center; vertical-align:middle; }
 
-    /* XFER NOTE */
-    .xfer-note { text-align:center; padding:8px; font-size:.78rem; color:var(--red); font-weight:700; border-top:1px solid var(--border); }
+    .gw-badge { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-family:'Orbitron',sans-serif; font-size:.75rem; font-weight:700; background:rgba(51,65,85,.8); color:var(--text-muted); }
 
-    /* EMPTY */
-    .empty-squad { padding:60px 20px; text-align:center; color:var(--text-muted); }
-    .empty-squad .bi { font-size:3rem; margin-bottom:14px; }
+    .opp-cell { display:flex; align-items:center; justify-content:center; gap:7px; font-weight:700; font-size:.9rem; }
+    .opp-em { font-size:1.1rem; }
 
-    /* SPINNER */
-    .state-box { text-align:center; padding:40px 20px; color:var(--text-muted); }
-    .spinner { width:40px; height:40px; border:3px solid rgba(59,130,246,.2); border-top-color:var(--blue-accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 12px; }
+    .pts-team { font-family:'Orbitron',sans-serif; font-size:.95rem; font-weight:900; }
+    .pts-opp  { font-family:'Orbitron',sans-serif; font-size:.95rem; font-weight:700; color:var(--text-muted); }
+
+    .result-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      padding:3px 10px; border-radius:20px;
+      font-size:.74rem; font-weight:800; letter-spacing:.5px;
+    }
+    .rb-win  { background:rgba(34,197,94,.15);  border:1px solid rgba(34,197,94,.35);  color:var(--green); }
+    .rb-draw { background:rgba(251,191,36,.15);  border:1px solid rgba(251,191,36,.35);  color:var(--gold); }
+    .rb-loss { background:rgba(239,68,68,.12);   border:1px solid rgba(239,68,68,.3);   color:var(--red); }
+    .rb-bye  { background:rgba(100,116,139,.12); border:1px solid rgba(100,116,139,.3); color:var(--text-muted); }
+
+    .mp-cell { font-weight:900; font-size:.95rem; }
+    .mp-3 { color:var(--green); }
+    .mp-1 { color:var(--gold); }
+    .mp-0 { color:var(--text-muted); }
+
+    .bonus-cell { font-weight:900; color:var(--gold); font-size:.9rem; }
+
+    /* STATE */
+    .state-box { text-align:center; padding:60px 20px; color:var(--text-muted); }
+    .state-box .si { font-size:2.5rem; margin-bottom:12px; }
+    .spinner { width:44px; height:44px; border:3px solid rgba(59,130,246,.2); border-top-color:var(--blue-accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 16px; }
     @keyframes spin { to { transform:rotate(360deg); } }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
 
     /* RESPONSIVE */
-    @media (max-width:900px) { .teams-layout { grid-template-columns:1fr; } .info-card { position:static; } }
-    @media (max-width:600px) { .selector-grid { grid-template-columns:1fr; } }
+    @media (max-width:900px) {
+      .teams-grid { grid-template-columns:repeat(3,1fr); }
+      .summary-row { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:600px) {
+      .teams-grid { grid-template-columns:repeat(2,1fr); }
+      .summary-row { grid-template-columns:repeat(2,1fr); }
+      thead th, tbody td { padding:9px 6px; font-size:.74rem; }
+      .hide-sm { display:none !important; }
+    }
     @media (max-width:768px) {
       .nav-links { display:none; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; background:rgba(15,23,42,.97); border-bottom:1px solid var(--border); padding:10px 16px 18px; z-index:999; }
       .nav-links.open { display:flex; }
@@ -202,88 +195,56 @@
   </div>
 </nav>
 
-<!-- PAGE -->
 <div class="page-wrap">
 
   <div class="page-header">
-    <div class="page-title">الفرق واللاعبون</div>
-    <div class="page-sub">اختر فريقاً ولاعباً لعرض تفاصيله</div>
+    <div class="page-title">نتائج الفرق</div>
+    <div class="page-sub">اختر فريقاً لعرض كل مبارياته ونتائجه</div>
   </div>
 
-  <!-- SELECTOR -->
-  <div class="selector-panel">
-    <div class="selector-grid">
-      <div class="field">
-        <label>اختر الفريق</label>
-        <select id="sel-team" onchange="onTeamChange()">
-          <option value="">— اختر الفريق —</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>اختر اللاعب</label>
-        <select id="sel-player" onchange="onPlayerChange()" disabled>
-          <option value="">— اختر اللاعب أولاً —</option>
-        </select>
-      </div>
-    </div>
+  <!-- TEAM SELECTOR CARDS -->
+  <div class="teams-grid" id="teams-grid">
+    <div class="state-box"><div class="spinner"></div></div>
   </div>
 
-  <!-- CONTENT (shown after selection) -->
-  <div class="teams-layout" id="teams-layout" style="display:none">
+  <!-- RESULTS SECTION (hidden until team selected) -->
+  <div id="results-section" style="display:none">
 
-    <!-- SIDEBAR: player stats -->
-    <div class="info-card">
-      <div class="info-hdr" id="info-hdr" style="background:linear-gradient(90deg,#1d4ed8,#2563eb)">
-        👤 معلومات اللاعب
-      </div>
-      <div class="player-avatar" id="p-avatar">⚽</div>
-      <div class="p-big-name" id="p-name">—</div>
-      <div class="p-team-lbl" id="p-team-pill">—</div>
-      <div class="stat-grid">
-        <div class="stat-cell">
-          <div class="stat-val c-gw" id="s-gw">—</div>
-          <div class="stat-lbl">نقاط الجولة</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-val c-blue" id="s-total">—</div>
-          <div class="stat-lbl">إجمالي FPL</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-val c-purple" id="s-l7pts">—</div>
-          <div class="stat-lbl">نقاط الدوري</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-val c-gold" id="s-l7rank">—</div>
-          <div class="stat-lbl">مركزه في الدوري</div>
-        </div>
-        <div class="stat-cell stat-full">
-          <div class="stat-val c-blue" id="s-world" style="font-size:.95rem">—</div>
-          <div class="stat-lbl">الترتيب العالمي FPL</div>
-        </div>
-      </div>
+    <!-- SUMMARY -->
+    <div class="summary-row" id="summary-row"></div>
+
+    <!-- TABLE -->
+    <div class="section-heading">
+      <div class="section-icon" id="tbl-icon" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">⚽</div>
+      <div class="section-title" id="tbl-title">سجل المباريات <small>Match History</small></div>
     </div>
 
-    <!-- SQUAD DISPLAY -->
-    <div class="squad-card">
-      <div class="squad-hdr">
-        <span>🟢 التشكيلة — <span id="squad-gw-lbl">الجولة —</span></span>
-        <span id="squad-pts-lbl" style="color:var(--gold)"></span>
-      </div>
-      <div id="squad-body">
-        <div class="empty-squad">
-          <div class="bi">👕</div>
-          <p>اختر لاعباً لعرض تشكيلته</p>
-        </div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>الجولة</th>
+            <th>الخصم</th>
+            <th class="hide-sm">نقاط الفريق</th>
+            <th class="hide-sm">نقاط الخصم</th>
+            <th>النتيجة</th>
+            <th>ماتش</th>
+            <th>بونص</th>
+            <th>المجموع</th>
+          </tr>
+        </thead>
+        <tbody id="matches-tbody"></tbody>
+      </table>
     </div>
 
   </div>
 
-</div>
+</div><!-- /page-wrap -->
 
 <script>
+/* ══ CONFIG ══ */
 const RAW = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main";
-const FPL = "https://fantasy.premierleague.com/api";
+
 const TEAM_META = {
   "Falcons":      { color:"#3b82f6", em:"🦅" },
   "Smokers":      { color:"#22c55e", em:"💨" },
@@ -291,168 +252,356 @@ const TEAM_META = {
   "Boys":         { color:"#f97316", em:"⚽" },
   "The Pharaohs": { color:"#eab308", em:"🏺" },
 };
-const POS = { 1:{cls:"pos-gk",lbl:"GK"}, 2:{cls:"pos-def",lbl:"DEF"}, 3:{cls:"pos-mid",lbl:"MID"}, 4:{cls:"pos-fwd",lbl:"FWD"} };
 
-let leagueData    = null;
+const FIXTURES = {
+  1:  [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  2:  [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  3:  [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  4:  [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  5:  [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  6:  [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  7:  [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  8:  [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  9:  [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  10: [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  11: [["BYE","BYE"]],
+  12: [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  13: [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  14: [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  15: [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  16: [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  17: [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  18: [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  19: [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  20: [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  21: [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  22: [["BYE","BYE"]],
+  23: [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  24: [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  25: [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  26: [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  27: [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  28: [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  29: [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  30: [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  31: [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  32: [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  33: [["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  34: [["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  35: [["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  36: [["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  37: [["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  38: [["BYE","BYE"]],
+};
+
+/* ══ STATE ══ */
 let standingsData = null;
-let bootstrap     = null;
-let currentGW     = 1;
+let selectedTeam  = null;
+const TEAMS = Object.keys(TEAM_META);
 
+/* ══ INIT ══ */
 async function init() {
   try {
-    [leagueData, standingsData] = await Promise.all([
-      fetch(`${RAW}/league.json?v=${Date.now()}`).then(r => r.json()),
-      fetch(`${RAW}/data/current_standings.json?v=${Date.now()}`).then(r => r.json()),
-    ]);
-    currentGW = standingsData.current_gw || 1;
-    buildTeamSelect();
-  } catch(e) { console.error(e); }
+    standingsData = await fetch(`${RAW}/data/current_standings.json?v=${Date.now()}`).then(r => r.json());
+    buildTeamCards();
+  } catch(e) {
+    document.getElementById('teams-grid').innerHTML =
+      `<div class="state-box"><div class="si">⚠️</div><p>فشل تحميل البيانات</p></div>`;
+  }
 }
 
-function buildTeamSelect() {
-  const sel = document.getElementById('sel-team');
-  Object.keys(leagueData.teams).forEach(name => {
-    const opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = `${TEAM_META[name]?.em || '⚽'} ${name}`;
-    sel.appendChild(opt);
+/* ══ BUILD TEAM SELECTOR CARDS ══ */
+function buildTeamCards() {
+  const grid = document.getElementById('teams-grid');
+  grid.innerHTML = TEAMS.map(name => {
+    const meta  = TEAM_META[name];
+    const tData = standingsData.teams.find(t => t.name === name);
+    const rank  = standingsData.teams.findIndex(t => t.name === name) + 1;
+    const rankEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+    return `
+      <div class="team-card" id="tc-${name.replace(/\s/g,'_')}"
+           onclick="selectTeam('${name}')"
+           style="border-color:${meta.color}44">
+        <div class="team-card-em">${meta.em}</div>
+        <div class="team-card-name" style="color:${meta.color}">${name}</div>
+        <div class="team-card-sub">${rankEmoji} · ${tData?.total ?? 0} نقطة</div>
+      </div>`;
+  }).join('');
+}
+
+/* ══ SELECT TEAM ══ */
+function selectTeam(name) {
+  /* Update active card */
+  TEAMS.forEach(t => {
+    const el = document.getElementById(`tc-${t.replace(/\s/g,'_')}`);
+    if (!el) return;
+    const meta = TEAM_META[t];
+    if (t === name) {
+      el.classList.add('active');
+      el.style.borderColor = meta.color;
+      el.style.background  = meta.color + '22';
+      el.style.boxShadow   = `0 0 20px ${meta.color}44`;
+    } else {
+      el.classList.remove('active');
+      el.style.borderColor = meta.color + '44';
+      el.style.background  = '';
+      el.style.boxShadow   = '';
+    }
   });
+
+  selectedTeam = name;
+  renderTeamResults(name);
 }
 
-function onTeamChange() {
-  const team = document.getElementById('sel-team').value;
-  const pSel = document.getElementById('sel-player');
-  pSel.innerHTML = '<option value="">— اختر اللاعب —</option>';
-  pSel.disabled = !team;
-  document.getElementById('teams-layout').style.display = 'none';
-  if (!team) return;
-  const players = leagueData.teams[team]?.players || {};
-  Object.keys(players).forEach(name => {
-    const opt = document.createElement('option');
-    opt.value = `${team}||${name}||${players[name]}`;
-    opt.textContent = name;
-    pSel.appendChild(opt);
-  });
+/* ══ RENDER RESULTS ══ */
+function renderTeamResults(teamName) {
+  const meta     = TEAM_META[teamName];
+  const currentGW = standingsData.current_gw || 1;
+  const allTeams  = TEAMS;
+
+  /* ── compute bonus winner per GW from standings data ──
+     We don't have per-GW raw data here in the HTML, so we derive
+     bonus from standings.teams bonus field is aggregate.
+     Instead we embed the per-GW bonus logic using the GW data
+     from current_standings which the Python script writes.
+     Since we only have aggregate bonus in standings, we show
+     the match results without per-GW bonus breakdown,
+     and show total bonus from standings at the end.
+
+     For the match scores: standings has gf/ga as season totals,
+     not per-GW. So we show what we CAN show from standings:
+     the aggregate stats, and per-GW opponent from fixtures.
+  ──────────────────────────────────────────────────────── */
+
+  /* Get team stats from standings */
+  const tData  = standingsData.teams.find(t => t.name === teamName) || {};
+  const rank   = standingsData.teams.findIndex(t => t.name === teamName) + 1;
+
+  /* Update icon and title */
+  document.getElementById('tbl-icon').textContent  = meta.em;
+  document.getElementById('tbl-icon').style.background = `linear-gradient(135deg,${meta.color}99,${meta.color})`;
+  document.getElementById('tbl-title').innerHTML =
+    `${teamName} — سجل المباريات <small>Match History · حتى الجولة ${currentGW}</small>`;
+
+  /* ── Build match rows from fixtures ── */
+  const tbody = document.getElementById('matches-tbody');
+
+  let rows = '';
+  let runningMP    = 0;
+  let runningBonus = 0;
+  let matchCount   = 0;
+  let wins = 0, draws = 0, losses = 0;
+
+  /* We need per-GW scores. Since the Python script saves gf/ga as season totals
+     we reconstruct match results from the fixtures + standings match counts.
+     For score display we'll show "—" for points and derive W/D/L from
+     the fixture list up to currentGW using only what we have.
+
+     The REAL per-GW points are in the gw JSON files which the script processes.
+     The script stores per-GW data in current_standings only as aggregates.
+     So for this page we fetch current_standings which has:
+       won, draw, lost, matchPts, bonus, total, gf, ga, gd
+     We can show the fixture schedule with results coded as W/D/L
+     IF we had per-GW data. Since we only have aggregates here,
+     we'll show the schedule and mark played GWs — for actual scores
+     we'd need a gw_history.json. Let's build the table with what we have
+     and show per-GW scores as "—" with honest labeling.
+
+     However — we DO have the GW json files on GitHub.
+     Let's fetch them! */
+
+  document.getElementById('results-section').style.display = 'block';
+  tbody.innerHTML = `<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--text-muted)"><div class="spinner" style="margin:0 auto 10px"></div>جارٍ تحميل نتائج الجولات…</td></tr>`;
+
+  /* Update summary with loading */
+  renderSummary(tData, rank, meta, null);
+
+  /* Fetch GW data and build table */
+  fetchAndRenderGWs(teamName, currentGW, meta, tData, rank);
 }
 
-async function onPlayerChange() {
-  const val = document.getElementById('sel-player').value;
-  if (!val) { document.getElementById('teams-layout').style.display = 'none'; return; }
-  const [teamName, playerName, entryId] = val.split('||');
-  const meta = TEAM_META[teamName] || { color:"#64748b", em:"⚽" };
-
-  /* Show layout with loading state */
-  document.getElementById('teams-layout').style.display = 'grid';
-  document.getElementById('p-avatar').textContent = meta.em;
-  document.getElementById('p-avatar').style.cssText = `background:${meta.color}22;border-color:${meta.color}`;
-  document.getElementById('p-name').textContent = playerName;
-  document.getElementById('p-team-pill').innerHTML = `<span class="team-pill" style="border-color:${meta.color}55;color:${meta.color}">${teamName}</span>`;
-  document.getElementById('info-hdr').style.background = `linear-gradient(90deg,${meta.color}99,${meta.color})`;
-  ['s-gw','s-total','s-l7pts','s-l7rank','s-world'].forEach(id => document.getElementById(id).textContent = '…');
-  document.getElementById('squad-body').innerHTML = '<div class="state-box"><div class="spinner"></div><p>جارٍ تحميل التشكيلة…</p></div>';
+async function fetchAndRenderGWs(teamName, currentGW, meta, tData, rank) {
+  const tbody = document.getElementById('matches-tbody');
 
   try {
-    if (!bootstrap) bootstrap = await fetch(`${FPL}/bootstrap-static/`).then(r => r.json());
+    /* Fetch all played GWs in parallel */
+    const gwPromises = [];
+    for (let gw = 1; gw <= currentGW; gw++) {
+      gwPromises.push(
+        fetch(`${RAW}/data/gw_history/gw${gw}.json?v=${Date.now()}`)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null)
+      );
+    }
+    const gwResults = await Promise.all(gwPromises);
 
-    const [summary, picks] = await Promise.all([
-      fetch(`${FPL}/entry/${entryId}/`).then(r => r.json()).catch(() => null),
-      fetch(`${FPL}/entry/${entryId}/event/${currentGW}/picks/`).then(r => r.json()).catch(() => null),
-    ]);
+    /* Build bonus winner per GW */
+    const bonusWinner = {};
+    const allTeamNames = Object.keys(TEAM_META);
 
-    /* Stats */
-    document.getElementById('s-total').textContent   = summary?.summary_overall_points ?? '—';
-    document.getElementById('s-world').textContent   = summary?.summary_overall_rank
-      ? Number(summary.summary_overall_rank).toLocaleString() : '—';
+    for (let i = 0; i < gwResults.length; i++) {
+      const gw   = i + 1;
+      const data = gwResults[i];
+      const matchups = FIXTURES[gw] || [];
+      const allBye   = matchups.every(m => m[0]==="BYE" && m[1]==="BYE");
+      if (allBye || !data) { bonusWinner[gw] = null; continue; }
 
-    const gwNet = picks
-      ? (picks.entry_history?.points ?? 0) - (picks.entry_history?.event_transfers_cost ?? 0)
-      : '—';
-    document.getElementById('s-gw').textContent = gwNet;
-    document.getElementById('squad-gw-lbl').textContent = `الجولة ${currentGW}`;
-    document.getElementById('squad-pts-lbl').textContent = typeof gwNet === 'number' ? `${gwNet} نقطة` : '';
+      const scores = {};
+      allTeamNames.forEach(t => {
+        if (data[t]) scores[t] = Object.values(data[t]).reduce((s,p) => s + p.points, 0);
+      });
+      const mx  = Math.max(...Object.values(scores));
+      const top = Object.keys(scores).filter(t => scores[t] === mx);
+      bonusWinner[gw] = top.length === 1 ? top[0] : null;
+    }
 
-    /* League stats */
-    const lIdx = standingsData.players.findIndex(p => p.name === playerName);
-    document.getElementById('s-l7pts').textContent  = lIdx >= 0 ? standingsData.players[lIdx].points.toLocaleString() : '—';
-    document.getElementById('s-l7rank').textContent = lIdx >= 0 ? `#${lIdx + 1}` : '—';
+    /* Build rows */
+    let rows = '';
+    let runMP = 0, runBonus = 0, wins = 0, draws = 0, losses = 0;
 
-    /* Render squad */
-    if (picks?.picks) renderSquad(picks.picks, picks.entry_history?.event_transfers_cost || 0, meta);
-    else document.getElementById('squad-body').innerHTML = '<div class="empty-squad"><div class="bi">😕</div><p>لا تتوفر تشكيلة لهذه الجولة</p></div>';
+    for (let i = 0; i < gwResults.length; i++) {
+      const gw      = i + 1;
+      const data    = gwResults[i];
+      const matchups = FIXTURES[gw] || [];
+      const allBye   = matchups.every(m => m[0]==="BYE" && m[1]==="BYE");
+
+      /* Full bye week */
+      if (allBye) {
+        rows += `
+          <tr class="bye-row">
+            <td><span class="gw-badge">${gw}</span></td>
+            <td colspan="6" style="color:var(--text-muted);font-size:.82rem">😴 جولة راحة كاملة</td>
+            <td>—</td>
+          </tr>`;
+        continue;
+      }
+
+      /* Find team's fixture this GW */
+      const myFix = matchups.find(m => m.includes(teamName));
+
+      /* Team BYE */
+      if (!myFix || myFix.includes("BYE")) {
+        const gotBonus = bonusWinner[gw] === teamName;
+        if (gotBonus) runBonus++;
+        rows += `
+          <tr class="bye-row">
+            <td><span class="gw-badge">${gw}</span></td>
+            <td style="color:var(--text-muted);font-size:.82rem">— استراحة —</td>
+            <td class="hide-sm">—</td>
+            <td class="hide-sm">—</td>
+            <td><span class="result-badge rb-bye">BYE</span></td>
+            <td class="mp-0">—</td>
+            <td>${gotBonus ? '<span class="bonus-cell">⭐ +1</span>' : '—'}</td>
+            <td style="color:var(--text-muted)">${runMP + runBonus}</td>
+          </tr>`;
+        continue;
+      }
+
+      /* Real match */
+      const opp = myFix[0] === teamName ? myFix[1] : myFix[0];
+      const oppMeta = TEAM_META[opp] || { em:'⚽', color:'#64748b' };
+
+      let myPts = null, oppPts = null;
+      if (data && data[teamName] && data[opp]) {
+        myPts  = Object.values(data[teamName]).reduce((s,p) => s + p.points, 0);
+        oppPts = Object.values(data[opp]).reduce((s,p) => s + p.points, 0);
+      }
+
+      let resultClass = '', resultBadge = '', mp = 0;
+      if (myPts !== null && oppPts !== null) {
+        if (myPts > oppPts)       { resultClass='win-row';  resultBadge=`<span class="result-badge rb-win">فوز ✅</span>`;  mp=3; wins++; }
+        else if (myPts === oppPts){ resultClass='draw-row'; resultBadge=`<span class="result-badge rb-draw">تعادل 🟡</span>`; mp=1; draws++; }
+        else                       { resultClass='loss-row'; resultBadge=`<span class="result-badge rb-loss">خسارة ❌</span>`; mp=0; losses++; }
+      } else {
+        resultBadge = `<span class="result-badge rb-bye" style="opacity:.6">لم تُلعب</span>`;
+      }
+
+      runMP += mp;
+      const gotBonus = bonusWinner[gw] === teamName;
+      if (gotBonus) runBonus++;
+
+      const myPtsDisp  = myPts  !== null ? `<span class="pts-team" style="color:${meta.color}">${myPts}</span>`  : '—';
+      const oppPtsDisp = oppPts !== null ? `<span class="pts-opp">${oppPts}</span>` : '—';
+      const mpCls      = mp===3?'mp-3':mp===1?'mp-1':'mp-0';
+
+      rows += `
+        <tr class="${resultClass}">
+          <td><span class="gw-badge">${gw}</span></td>
+          <td>
+            <div class="opp-cell">
+              <span class="opp-em">${oppMeta.em}</span>
+              <span style="color:${oppMeta.color};font-weight:800">${opp}</span>
+            </div>
+          </td>
+          <td class="hide-sm">${myPtsDisp}</td>
+          <td class="hide-sm">${oppPtsDisp}</td>
+          <td>${resultBadge}</td>
+          <td class="${mpCls} mp-cell">+${mp}</td>
+          <td>${gotBonus ? '<span class="bonus-cell">⭐ +1</span>' : '—'}</td>
+          <td style="font-weight:800;color:var(--blue-accent)">${runMP + runBonus}</td>
+        </tr>`;
+    }
+
+    tbody.innerHTML = rows || `<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--text-muted)">لا توجد بيانات</td></tr>`;
+    renderSummary(tData, rank, meta, { wins, draws, losses, runMP, runBonus });
 
   } catch(e) {
-    console.error(e);
-    document.getElementById('squad-body').innerHTML = '<div class="empty-squad"><div class="bi">⚠️</div><p>فشل تحميل التشكيلة</p></div>';
+    tbody.innerHTML = `<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--red)">⚠️ فشل تحميل بيانات الجولات</td></tr>`;
   }
 }
 
-function renderSquad(picks, xferCost, teamMeta) {
-  const lookup = {};
-  (bootstrap.elements || []).forEach(el => { lookup[el.id] = el; });
+function renderSummary(tData, rank, meta, computed) {
+  const rankEmoji = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':`#${rank}`;
+  const w = computed?.wins    ?? tData.won   ?? '—';
+  const d = computed?.draws   ?? tData.draw  ?? '—';
+  const l = computed?.losses  ?? tData.lost  ?? '—';
+  const mp    = computed?.runMP    ?? tData.matchPts ?? '—';
+  const bonus = computed?.runBonus ?? tData.bonus    ?? '—';
+  const total = (typeof mp==='number' && typeof bonus==='number') ? mp+bonus : tData.total ?? '—';
 
-  const playing = picks.filter(p => p.position <= 11).sort((a,b) => a.position - b.position);
-  const bench   = picks.filter(p => p.position > 11).sort((a,b) => a.position - b.position);
-
-  /* Group by position type */
-  const groups = { 1:[], 2:[], 3:[], 4:[] };
-  playing.forEach(p => { const el = lookup[p.element]; if (el) groups[el.element_type]?.push({p, el}); });
-
-  function tile(p, el, isBench = false) {
-    const rawPts = el.event_points ?? 0;
-    const pts    = p.is_captain ? rawPts * (p.multiplier || 2) : rawPts;
-    const pos    = POS[el.element_type] || { cls:'pos-mid', lbl:'?' };
-    const shirtCls = isBench ? 'pos-bch' : pos.cls;
-    const ptsClass = pts >= 10 ? 'hi' : pts <= 1 ? 'lo' : '';
-    const badge    = p.is_captain ? '<div class="capt-badge">C</div>'
-                   : p.is_vice_captain ? '<div class="vc-badge">V</div>' : '';
-    return `
-      <div class="ptile">
-        <div class="pshirt ${shirtCls}" style="border-color:${isBench?'rgba(255,255,255,.15)':teamMeta.color}">
-          ${badge}
-          <span>${pos.lbl}</span>
-        </div>
-        <div class="pname">${el.web_name || el.second_name}</div>
-        <div class="ppts ${ptsClass}">${pts}</div>
-      </div>`;
-  }
-
-  const sections = [];
-  const lblMap = { 1:'حارس المرمى', 2:'المدافعون', 3:'خط الوسط', 4:'المهاجمون' };
-  [1,2,3,4].forEach(pos => {
-    if (!groups[pos].length) return;
-    sections.push(`
-      <div class="pitch-section">
-        <div class="pitch-label">${lblMap[pos]}</div>
-        <div class="pitch-row">${groups[pos].map(({p,el}) => tile(p,el)).join('')}</div>
-      </div>`);
-  });
-
-  const benchHTML = bench.map(({p,el} = {}) => {
-    // bench is raw pick objects
-    const el2 = lookup[p?.element || p];
-    return el2 ? tile(p, el2, true) : '';
-  });
-  // fix: bench items are raw pick objects
-  const benchTiles = bench.map(p => {
-    const el = lookup[p.element];
-    return el ? tile(p, el, true) : '';
-  }).join('');
-
-  const xferNote = xferCost > 0
-    ? `<div class="xfer-note">⚠️ خصم تحويلات: −${xferCost} نقطة</div>` : '';
-
-  document.getElementById('squad-body').innerHTML = `
-    <div class="pitch">
-      ${sections.join('')}
-      <div class="bench-wrap">
-        <div class="bench-lbl">الاحتياط</div>
-        <div class="bench-row">${benchTiles}</div>
-      </div>
+  document.getElementById('summary-row').innerHTML = `
+    <div class="sum-chip" style="border-color:${meta.color}55">
+      <div class="sum-val" style="color:${meta.color}">${rankEmoji}</div>
+      <div class="sum-lbl">المركز في الدوري</div>
     </div>
-    ${xferNote}`;
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--green)">${w}</div>
+      <div class="sum-lbl">فوز</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--gold)">${d}</div>
+      <div class="sum-lbl">تعادل</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--red)">${l}</div>
+      <div class="sum-lbl">خسارة</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--blue-accent)">${mp}</div>
+      <div class="sum-lbl">نقاط الماتشات</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--gold)">${bonus}</div>
+      <div class="sum-lbl">البونص</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--blue-accent)">${total}</div>
+      <div class="sum-lbl">المجموع الكلي</div>
+    </div>
+    <div class="sum-chip">
+      <div class="sum-val" style="color:var(--text-muted)">${tData.gd > 0 ? '+' : ''}${tData.gd ?? '—'}</div>
+      <div class="sum-lbl">فارق النقاط</div>
+    </div>`;
 }
 
 init();
 </script>
 </body>
 </html>
+<!-- 
+  ملاحظة مهمة:
+  الصفحة دي بتحمّل بيانات كل جولة من:
+  https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/data/gw_history/gw{N}.json
+  
+  محتاج تضيف هذا الكود لـ update_standings.py عشان يحفظ ملفات الجولات:
+-->
