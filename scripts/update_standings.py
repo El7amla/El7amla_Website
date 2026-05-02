@@ -443,6 +443,21 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
         for team in team_names:
             gw_team_pts[gw][team] = team_gw_points(team, gw)
 
+        # ── Save per-GW history file for the teams page ──
+        gw_hist = {}
+        for team in team_names:
+            gw_hist[team] = {}
+            for player_name, entry_id in league[team]["players"].items():
+                key = (entry_id, gw)
+                pts = _shared_cache.get(key)
+                if pts is not None:
+                    gw_hist[team][str(entry_id)] = {"points": pts}
+        gw_hist_dir  = REPO_ROOT / "data" / "gw_history"
+        gw_hist_dir.mkdir(parents=True, exist_ok=True)
+        gw_hist_file = gw_hist_dir / f"gw{gw}.json"
+        with open(gw_hist_file, "w", encoding="utf-8") as f:
+            json.dump(gw_hist, f, ensure_ascii=False, indent=2)
+
         if all_bye:
             log.info(f"GW{gw}: Full-bye week")
             _apply_bonus(gw, team_names, gw_team_pts, stats)
