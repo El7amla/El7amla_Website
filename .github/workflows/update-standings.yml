@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name  "El7amla Bot"
           git config user.email "bot@el7amla.local"
-          git add data/current_standings.json
+          git add data/current_standings.json data/gw_history/
           # Only commit if there are actual changes
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "Auto-update standings [skip ci]"
