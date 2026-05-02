@@ -1,6 +1,6 @@
 {
   "current_gw": 34,
-  "last_updated": "2026-05-02 09:38:42",
+  "last_updated": "2026-05-02 14:15:02",
   "teams": [
     {
       "name": "Boys",
@@ -38,8 +38,8 @@
       "ga": 2898,
       "gd": 124,
       "matchPts": 37,
-      "bonus": 7,
-      "total": 44
+      "bonus": 6,
+      "total": 43
     },
     {
       "name": "Smokers",
@@ -51,8 +51,8 @@
       "ga": 3110,
       "gd": -121,
       "matchPts": 37,
-      "bonus": 7,
-      "total": 44
+      "bonus": 6,
+      "total": 43
     },
     {
       "name": "The Pharaohs",
