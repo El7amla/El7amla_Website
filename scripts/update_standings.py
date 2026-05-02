@@ -181,13 +181,9 @@ def calculate_standings(current_gw: int) -> list[dict]:
             (m[0] == "BYE" and m[1] == "BYE") for m in matchups
         )
         if all_bye:
-            log.info(f"GW{gw}: Full-bye week — skipping match logic")
-            # Still need points for bonus calculation — fetch all teams
+            log.info(f"GW{gw}: Full-bye week — no bonus awarded")
+            # Full bye weeks (GW11, GW22, GW38): skip entirely, no bonus
             gw_team_pts[gw] = {}
-            for team in team_names:
-                gw_team_pts[gw][team] = team_gw_points(team, gw)
-            # apply bonus only (match points = 0 for everyone)
-            _apply_bonus(gw, team_names, gw_team_pts, stats)
             continue
 
         log.info(f"GW{gw}: Processing {len(matchups)} fixture(s)")
@@ -459,8 +455,8 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
             json.dump(gw_hist, f, ensure_ascii=False, indent=2)
 
         if all_bye:
-            log.info(f"GW{gw}: Full-bye week")
-            _apply_bonus(gw, team_names, gw_team_pts, stats)
+            log.info(f"GW{gw}: Full-bye week — no bonus awarded")
+            # Full bye weeks (GW11, GW22, GW38): NO bonus for anyone
             continue
 
         log.info(f"GW{gw}: Processing fixtures…")
