@@ -249,11 +249,11 @@ def calculate_standings(current_gw: int) -> list[dict]:
     sorted_teams = sorted(
         team_names,
         key=lambda t: (
-            -stats[t]["total"],
-            -stats[t]["matchPts"],
-            -stats[t]["gd"],
-            -stats[t]["gf"],
-            -stats[t]["won"],
+            -stats[t]["total"],   # 1. الإجمالي
+            -stats[t]["gd"],      # 2. فارق النقاط
+            -stats[t]["matchPts"],# 3. نقاط الماتشات
+            -stats[t]["gf"],      # 4. النقاط له
+            -stats[t]["won"],     # 5. عدد الفوز
         )
     )
 
@@ -507,11 +507,11 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
     sorted_teams = sorted(
         team_names,
         key=lambda t: (
-            -stats[t]["total"],
-            -stats[t]["matchPts"],
-            -stats[t]["gd"],
-            -stats[t]["gf"],
-            -stats[t]["won"],
+            -stats[t]["total"],   # 1. الإجمالي
+            -stats[t]["gd"],      # 2. فارق النقاط
+            -stats[t]["matchPts"],# 3. نقاط الماتشات
+            -stats[t]["gf"],      # 4. النقاط له
+            -stats[t]["won"],     # 5. عدد الفوز
         )
     )
 
