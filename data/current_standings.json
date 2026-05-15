@@ -1,20 +1,7 @@
 {
   "current_gw": 36,
-  "last_updated": "2026-05-15 00:07:28",
+  "last_updated": "2026-05-15 09:07:45",
   "teams": [
-    {
-      "name": "Boys",
-      "played": 27,
-      "won": 14,
-      "draw": 2,
-      "lost": 11,
-      "gf": 3021,
-      "ga": 3027,
-      "gd": -6,
-      "matchPts": 44,
-      "bonus": 7,
-      "total": 51
-    },
     {
       "name": "Falcons",
       "played": 27,
@@ -26,6 +13,19 @@
       "gd": 144,
       "matchPts": 43,
       "bonus": 8,
+      "total": 51
+    },
+    {
+      "name": "Boys",
+      "played": 27,
+      "won": 14,
+      "draw": 2,
+      "lost": 11,
+      "gf": 3021,
+      "ga": 3027,
+      "gd": -6,
+      "matchPts": 44,
+      "bonus": 7,
       "total": 51
     },
     {
