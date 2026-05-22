@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الرئيسية - El7amla Fantasy League</title>
+  <title>الرئيسية - El7amla Fantasy League 🏆</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
@@ -26,6 +26,7 @@
       --red:          #ef4444;
       --purple:       #a855f7;
       --nav-h:        68px;
+      --falcon-blue:  #3b82f6;
     }
 
     html { scroll-behavior: smooth; }
@@ -35,11 +36,137 @@
       color: var(--text-primary);
       min-height: 100vh;
       direction: rtl;
+      overflow-x: hidden;
     }
 
-    /* ══════════════════════════════════════
-       SHARED NAVBAR (same across all pages)
-    ══════════════════════════════════════ */
+    /* ════ CONFETTI CANVAS ════ */
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ════ CHAMPION BANNER ════ */
+    .champion-banner {
+      position: relative;
+      background: linear-gradient(135deg, #0a1628 0%, #0d1f3c 40%, #071220 100%);
+      border-bottom: 2px solid rgba(59,130,246,.3);
+      overflow: hidden;
+      padding: calc(var(--nav-h) + 20px) 16px 0;
+    }
+    .champion-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 80%, rgba(59,130,246,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 30%, rgba(251,191,36,.06) 0%, transparent 60%);
+    }
+
+    /* gold rays behind image */
+    .rays {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      pointer-events: none;
+    }
+    .rays::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 350px solid transparent;
+      border-right: 350px solid transparent;
+      border-bottom: 500px solid rgba(251,191,36,.04);
+    }
+
+    .banner-inner {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* champ text top */
+    .champ-eyebrow {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      animation: fadeDown .6s ease both;
+    }
+    .champ-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      font-weight: 900;
+      background: linear-gradient(90deg, #fbbf24, #fff, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      animation: fadeDown .7s .1s ease both;
+    }
+    .champ-sub {
+      font-size: 1rem;
+      color: var(--blue-accent);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+      animation: fadeDown .7s .2s ease both;
+    }
+    .champ-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+      animation: fadeDown .7s .3s ease both;
+    }
+    .champ-badge {
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+    .champ-badge.gold  { background: rgba(251,191,36,.18); border: 1px solid rgba(251,191,36,.5); color: var(--gold); }
+    .champ-badge.blue  { background: rgba(59,130,246,.18); border: 1px solid rgba(59,130,246,.4); color: #93c5fd; }
+    .champ-badge.green { background: rgba(34,197,94,.15); border: 1px solid rgba(34,197,94,.4); color: var(--green); }
+
+    /* hero image */
+    .hero-img-wrap {
+      position: relative;
+      width: min(600px, 100%);
+      margin: 0 auto -4px;
+      animation: riseUp .9s .3s ease both;
+    }
+    .hero-img-wrap img {
+      width: 100%;
+      display: block;
+      filter: drop-shadow(0 -20px 60px rgba(59,130,246,.3)) drop-shadow(0 -10px 30px rgba(251,191,36,.2));
+    }
+    /* gold glow under image */
+    .hero-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 60%; height: 30px;
+      background: radial-gradient(ellipse, rgba(251,191,36,.35), transparent 70%);
+      filter: blur(10px);
+    }
+
+    /* ════ SITE NAV ════ */
     .site-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -53,22 +180,12 @@
       padding: 0 20px;
     }
     .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 0;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: flex; align-items: center;
     }
-
-    /* ── LOGO ── */
     .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      text-decoration: none;
-      margin-left: auto; /* RTL: pushes to right side */
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 11px;
+      text-decoration: none; margin-left: auto; flex-shrink: 0;
     }
     .logo-mark {
       width: 44px; height: 44px;
@@ -76,188 +193,32 @@
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 18px rgba(59,130,246,.4), 0 2px 8px rgba(0,0,0,.4);
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
+      position: relative; overflow: hidden; flex-shrink: 0;
     }
-    .logo-mark::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,.12) 50%, transparent 60%);
-    }
-    .logo-mark svg {
-      width: 26px; height: 26px;
-      fill: none;
-      stroke: #fff;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-    .logo-ar {
-      font-family: 'Cairo', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 900;
-      color: var(--text-primary);
-      letter-spacing: .5px;
-    }
-    .logo-en {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.5rem;
-      font-weight: 700;
-      color: var(--blue-accent);
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-    }
+    .logo-mark svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .logo-ar { font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: 900; color: var(--text-primary); }
+    .logo-en { font-family: 'Orbitron', sans-serif; font-size: 0.5rem; font-weight: 700; color: var(--blue-accent); letter-spacing: 2.5px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; margin-right: auto; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 18px; border-bottom: 3px solid transparent; transition: .2s; height: var(--nav-h); display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue-accent); border-bottom-color: var(--blue-accent); background: rgba(59,130,246,.06); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; margin-right: auto; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; }
 
-    /* ── NAV LINKS ── */
-    .nav-links {
-      display: flex;
-      align-items: center;
-      margin-right: auto; /* RTL: left side */
-    }
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-bottom: 3px solid transparent;
-      transition: color .2s, background .2s, border-color .2s;
-      height: var(--nav-h);
-      display: flex;
-      align-items: center;
-    }
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--blue-accent);
-      border-bottom-color: var(--blue-accent);
-      background: rgba(59,130,246,.06);
-    }
-
-    /* ── HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-      margin-right: auto;
-      background: none;
-      border: none;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px; height: 2px;
-      background: var(--text-primary);
-      border-radius: 2px;
-      transition: .2s;
-    }
-
-    /* ══════════════════════════════════════
-       PAGE CONTENT
-    ══════════════════════════════════════ */
+    /* ════ PAGE CONTENT ════ */
     .page-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: calc(var(--nav-h) + 28px) 16px 60px;
+      max-width: 1200px; margin: 0 auto;
+      padding: 28px 16px 60px;
     }
 
-    /* ── HERO ── */
-    .hero {
-      text-align: center;
-      padding-bottom: 28px;
-    }
-    .hero-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.3rem, 4vw, 2.2rem);
-      font-weight: 900;
-      background: linear-gradient(90deg, #60a5fa, #f1f5f9, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-    .hero-sub {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .live-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(34,197,94,.15);
-      border: 1px solid rgba(34,197,94,.4);
-      color: var(--green);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      padding: 3px 12px;
-      border-radius: 20px;
-      text-transform: uppercase;
-    }
-    .live-badge::before {
-      content: '';
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 1.4s infinite;
-    }
-
-    /* ── GW NAV ── */
-    .gw-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-    .gw-arrow {
-      width: 38px; height: 38px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: .2s;
-    }
+    /* GW NAV */
+    .gw-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 28px; }
+    .gw-arrow { width: 38px; height: 38px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 9px; color: var(--text-muted); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .2s; }
     .gw-arrow:hover:not(:disabled) { border-color: var(--blue-accent); color: var(--blue-accent); }
     .gw-arrow:disabled { opacity: .3; cursor: not-allowed; }
-    .gw-pill {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 7px 24px;
-      min-width: 140px;
-      text-align: center;
-    }
+    .gw-pill { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 700; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 7px 24px; min-width: 140px; text-align: center; }
 
-    /* ── THREE-COL GRID ── */
-    .home-grid {
-      display: grid;
-      grid-template-columns: 270px 1fr 270px;
-      gap: 20px;
-      align-items: start;
-    }
-
-    /* ══════════════════════════════════════
-       SIDEBAR CARDS
-    ══════════════════════════════════════ */
+    /* ════ CHAMPION SIDEBAR CARD ════ */
     .side-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -265,176 +226,126 @@
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(0,0,0,.4);
     }
-    .side-card-hdr {
-      padding: 13px 16px;
-      font-weight: 800;
-      font-size: 0.88rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid var(--border);
+    /* Champion card special glow */
+    .side-card.champion-card {
+      border-color: rgba(251,191,36,.4);
+      box-shadow: 0 0 30px rgba(251,191,36,.12), 0 4px 24px rgba(0,0,0,.4);
+      position: relative;
     }
+    .side-card.champion-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #fbbf24, #fff, #fbbf24, transparent);
+    }
+    .side-card.mvp-card {
+      border-color: rgba(168,85,247,.4);
+      box-shadow: 0 0 30px rgba(168,85,247,.1), 0 4px 24px rgba(0,0,0,.4);
+      position: relative;
+    }
+    .side-card.mvp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #a855f7, #fff, #a855f7, transparent);
+    }
+
+    .side-card-hdr { padding: 13px 16px; font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
     .side-card-body { padding: 18px; }
 
-    /* Best team */
-    .bteam-badge { font-size: 3rem; text-align: center; margin-bottom: 8px; }
-    .bteam-name  { text-align: center; font-size: 1.1rem; font-weight: 900; margin-bottom: 4px; }
-    .bteam-rank  { text-align: center; margin-bottom: 14px; }
-    .bteam-stat  {
-      display: flex; justify-content: space-between;
-      padding: 7px 0;
+    /* champion stats */
+    .champ-crown { font-size: 2.5rem; text-align: center; margin-bottom: 4px; animation: bounce 1s ease infinite alternate; }
+    .champ-team-em { font-size: 3rem; text-align: center; }
+    .champ-team-name { text-align: center; font-size: 1.2rem; font-weight: 900; margin-bottom: 4px; }
+    .season-label { text-align: center; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0;
       border-bottom: 1px solid rgba(51,65,85,.5);
       font-size: 0.82rem;
     }
-    .bteam-stat:last-child { border-bottom: none; }
-    .bteam-stat .val { font-weight: 800; color: var(--blue-accent); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-row .lbl { color: var(--text-muted); }
+    .stat-row .val { font-weight: 800; }
+    .stat-row .val.gold   { color: var(--gold); }
+    .stat-row .val.blue   { color: var(--blue-accent); }
+    .stat-row .val.green  { color: var(--green); }
+    .stat-row .val.red    { color: var(--red); }
+    .stat-row .val.purple { color: var(--purple); }
 
-    /* Best player */
-    .bplayer-pts {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.4rem; font-weight: 900;
-      color: var(--purple);
-      text-align: center;
-      line-height: 1;
+    /* champion trophy row */
+    .trophy-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; margin: 12px 0 14px;
     }
-    .bplayer-sub { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin: 4px 0 10px; }
-    .bplayer-name { text-align: center; font-size: 1.1rem; font-weight: 900; margin-bottom: 6px; }
-    .bplayer-team { text-align: center; margin-bottom: 14px; }
+    .trophy-row span { font-size: 1.6rem; }
 
     /* rank badge */
     .rank-badge {
-      display: inline-flex;
-      align-items: center; justify-content: center;
-      width: 32px; height: 32px;
-      border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 8px;
       font-weight: 900; font-size: 0.85rem;
     }
-    .rank-badge.gold   { background: linear-gradient(135deg,#fbbf24,#f59e0b); color:#78350f; }
+    .rank-badge.gold { background: linear-gradient(135deg,#fbbf24,#f59e0b); color:#78350f; }
+    .rank-badge.silver { background: linear-gradient(135deg,#cbd5e1,#94a3b8); color:#1e293b; }
+    .rank-badge.bronze { background: linear-gradient(135deg,#cd7c3e,#b45309); color:#fff; }
 
-    /* team pill */
-    .team-pill {
-      display: inline-block;
-      padding: 2px 12px;
-      border-radius: 20px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      background: rgba(59,130,246,.12);
-      border: 1px solid rgba(59,130,246,.25);
-      color: #93c5fd;
-    }
+    /* mvp */
+    .mvp-pts { font-family: 'Orbitron', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--purple); text-align: center; line-height: 1; }
+    .mvp-sub { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin: 4px 0 10px; }
+    .mvp-name { text-align: center; font-size: 1.1rem; font-weight: 900; margin-bottom: 6px; }
+    .team-pill { display: inline-block; padding: 2px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 700; background: rgba(59,130,246,.12); border: 1px solid rgba(59,130,246,.25); color: #93c5fd; }
 
-    /* ══════════════════════════════════════
-       MATCH CARDS
-    ══════════════════════════════════════ */
-    .match-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.35);
-      transition: border-color .2s, transform .2s;
-    }
+    /* ════ HOME GRID ════ */
+    .home-grid { display: grid; grid-template-columns: 270px 1fr 270px; gap: 20px; align-items: start; }
+
+    /* ════ MATCH CARDS ════ */
+    .match-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 18px; margin-bottom: 14px; box-shadow: 0 4px 20px rgba(0,0,0,.35); transition: border-color .2s, transform .2s; }
     .match-card:hover { border-color: var(--blue-accent); transform: translateY(-2px); }
-    .match-card.bye   { opacity: .55; border-style: dashed; }
-
-    .match-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 12px;
-    }
-    .match-team       { display: flex; flex-direction: column; align-items: center; gap: 7px; }
-    .match-team.home  { align-items: flex-end; }
-    .match-team.away  { align-items: flex-start; }
-
-    .team-icon {
-      width: 54px; height: 54px;
-      border-radius: 12px;
-      background: var(--bg-primary);
-      border: 2px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      transition: border-color .2s;
-    }
+    .match-card.bye { opacity: .55; border-style: dashed; }
+    .match-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
+    .match-team { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .match-team.home { align-items: flex-end; }
+    .match-team.away { align-items: flex-start; }
+    .team-icon { width: 54px; height: 54px; border-radius: 12px; background: var(--bg-primary); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: border-color .2s; }
     .match-card:hover .team-icon { border-color: var(--blue-accent); }
     .match-team-name { font-weight: 800; font-size: 0.9rem; text-align: center; }
-    .match-team-pts  {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-    .match-winner { font-size: 0.65rem; font-weight: 700; color: var(--gold); }
-
     .score-center { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-    .score-nums {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem; font-weight: 900;
-      letter-spacing: 4px;
-    }
-    .score-tag {
-      font-size: 0.66rem; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 2px 9px; border-radius: 10px;
-    }
+    .score-nums { font-family: 'Orbitron', sans-serif; font-size: 1.9rem; font-weight: 900; letter-spacing: 4px; }
+    .score-tag { font-size: 0.66rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 9px; border-radius: 10px; }
     .score-tag.done { background: rgba(34,197,94,.15); color: var(--green); }
     .score-tag.live { background: rgba(251,191,36,.15); color: var(--gold); animation: pulse 1.4s infinite; }
     .score-tag.soon { background: rgba(59,130,246,.15); color: var(--blue-accent); }
     .score-tag.bye  { background: rgba(100,116,139,.15); color: var(--text-muted); }
 
-    /* bye full-week */
-    .full-bye-card {
-      background: var(--bg-card);
-      border: 2px dashed var(--border);
-      border-radius: 16px;
-      padding: 48px 20px;
-      text-align: center;
-      color: var(--text-muted);
-    }
-    .full-bye-card .bi { font-size: 2.5rem; margin-bottom: 12px; }
+    .full-bye-card { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 16px; padding: 48px 20px; text-align: center; color: var(--text-muted); }
 
-    /* ══════════════════════════════════════
-       STATE / SPINNER
-    ══════════════════════════════════════ */
+    /* ════ STATE / SPINNER ════ */
     .state-box { text-align: center; padding: 60px 20px; color: var(--text-muted); }
     .state-box .icon { font-size: 2.5rem; margin-bottom: 12px; }
-    .spinner {
-      width: 44px; height: 44px;
-      border: 3px solid rgba(59,130,246,.2);
-      border-top-color: var(--blue-accent);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin: 0 auto 14px;
-    }
+    .spinner { width: 44px; height: 44px; border: 3px solid rgba(59,130,246,.2); border-top-color: var(--blue-accent); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 14px; }
 
     /* META */
-    .meta-footer {
-      margin-top: 40px;
-      display: flex; flex-wrap: wrap;
-      gap: 14px; justify-content: center;
-    }
-    .meta-chip {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 18px;
-      font-size: 0.81rem;
-      color: var(--text-muted);
-      display: flex; align-items: center; gap: 7px;
-    }
+    .meta-footer { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .meta-chip { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 9px 18px; font-size: 0.81rem; color: var(--text-muted); display: flex; align-items: center; gap: 7px; }
     .meta-chip span { color: var(--text-primary); font-weight: 700; }
 
-    /* ══════════════════════════════════════
-       ANIMATIONS
-    ══════════════════════════════════════ */
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
-    @keyframes spin  { to { transform: rotate(360deg); } }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    /* ════ ANIMATIONS ════ */
+    @keyframes pulse    { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
+    @keyframes spin     { to { transform: rotate(360deg); } }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes riseUp   { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes bounce   { from{transform:translateY(0)} to{transform:translateY(-8px)} }
+    @keyframes shimmer  { 0%{background-position:200% center} 100%{background-position:-200% center} }
+    @keyframes glow     { 0%,100%{box-shadow:0 0 20px rgba(251,191,36,.2)} 50%{box-shadow:0 0 40px rgba(251,191,36,.5)} }
+
     .fade-up { animation: fadeUp .3s ease forwards; }
 
-    /* ══════════════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════════════ */
+    /* ════ RESPONSIVE ════ */
     @media (max-width: 1024px) {
       .home-grid { grid-template-columns: 1fr; }
       .sidebar-right { order: -1; }
@@ -446,22 +357,26 @@
       .nav-links a.active { background: rgba(59,130,246,.12); }
       .hamburger { display: flex; }
       .logo-text .logo-en { display: none; }
+      .champ-title { font-size: 1.5rem; }
     }
     @media (max-width: 480px) {
       .score-nums { font-size: 1.4rem; letter-spacing: 2px; }
       .team-icon  { width: 44px; height: 44px; font-size: 1.6rem; }
       .gw-pill    { min-width: 110px; font-size: 0.82rem; }
+      .hero-img-wrap { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════ NAVBAR ══════════════ -->
+<!-- CONFETTI CANVAS -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ════ NAVBAR ════ -->
 <nav class="site-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
       <div class="logo-mark">
-        <!-- Trophy icon -->
         <svg viewBox="0 0 24 24"><path d="M6 2h12v6a6 6 0 01-12 0V2z"/><path d="M6 4H3a2 2 0 000 4h3"/><path d="M18 4h3a2 2 0 010 4h-3"/><path d="M12 14v4"/><path d="M8 22h8"/><path d="M9 18h6"/></svg>
       </div>
       <div class="logo-text">
@@ -481,15 +396,33 @@
   </div>
 </nav>
 
-<!-- ══════════════ PAGE ══════════════ -->
-<div class="page-wrap">
-
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-title">El7amla 2v2 Fantasy League</div>
-    <div class="hero-sub">الموسم 2025 / 26</div>
-    <div class="live-badge">مباشر</div>
+<!-- ════ CHAMPION HERO BANNER ════ -->
+<div class="champion-banner">
+  <div class="rays"></div>
+  <div class="banner-inner">
+    <div class="champ-eyebrow">⚡ El7amla 2v2 Fantasy League — الموسم 2025/26</div>
+    <div class="champ-title">🦅 بطولة الفالكونز 🦅</div>
+    <div class="champ-sub">CHAMPIONS OF THE SEASON</div>
+    <div class="champ-badges">
+      <span class="champ-badge gold">🏆 الموسم 2025 / 26</span>
+      <span class="champ-badge blue">🦅 Falcons</span>
+      <span class="champ-badge green">✅ انتهى الموسم</span>
+    </div>
+    <!-- Hero Image -->
+    <div class="hero-img-wrap">
+      <img
+        src="https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/assets/champion.png"
+        onerror="this.style.display='none'; document.getElementById('fallback-img').style.display='block'"
+        alt="El7amla Champion Falcon"
+      />
+      <!-- Fallback if no GitHub image -->
+      <div id="fallback-img" style="display:none; font-size:8rem; text-align:center; padding:20px 0; filter: drop-shadow(0 0 40px rgba(59,130,246,.5))">🦅</div>
+    </div>
   </div>
+</div>
+
+<!-- ════ PAGE ════ -->
+<div class="page-wrap">
 
   <!-- GW Navigation -->
   <div class="gw-nav">
@@ -501,10 +434,10 @@
   <!-- Main Grid -->
   <div class="home-grid">
 
-    <!-- LEFT: Best Team -->
-    <div class="side-card" id="card-best-team">
-      <div class="side-card-hdr" style="background:linear-gradient(90deg,#1d4ed8,#2563eb)">
-        🏆 أفضل فريق
+    <!-- LEFT: Champion Team -->
+    <div class="side-card champion-card" id="card-best-team">
+      <div class="side-card-hdr" style="background:linear-gradient(90deg,#92400e,#d97706,#fbbf24)">
+        🏆 بطل الموسم
       </div>
       <div class="side-card-body">
         <div class="state-box"><div class="spinner"></div><p>جارٍ التحميل…</p></div>
@@ -516,10 +449,10 @@
       <div class="state-box"><div class="spinner"></div><p>جارٍ تحميل المباريات…</p></div>
     </div>
 
-    <!-- RIGHT: Best Player -->
-    <div class="side-card sidebar-right" id="card-best-player">
-      <div class="side-card-hdr" style="background:linear-gradient(90deg,#7c3aed,#9333ea)">
-        ⚡ أفضل لاعب
+    <!-- RIGHT: MVP Player -->
+    <div class="side-card mvp-card sidebar-right" id="card-best-player">
+      <div class="side-card-hdr" style="background:linear-gradient(90deg,#5b21b6,#7c3aed,#a855f7)">
+        ⚡ MVP الموسم
       </div>
       <div class="side-card-body">
         <div class="state-box"><div class="spinner"></div><p>جارٍ التحميل…</p></div>
@@ -530,14 +463,175 @@
 
   <!-- Meta -->
   <div class="meta-footer" id="meta-footer" style="display:none">
-    <div class="meta-chip">🗓️ الجولة الحالية: <span id="meta-gw">—</span></div>
+    <div class="meta-chip">🗓️ الجولة النهائية: <span id="meta-gw">—</span></div>
     <div class="meta-chip">📅 آخر تحديث: <span id="meta-updated">—</span></div>
+    <div class="meta-chip">🦅 بطل الموسم: <span style="color:var(--gold)">Falcons</span></div>
   </div>
 
-</div><!-- /page-wrap -->
+</div>
 
+<!-- ════════════════════════════════
+     CONFETTI + FIREWORKS ENGINE
+════════════════════════════════ -->
 <script>
-/* ═══════ CONFIG ═══════ */
+(function() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], fireworks = [], sparks = [];
+  let frame = 0;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const COLORS = ['#fbbf24','#3b82f6','#a855f7','#22c55e','#f97316','#ef4444','#60a5fa','#fff'];
+
+  /* ── Confetti particle ── */
+  function makeParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * -H,
+      vx: (Math.random() - .5) * 2,
+      vy: Math.random() * 3 + 1.5,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 5 + 2,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      rot: Math.random() * Math.PI * 2,
+      rotV: (Math.random() - .5) * .15,
+      life: 1,
+    };
+  }
+
+  /* ── Firework burst ── */
+  function burst(x, y) {
+    const count = 50 + Math.floor(Math.random() * 30);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count;
+      const speed = Math.random() * 5 + 2;
+      sparks.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        life: 1,
+        size: Math.random() * 3 + 1,
+      });
+    }
+  }
+
+  /* ── Firework projectile ── */
+  function launchFirework() {
+    fireworks.push({
+      x: Math.random() * W * .8 + W * .1,
+      y: H,
+      tx: Math.random() * W * .6 + W * .2,
+      ty: Math.random() * H * .5 + H * .05,
+      speed: 8 + Math.random() * 6,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      trail: [],
+    });
+  }
+
+  /* init confetti */
+  for (let i = 0; i < 120; i++) particles.push(makeParticle());
+
+  /* periodic fireworks */
+  launchFirework();
+  setInterval(launchFirework, 900);
+  /* slow down after 12s */
+  setTimeout(() => clearInterval, 12000);
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+
+    /* spawn more confetti early */
+    if (frame < 300 && frame % 3 === 0) particles.push(makeParticle());
+
+    /* confetti */
+    particles.forEach((p, i) => {
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.rot += p.rotV;
+      p.vy += .04;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.min(1, p.life);
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+
+      if (p.y > H + 20) {
+        particles[i] = frame < 400 ? makeParticle() : null;
+      }
+    });
+    particles = particles.filter(Boolean);
+
+    /* firework projectiles */
+    fireworks.forEach((fw, fi) => {
+      fw.trail.push({ x: fw.x, y: fw.y });
+      if (fw.trail.length > 12) fw.trail.shift();
+
+      const dx = fw.tx - fw.x;
+      const dy = fw.ty - fw.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < fw.speed) {
+        burst(fw.tx, fw.ty);
+        fireworks.splice(fi, 1);
+        return;
+      }
+
+      fw.x += (dx / dist) * fw.speed;
+      fw.y += (dy / dist) * fw.speed;
+
+      /* trail */
+      fw.trail.forEach((pt, ti) => {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 2 * (ti / fw.trail.length), 0, Math.PI * 2);
+        ctx.fillStyle = fw.color;
+        ctx.globalAlpha = .6 * (ti / fw.trail.length);
+        ctx.fill();
+      });
+
+      ctx.beginPath();
+      ctx.arc(fw.x, fw.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.globalAlpha = 1;
+      ctx.fill();
+    });
+
+    /* sparks */
+    sparks.forEach((s, si) => {
+      s.x  += s.vx;
+      s.y  += s.vy;
+      s.vy += .12;
+      s.vx *= .98;
+      s.life -= .022;
+
+      if (s.life <= 0) { sparks.splice(si, 1); return; }
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.life;
+      ctx.fill();
+    });
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<!-- ════ DATA ENGINE ════ -->
+<script>
 const RAW = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main";
 const TEAM_META = {
   "Falcons":      { color:"#3b82f6", em:"🦅" },
@@ -547,37 +641,33 @@ const TEAM_META = {
   "The Pharaohs": { color:"#eab308", em:"🏺" },
 };
 
-/* ═══════ STATE ═══════ */
-let standingsData = null;
-let fixturesData  = null;
-let currentGW = 1;   // latest finished GW
-let viewGW    = 1;   // GW currently displayed
+let standingsData = null, fixturesData = null;
+let currentGW = 1, viewGW = 1;
 
-/* ═══════ INIT ═══════ */
 async function init() {
   try {
     [standingsData, fixturesData] = await Promise.all([
       fetch(`${RAW}/data/current_standings.json?v=${Date.now()}`).then(r => r.json()),
       fetch(`${RAW}/fixtures.json?v=${Date.now()}`).then(r => r.json()),
     ]);
-
     currentGW = standingsData.current_gw || 1;
-    // Show next GW if current is done, otherwise show current
     viewGW = currentGW;
 
     document.getElementById('meta-gw').textContent      = currentGW;
     document.getElementById('meta-updated').textContent  = standingsData.last_updated || '—';
     document.getElementById('meta-footer').style.display = 'flex';
 
-    renderSidebars();
+    renderChampionSidebar();
+    renderMVPSidebar();
     renderGW(viewGW);
   } catch(e) {
     document.getElementById('matches-wrap').innerHTML =
       `<div class="state-box"><div class="icon">⚠️</div><p>فشل تحميل البيانات</p></div>`;
+    renderChampionFallback();
+    renderMVPFallback();
   }
 }
 
-/* ═══════ GW CHANGE ═══════ */
 function changeGW(delta) {
   const next = viewGW + delta;
   if (next < 1 || next > 38) return;
@@ -591,21 +681,115 @@ function updateNavBtns() {
   document.getElementById('gw-label').textContent = `الجولة ${viewGW}`;
 }
 
-/* ═══════ RENDER MATCHES ═══════ */
+/* ── Champion Sidebar ── */
+function renderChampionSidebar() {
+  /* champion = rank 1 from standings */
+  const team = standingsData?.teams?.[0];
+  if (!team) { renderChampionFallback(); return; }
+
+  const meta = TEAM_META[team.name] || { em:"🦅", color:"#3b82f6" };
+  const gd   = team.gd ?? ((team.gf || 0) - (team.ga || 0));
+  const winRate = team.played ? Math.round((team.won / team.played) * 100) : '—';
+
+  document.getElementById('card-best-team').querySelector('.side-card-body').innerHTML = `
+    <div class="champ-crown">👑</div>
+    <div class="champ-team-em">${meta.em}</div>
+    <div class="champ-team-name" style="color:${meta.color}">${team.name}</div>
+    <div class="season-label">بطل الموسم 2025 / 26</div>
+
+    <div class="trophy-row">
+      <span>🥇</span><span>🏆</span><span>🥇</span>
+    </div>
+
+    <div class="stat-row">
+      <span class="lbl">إجمالي النقاط</span>
+      <span class="val gold">${(team.total || 0).toLocaleString()}</span>
+    </div>
+    <div class="stat-row">
+      <span class="lbl">نقاط الماتشات</span>
+      <span class="val blue">${(team.matchPts || 0).toLocaleString()}</span>
+    </div>
+    <div class="stat-row">
+      <span class="lbl">البونص</span>
+      <span class="val gold">${(team.bonus || 0).toLocaleString()}</span>
+    </div>
+    <div class="stat-row">
+      <span class="lbl">فوز / خسارة</span>
+      <span class="val green">${team.won || 0} <span style="color:var(--text-muted)"> / </span> <span style="color:var(--red)">${team.lost || 0}</span></span>
+    </div>
+    <div class="stat-row">
+      <span class="lbl">نسبة الفوز</span>
+      <span class="val blue">${winRate}%</span>
+    </div>
+    <div class="stat-row">
+      <span class="lbl">فارق النقاط</span>
+      <span class="val ${gd >= 0 ? 'green' : 'red'}">${gd > 0 ? '+' : ''}${gd}</span>
+    </div>
+    <div class="stat-row">
+      <span class="lbl">جولات لُعبت</span>
+      <span class="val blue">${team.played || currentGW}</span>
+    </div>
+  `;
+}
+
+function renderChampionFallback() {
+  document.getElementById('card-best-team').querySelector('.side-card-body').innerHTML = `
+    <div class="champ-crown">👑</div>
+    <div class="champ-team-em">🦅</div>
+    <div class="champ-team-name" style="color:#3b82f6">Falcons</div>
+    <div class="season-label">بطل الموسم 2025 / 26</div>
+    <div class="trophy-row"><span>🥇</span><span>🏆</span><span>🥇</span></div>
+    <div style="text-align:center;color:var(--text-muted);font-size:.8rem;margin-top:8px">جارٍ تحميل الإحصائيات…</div>
+  `;
+}
+
+/* ── MVP Sidebar ── */
+function renderMVPSidebar() {
+  const player = standingsData?.players?.[0];
+  if (!player) { renderMVPFallback(); return; }
+
+  const meta = TEAM_META[player.team] || { color:"#64748b" };
+
+  document.getElementById('card-best-player').querySelector('.side-card-body').innerHTML = `
+    <div class="mvp-pts">${(player.points || 0).toLocaleString()}</div>
+    <div class="mvp-sub">نقطة — أعلى نقاط في الدوري</div>
+    <div class="mvp-name">⚡ ${player.name}</div>
+    <div class="bplayer-team" style="text-align:center;margin-bottom:14px">
+      <span class="team-pill" style="border-color:${meta.color}55;color:${meta.color}">${player.team}</span>
+    </div>
+
+    <div class="stat-row">
+      <span class="lbl">إجمالي النقاط</span>
+      <span class="val purple">${(player.points || 0).toLocaleString()}</span>
+    </div>
+    ${player.avgPts ? `<div class="stat-row"><span class="lbl">متوسط النقاط</span><span class="val blue">${player.avgPts}</span></div>` : ''}
+    ${player.highScore ? `<div class="stat-row"><span class="lbl">أعلى جولة</span><span class="val gold">${player.highScore}</span></div>` : ''}
+    ${player.gwWins !== undefined ? `<div class="stat-row"><span class="lbl">جولات الصدارة</span><span class="val green">${player.gwWins}</span></div>` : ''}
+
+    <div style="text-align:center;margin-top:14px">
+      <span class="rank-badge gold">🥇</span>
+      <div style="font-size:.74rem;color:var(--text-muted);margin-top:6px">MVP الموسم 2025/26</div>
+    </div>
+  `;
+}
+
+function renderMVPFallback() {
+  document.getElementById('card-best-player').querySelector('.side-card-body').innerHTML = `
+    <div class="mvp-pts">—</div>
+    <div class="mvp-sub">جارٍ تحميل بيانات MVP…</div>
+    <div style="text-align:center;margin-top:14px"><span class="rank-badge gold">🥇</span></div>
+  `;
+}
+
+/* ── Render GW matches ── */
 function renderGW(gw) {
   updateNavBtns();
   const wrap = document.getElementById('matches-wrap');
   const matchups = (fixturesData?.fixtures || {})[String(gw)] || [];
 
-  /* Full-bye week */
-  const allBye = matchups.every(m => m[0] === "BYE" && m[1] === "BYE");
+  const allBye = matchups.length > 0 && matchups.every(m => m[0] === "BYE" && m[1] === "BYE");
   if (allBye) {
-    wrap.innerHTML = `
-      <div class="full-bye-card fade-up">
-        <div class="bi">😴</div>
-        <div style="font-weight:800;font-size:1rem;margin-bottom:6px">جولة راحة كاملة</div>
-        <div style="font-size:0.85rem">لا توجد مباريات في هذه الجولة</div>
-      </div>`;
+    wrap.innerHTML = `<div class="full-bye-card fade-up"><div style="font-size:2.5rem;margin-bottom:12px">😴</div><div style="font-weight:800;font-size:1rem;margin-bottom:6px">جولة راحة كاملة</div><div style="font-size:.85rem">لا توجد مباريات في هذه الجولة</div></div>`;
     return;
   }
 
@@ -615,95 +799,46 @@ function renderGW(gw) {
   const html = matchups.map(m => {
     const [home, away] = m;
 
-    /* One-team BYE */
     if (home === "BYE" || away === "BYE") {
       const team = home === "BYE" ? away : home;
       const meta = TEAM_META[team] || { em:"⚽", color:"#64748b" };
-      return `
-        <div class="match-card bye fade-up">
-          <div class="match-row">
-            <div class="match-team home">
-              <div class="team-icon" style="border-color:${meta.color}">${meta.em}</div>
-              <div class="match-team-name">${team}</div>
-            </div>
-            <div class="score-center">
-              <div class="score-nums" style="font-size:1rem;color:var(--text-muted)">BYE</div>
-              <div class="score-tag bye">راحة</div>
-            </div>
-            <div class="match-team away"></div>
-          </div>
-        </div>`;
+      return `<div class="match-card bye fade-up"><div class="match-row"><div class="match-team home"><div class="team-icon" style="border-color:${meta.color}">${meta.em}</div><div class="match-team-name">${team}</div></div><div class="score-center"><div class="score-nums" style="font-size:1rem;color:var(--text-muted)">BYE</div><div class="score-tag bye">راحة</div></div><div class="match-team away"></div></div></div>`;
     }
 
     const hMeta = TEAM_META[home] || { em:"⚽", color:"#64748b" };
     const aMeta = TEAM_META[away] || { em:"⚽", color:"#64748b" };
-
-    /* Get per-GW points from standings gf field isn't per-GW,
-       so we mark played/live/upcoming only */
     const tag = isPlayed
       ? `<div class="score-tag done">انتهت</div>`
       : isCurrent
         ? `<div class="score-tag live">جارية</div>`
         : `<div class="score-tag soon">قادمة</div>`;
 
-    const scoreDisplay = `<div class="score-nums" style="color:var(--text-muted);font-size:1.3rem">VS</div>`;
+    /* highlight champion match */
+    const isChampMatch = home === "Falcons" || away === "Falcons";
+    const cardExtra = (isPlayed && isChampMatch) ? ' style="border-color:rgba(251,191,36,.35)"' : '';
 
     return `
-      <div class="match-card fade-up">
+      <div class="match-card fade-up"${cardExtra}>
         <div class="match-row">
           <div class="match-team home">
             <div class="team-icon" style="border-color:${hMeta.color}">${hMeta.em}</div>
             <div class="match-team-name">${home}</div>
+            ${home === "Falcons" && isPlayed ? '<div style="font-size:.65rem;color:var(--gold);font-weight:800">🏆 بطل</div>' : ''}
           </div>
           <div class="score-center">
-            ${scoreDisplay}
+            <div class="score-nums" style="color:var(--text-muted);font-size:1.3rem">VS</div>
             ${tag}
           </div>
           <div class="match-team away">
             <div class="team-icon" style="border-color:${aMeta.color}">${aMeta.em}</div>
             <div class="match-team-name">${away}</div>
+            ${away === "Falcons" && isPlayed ? '<div style="font-size:.65rem;color:var(--gold);font-weight:800">🏆 بطل</div>' : ''}
           </div>
         </div>
       </div>`;
   }).join('');
 
   wrap.innerHTML = html || `<div class="state-box"><div class="icon">📭</div><p>لا توجد مباريات</p></div>`;
-}
-
-/* ═══════ RENDER SIDEBARS ═══════ */
-function renderSidebars() {
-  /* Best team = rank 1 */
-  const team = standingsData?.teams?.[0];
-  if (team) {
-    const meta = TEAM_META[team.name] || { em:"⚽", color:"#64748b" };
-    const gd   = team.gd ?? (team.gf - team.ga);
-    document.getElementById('card-best-team').querySelector('.side-card-body').innerHTML = `
-      <div class="bteam-badge">${meta.em}</div>
-      <div class="bteam-name" style="color:${meta.color}">${team.name}</div>
-      <div class="bteam-rank"><span class="rank-badge gold">🥇</span></div>
-      <div class="bteam-stat"><span>الإجمالي</span>       <span class="val">${team.total}</span></div>
-      <div class="bteam-stat"><span>نقاط الماتشات</span>  <span class="val">${team.matchPts}</span></div>
-      <div class="bteam-stat"><span>البونص</span>          <span class="val" style="color:var(--gold)">${team.bonus}</span></div>
-      <div class="bteam-stat"><span>فوز / خسارة</span>    <span class="val">${team.won} / ${team.lost}</span></div>
-      <div class="bteam-stat"><span>فارق النقاط</span>    <span class="val" style="color:${gd>=0?'var(--green)':'var(--red)'}">${gd>0?'+':''}${gd}</span></div>`;
-  }
-
-  /* Best player = rank 1 in players array */
-  const player = standingsData?.players?.[0];
-  if (player) {
-    const meta = TEAM_META[player.team] || { color:"#64748b" };
-    document.getElementById('card-best-player').querySelector('.side-card-body').innerHTML = `
-      <div class="bplayer-pts">${player.points.toLocaleString()}</div>
-      <div class="bplayer-sub">نقطة في دوري الحمله</div>
-      <div class="bplayer-name">⚡ ${player.name}</div>
-      <div class="bplayer-team">
-        <span class="team-pill" style="border-color:${meta.color}55;color:${meta.color}">${player.team}</span>
-      </div>
-      <div style="text-align:center;margin-top:12px">
-        <span class="rank-badge gold" style="margin:0 auto">🥇</span>
-        <div style="font-size:0.74rem;color:var(--text-muted);margin-top:6px">المركز الأول في الدوري</div>
-      </div>`;
-  }
 }
 
 init();
