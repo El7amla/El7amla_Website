@@ -21,9 +21,9 @@
     --blue: #3b82f6;
     --purple: #a855f7;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   body {
     font-family: 'Cairo', sans-serif;
     background: var(--dark);
@@ -31,7 +31,7 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
+ 
   /* ── background grid ── */
   body::before {
     content: '';
@@ -44,7 +44,7 @@
     pointer-events: none;
     z-index: 0;
   }
-
+ 
   /* ══════════════════════════════
      NAVBAR
   ══════════════════════════════ */
@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: space-between;
   }
-
+ 
   .nav-logo {
     font-size: 18px;
     font-weight: 900;
@@ -69,13 +69,13 @@
     letter-spacing: -0.5px;
     text-decoration: none;
   }
-
+ 
   .nav-links {
     display: flex;
     gap: 6px;
     list-style: none;
   }
-
+ 
   .nav-links a {
     color: var(--muted);
     text-decoration: none;
@@ -85,10 +85,10 @@
     border-radius: 6px;
     transition: all 0.2s;
   }
-
+ 
   .nav-links a:hover { color: var(--text); background: var(--dark3); }
   .nav-links a.active { color: var(--gold); background: rgba(240,180,41,0.1); }
-
+ 
   /* ══════════════════════════════
      LOGIN PAGE
   ══════════════════════════════ */
@@ -101,7 +101,7 @@
     justify-content: center;
     padding: 40px 20px;
   }
-
+ 
   .login-box {
     background: var(--card);
     border: 1px solid var(--border);
@@ -112,7 +112,7 @@
     position: relative;
     overflow: hidden;
   }
-
+ 
   .login-box::before {
     content: '';
     position: absolute;
@@ -120,7 +120,7 @@
     height: 3px;
     background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
   }
-
+ 
   .login-icon {
     width: 64px; height: 64px;
     background: rgba(240,180,41,0.12);
@@ -130,7 +130,7 @@
     font-size: 28px;
     margin: 0 auto 24px;
   }
-
+ 
   .login-title {
     font-size: 24px;
     font-weight: 900;
@@ -138,16 +138,16 @@
     color: var(--text);
     margin-bottom: 6px;
   }
-
+ 
   .login-sub {
     font-size: 13px;
     color: var(--muted);
     text-align: center;
     margin-bottom: 36px;
   }
-
+ 
   .form-group { margin-bottom: 20px; }
-
+ 
   .form-group label {
     display: block;
     font-size: 13px;
@@ -155,7 +155,7 @@
     color: var(--muted);
     margin-bottom: 8px;
   }
-
+ 
   .form-group input {
     width: 100%;
     background: var(--dark3);
@@ -168,13 +168,13 @@
     transition: border-color 0.2s;
     direction: rtl;
   }
-
+ 
   .form-group input:focus {
     outline: none;
     border-color: var(--gold);
     box-shadow: 0 0 0 3px rgba(240,180,41,0.1);
   }
-
+ 
   .btn-login {
     width: 100%;
     background: var(--gold);
@@ -189,10 +189,10 @@
     transition: all 0.2s;
     margin-top: 8px;
   }
-
+ 
   .btn-login:hover { background: #f5c842; transform: translateY(-1px); }
   .btn-login:active { transform: translateY(0); }
-
+ 
   .login-error {
     background: rgba(239,68,68,0.1);
     border: 1px solid rgba(239,68,68,0.3);
@@ -204,7 +204,7 @@
     margin-top: 14px;
     display: none;
   }
-
+ 
   /* ══════════════════════════════
      DASHBOARD
   ══════════════════════════════ */
@@ -216,7 +216,7 @@
     padding: 36px 20px 60px;
     display: none;
   }
-
+ 
   .dash-header {
     display: flex;
     align-items: center;
@@ -225,19 +225,19 @@
     flex-wrap: wrap;
     gap: 12px;
   }
-
+ 
   .dash-team-name {
     font-size: 28px;
     font-weight: 900;
     color: var(--gold);
   }
-
+ 
   .dash-team-sub {
     font-size: 13px;
     color: var(--muted);
     margin-top: 2px;
   }
-
+ 
   .btn-logout {
     background: transparent;
     border: 1px solid var(--border);
@@ -249,9 +249,9 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-
+ 
   .btn-logout:hover { border-color: var(--red); color: var(--red); }
-
+ 
   /* section title */
   .section-title {
     font-size: 13px;
@@ -264,14 +264,14 @@
     align-items: center;
     gap: 8px;
   }
-
+ 
   .section-title::after {
     content: '';
     flex: 1;
     height: 1px;
     background: var(--border);
   }
-
+ 
   /* ── features grid ── */
   .features-grid {
     display: grid;
@@ -279,7 +279,7 @@
     gap: 16px;
     margin-bottom: 40px;
   }
-
+ 
   .feature-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -290,23 +290,23 @@
     transition: all 0.25s;
     cursor: pointer;
   }
-
+ 
   .feature-card:hover:not(.used):not(.disabled) {
     border-color: var(--gold);
     transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(240,180,41,0.12);
   }
-
+ 
   .feature-card.used {
     opacity: 0.45;
     cursor: not-allowed;
   }
-
+ 
   .feature-card.disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-
+ 
   .feature-card::before {
     content: '';
     position: absolute;
@@ -314,30 +314,30 @@
     height: 3px;
     border-radius: 16px 16px 0 0;
   }
-
+ 
   .feature-card.bonus::before    { background: linear-gradient(90deg, #22c55e, #16a34a); }
   .feature-card.penalty::before  { background: linear-gradient(90deg, #ef4444, #b91c1c); }
   .feature-card.onevone::before  { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
-
+ 
   .feat-icon {
     font-size: 32px;
     margin-bottom: 12px;
     display: block;
   }
-
+ 
   .feat-name {
     font-size: 17px;
     font-weight: 900;
     color: var(--text);
     margin-bottom: 6px;
   }
-
+ 
   .feat-desc {
     font-size: 12px;
     color: var(--muted);
     line-height: 1.7;
   }
-
+ 
   .feat-badge {
     position: absolute;
     top: 16px;
@@ -347,25 +347,25 @@
     padding: 3px 10px;
     border-radius: 20px;
   }
-
+ 
   .feat-badge.available {
     background: rgba(34,197,94,0.15);
     color: #86efac;
     border: 1px solid rgba(34,197,94,0.3);
   }
-
+ 
   .feat-badge.used-badge {
     background: rgba(239,68,68,0.15);
     color: #fca5a5;
     border: 1px solid rgba(239,68,68,0.3);
   }
-
+ 
   .feat-badge.active-badge {
     background: rgba(240,180,41,0.15);
     color: var(--gold);
     border: 1px solid rgba(240,180,41,0.3);
   }
-
+ 
   /* ── change password section ── */
   .pass-box {
     background: var(--card);
@@ -374,14 +374,14 @@
     padding: 28px;
     margin-bottom: 40px;
   }
-
+ 
   .pass-row {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
     gap: 12px;
     align-items: end;
   }
-
+ 
   .pass-row input {
     background: var(--dark3);
     border: 1px solid var(--border);
@@ -393,12 +393,12 @@
     direction: rtl;
     transition: border-color 0.2s;
   }
-
+ 
   .pass-row input:focus {
     outline: none;
     border-color: var(--gold);
   }
-
+ 
   .pass-row label {
     display: block;
     font-size: 12px;
@@ -406,7 +406,7 @@
     margin-bottom: 6px;
     font-weight: 600;
   }
-
+ 
   .btn-save {
     background: var(--dark3);
     border: 1px solid var(--border);
@@ -420,9 +420,9 @@
     white-space: nowrap;
     transition: all 0.2s;
   }
-
+ 
   .btn-save:hover { border-color: var(--gold); color: var(--gold); }
-
+ 
   .pass-msg {
     font-size: 13px;
     margin-top: 12px;
@@ -430,10 +430,10 @@
     padding: 8px 12px;
     border-radius: 8px;
   }
-
+ 
   .pass-msg.ok  { background: rgba(34,197,94,0.1);  color: #86efac; border: 1px solid rgba(34,197,94,0.2); }
   .pass-msg.err { background: rgba(239,68,68,0.1);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
-
+ 
   /* ── history box ── */
   .history-box {
     background: var(--card);
@@ -441,7 +441,7 @@
     border-radius: 16px;
     overflow: hidden;
   }
-
+ 
   .history-row {
     display: flex;
     align-items: center;
@@ -450,21 +450,21 @@
     border-bottom: 1px solid var(--border);
     font-size: 14px;
   }
-
+ 
   .history-row:last-child { border-bottom: none; }
-
+ 
   .history-row .feat-label {
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 700;
   }
-
+ 
   .history-row .gw-tag {
     font-size: 12px;
     color: var(--muted);
   }
-
+ 
   /* ── 1v1 modal ── */
   .modal-overlay {
     position: fixed;
@@ -477,9 +477,9 @@
     justify-content: center;
     padding: 20px;
   }
-
+ 
   .modal-overlay.open { display: flex; }
-
+ 
   .modal-box {
     background: var(--card);
     border: 1px solid var(--border);
@@ -489,23 +489,23 @@
     width: 100%;
     position: relative;
   }
-
+ 
   .modal-title {
     font-size: 20px;
     font-weight: 900;
     color: var(--text);
     margin-bottom: 6px;
   }
-
+ 
   .modal-sub {
     font-size: 13px;
     color: var(--muted);
     margin-bottom: 28px;
     line-height: 1.7;
   }
-
+ 
   .player-select-group { margin-bottom: 20px; }
-
+ 
   .player-select-group label {
     font-size: 13px;
     font-weight: 700;
@@ -513,7 +513,7 @@
     margin-bottom: 8px;
     display: block;
   }
-
+ 
   .player-select-group select {
     width: 100%;
     background: var(--dark3);
@@ -526,14 +526,14 @@
     cursor: pointer;
     direction: rtl;
   }
-
+ 
   .player-select-group select:focus {
     outline: none;
     border-color: var(--blue);
   }
-
+ 
   .modal-actions { display: flex; gap: 10px; margin-top: 8px; }
-
+ 
   .btn-confirm {
     flex: 1;
     background: var(--blue);
@@ -547,9 +547,9 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-
+ 
   .btn-confirm:hover { background: #2563eb; }
-
+ 
   .btn-cancel {
     flex: 1;
     background: transparent;
@@ -562,14 +562,14 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-
+ 
   .btn-cancel:hover { border-color: var(--red); color: var(--red); }
-
+ 
   /* ── confirm modal ── */
   .confirm-icon { font-size: 42px; text-align: center; margin-bottom: 16px; }
   .confirm-title { font-size: 19px; font-weight: 900; text-align: center; margin-bottom: 8px; }
   .confirm-sub { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7; margin-bottom: 24px; }
-
+ 
   .toast {
     position: fixed;
     bottom: 24px;
@@ -585,11 +585,11 @@
     transition: transform 0.3s ease;
     white-space: nowrap;
   }
-
+ 
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.success { border-color: rgba(34,197,94,0.5); color: #86efac; }
   .toast.error   { border-color: rgba(239,68,68,0.5);  color: #fca5a5; }
-
+ 
   .gw-notice {
     background: rgba(240,180,41,0.08);
     border: 1px solid rgba(240,180,41,0.25);
@@ -602,7 +602,7 @@
     align-items: center;
     gap: 10px;
   }
-
+ 
   @media (max-width: 600px) {
     .pass-row { grid-template-columns: 1fr; }
     .login-box { padding: 32px 24px; }
@@ -612,7 +612,7 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- ════════ NAVBAR ════════ -->
 <nav>
   <a class="nav-logo" href="index.html">⚽ El7amla</a>
@@ -624,14 +624,14 @@
     <li><a href="khawas.html" class="active">الخواص ✨</a></li>
   </ul>
 </nav>
-
+ 
 <!-- ════════ LOGIN PAGE ════════ -->
 <div id="login-page">
   <div class="login-box">
     <div class="login-icon">🔐</div>
     <div class="login-title">لوحة تحكم الفريق</div>
     <div class="login-sub">سجّل دخولك للوصول إلى خواص فريقك</div>
-
+ 
     <div class="form-group">
       <label>اسم الفريق</label>
       <input type="text" id="inp-username" placeholder="مثال: Black Tech" autocomplete="off">
@@ -640,12 +640,12 @@
       <label>الباسورد</label>
       <input type="password" id="inp-password" placeholder="••••••••">
     </div>
-
+ 
     <button class="btn-login" onclick="doLogin()">دخول</button>
     <div class="login-error" id="login-error">اسم الفريق أو الباسورد غلط</div>
   </div>
 </div>
-
+ 
 <!-- ════════ DASHBOARD ════════ -->
 <div id="dashboard-page">
   <!-- header -->
@@ -656,16 +656,16 @@
     </div>
     <button class="btn-logout" onclick="doLogout()">تسجيل خروج</button>
   </div>
-
+ 
   <!-- current gw notice -->
   <div class="gw-notice" id="gw-notice">
-    ⚡ الجولة الحالية: <strong id="gw-label">—</strong> &nbsp;·&nbsp; يمكنك تفعيل خاصية واحدة قبل الديدلاين
+    ⚡ <span id="gw-label" style="font-weight:700">جارٍ تحميل الجولة والديدلاين…</span>
   </div>
-
+ 
   <!-- ── FEATURES ── -->
   <div class="section-title">الخواص المتاحة</div>
   <div class="features-grid">
-
+ 
     <!-- Bonus Win -->
     <div class="feature-card bonus" id="card-bonus" onclick="activateFeature('bonus')">
       <span class="feat-badge available" id="badge-bonus">متاحة</span>
@@ -673,7 +673,7 @@
       <div class="feat-name">مكسب بونص</div>
       <div class="feat-desc">لو كسبت الماتش في هذه الجولة تحصل على +3 نقاط إضافية. لو خسرت تُستهلك بدون فائدة.</div>
     </div>
-
+ 
     <!-- Opponent Penalty -->
     <div class="feature-card penalty" id="card-penalty" onclick="activateFeature('penalty')">
       <span class="feat-badge available" id="badge-penalty">متاحة</span>
@@ -681,7 +681,7 @@
       <div class="feat-name">نقص خصمك</div>
       <div class="feat-desc">يتم خصم 15 نقطة من إجمالي نقاط خصمك في هذه الجولة فقط.</div>
     </div>
-
+ 
     <!-- 1v1 -->
     <div class="feature-card onevone" id="card-1v1" onclick="activateFeature('1v1')">
       <span class="feat-badge available" id="badge-1v1">متاحة</span>
@@ -689,9 +689,9 @@
       <div class="feat-name">وان تو وان</div>
       <div class="feat-desc">تختار لاعب من فريقك ولاعب من فريق الخصم. النقاط تُحسب فقط بين هذين اللاعبين.</div>
     </div>
-
+ 
   </div>
-
+ 
   <!-- ── CHANGE PASSWORD ── -->
   <div class="section-title">الإعدادات</div>
   <div class="pass-box">
@@ -709,7 +709,7 @@
     </div>
     <div class="pass-msg" id="pass-msg"></div>
   </div>
-
+ 
   <!-- ── HISTORY ── -->
   <div class="section-title">سجل الخواص المُفعَّلة</div>
   <div class="history-box" id="history-box">
@@ -718,13 +718,13 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- ════════ 1v1 MODAL ════════ -->
 <div class="modal-overlay" id="modal-1v1">
   <div class="modal-box">
     <div class="modal-title">⚡ وان تو وان</div>
     <div class="modal-sub">اختر لاعباً من فريقك ولاعباً من فريق الخصم. النقاط ستُحسب فقط بين هذين اللاعبين في هذه الجولة.</div>
-
+ 
     <div class="player-select-group">
       <label>لاعبك</label>
       <select id="sel-my-player"></select>
@@ -733,14 +733,14 @@
       <label>لاعب الخصم</label>
       <select id="sel-opp-player"></select>
     </div>
-
+ 
     <div class="modal-actions">
       <button class="btn-confirm" onclick="confirm1v1()">تأكيد التفعيل</button>
       <button class="btn-cancel"  onclick="closeModal('modal-1v1')">إلغاء</button>
     </div>
   </div>
 </div>
-
+ 
 <!-- ════════ CONFIRM MODAL ════════ -->
 <div class="modal-overlay" id="modal-confirm">
   <div class="modal-box">
@@ -753,15 +753,15 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- ════════ TOAST ════════ -->
 <div class="toast" id="toast"></div>
-
+ 
 <script>
 // ══════════════════════════════════════════════
 //  DATA
 // ══════════════════════════════════════════════
-
+ 
 // الفرق واللاعبين — مستخرجة من league.json
 const LEAGUE = {
   "Black Tech":    ["Elfiky", "Omar"],
@@ -770,21 +770,54 @@ const LEAGUE = {
   "Falcons":       ["Nasser", "Mahmoud"],
   "Boys":          ["Ali", "Magdy"],
 };
-
-// الجولة الحالية — غيّرها يدوياً أو اسحبها من current_standings.json
-// للجولة التجريبية 38 نضع 38
-const CURRENT_GW = 38;
-
-// الديدلاين — غيّرها قبل كل جولة (ISO 8601 بتوقيت القاهرة +02:00)
-// مثال: جولة 38 ديدلاين افتراضي
-const DEADLINE = "2025-05-17T11:30:00+02:00";
-
+ 
+// الجولة والديدلاين — بيتجلبوا تلقائياً من FPL
+let CURRENT_GW = 38;
+let DEADLINE    = null;   // ISO string — بيتملى من fetchFPLDeadline()
+ 
+async function fetchFPLDeadline() {
+  try {
+    // CORS proxy عشان نقدر نكلم FPL من المتصفح
+    const PROXY = "https://corsproxy.io/?";
+    const url   = PROXY + encodeURIComponent("https://fantasy.premierleague.com/api/bootstrap-static/");
+    const res   = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error("FPL HTTP " + res.status);
+    const data  = await res.json();
+ 
+    // أحدث جولة لسه مش finished = الجولة القادمة/الحالية
+    const events  = data.events || [];
+    const current = events.find(e => e.is_current) || events.find(e => !e.finished);
+ 
+    if (current) {
+      CURRENT_GW = current.id;
+      DEADLINE   = current.deadline_time;   // مثال: "2025-05-17T11:30:00Z"
+      updateDeadlineUI();
+    }
+  } catch (e) {
+    console.warn("تعذّر جلب ديدلاين FPL:", e);
+    // fallback: نخلي الديدلاين مفتوح عشان متشلّش التفعيل
+    DEADLINE = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+    updateDeadlineUI();
+  }
+}
+ 
+function updateDeadlineUI() {
+  const el = document.getElementById("gw-label");
+  if (!el) return;
+  const passed = DEADLINE && new Date() > new Date(DEADLINE);
+  const fmt = DEADLINE
+    ? new Date(DEADLINE).toLocaleString("ar-EG", { weekday:"short", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" })
+    : "—";
+  el.textContent = `الجولة ${CURRENT_GW}${passed ? " · انتهى الديدلاين ⛔" : " · ديدلاين: " + fmt}`;
+  el.style.color = passed ? "var(--red)" : "var(--gold)";
+}
+ 
 // مفاتيح الـ localStorage
 const KEY_PASSWORDS = "kh_passwords";
 const KEY_FEATURES  = "kh_features";
 const KEY_SESSION   = "kh_session";
 const KEY_FIRST     = "kh_first_login";
-
+ 
 // ══════════════════════════════════════════════
 //  INIT — ضبط الباسوردات الأولى
 // ══════════════════════════════════════════════
@@ -799,7 +832,7 @@ function initPasswords() {
   }
   if (changed) localStorage.setItem(KEY_PASSWORDS, JSON.stringify(passwords));
 }
-
+ 
 function initFeatures() {
   let features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
   let changed = false;
@@ -816,7 +849,7 @@ function initFeatures() {
   }
   if (changed) localStorage.setItem(KEY_FEATURES, JSON.stringify(features));
 }
-
+ 
 // ══════════════════════════════════════════════
 //  AUTH
 // ══════════════════════════════════════════════
@@ -824,17 +857,17 @@ function doLogin() {
   const username = document.getElementById("inp-username").value.trim();
   const password = document.getElementById("inp-password").value;
   const passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
-
+ 
   if (!LEAGUE[username] || passwords[username] !== password) {
     const err = document.getElementById("login-error");
     err.style.display = "block";
     setTimeout(() => err.style.display = "none", 3000);
     return;
   }
-
+ 
   // حفظ الجلسة
   sessionStorage.setItem(KEY_SESSION, username);
-
+ 
   // هل أول دخول؟
   const firstLogins = JSON.parse(localStorage.getItem(KEY_FIRST) || "{}");
   if (!firstLogins[username]) {
@@ -842,21 +875,21 @@ function doLogin() {
     localStorage.setItem(KEY_FIRST, JSON.stringify(firstLogins));
     showToast("أهلاً! غيّر باسوردك من الإعدادات 👇", "success");
   }
-
+ 
   showDashboard(username);
 }
-
+ 
 document.getElementById("inp-password").addEventListener("keydown", e => {
   if (e.key === "Enter") doLogin();
 });
-
+ 
 function doLogout() {
   sessionStorage.removeItem(KEY_SESSION);
   document.getElementById("dashboard-page").style.display = "none";
   document.getElementById("login-page").style.display = "flex";
   document.getElementById("inp-password").value = "";
 }
-
+ 
 // ══════════════════════════════════════════════
 //  DASHBOARD
 // ══════════════════════════════════════════════
@@ -864,30 +897,30 @@ function showDashboard(team) {
   document.getElementById("login-page").style.display = "none";
   document.getElementById("dashboard-page").style.display = "block";
   document.getElementById("dash-team-name").textContent = team;
-  document.getElementById("gw-label").textContent = "الجولة " + CURRENT_GW + " (تجريبية)";
-
+  updateDeadlineUI();
+ 
   renderFeatures(team);
   renderHistory(team);
 }
-
+ 
 function renderFeatures(team) {
   const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
   const tf = features[team] || {};
-  const deadlinePassed = new Date() > new Date(DEADLINE);
+  const deadlinePassed = DEADLINE && new Date() > new Date(DEADLINE);
   const alreadyActivatedThisGW = tf.activeThisGW !== null;
-
+ 
   const featureKeys = ["bonus", "penalty", "1v1"];
   const icons = { bonus: "🏆", penalty: "⚔️", "1v1": "⚡" };
   const badgeEl = { bonus: "badge-bonus", penalty: "badge-penalty", "1v1": "badge-1v1" };
   const cardEl  = { bonus: "card-bonus",  penalty: "card-penalty",  "1v1": "card-1v1" };
-
+ 
   for (const key of featureKeys) {
     const badge = document.getElementById(badgeEl[key]);
     const card  = document.getElementById(cardEl[key]);
-
+ 
     card.classList.remove("used", "disabled");
     badge.className = "feat-badge";
-
+ 
     if (tf[key] && tf[key].used) {
       // مستهلكة نهائياً
       card.classList.add("used");
@@ -909,21 +942,21 @@ function renderFeatures(team) {
     }
   }
 }
-
+ 
 function renderHistory(team) {
   const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
   const tf = features[team] || {};
   const box = document.getElementById("history-box");
   const icons = { bonus: "🏆", penalty: "⚔️", "1v1": "⚡" };
   const names = { bonus: "مكسب بونص", penalty: "نقص خصمك", "1v1": "وان تو وان" };
-
+ 
   const used = ["bonus", "penalty", "1v1"].filter(k => tf[k] && tf[k].used);
-
+ 
   if (used.length === 0) {
     box.innerHTML = `<div class="history-row" style="color:var(--muted);font-size:13px;justify-content:center;">لم يتم تفعيل أي خاصية بعد</div>`;
     return;
   }
-
+ 
   box.innerHTML = used.map(k => {
     const f = tf[k];
     let extra = "";
@@ -934,25 +967,25 @@ function renderHistory(team) {
     </div>`;
   }).join("");
 }
-
+ 
 // ══════════════════════════════════════════════
 //  ACTIVATE FEATURE
 // ══════════════════════════════════════════════
 let _pendingFeature = null;
-
+ 
 function activateFeature(key) {
   const team = sessionStorage.getItem(KEY_SESSION);
   if (!team) return;
-
+ 
   const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
   const tf = features[team];
-
+ 
   if (tf[key].used)       return showToast("هذه الخاصية مستهلكة نهائياً", "error");
   if (tf.activeThisGW)    return showToast("فعّلت خاصية بالفعل هذه الجولة", "error");
-  if (new Date() > new Date(DEADLINE)) return showToast("انتهى الديدلاين لهذه الجولة", "error");
-
+  if (DEADLINE && new Date() > new Date(DEADLINE)) return showToast("انتهى الديدلاين لهذه الجولة ⛔", "error");
+ 
   _pendingFeature = key;
-
+ 
   if (key === "1v1") {
     open1v1Modal(team);
   } else {
@@ -968,28 +1001,28 @@ function activateFeature(key) {
     document.getElementById("modal-confirm").classList.add("open");
   }
 }
-
+ 
 function doActivate() {
   const team = sessionStorage.getItem(KEY_SESSION);
   const key  = _pendingFeature;
   if (!team || !key) return;
-
+ 
   const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
   features[team][key].used = true;
   features[team][key].gw   = CURRENT_GW;
   features[team].activeThisGW = key;
   localStorage.setItem(KEY_FEATURES, JSON.stringify(features));
-
+ 
   closeModal("modal-confirm");
   closeModal("modal-1v1");
   renderFeatures(team);
   renderHistory(team);
-
+ 
   const names = { bonus: "مكسب بونص", penalty: "نقص خصمك", "1v1": "وان تو وان" };
   showToast("✅ تم تفعيل خاصية " + names[key], "success");
   _pendingFeature = null;
 }
-
+ 
 // ══════════════════════════════════════════════
 //  1v1 MODAL
 // ══════════════════════════════════════════════
@@ -998,23 +1031,23 @@ function open1v1Modal(team) {
   const myPlayers = LEAGUE[team] || [];
   const selMy = document.getElementById("sel-my-player");
   selMy.innerHTML = myPlayers.map(p => `<option value="${p}">${p}</option>`).join("");
-
+ 
   // All other players
   const selOpp = document.getElementById("sel-opp-player");
   const oppPlayers = Object.entries(LEAGUE)
     .filter(([t]) => t !== team)
     .flatMap(([t, players]) => players.map(p => `<option value="${p} (${t})">${p} — ${t}</option>`));
   selOpp.innerHTML = oppPlayers.join("");
-
+ 
   document.getElementById("modal-1v1").classList.add("open");
 }
-
+ 
 function confirm1v1() {
   const team = sessionStorage.getItem(KEY_SESSION);
   const myPlayer  = document.getElementById("sel-my-player").value;
   const oppRaw    = document.getElementById("sel-opp-player").value;
   const oppPlayer = oppRaw.split(" (")[0];
-
+ 
   const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
   features[team]["1v1"].used      = true;
   features[team]["1v1"].gw        = CURRENT_GW;
@@ -1022,14 +1055,14 @@ function confirm1v1() {
   features[team]["1v1"].oppPlayer = oppPlayer;
   features[team].activeThisGW = "1v1";
   localStorage.setItem(KEY_FEATURES, JSON.stringify(features));
-
+ 
   closeModal("modal-1v1");
   renderFeatures(team);
   renderHistory(team);
   showToast(`✅ وان تو وان: ${myPlayer} vs ${oppPlayer}`, "success");
   _pendingFeature = null;
 }
-
+ 
 // ══════════════════════════════════════════════
 //  CHANGE PASSWORD
 // ══════════════════════════════════════════════
@@ -1038,70 +1071,74 @@ function changePassword() {
   const oldPass = document.getElementById("inp-old-pass").value;
   const newPass = document.getElementById("inp-new-pass").value;
   const msg     = document.getElementById("pass-msg");
-
+ 
   const passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
-
+ 
   msg.style.display = "block";
-
+ 
   if (passwords[team] !== oldPass) {
     msg.className = "pass-msg err";
     msg.textContent = "الباسورد الحالي غلط";
     return;
   }
-
+ 
   if (newPass.length < 4) {
     msg.className = "pass-msg err";
     msg.textContent = "الباسورد الجديد قصير جداً (4 أحرف على الأقل)";
     return;
   }
-
+ 
   if (oldPass === newPass) {
     msg.className = "pass-msg err";
     msg.textContent = "الباسورد الجديد نفس القديم";
     return;
   }
-
+ 
   passwords[team] = newPass;
   localStorage.setItem(KEY_PASSWORDS, JSON.stringify(passwords));
-
+ 
   msg.className = "pass-msg ok";
   msg.textContent = "✅ تم تغيير الباسورد بنجاح";
   document.getElementById("inp-old-pass").value = "";
   document.getElementById("inp-new-pass").value = "";
   setTimeout(() => msg.style.display = "none", 3000);
 }
-
+ 
 // ══════════════════════════════════════════════
 //  UTILS
 // ══════════════════════════════════════════════
 function closeModal(id) {
   document.getElementById(id).classList.remove("open");
 }
-
+ 
 function showToast(msg, type = "success") {
   const t = document.getElementById("toast");
   t.textContent = msg;
   t.className   = `toast ${type} show`;
   setTimeout(() => t.classList.remove("show"), 3000);
 }
-
+ 
 // Close modals on overlay click
 document.querySelectorAll(".modal-overlay").forEach(overlay => {
   overlay.addEventListener("click", e => {
     if (e.target === overlay) overlay.classList.remove("open");
   });
 });
-
+ 
 // ══════════════════════════════════════════════
 //  STARTUP
 // ══════════════════════════════════════════════
 initPasswords();
 initFeatures();
-
+ 
+// جلب الديدلاين من FPL تلقائياً
+fetchFPLDeadline();
+ 
 // لو في جلسة محفوظة ارجع للداشبورد
 const savedSession = sessionStorage.getItem(KEY_SESSION);
 if (savedSession && LEAGUE[savedSession]) {
   showDashboard(savedSession);
+  fetchFPLDeadline(); // تحديث الديدلاين عند فتح الداشبورد
 }
 </script>
 </body>
