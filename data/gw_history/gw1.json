@@ -1,42 +1,7 @@
 {
-  "Black Tech": {
-    "7002106": {
-      "points": 97
-    },
-    "1216533": {
-      "points": 83
-    }
-  },
-  "The Pharaohs": {
-    "275539": {
-      "points": 66
-    },
-    "1545049": {
-      "points": 58
-    }
-  },
-  "Smokers": {
-    "1679155": {
-      "points": 68
-    },
-    "2208753": {
-      "points": 64
-    }
-  },
-  "Falcons": {
-    "2134302": {
-      "points": 82
-    },
-    "8656672": {
-      "points": 53
-    }
-  },
-  "Boys": {
-    "8703485": {
-      "points": 60
-    },
-    "5857198": {
-      "points": 39
-    }
-  }
+  "Black Tech": {},
+  "The Pharaohs": {},
+  "Smokers": {},
+  "Falcons": {},
+  "Boys": {}
 }
