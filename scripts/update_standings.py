@@ -6,10 +6,30 @@ Fetches live FPL data and generates current_standings.json
 
 Rules:
   - Player points counted only on gameweeks their team PLAYED (not BYE)
-  - Team match points: 3=win, 1=draw, 0=loss  (compared by team total pts that GW)
+  - Team match points: 3=win, 1=draw, 0=loss  (compared by team total pts that GW,
+    AFTER chip adjustments — see Chips System below)
   - Bonus: every GW the team with highest total pts gets +1 (all teams included,
     even BYE teams). Tie at top = NO bonus awarded that GW.
   - Tiebreaker order: total → matchPts → GD → GF → wins
+
+  Chips System (data/chips.json):
+    - one_v_one     : 2x/season (once per half: GW1-19, GW20-38). Player vs player
+                       duel against a chosen rival team. Winner's team gets +1 extra
+                       league point. Mutual activation against each other in the same
+                       GW cancels both (status == "canceled" → ignored here).
+    - bonus3        : 1x/season only. If the team WINS its fixture that GW, +3 extra
+                       league points on top of the normal 3 match points.
+    - double_player : 2x/season (once per half). Chosen player's GW points ×2,
+                       teammate's points zeroed — affects that team's GW total used
+                       for match result (win/draw/loss) and gf/ga.
+    - borrow        : 2x/season (once per half). OUT player zeroed, IN player's raw
+                       points (from their own team, unaffected by the other team's
+                       chips) added instead — affects match result & gf/ga. The
+                       borrowed player's own team is unaffected (points aren't moved,
+                       only copied).
+    Chip effects only apply to TEAM standings (match results / gf / ga / bonus).
+    Individual PLAYER standings (calculate_player_standings) stay on raw FPL points,
+    unaffected by chips, since they reflect real FPL performance.
 
 Run:
   pip install requests
@@ -42,6 +62,7 @@ BASE_DIR        = Path(__file__).parent          # → scripts/
 REPO_ROOT       = BASE_DIR.parent                # → repo root
 LEAGUE_FILE     = REPO_ROOT / "league.json"
 FIXTURES_FILE   = REPO_ROOT / "fixtures.json"
+CHIPS_FILE      = REPO_ROOT / "data" / "chips.json"
 OUTPUT_FILE     = REPO_ROOT / "data" / "current_standings.json"
 
 FPL_BASE        = "https://fantasy.premierleague.com/api"
@@ -122,13 +143,165 @@ def load_fixtures() -> dict[int, list]:
     return {int(gw): matchups for gw, matchups in raw.items()}
 
 
+def load_chips() -> dict:
+    """
+    Loads data/chips.json (written by khawas.html / the team dashboard).
+    Returns {} if the file doesn't exist yet — chips are optional, the
+    script must still work fine before anyone activates anything.
+    """
+    if not CHIPS_FILE.exists():
+        log.info("chips.json not found — running without chip adjustments")
+        return {}
+    with open(CHIPS_FILE, encoding="utf-8") as f:
+        data = json.load(f)
+    data.pop("_comment", None)
+    return data
+
+
 # ─────────────────────────────────────────────
-# MAIN CALCULATION
+# CHIPS SYSTEM — HELPERS
 # ─────────────────────────────────────────────
 
-def calculate_standings(current_gw: int) -> list[dict]:
+def half_key(gw: int) -> str:
+    """GW1-19 = الدور الأول (h1), GW20-38 = الدور الثاني (h2)."""
+    return "h1" if gw <= 19 else "h2"
+
+
+def get_chip_slot(chips: dict, team: str, chip_key: str, gw: int) -> dict | None:
+    """
+    Returns the activated chip record for `team`/`chip_key` IF it was
+    activated for this exact `gw` and its status is "used" (not "canceled").
+    Returns None otherwise (not activated, wrong GW, or mutually canceled).
+    """
+    team_chips = chips.get(team)
+    if not team_chips:
+        return None
+
+    if chip_key == "bonus3":
+        slot = team_chips.get("bonus3")
+        if slot and slot.get("used") and slot.get("gw") == gw and slot.get("status") == "used":
+            return slot
+        return None
+
+    slot = (team_chips.get(chip_key) or {}).get(half_key(gw))
+    if slot and slot.get("gw") == gw and slot.get("status") == "used":
+        return slot
+    return None
+
+
+def team_player_points_dict(team_name: str, gw: int, league: dict, cache: dict) -> dict | None:
+    """
+    Returns {player_name: raw_points} for the team's two players this GW,
+    or None if either player's GW data isn't available yet.
+    Uses/populates the shared (entry_id, gw) → points cache.
+    """
+    players = league[team_name]["players"]
+    result = {}
+    for player_name, entry_id in players.items():
+        key = (entry_id, gw)
+        if key not in cache:
+            log.info(f"  Fetching GW{gw} — {team_name} / {player_name} (id={entry_id})")
+            cache[key] = get_player_gw_points(entry_id, gw)
+            time.sleep(API_DELAY)
+        p = cache[key]
+        if p is None:
+            return None
+        result[player_name] = p
+    return result
+
+
+def compute_adjusted_team_points(
+    team: str,
+    gw: int,
+    raw_player_pts: dict,
+    chips: dict,
+) -> int | None:
+    """
+    Returns the team's chip-adjusted total points for this GW (used for
+    match result / gf / ga / overall bonus). None if the team's own raw
+    data isn't available yet for this GW.
+    """
+    own = raw_player_pts.get(team)
+    if own is None:
+        return None
+
+    adjusted = dict(own)
+
+    # ── دبل نقاط لاعب ──
+    dbl = get_chip_slot(chips, team, "double_player", gw)
+    if dbl:
+        doubled = dbl.get("doubledPlayer")
+        zeroed  = dbl.get("zeroedPlayer")
+        if doubled in adjusted:
+            adjusted[doubled] = adjusted[doubled] * 2
+        if zeroed in adjusted:
+            adjusted[zeroed] = 0
+        log.info(f"  GW{gw}: {team} double_player → {doubled} ×2, {zeroed} = 0")
+
+    # ── استعارة لاعب ──
+    brw = get_chip_slot(chips, team, "borrow", gw)
+    if brw:
+        out_p   = brw.get("outPlayer")
+        in_team = brw.get("inTeam")
+        in_p    = brw.get("inPlayer")
+        if out_p in adjusted:
+            adjusted[out_p] = 0
+        in_team_raw = raw_player_pts.get(in_team)
+        if in_team_raw and in_p in in_team_raw:
+            adjusted[f"__borrowed::{in_p}"] = in_team_raw[in_p]
+            log.info(f"  GW{gw}: {team} borrow → OUT {out_p} (0), IN {in_p} from {in_team} ({in_team_raw[in_p]} pts)")
+        else:
+            log.warning(f"  GW{gw}: {team} borrow — missing GW data for {in_p} ({in_team}), borrow adds 0")
+
+    return sum(adjusted.values())
+
+
+def apply_bonus3_if_won(chips: dict, team: str, gw: int, stats: dict) -> None:
+    """+3 extra league points if this team's bonus3 chip is active AND they won this GW."""
+    slot = get_chip_slot(chips, team, "bonus3", gw)
+    if slot:
+        stats[team]["chipBonus"] += 3
+        log.info(f"  GW{gw}: بونص X3 → {team} +3 نقطة إضافية")
+
+
+def apply_1v1_duels(chips: dict, team_names: list, gw: int, raw_player_pts: dict, stats: dict) -> None:
+    """
+    Compares the two chosen players (own vs rival) for every team that
+    activated 1v1 this GW. Winner's team gets +1 extra league point.
+    Independent of the fixtures list — the rival is whoever the team chose,
+    not necessarily their scheduled opponent that GW.
+    """
+    for team in team_names:
+        duel = get_chip_slot(chips, team, "one_v_one", gw)
+        if not duel:
+            continue
+
+        opp_team = duel.get("oppTeam")
+        my_pts  = (raw_player_pts.get(team) or {}).get(duel.get("myPlayer"))
+        opp_pts = (raw_player_pts.get(opp_team) or {}).get(duel.get("oppPlayer"))
+
+        if my_pts is None or opp_pts is None:
+            log.warning(f"  GW{gw}: 1v1 — missing data for {team} vs {opp_team}, skipping")
+            continue
+
+        if my_pts > opp_pts:
+            stats[team]["chipBonus"] += 1
+            log.info(f"  GW{gw}: 1v1 win → {team} ({duel['myPlayer']} {my_pts}) vs {opp_team} ({duel['oppPlayer']} {opp_pts}) → +1 pt")
+        elif opp_pts > my_pts:
+            log.info(f"  GW{gw}: 1v1 loss → {team} ({duel['myPlayer']} {my_pts}) vs {opp_team} ({duel['oppPlayer']} {opp_pts})")
+        else:
+            log.info(f"  GW{gw}: 1v1 tie → {team} vs {opp_team} ({my_pts}-{opp_pts}) — no extra point")
+
+
+# ─────────────────────────────────────────────
+# MAIN CALCULATION  (legacy standalone version — kept in sync with
+# _run_with_shared_cache below, which is the one actually used by main())
+# ─────────────────────────────────────────────
+
+def calculate_standings(current_gw: int, chips: dict | None = None) -> list[dict]:
     league   = load_league()
     fixtures = load_fixtures()
+    chips    = chips if chips is not None else load_chips()
 
     team_names = list(league.keys())
 
@@ -136,39 +309,23 @@ def calculate_standings(current_gw: int) -> list[dict]:
     stats: dict[str, dict] = {}
     for team in team_names:
         stats[team] = {
-            "played":   0,
-            "won":      0,
-            "draw":     0,
-            "lost":     0,
-            "gf":       0,   # goals-for  = total FPL pts scored
-            "ga":       0,   # goals-against
-            "gd":       0,   # goal difference
-            "matchPts": 0,
-            "bonus":    0,
-            "total":    0,
+            "played":    0,
+            "won":       0,
+            "draw":      0,
+            "lost":      0,
+            "gf":        0,   # goals-for  = total FPL pts scored
+            "ga":        0,   # goals-against
+            "gd":        0,   # goal difference
+            "matchPts":  0,
+            "bonus":     0,
+            "chipBonus": 0,   # extra points from bonus3 / 1v1 duel chips
+            "total":     0,
         }
 
     # ── cache: (entry_id, gw) → points ──
     pts_cache: dict[tuple, int | None] = {}
 
-    def team_gw_points(team_name: str, gw: int) -> int | None:
-        """Sum of both players' points for a team in a GW. None = not played."""
-        players = league[team_name]["players"]
-        total = 0
-        for player_name, entry_id in players.items():
-            key = (entry_id, gw)
-            if key not in pts_cache:
-                log.info(f"  Fetching GW{gw} — {team_name} / {player_name} (id={entry_id})")
-                pts_cache[key] = get_player_gw_points(entry_id, gw)
-                time.sleep(API_DELAY)
-            p = pts_cache[key]
-            if p is None:
-                return None
-            total += p
-        return total
-
     # ── per-GW team totals (needed for bonus) ──
-    # gw_team_pts[gw][team] = int or None
     gw_team_pts: dict[int, dict[str, int | None]] = {}
 
     log.info(f"Processing GW 1 → {current_gw}")
@@ -180,24 +337,24 @@ def calculate_standings(current_gw: int) -> list[dict]:
         all_bye = all(
             (m[0] == "BYE" and m[1] == "BYE") for m in matchups
         )
+
+        # ── raw per-player points (needed for chip adjustments) ──
+        raw_player_pts = {}
+        for team in team_names:
+            raw_player_pts[team] = team_player_points_dict(team, gw, league, pts_cache)
+
+        gw_team_pts[gw] = {}
+        for team in team_names:
+            gw_team_pts[gw][team] = compute_adjusted_team_points(team, gw, raw_player_pts, chips)
+
         if all_bye:
             log.info(f"GW{gw}: Full-bye week — no bonus awarded")
-            # Full bye weeks (GW11, GW22, GW38): skip entirely, no bonus
-            gw_team_pts[gw] = {}
             continue
 
         log.info(f"GW{gw}: Processing {len(matchups)} fixture(s)")
 
-        # ── collect every team's GW points ──
-        gw_team_pts[gw] = {}
-        for team in team_names:
-            gw_team_pts[gw][team] = team_gw_points(team, gw)
-
-        # ── process each matchup ──
         for matchup in matchups:
             home, away = matchup[0], matchup[1]
-
-            # One-sided BYE (team gets a rest, no match recorded)
             if home == "BYE" or away == "BYE":
                 continue
 
@@ -208,26 +365,24 @@ def calculate_standings(current_gw: int) -> list[dict]:
                 log.warning(f"  GW{gw}: Missing points for {home} vs {away} — skipping")
                 continue
 
-            # update played count
             stats[home]["played"] += 1
             stats[away]["played"] += 1
-
-            # goals for / against
             stats[home]["gf"] += home_pts
             stats[home]["ga"] += away_pts
             stats[away]["gf"] += away_pts
             stats[away]["ga"] += home_pts
 
-            # match result
             if home_pts > away_pts:
                 stats[home]["won"]      += 1
                 stats[home]["matchPts"] += 3
                 stats[away]["lost"]     += 1
+                apply_bonus3_if_won(chips, home, gw, stats)
                 log.info(f"  GW{gw}: {home} {home_pts} – {away_pts} {away}  → WIN {home}")
             elif away_pts > home_pts:
                 stats[away]["won"]      += 1
                 stats[away]["matchPts"] += 3
                 stats[home]["lost"]     += 1
+                apply_bonus3_if_won(chips, away, gw, stats)
                 log.info(f"  GW{gw}: {home} {home_pts} – {away_pts} {away}  → WIN {away}")
             else:
                 stats[home]["draw"]     += 1
@@ -236,6 +391,9 @@ def calculate_standings(current_gw: int) -> list[dict]:
                 stats[away]["matchPts"] += 1
                 log.info(f"  GW{gw}: {home} {home_pts} – {away_pts} {away}  → DRAW")
 
+        # ── 1v1 duels (independent of fixtures) ──
+        apply_1v1_duels(chips, team_names, gw, raw_player_pts, stats)
+
         # ── bonus for this GW ──
         _apply_bonus(gw, team_names, gw_team_pts, stats)
 
@@ -243,7 +401,7 @@ def calculate_standings(current_gw: int) -> list[dict]:
     for team in team_names:
         s = stats[team]
         s["gd"]    = s["gf"] - s["ga"]
-        s["total"] = s["matchPts"] + s["bonus"]
+        s["total"] = s["matchPts"] + s["bonus"] + s["chipBonus"]
 
     # ── sort teams ──
     sorted_teams = sorted(
@@ -267,7 +425,7 @@ def _apply_bonus(
     stats: dict,
 ) -> None:
     """
-    Award +1 bonus to the team with the highest GW points.
+    Award +1 bonus to the team with the highest GW points (chip-adjusted).
     Rules:
       - All teams compete (including BYE teams).
       - If the top score is shared by 2+ teams → NO bonus awarded.
@@ -303,16 +461,15 @@ def calculate_player_standings(
     pts_cache: dict,
 ) -> list[dict]:
     """
-    Sum each player's points only on gameweeks their team actually played
-    (i.e. not a BYE week for that team).
+    Sum each player's RAW points only on gameweeks their team actually played
+    (i.e. not a BYE week for that team). Deliberately NOT chip-adjusted —
+    this reflects real FPL performance, independent of fantasy-league chips.
     """
 
     def team_has_bye(team: str, gw: int) -> bool:
         for matchup in fixtures.get(gw, []):
             if team in matchup:
-                # team found — check if opponent is BYE
                 return "BYE" in matchup
-        # team not in fixtures at all for this GW (full-bye week)
         return True
 
     player_totals = []
@@ -322,7 +479,7 @@ def calculate_player_standings(
             total = 0
             for gw in range(1, current_gw + 1):
                 if team_has_bye(team_name, gw):
-                    continue   # skip BYE weeks
+                    continue
                 pts = pts_cache.get((entry_id, gw))
                 if pts is not None:
                     total += pts
@@ -368,18 +525,17 @@ def main():
     current_gw = get_current_gw()
     log.info(f"Current GW: {current_gw}")
 
-    # 2. Calculate team standings (also populates pts_cache)
+    # 2. Load league / fixtures / chips
     league   = load_league()
     fixtures = load_fixtures()
+    chips    = load_chips()
 
-    # We run calculate_standings first so pts_cache is populated,
+    # We run _run_with_shared_cache first so pts_cache is populated,
     # then reuse the cache for player standings.
-    # To share the cache we use a module-level trick:
     global _shared_cache
     _shared_cache = {}
 
-    # Monkey-patch fpl_get cache into calculate_standings via closure
-    team_rows = _run_with_shared_cache(current_gw, league, fixtures)
+    team_rows = _run_with_shared_cache(current_gw, league, fixtures, chips)
 
     # 3. Player standings (reuse cache — zero extra API calls)
     log.info("Calculating player standings…")
@@ -400,33 +556,19 @@ def main():
 _shared_cache: dict = {}
 
 
-def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> list:
+def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict, chips: dict) -> list:
     """
     Runs the standings calculation while storing all fetched
     (entry_id, gw) → points into _shared_cache for reuse.
+    This is the version actually called by main().
     """
     team_names = list(league.keys())
 
     stats: dict[str, dict] = {
         t: {"played":0,"won":0,"draw":0,"lost":0,
-            "gf":0,"ga":0,"gd":0,"matchPts":0,"bonus":0,"total":0}
+            "gf":0,"ga":0,"gd":0,"matchPts":0,"bonus":0,"chipBonus":0,"total":0}
         for t in team_names
     }
-
-    def team_gw_points(team_name: str, gw: int) -> int | None:
-        players = league[team_name]["players"]
-        total = 0
-        for player_name, entry_id in players.items():
-            key = (entry_id, gw)
-            if key not in _shared_cache:
-                log.info(f"  Fetching GW{gw} — {team_name} / {player_name} (id={entry_id})")
-                _shared_cache[key] = get_player_gw_points(entry_id, gw)
-                time.sleep(API_DELAY)
-            p = _shared_cache[key]
-            if p is None:
-                return None
-            total += p
-        return total
 
     gw_team_pts: dict[int, dict[str, int | None]] = {}
 
@@ -435,11 +577,17 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
 
         all_bye = all(m[0] == "BYE" and m[1] == "BYE" for m in matchups)
 
+        # ── raw per-player points this GW (drives chip adjustments + history) ──
+        raw_player_pts = {}
+        for team in team_names:
+            raw_player_pts[team] = team_player_points_dict(team, gw, league, _shared_cache)
+
+        # ── chip-adjusted team totals (double_player / borrow applied here) ──
         gw_team_pts[gw] = {}
         for team in team_names:
-            gw_team_pts[gw][team] = team_gw_points(team, gw)
+            gw_team_pts[gw][team] = compute_adjusted_team_points(team, gw, raw_player_pts, chips)
 
-        # ── Save per-GW history file for the teams page ──
+        # ── Save per-GW history file for the teams page (raw, unadjusted) ──
         gw_hist = {}
         for team in team_names:
             gw_hist[team] = {}
@@ -456,7 +604,7 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
 
         if all_bye:
             log.info(f"GW{gw}: Full-bye week — no bonus awarded")
-            # Full bye weeks (GW11, GW22, GW38): NO bonus for anyone
+            # Full bye weeks (GW11, GW22, GW38): NO bonus, NO chip scoring for anyone
             continue
 
         log.info(f"GW{gw}: Processing fixtures…")
@@ -484,11 +632,13 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
                 stats[home]["won"]      += 1
                 stats[home]["matchPts"] += 3
                 stats[away]["lost"]     += 1
+                apply_bonus3_if_won(chips, home, gw, stats)
                 log.info(f"  {home} {home_pts}–{away_pts} {away}  WIN→{home}")
             elif away_pts > home_pts:
                 stats[away]["won"]      += 1
                 stats[away]["matchPts"] += 3
                 stats[home]["lost"]     += 1
+                apply_bonus3_if_won(chips, away, gw, stats)
                 log.info(f"  {home} {home_pts}–{away_pts} {away}  WIN→{away}")
             else:
                 stats[home]["draw"]     += 1
@@ -497,12 +647,15 @@ def _run_with_shared_cache(current_gw: int, league: dict, fixtures: dict) -> lis
                 stats[away]["matchPts"] += 1
                 log.info(f"  {home} {home_pts}–{away_pts} {away}  DRAW")
 
+        # ── 1v1 duels — independent of who plays whom this GW ──
+        apply_1v1_duels(chips, team_names, gw, raw_player_pts, stats)
+
         _apply_bonus(gw, team_names, gw_team_pts, stats)
 
     for team in team_names:
         s = stats[team]
         s["gd"]    = s["gf"] - s["ga"]
-        s["total"] = s["matchPts"] + s["bonus"]
+        s["total"] = s["matchPts"] + s["bonus"] + s["chipBonus"]
 
     sorted_teams = sorted(
         team_names,
