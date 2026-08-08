@@ -1,1145 +1,1170 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الخواص — El7amla</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>الخواص — El7amla Fantasy League</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --gold: #f0b429;
-    --gold-dark: #b7860d;
-    --dark: #0d0f14;
-    --dark2: #13161e;
-    --dark3: #1a1e2a;
-    --card: #1e2231;
-    --border: #2a2f42;
-    --text: #e8eaf0;
-    --muted: #7a7f96;
-    --green: #22c55e;
-    --red: #ef4444;
-    --blue: #3b82f6;
-    --purple: #a855f7;
-  }
- 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
- 
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--dark);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
- 
-  /* ── background grid ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(240,180,41,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(240,180,41,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
- 
-  /* ══════════════════════════════
-     NAVBAR
-  ══════════════════════════════ */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(13,15,20,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
- 
-  .nav-logo {
-    font-size: 18px;
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: -0.5px;
-    text-decoration: none;
-  }
- 
-  .nav-links {
-    display: flex;
-    gap: 6px;
-    list-style: none;
-  }
- 
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: all 0.2s;
-  }
- 
-  .nav-links a:hover { color: var(--text); background: var(--dark3); }
-  .nav-links a.active { color: var(--gold); background: rgba(240,180,41,0.1); }
- 
-  /* ══════════════════════════════
-     LOGIN PAGE
-  ══════════════════════════════ */
-  #login-page {
-    position: relative;
-    z-index: 1;
-    min-height: calc(100vh - 60px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
- 
-  .login-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px 40px;
-    width: 100%;
-    max-width: 420px;
-    position: relative;
-    overflow: hidden;
-  }
- 
-  .login-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
-  }
- 
-  .login-icon {
-    width: 64px; height: 64px;
-    background: rgba(240,180,41,0.12);
-    border: 1px solid rgba(240,180,41,0.3);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    margin: 0 auto 24px;
-  }
- 
-  .login-title {
-    font-size: 24px;
-    font-weight: 900;
-    text-align: center;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
- 
-  .login-sub {
-    font-size: 13px;
-    color: var(--muted);
-    text-align: center;
-    margin-bottom: 36px;
-  }
- 
-  .form-group { margin-bottom: 20px; }
- 
-  .form-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
- 
-  .form-group input {
-    width: 100%;
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 15px;
-    font-family: 'Cairo', sans-serif;
-    color: var(--text);
-    transition: border-color 0.2s;
-    direction: rtl;
-  }
- 
-  .form-group input:focus {
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(240,180,41,0.1);
-  }
- 
-  .btn-login {
-    width: 100%;
-    background: var(--gold);
-    color: #0d0f14;
-    border: none;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: 900;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
-  }
- 
-  .btn-login:hover { background: #f5c842; transform: translateY(-1px); }
-  .btn-login:active { transform: translateY(0); }
- 
-  .login-error {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.3);
-    color: #fca5a5;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 13px;
-    text-align: center;
-    margin-top: 14px;
-    display: none;
-  }
- 
-  /* ══════════════════════════════
-     DASHBOARD
-  ══════════════════════════════ */
-  #dashboard-page {
-    position: relative;
-    z-index: 1;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 36px 20px 60px;
-    display: none;
-  }
- 
-  .dash-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
- 
-  .dash-team-name {
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--gold);
-  }
- 
-  .dash-team-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
- 
-  .btn-logout {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
- 
-  .btn-logout:hover { border-color: var(--red); color: var(--red); }
- 
-  /* section title */
-  .section-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
- 
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
- 
-  /* ── features grid ── */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-bottom: 40px;
-  }
- 
-  .feature-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.25s;
-    cursor: pointer;
-  }
- 
-  .feature-card:hover:not(.used):not(.disabled) {
-    border-color: var(--gold);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(240,180,41,0.12);
-  }
- 
-  .feature-card.used {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
- 
-  .feature-card.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
- 
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 16px 16px 0 0;
-  }
- 
-  .feature-card.bonus::before    { background: linear-gradient(90deg, #22c55e, #16a34a); }
-  .feature-card.penalty::before  { background: linear-gradient(90deg, #ef4444, #b91c1c); }
-  .feature-card.onevone::before  { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
- 
-  .feat-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-    display: block;
-  }
- 
-  .feat-name {
-    font-size: 17px;
-    font-weight: 900;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
- 
-  .feat-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
- 
-  .feat-badge {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
- 
-  .feat-badge.available {
-    background: rgba(34,197,94,0.15);
-    color: #86efac;
-    border: 1px solid rgba(34,197,94,0.3);
-  }
- 
-  .feat-badge.used-badge {
-    background: rgba(239,68,68,0.15);
-    color: #fca5a5;
-    border: 1px solid rgba(239,68,68,0.3);
-  }
- 
-  .feat-badge.active-badge {
-    background: rgba(240,180,41,0.15);
-    color: var(--gold);
-    border: 1px solid rgba(240,180,41,0.3);
-  }
- 
-  /* ── change password section ── */
-  .pass-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    margin-bottom: 40px;
-  }
- 
-  .pass-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 12px;
-    align-items: end;
-  }
- 
-  .pass-row input {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 11px 14px;
-    font-size: 14px;
-    font-family: 'Cairo', sans-serif;
-    color: var(--text);
-    direction: rtl;
-    transition: border-color 0.2s;
-  }
- 
-  .pass-row input:focus {
-    outline: none;
-    border-color: var(--gold);
-  }
- 
-  .pass-row label {
-    display: block;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
- 
-  .btn-save {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 10px;
-    padding: 11px 20px;
-    font-size: 14px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
- 
-  .btn-save:hover { border-color: var(--gold); color: var(--gold); }
- 
-  .pass-msg {
-    font-size: 13px;
-    margin-top: 12px;
-    display: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-  }
- 
-  .pass-msg.ok  { background: rgba(34,197,94,0.1);  color: #86efac; border: 1px solid rgba(34,197,94,0.2); }
-  .pass-msg.err { background: rgba(239,68,68,0.1);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
- 
-  /* ── history box ── */
-  .history-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
- 
-  .history-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-  }
- 
-  .history-row:last-child { border-bottom: none; }
- 
-  .history-row .feat-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-  }
- 
-  .history-row .gw-tag {
-    font-size: 12px;
-    color: var(--muted);
-  }
- 
-  /* ── 1v1 modal ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(4px);
-    z-index: 200;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
- 
-  .modal-overlay.open { display: flex; }
- 
-  .modal-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px;
-    max-width: 480px;
-    width: 100%;
-    position: relative;
-  }
- 
-  .modal-title {
-    font-size: 20px;
-    font-weight: 900;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
- 
-  .modal-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 28px;
-    line-height: 1.7;
-  }
- 
-  .player-select-group { margin-bottom: 20px; }
- 
-  .player-select-group label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--muted);
-    margin-bottom: 8px;
-    display: block;
-  }
- 
-  .player-select-group select {
-    width: 100%;
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 11px 14px;
-    font-size: 14px;
-    font-family: 'Cairo', sans-serif;
-    color: var(--text);
-    cursor: pointer;
-    direction: rtl;
-  }
- 
-  .player-select-group select:focus {
-    outline: none;
-    border-color: var(--blue);
-  }
- 
-  .modal-actions { display: flex; gap: 10px; margin-top: 8px; }
- 
-  .btn-confirm {
-    flex: 1;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 13px;
-    font-size: 15px;
-    font-weight: 900;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
- 
-  .btn-confirm:hover { background: #2563eb; }
- 
-  .btn-cancel {
-    flex: 1;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 10px;
-    padding: 13px;
-    font-size: 15px;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
- 
-  .btn-cancel:hover { border-color: var(--red); color: var(--red); }
- 
-  /* ── confirm modal ── */
-  .confirm-icon { font-size: 42px; text-align: center; margin-bottom: 16px; }
-  .confirm-title { font-size: 19px; font-weight: 900; text-align: center; margin-bottom: 8px; }
-  .confirm-sub { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7; margin-bottom: 24px; }
- 
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--dark2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 24px;
-    font-size: 14px;
-    font-weight: 700;
-    z-index: 300;
-    transition: transform 0.3s ease;
-    white-space: nowrap;
-  }
- 
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.success { border-color: rgba(34,197,94,0.5); color: #86efac; }
-  .toast.error   { border-color: rgba(239,68,68,0.5);  color: #fca5a5; }
- 
-  .gw-notice {
-    background: rgba(240,180,41,0.08);
-    border: 1px solid rgba(240,180,41,0.25);
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--gold);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
- 
-  @media (max-width: 600px) {
-    .pass-row { grid-template-columns: 1fr; }
-    .login-box { padding: 32px 24px; }
-    .features-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14; --bg2:#13161e; --bg3:#1a1e2a;
+  --card:#1e2231; --card2:#252a3a;
+  --border:#2a2f42; --border2:#353b52;
+  --text:#e8eaf0; --muted:#7a7f96; --muted2:#5a5f76;
+  --gold:#f0b429; --gold-dk:#b7860d; --gold-lt:#fde68a;
+  --green:#22c55e; --red:#ef4444; --blue:#3b82f6;
+  --purple:#a855f7; --orange:#f97316; --cyan:#06b6d4;
+  --nav-h:60px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+}
+/* grid bg */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(240,180,41,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(240,180,41,.025) 1px,transparent 1px);
+  background-size:44px 44px;
+  pointer-events:none;z-index:0;
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ══ NAVBAR ══ */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,15,20,.93);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  padding:0 24px;gap:0;
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:.9rem;font-weight:900;
+  color:var(--gold);text-decoration:none;
+  letter-spacing:-.5px;
+  display:flex;align-items:center;gap:8px;
+  margin-left:auto;
+}
+.nav-logo-icon{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,#1d4ed8,#3b82f6,#60a5fa);
+  border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;box-shadow:0 0 14px rgba(59,130,246,.35);
+}
+.nav-links{display:flex;gap:2px;margin-right:auto}
+.nav-links a{
+  color:var(--muted);text-decoration:none;
+  font-size:.82rem;font-weight:600;
+  padding:7px 12px;border-radius:7px;
+  transition:.18s;
+}
+.nav-links a:hover{color:var(--text);background:var(--bg3)}
+.nav-links a.active{color:var(--gold);background:rgba(240,180,41,.1)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;background:none;border:none;margin-right:auto}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px}
+
+/* ══ PAGE ══ */
+.page{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:32px 16px 64px}
+
+/* ══ DEADLINE BANNER ══ */
+.deadline-banner{
+  background:linear-gradient(135deg,rgba(240,180,41,.08),rgba(240,180,41,.04));
+  border:1px solid rgba(240,180,41,.25);
+  border-radius:14px;padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:28px;flex-wrap:wrap;
+}
+.dl-left{display:flex;align-items:center;gap:12px}
+.dl-icon{font-size:1.6rem}
+.dl-gw{font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:var(--gold)}
+.dl-time{font-size:.8rem;color:var(--muted);margin-top:2px}
+.countdown{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--gold);
+  background:rgba(240,180,41,.1);
+  border:1px solid rgba(240,180,41,.25);
+  border-radius:10px;padding:8px 16px;
+  letter-spacing:2px;
+}
+.countdown.danger{color:var(--red);border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08);animation:blink 1s infinite}
+.countdown.ended{color:var(--muted);border-color:var(--border)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ══ LOGIN ══ */
+#login-page{
+  position:relative;z-index:1;
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 20px;
+}
+.login-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:44px 36px;
+  width:100%;max-width:420px;
+  position:relative;overflow:hidden;
+}
+.login-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold-dk),var(--gold),var(--gold-dk));
+}
+.login-icon{
+  width:64px;height:64px;
+  background:rgba(240,180,41,.1);
+  border:1px solid rgba(240,180,41,.25);
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;margin:0 auto 22px;
+}
+.login-title{font-size:1.4rem;font-weight:900;text-align:center;margin-bottom:4px}
+.login-sub{font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:28px}
+.demo-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);
+  color:var(--gold);font-size:.72rem;font-weight:700;
+  padding:4px 12px;border-radius:20px;
+  margin:0 auto 22px;display:flex;width:fit-content;
+}
+
+/* form */
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.fg input,.fg select{
+  width:100%;background:var(--bg3);
+  border:1px solid var(--border);border-radius:9px;
+  padding:11px 14px;font-size:.9rem;
+  font-family:'Cairo',sans-serif;color:var(--text);
+  transition:border .2s;direction:rtl;outline:none;
+}
+.fg input:focus,.fg select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,180,41,.1)}
+.fg select option{background:var(--bg3)}
+
+.btn-login{
+  width:100%;background:var(--gold);color:#0d0f14;
+  border:none;border-radius:10px;padding:13px;
+  font-size:.95rem;font-weight:900;
+  font-family:'Cairo',sans-serif;cursor:pointer;
+  transition:.2s;margin-top:6px;
+}
+.btn-login:hover{background:var(--gold-lt);transform:translateY(-1px)}
+.login-hint{
+  margin-top:14px;padding:11px 14px;
+  background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);
+  border-radius:9px;font-size:.75rem;color:var(--muted);line-height:1.6;
+}
+.login-err{
+  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);
+  color:#fca5a5;border-radius:8px;padding:9px 13px;
+  font-size:.8rem;text-align:center;margin-top:12px;display:none;
+}
+
+/* ══ DASHBOARD ══ */
+#dash-page{position:relative;z-index:1;display:none}
+.dash-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:24px;flex-wrap:wrap;gap:12px;
+}
+.dash-team-name{font-size:1.7rem;font-weight:900;color:var(--gold)}
+.dash-sub{font-size:.78rem;color:var(--muted);margin-top:3px}
+.btn-out{
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);border-radius:8px;padding:8px 16px;
+  font-size:.8rem;font-family:'Cairo',sans-serif;cursor:pointer;transition:.2s;
+}
+.btn-out:hover{border-color:var(--red);color:var(--red)}
+
+/* info chips row */
+.info-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.info-chip{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:10px 16px;text-align:center;
+  flex:1;min-width:100px;
+}
+.info-chip-val{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;line-height:1;margin-bottom:4px}
+.info-chip-lbl{font-size:.68rem;color:var(--muted)}
+
+/* ══ SECTION HEAD ══ */
+.sec-head{
+  font-size:.72rem;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:2px;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.sec-head::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ══ CHIPS GRID ══ */
+.chips-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px;margin-bottom:36px;
+}
+
+.chip-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:16px;padding:22px 18px 18px;
+  position:relative;overflow:hidden;
+  cursor:pointer;transition:all .22s;
+  display:flex;flex-direction:column;gap:0;
+}
+.chip-card:hover:not(.cc-used):not(.cc-locked):not(.cc-disabled){
+  transform:translateY(-3px);
+  box-shadow:0 10px 36px rgba(0,0,0,.4);
+}
+/* accent top bar */
+.chip-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;
+}
+.chip-card.cc-bonus::before    {background:linear-gradient(90deg,#22c55e,#16a34a)}
+.chip-card.cc-double::before   {background:linear-gradient(90deg,#a855f7,#7c3aed)}
+.chip-card.cc-1v1::before      {background:linear-gradient(90deg,#3b82f6,#1d4ed8)}
+.chip-card.cc-borrow::before   {background:linear-gradient(90deg,#f97316,#ea580c)}
+/* hover border colour */
+.chip-card.cc-bonus:hover:not(.cc-used):not(.cc-locked):not(.cc-disabled)    {border-color:#22c55e;box-shadow:0 10px 36px rgba(34,197,94,.15)}
+.chip-card.cc-double:hover:not(.cc-used):not(.cc-locked):not(.cc-disabled)   {border-color:#a855f7;box-shadow:0 10px 36px rgba(168,85,247,.15)}
+.chip-card.cc-1v1:hover:not(.cc-used):not(.cc-locked):not(.cc-disabled)      {border-color:#3b82f6;box-shadow:0 10px 36px rgba(59,130,246,.15)}
+.chip-card.cc-borrow:hover:not(.cc-used):not(.cc-locked):not(.cc-disabled)   {border-color:#f97316;box-shadow:0 10px 36px rgba(249,115,22,.15)}
+
+.chip-card.cc-used    {opacity:.42;cursor:not-allowed;filter:grayscale(.5)}
+.chip-card.cc-locked  {opacity:.38;cursor:not-allowed}
+.chip-card.cc-disabled{opacity:.5;cursor:not-allowed}
+.chip-card.cc-active  {border-color:var(--gold)!important;box-shadow:0 0 24px rgba(240,180,41,.2)!important}
+
+.chip-icon{font-size:2rem;margin-bottom:10px;display:block;line-height:1}
+.chip-name{font-size:.98rem;font-weight:900;color:var(--text);margin-bottom:6px}
+.chip-desc{font-size:.74rem;color:var(--muted);line-height:1.65;flex:1}
+.chip-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+
+/* uses counter */
+.chip-uses{
+  display:flex;gap:4px;align-items:center;
+}
+.use-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--border2);transition:.2s;
+}
+.use-dot.filled{background:var(--gold)}
+.use-dot.active-dot{background:var(--green);box-shadow:0 0 5px var(--green)}
+
+/* status badge */
+.chip-badge{
+  font-size:.65rem;font-weight:700;
+  padding:3px 9px;border-radius:20px;
+  white-space:nowrap;
+}
+.cb-avail  {background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.25)}
+.cb-used   {background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
+.cb-active {background:rgba(240,180,41,.12);color:var(--gold);border:1px solid rgba(240,180,41,.3)}
+.cb-locked {background:rgba(100,116,139,.12);color:var(--muted);border:1px solid rgba(100,116,139,.25)}
+.cb-half   {background:rgba(168,85,247,.12);color:#d8b4fe;border:1px solid rgba(168,85,247,.25);font-size:.62rem}
+
+/* half-season indicator */
+.half-tag{
+  position:absolute;top:12px;left:12px;
+  font-size:.6rem;font-weight:700;
+  padding:2px 7px;border-radius:6px;
+  background:rgba(240,180,41,.1);color:var(--gold-dk);border:1px solid rgba(240,180,41,.2);
+}
+
+/* ══ SETTINGS ══ */
+.settings-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:22px;margin-bottom:32px;
+}
+.settings-title{font-size:.88rem;font-weight:700;margin-bottom:16px}
+.pass-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
+.pass-grid input{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:9px;padding:10px 13px;
+  font-size:.85rem;font-family:'Cairo',sans-serif;color:var(--text);
+  direction:rtl;outline:none;transition:border .2s;width:100%;
+}
+.pass-grid input:focus{border-color:var(--gold)}
+.pass-grid label{font-size:.72rem;color:var(--muted);display:block;margin-bottom:5px;font-weight:600}
+.btn-save{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);border-radius:9px;padding:10px 18px;
+  font-size:.82rem;font-family:'Cairo',sans-serif;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:.2s;
+}
+.btn-save:hover{border-color:var(--gold);color:var(--gold)}
+.pass-msg{font-size:.78rem;margin-top:10px;padding:8px 12px;border-radius:8px;display:none}
+.pm-ok {background:rgba(34,197,94,.08);color:#86efac;border:1px solid rgba(34,197,94,.2)}
+.pm-err{background:rgba(239,68,68,.08);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+
+/* ══ HISTORY ══ */
+.hist-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+}
+.hist-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 18px;border-bottom:1px solid var(--border);
+  font-size:.83rem;gap:10px;flex-wrap:wrap;
+}
+.hist-row:last-child{border-bottom:none}
+.hist-feat{display:flex;align-items:center;gap:8px;font-weight:700}
+.hist-detail{font-size:.72rem;color:var(--muted)}
+.hist-gw{
+  font-family:'Orbitron',sans-serif;font-size:.72rem;
+  color:var(--muted);white-space:nowrap;
+}
+.hist-empty{padding:24px;text-align:center;color:var(--muted);font-size:.82rem}
+
+/* ══ MODALS ══ */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(5px);
+  z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:20px;padding:32px;
+  max-width:500px;width:100%;
+  position:relative;max-height:90vh;overflow-y:auto;
+  animation:fadeUp .25s ease;
+}
+.modal-title{font-size:1.15rem;font-weight:900;margin-bottom:6px}
+.modal-sub{font-size:.8rem;color:var(--muted);margin-bottom:22px;line-height:1.65}
+
+/* confirm */
+.conf-icon{font-size:2.8rem;text-align:center;margin-bottom:12px}
+.conf-title{font-size:1.1rem;font-weight:900;text-align:center;margin-bottom:6px}
+.conf-sub{font-size:.8rem;color:var(--muted);text-align:center;line-height:1.65;margin-bottom:4px}
+.conf-warn{
+  background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);
+  color:#fca5a5;border-radius:9px;padding:10px 14px;
+  font-size:.78rem;text-align:center;margin-top:14px;
+}
+
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.btn-confirm{
+  flex:1;background:var(--blue);color:#fff;border:none;
+  border-radius:10px;padding:12px;font-size:.9rem;font-weight:900;
+  font-family:'Cairo',sans-serif;cursor:pointer;transition:.2s;
+}
+.btn-confirm.green-btn{background:var(--green)}
+.btn-confirm:hover{opacity:.88;transform:translateY(-1px)}
+.btn-confirm:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-cancel-m{
+  flex:1;background:transparent;border:1px solid var(--border);
+  color:var(--muted);border-radius:10px;padding:12px;
+  font-size:.9rem;font-family:'Cairo',sans-serif;cursor:pointer;transition:.2s;
+}
+.btn-cancel-m:hover{border-color:var(--red);color:var(--red)}
+
+/* player select */
+.psel-group{margin-bottom:16px}
+.psel-group label{font-size:.78rem;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+.psel-group select{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  border-radius:9px;padding:10px 13px;font-size:.85rem;
+  font-family:'Cairo',sans-serif;color:var(--text);cursor:pointer;
+  direction:rtl;outline:none;transition:border .2s;
+}
+.psel-group select:focus{border-color:var(--blue)}
+
+/* mutual cancel warning */
+.cancel-warn{
+  background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);
+  border-radius:9px;padding:10px 13px;font-size:.75rem;color:#fca5a5;
+  margin-bottom:14px;display:flex;align-items:flex-start;gap:8px;
+}
+
+/* ══ TOAST ══ */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:11px 22px;
+  font-size:.85rem;font-weight:700;
+  z-index:300;transition:transform .28s ease;white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(34,197,94,.5);color:#86efac}
+.toast.error  {border-color:rgba(239,68,68,.5); color:#fca5a5}
+.toast.info   {border-color:rgba(59,130,246,.5);color:#93c5fd}
+
+/* ══ SPINNER ══ */
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spinR .7s linear infinite;display:inline-block;vertical-align:middle}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spinR{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:640px){
+  .chips-grid{grid-template-columns:1fr 1fr}
+  .pass-grid{grid-template-columns:1fr}
+  .info-row{gap:8px}
+}
+@media(max-width:400px){
+  .chips-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(13,15,20,.97);border-bottom:1px solid var(--border);padding:10px 14px 18px;z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links a{height:auto;padding:10px 12px;border-radius:7px;width:100%}
+  .hamburger{display:flex}
+}
 </style>
 </head>
 <body>
- 
-<!-- ════════ NAVBAR ════════ -->
+
+<!-- ══ NAVBAR ══ -->
 <nav>
-  <a class="nav-logo" href="index.html">⚽ El7amla</a>
-  <ul class="nav-links">
-    <li><a href="index.html">الرئيسية</a></li>
-    <li><a href="standings.html">الترتيب</a></li>
-    <li><a href="fixtures.html">المباريات</a></li>
-    <li><a href="teams.html">الفرق</a></li>
-    <li><a href="khawas.html" class="active">الخواص ✨</a></li>
-  </ul>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-icon">🏆</div>
+    El7amla
+  </a>
+  <div class="nav-links" id="nav-links">
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="standings.html">📊 الترتيب</a>
+    <a href="fixtures.html">📅 المباريات</a>
+    <a href="teams.html">👥 الفرق</a>
+    <a href="analysis.html">📈 التحليل</a>
+    <a href="khawas.html" class="active">⚡ الخواص</a>
+  </div>
+  <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')"><span></span><span></span><span></span></button>
 </nav>
- 
-<!-- ════════ LOGIN PAGE ════════ -->
+
+<!-- ══ LOGIN PAGE ══ -->
 <div id="login-page">
   <div class="login-box">
     <div class="login-icon">🔐</div>
-    <div class="login-title">لوحة تحكم الفريق</div>
-    <div class="login-sub">سجّل دخولك للوصول إلى خواص فريقك</div>
- 
-    <div class="form-group">
+    <div class="login-title">لوحة تحكم الخواص</div>
+    <div class="login-sub">سجّل دخولك بيانات فريقك</div>
+    <div class="demo-pill">🧪 الموسم التجريبي 2025/26</div>
+
+    <div class="fg">
       <label>اسم الفريق</label>
-      <input type="text" id="inp-username" placeholder="مثال: Black Tech" autocomplete="off">
+      <input type="text" id="inp-user" placeholder="مثال: Black Tech" autocomplete="off"/>
     </div>
-    <div class="form-group">
-      <label>الباسورد</label>
-      <input type="password" id="inp-password" placeholder="••••••••">
+    <div class="fg">
+      <label>كلمة المرور</label>
+      <input type="password" id="inp-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
- 
     <button class="btn-login" onclick="doLogin()">دخول</button>
-    <div class="login-error" id="login-error">اسم الفريق أو الباسورد غلط</div>
+    <div class="login-err" id="login-err">اسم الفريق أو كلمة المرور غلط</div>
+    <div class="login-hint">
+      💡 <strong style="color:var(--text)">الباسورد الابتدائي:</strong> اسم الفريق بالإنجليزي<br>
+      مثال: فريق <code style="color:var(--gold)">Falcons</code> → الباسورد: <code style="color:var(--gold)">Falcons</code>
+    </div>
   </div>
 </div>
- 
-<!-- ════════ DASHBOARD ════════ -->
-<div id="dashboard-page">
-  <!-- header -->
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dash-page" class="page">
+
+  <!-- Deadline Banner -->
+  <div class="deadline-banner" id="dl-banner">
+    <div class="dl-left">
+      <div class="dl-icon">⏰</div>
+      <div>
+        <div class="dl-gw" id="dl-gw">الجولة —</div>
+        <div class="dl-time" id="dl-time">جارٍ تحميل الديدلاين…</div>
+      </div>
+    </div>
+    <div class="countdown" id="countdown">--:--:--</div>
+  </div>
+
+  <!-- Header -->
   <div class="dash-header">
     <div>
-      <div class="dash-team-name" id="dash-team-name">—</div>
-      <div class="dash-team-sub">لوحة تحكم الفريق · الموسم 2024/25</div>
+      <div class="dash-team-name" id="dash-name">—</div>
+      <div class="dash-sub">لوحة تحكم الخواص · الموسم التجريبي</div>
     </div>
-    <button class="btn-logout" onclick="doLogout()">تسجيل خروج</button>
+    <button class="btn-out" onclick="doLogout()">🚪 خروج</button>
   </div>
- 
-  <!-- current gw notice -->
-  <div class="gw-notice" id="gw-notice">
-    ⚡ <span id="gw-label" style="font-weight:700">جارٍ تحميل الجولة والديدلاين…</span>
+
+  <!-- Info Row -->
+  <div class="info-row" id="info-row">
+    <!-- filled by JS -->
   </div>
- 
-  <!-- ── FEATURES ── -->
-  <div class="section-title">الخواص المتاحة</div>
-  <div class="features-grid">
- 
-    <!-- Bonus Win -->
-    <div class="feature-card bonus" id="card-bonus" onclick="activateFeature('bonus')">
-      <span class="feat-badge available" id="badge-bonus">متاحة</span>
-      <span class="feat-icon">🏆</span>
-      <div class="feat-name">مكسب بونص</div>
-      <div class="feat-desc">لو كسبت الماتش في هذه الجولة تحصل على +3 نقاط إضافية. لو خسرت تُستهلك بدون فائدة.</div>
-    </div>
- 
-    <!-- Opponent Penalty -->
-    <div class="feature-card penalty" id="card-penalty" onclick="activateFeature('penalty')">
-      <span class="feat-badge available" id="badge-penalty">متاحة</span>
-      <span class="feat-icon">⚔️</span>
-      <div class="feat-name">نقص خصمك</div>
-      <div class="feat-desc">يتم خصم 15 نقطة من إجمالي نقاط خصمك في هذه الجولة فقط.</div>
-    </div>
- 
-    <!-- 1v1 -->
-    <div class="feature-card onevone" id="card-1v1" onclick="activateFeature('1v1')">
-      <span class="feat-badge available" id="badge-1v1">متاحة</span>
-      <span class="feat-icon">⚡</span>
-      <div class="feat-name">وان تو وان</div>
-      <div class="feat-desc">تختار لاعب من فريقك ولاعب من فريق الخصم. النقاط تُحسب فقط بين هذين اللاعبين.</div>
-    </div>
- 
+
+  <!-- ══ CHIPS ══ -->
+  <div class="sec-head">الخواص الأربعة</div>
+  <div class="chips-grid" id="chips-grid">
+    <!-- filled by JS -->
   </div>
- 
-  <!-- ── CHANGE PASSWORD ── -->
-  <div class="section-title">الإعدادات</div>
-  <div class="pass-box">
-    <div style="font-size:15px;font-weight:700;margin-bottom:16px;">تغيير الباسورد</div>
-    <div class="pass-row">
+
+  <!-- ══ SETTINGS ══ -->
+  <div class="sec-head">الإعدادات</div>
+  <div class="settings-box">
+    <div class="settings-title">🔑 تغيير كلمة المرور</div>
+    <div class="pass-grid">
       <div>
-        <label>الباسورد الحالي</label>
-        <input type="password" id="inp-old-pass" placeholder="••••••••">
+        <label>الحالية</label>
+        <input type="password" id="p-old" placeholder="••••••••"/>
       </div>
       <div>
-        <label>الباسورد الجديد</label>
-        <input type="password" id="inp-new-pass" placeholder="••••••••">
+        <label>الجديدة</label>
+        <input type="password" id="p-new" placeholder="••••••••"/>
       </div>
       <button class="btn-save" onclick="changePassword()">حفظ</button>
     </div>
     <div class="pass-msg" id="pass-msg"></div>
   </div>
- 
-  <!-- ── HISTORY ── -->
-  <div class="section-title">سجل الخواص المُفعَّلة</div>
-  <div class="history-box" id="history-box">
-    <div class="history-row" style="color:var(--muted);font-size:13px;justify-content:center;">
-      لم يتم تفعيل أي خاصية بعد
-    </div>
+
+  <!-- ══ HISTORY ══ -->
+  <div class="sec-head">سجل الخواص المُفعَّلة</div>
+  <div class="hist-box" id="hist-box">
+    <div class="hist-empty">لم يتم تفعيل أي خاصية بعد</div>
   </div>
+
 </div>
- 
-<!-- ════════ 1v1 MODAL ════════ -->
-<div class="modal-overlay" id="modal-1v1">
-  <div class="modal-box">
-    <div class="modal-title">⚡ وان تو وان</div>
-    <div class="modal-sub">اختر لاعباً من فريقك ولاعباً من فريق الخصم. النقاط ستُحسب فقط بين هذين اللاعبين في هذه الجولة.</div>
- 
-    <div class="player-select-group">
-      <label>لاعبك</label>
-      <select id="sel-my-player"></select>
-    </div>
-    <div class="player-select-group">
-      <label>لاعب الخصم</label>
-      <select id="sel-opp-player"></select>
-    </div>
- 
-    <div class="modal-actions">
-      <button class="btn-confirm" onclick="confirm1v1()">تأكيد التفعيل</button>
-      <button class="btn-cancel"  onclick="closeModal('modal-1v1')">إلغاء</button>
-    </div>
-  </div>
-</div>
- 
-<!-- ════════ CONFIRM MODAL ════════ -->
+
+<!-- ══ MODAL: CONFIRM (generic) ══ -->
 <div class="modal-overlay" id="modal-confirm">
   <div class="modal-box">
-    <div class="confirm-icon" id="confirm-icon">⚠️</div>
-    <div class="confirm-title" id="confirm-title">تأكيد التفعيل</div>
-    <div class="confirm-sub" id="confirm-sub">هذه الخاصية ستُستهلك نهائياً ولا يمكن تفعيلها مرة أخرى طوال الموسم.</div>
+    <div class="conf-icon" id="m-icon">⚠️</div>
+    <div class="conf-title" id="m-title">تأكيد التفعيل</div>
+    <div class="conf-sub" id="m-sub">—</div>
+    <div class="conf-warn" id="m-warn" style="display:none"></div>
     <div class="modal-actions">
-      <button class="btn-confirm" id="confirm-yes-btn">نعم، فعّل</button>
-      <button class="btn-cancel"  onclick="closeModal('modal-confirm')">إلغاء</button>
+      <button class="btn-confirm green-btn" id="m-ok-btn">✅ تأكيد</button>
+      <button class="btn-cancel-m" onclick="closeModal('modal-confirm')">إلغاء</button>
     </div>
   </div>
 </div>
- 
-<!-- ════════ TOAST ════════ -->
+
+<!-- ══ MODAL: 1v1 ══ -->
+<div class="modal-overlay" id="modal-1v1">
+  <div class="modal-box">
+    <div class="modal-title">⚔️ وان تو وان — اختر اللاعبين</div>
+    <div class="modal-sub">النقاط ستُحسب فقط بين هذين اللاعبين. إذا فعّل الخصم نفس الخاصية في نفس الجولة → تتكنسل الخاصية للطرفين.</div>
+    <div class="cancel-warn" id="1v1-cancel-warn" style="display:none">
+      ⚠️ <span>الخصم فعّل 1v1 في نفس الجولة — إذا أكملت ستتكنسل الخاصيتان وتُستهلكان!</span>
+    </div>
+    <div class="psel-group">
+      <label id="lbl-my">لاعبك</label>
+      <select id="sel-my"></select>
+    </div>
+    <div class="psel-group">
+      <label id="lbl-opp">لاعب الخصم</label>
+      <select id="sel-opp"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-confirm" onclick="confirm1v1()">⚔️ تأكيد التفعيل</button>
+      <button class="btn-cancel-m" onclick="closeModal('modal-1v1')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: DOUBLE PLAYER ══ -->
+<div class="modal-overlay" id="modal-double">
+  <div class="modal-box">
+    <div class="modal-title">✖️2 دبل لاعب — اختر النجم</div>
+    <div class="modal-sub">نقاط اللاعب المختار تُضاعَف × 2، ونقاط الآخر تصبح صفراً. مجموع الفريق = نقاط المختار × 2.</div>
+    <div class="psel-group">
+      <label>اختر اللاعب الذي ستُضاعَف نقاطه</label>
+      <select id="sel-double-player"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-confirm" style="background:var(--purple)" onclick="confirmDouble()">✖️2 تأكيد التفعيل</button>
+      <button class="btn-cancel-m" onclick="closeModal('modal-double')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: BORROW ══ -->
+<div class="modal-overlay" id="modal-borrow">
+  <div class="modal-box">
+    <div class="modal-title">🔄 استعارة لاعب</div>
+    <div class="modal-sub">اختر لاعباً من فريقك يُستبعد، واستعر لاعباً من فريق آخر. لا يمكن استعارة لاعب من الفريق الذي تواجهه.</div>
+    <div class="psel-group">
+      <label>لاعبك الذي يخرج (OUT)</label>
+      <select id="sel-borrow-out"></select>
+    </div>
+    <div class="psel-group">
+      <label>اللاعب المُستعار (IN) — من أي فريق آخر</label>
+      <select id="sel-borrow-in"></select>
+    </div>
+    <div class="conf-warn" id="borrow-warn" style="display:none">
+      ⛔ لا يمكن استعارة لاعب من الفريق الخصم الذي تواجهه هذه الجولة.
+    </div>
+    <div class="modal-actions">
+      <button class="btn-confirm" style="background:var(--orange)" onclick="confirmBorrow()">🔄 تأكيد الاستعارة</button>
+      <button class="btn-cancel-m" onclick="closeModal('modal-borrow')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
 <div class="toast" id="toast"></div>
- 
+
 <script>
-// ══════════════════════════════════════════════
-//  DATA
-// ══════════════════════════════════════════════
- 
-// الفرق واللاعبين — مستخرجة من league.json
+/* ══════════════════════════════════════════════
+   LEAGUE DATA (من league.json)
+══════════════════════════════════════════════ */
 const LEAGUE = {
-  "Black Tech":    ["Elfiky", "Omar"],
-  "The Pharaohs":  ["Hussein", "Ahmed"],
-  "Smokers":       ["Body", "Tawheed"],
-  "Falcons":       ["Nasser", "Mahmoud"],
-  "Boys":          ["Ali", "Magdy"],
+  "Black Tech":   ["Elfiky", "Omar"],
+  "The Pharaohs": ["Hussein", "Ahmed"],
+  "Smokers":      ["Body", "Tawheed"],
+  "Falcons":      ["Nasser", "Mahmoud"],
+  "Boys":         ["Ali", "Magdy"],
 };
- 
-// الجولة والديدلاين — بيتجلبوا تلقائياً من FPL
-let CURRENT_GW = 38;
-let DEADLINE    = null;   // ISO string — بيتملى من fetchFPLDeadline()
- 
-async function fetchFPLDeadline() {
-  try {
-    // CORS proxy عشان نقدر نكلم FPL من المتصفح
-    const PROXY = "https://corsproxy.io/?";
-    const url   = PROXY + encodeURIComponent("https://fantasy.premierleague.com/api/bootstrap-static/");
-    const res   = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error("FPL HTTP " + res.status);
-    const data  = await res.json();
- 
-    // أحدث جولة لسه مش finished = الجولة القادمة/الحالية
-    const events  = data.events || [];
-    const current = events.find(e => e.is_current) || events.find(e => !e.finished);
- 
-    if (current) {
-      CURRENT_GW = current.id;
-      DEADLINE   = current.deadline_time;   // مثال: "2025-05-17T11:30:00Z"
-      updateDeadlineUI();
-    }
-  } catch (e) {
-    console.warn("تعذّر جلب ديدلاين FPL:", e);
-    // fallback: نخلي الديدلاين مفتوح عشان متشلّش التفعيل
-    DEADLINE = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
-    updateDeadlineUI();
-  }
-}
- 
-function updateDeadlineUI() {
-  const el = document.getElementById("gw-label");
-  if (!el) return;
-  const passed = DEADLINE && new Date() > new Date(DEADLINE);
-  const fmt = DEADLINE
-    ? new Date(DEADLINE).toLocaleString("ar-EG", { weekday:"short", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" })
-    : "—";
-  el.textContent = `الجولة ${CURRENT_GW}${passed ? " · انتهى الديدلاين ⛔" : " · ديدلاين: " + fmt}`;
-  el.style.color = passed ? "var(--red)" : "var(--gold)";
-}
- 
-// مفاتيح الـ localStorage
-const KEY_PASSWORDS = "kh_passwords";
-const KEY_FEATURES  = "kh_features";
-const KEY_SESSION   = "kh_session";
-const KEY_FIRST     = "kh_first_login";
- 
-// ══════════════════════════════════════════════
-//  INIT — ضبط الباسوردات الأولى
-// ══════════════════════════════════════════════
-function initPasswords() {
-  let passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
+
+// Fixtures (لمعرفة الخصم الحالي)
+const FIXTURES = {
+  1:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  2:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  3:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  4:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  5:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  6:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  7:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  8:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  9:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  10:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  11:[["BYE","BYE"]],
+  12:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  13:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  14:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  15:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  16:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  17:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  18:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  19:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  20:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  21:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  22:[["BYE","BYE"]],
+  23:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  24:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  25:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  26:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  27:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  28:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  29:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  30:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  31:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  32:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  33:[["Black Tech","The Pharaohs"],["Smokers","Falcons"],["Boys","BYE"]],
+  34:[["Smokers","The Pharaohs"],["Black Tech","Boys"],["Falcons","BYE"]],
+  35:[["Smokers","Black Tech"],["Falcons","Boys"],["The Pharaohs","BYE"]],
+  36:[["Smokers","Boys"],["Falcons","The Pharaohs"],["Black Tech","BYE"]],
+  37:[["Falcons","Black Tech"],["The Pharaohs","Boys"],["Smokers","BYE"]],
+  38:[["BYE","BYE"]],
+};
+
+/* ══════════════════════════════════════════════
+   CHIPS CONFIG
+══════════════════════════════════════════════ */
+const CHIPS_CONFIG = {
+  bonus_win: {
+    key:'bonus_win', label:'بونص مضاعف', icon:'🚀',
+    color:'#22c55e', cls:'cc-bonus',
+    maxUses:1, halfRule:false,
+    desc:'في حالة الفوز → +3 نقاط ماتش إضافية (6 إجمالاً). تعادل أو خسارة → تُستهلك بدون فائدة.',
+  },
+  double_player: {
+    key:'double_player', label:'دبل لاعب', icon:'✖️2',
+    color:'#a855f7', cls:'cc-double',
+    maxUses:2, halfRule:true,
+    desc:'نقاط اللاعب المختار تُضاعَف × 2، نقاط الآخر = صفر. الاستخدام: مرة في كل دور (GW1-19 ومرة في GW20-38).',
+  },
+  one_v_one: {
+    key:'one_v_one', label:'وان تو وان', icon:'⚔️',
+    color:'#3b82f6', cls:'cc-1v1',
+    maxUses:2, halfRule:true,
+    desc:'مواجهة لاعب vs لاعب. الفائز → +1 نقطة ماتش لفريقه. إذا فعّل الخصم نفسها في نفس الجولة → تتكنسل.',
+  },
+  player_borrow: {
+    key:'player_borrow', label:'استعارة لاعب', icon:'🔄',
+    color:'#f97316', cls:'cc-borrow',
+    maxUses:2, halfRule:true,
+    desc:'تُخرج لاعباً من فريقك وتستعير لاعباً من فريق آخر لجولة واحدة. يُمنع استعارة لاعب من الخصم.',
+  },
+};
+
+/* ══════════════════════════════════════════════
+   STORAGE KEYS
+══════════════════════════════════════════════ */
+const K_PWD  = 'el7_pwd';
+const K_FEAT = 'el7_feat';
+const K_SESS = 'el7_sess';
+
+/* ══════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════ */
+let CURRENT_GW  = 38;
+let DEADLINE    = null;
+let countdownTimer = null;
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+function initStorage() {
+  let pwd  = JSON.parse(localStorage.getItem(K_PWD)  || '{}');
+  let feat = JSON.parse(localStorage.getItem(K_FEAT) || '{}');
   let changed = false;
+
   for (const team of Object.keys(LEAGUE)) {
-    if (!passwords[team]) {
-      passwords[team] = team;   // باسورد ابتدائي = اسم الفريق
-      changed = true;
-    }
-  }
-  if (changed) localStorage.setItem(KEY_PASSWORDS, JSON.stringify(passwords));
-}
- 
-function initFeatures() {
-  let features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
-  let changed = false;
-  for (const team of Object.keys(LEAGUE)) {
-    if (!features[team]) {
-      features[team] = {
-        bonus:   { used: false, gw: null },
-        penalty: { used: false, gw: null },
-        "1v1":   { used: false, gw: null, myPlayer: null, oppPlayer: null },
-        activeThisGW: null   // الخاصية المفعّلة في الجولة الحالية
+    if (!pwd[team])  { pwd[team]  = team; changed = true; }
+    if (!feat[team]) {
+      feat[team] = {
+        bonus_win:     { uses:[], activeGW:null },
+        double_player: { uses:[], activeGW:null },
+        one_v_one:     { uses:[], activeGW:null },
+        player_borrow: { uses:[], activeGW:null },
+        activatedThisGW: null,
+        history: [],
       };
       changed = true;
     }
   }
-  if (changed) localStorage.setItem(KEY_FEATURES, JSON.stringify(features));
+  if (changed) {
+    localStorage.setItem(K_PWD,  JSON.stringify(pwd));
+    localStorage.setItem(K_FEAT, JSON.stringify(feat));
+  }
 }
- 
-// ══════════════════════════════════════════════
-//  AUTH
-// ══════════════════════════════════════════════
+
+/* ══════════════════════════════════════════════
+   FPL DEADLINE
+══════════════════════════════════════════════ */
+async function fetchDeadline() {
+  try {
+    const PROXY = 'https://corsproxy.io/?';
+    const url   = PROXY + encodeURIComponent('https://fantasy.premierleague.com/api/bootstrap-static/');
+    const res   = await fetch(url, { cache:'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data  = await res.json();
+    const ev    = data.events || [];
+    // next unfinished event = upcoming deadline
+    const next  = ev.find(e => !e.finished && e.deadline_time);
+    const cur   = ev.find(e => e.is_current) || ev.slice(-1)[0];
+    CURRENT_GW  = (cur?.id) || 38;
+    DEADLINE    = next?.deadline_time || cur?.deadline_time || null;
+    updateDeadlineBanner();
+    startCountdown();
+  } catch(e) {
+    console.warn('FPL fetch failed:', e);
+    // Fallback: open deadline 7 days from now
+    DEADLINE = new Date(Date.now() + 7*864e5).toISOString();
+    updateDeadlineBanner();
+    startCountdown();
+  }
+}
+
+function updateDeadlineBanner() {
+  document.getElementById('dl-gw').textContent = `الجولة ${CURRENT_GW}`;
+  if (DEADLINE) {
+    const d = new Date(DEADLINE);
+    const fmt = d.toLocaleString('ar-EG',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    document.getElementById('dl-time').textContent = 'الديدلاين: ' + fmt;
+  }
+}
+
+function startCountdown() {
+  clearInterval(countdownTimer);
+  const el = document.getElementById('countdown');
+  function tick() {
+    if (!DEADLINE) return;
+    const diff = new Date(DEADLINE) - Date.now();
+    if (diff <= 0) {
+      el.textContent = 'انتهى الديدلاين ⛔';
+      el.className   = 'countdown ended';
+      return;
+    }
+    const h  = Math.floor(diff / 36e5);
+    const m  = Math.floor((diff % 36e5) / 6e4);
+    const s  = Math.floor((diff % 6e4)  / 1e3);
+    el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    el.className   = diff < 36e5 ? 'countdown danger' : 'countdown';
+  }
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
+const pad = n => String(n).padStart(2,'0');
+
+function isDeadlinePassed() {
+  return DEADLINE && new Date() > new Date(DEADLINE);
+}
+
+/* ══════════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════════ */
 function doLogin() {
-  const username = document.getElementById("inp-username").value.trim();
-  const password = document.getElementById("inp-password").value;
-  const passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
- 
-  if (!LEAGUE[username] || passwords[username] !== password) {
-    const err = document.getElementById("login-error");
-    err.style.display = "block";
-    setTimeout(() => err.style.display = "none", 3000);
+  const user = document.getElementById('inp-user').value.trim();
+  const pass = document.getElementById('inp-pass').value;
+  const err  = document.getElementById('login-err');
+  err.style.display = 'none';
+
+  const passwords = JSON.parse(localStorage.getItem(K_PWD) || '{}');
+  if (!LEAGUE[user] || passwords[user] !== pass) {
+    err.style.display = 'block';
+    setTimeout(()=> err.style.display='none', 3000);
     return;
   }
- 
-  // حفظ الجلسة
-  sessionStorage.setItem(KEY_SESSION, username);
- 
-  // هل أول دخول؟
-  const firstLogins = JSON.parse(localStorage.getItem(KEY_FIRST) || "{}");
-  if (!firstLogins[username]) {
-    firstLogins[username] = true;
-    localStorage.setItem(KEY_FIRST, JSON.stringify(firstLogins));
-    showToast("أهلاً! غيّر باسوردك من الإعدادات 👇", "success");
-  }
- 
-  showDashboard(username);
+  sessionStorage.setItem(K_SESS, user);
+  showDash(user);
 }
- 
-document.getElementById("inp-password").addEventListener("keydown", e => {
-  if (e.key === "Enter") doLogin();
-});
- 
+
 function doLogout() {
-  sessionStorage.removeItem(KEY_SESSION);
-  document.getElementById("dashboard-page").style.display = "none";
-  document.getElementById("login-page").style.display = "flex";
-  document.getElementById("inp-password").value = "";
+  sessionStorage.removeItem(K_SESS);
+  document.getElementById('dash-page').style.display   = 'none';
+  document.getElementById('login-page').style.display  = 'flex';
+  document.getElementById('inp-pass').value = '';
 }
- 
-// ══════════════════════════════════════════════
-//  DASHBOARD
-// ══════════════════════════════════════════════
-function showDashboard(team) {
-  document.getElementById("login-page").style.display = "none";
-  document.getElementById("dashboard-page").style.display = "block";
-  document.getElementById("dash-team-name").textContent = team;
-  updateDeadlineUI();
- 
-  renderFeatures(team);
+
+/* ══════════════════════════════════════════════
+   DASHBOARD RENDER
+══════════════════════════════════════════════ */
+function showDash(team) {
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('dash-page').style.display  = 'block';
+  document.getElementById('dash-name').textContent = team;
+  renderInfoRow(team);
+  renderChips(team);
   renderHistory(team);
 }
- 
-function renderFeatures(team) {
-  const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
-  const tf = features[team] || {};
-  const deadlinePassed = DEADLINE && new Date() > new Date(DEADLINE);
-  const alreadyActivatedThisGW = tf.activeThisGW !== null;
- 
-  const featureKeys = ["bonus", "penalty", "1v1"];
-  const icons = { bonus: "🏆", penalty: "⚔️", "1v1": "⚡" };
-  const badgeEl = { bonus: "badge-bonus", penalty: "badge-penalty", "1v1": "badge-1v1" };
-  const cardEl  = { bonus: "card-bonus",  penalty: "card-penalty",  "1v1": "card-1v1" };
- 
-  for (const key of featureKeys) {
-    const badge = document.getElementById(badgeEl[key]);
-    const card  = document.getElementById(cardEl[key]);
- 
-    card.classList.remove("used", "disabled");
-    badge.className = "feat-badge";
- 
-    if (tf[key] && tf[key].used) {
-      // مستهلكة نهائياً
-      card.classList.add("used");
-      badge.classList.add("used-badge");
-      badge.textContent = "مُستهلكة ✗";
-    } else if (tf.activeThisGW === key) {
-      // مفعّلة هذه الجولة
-      badge.classList.add("active-badge");
-      badge.textContent = "مفعّلة هذه الجولة ✓";
-      card.classList.add("disabled");
-    } else if (alreadyActivatedThisGW || deadlinePassed) {
-      // فعّل خاصية ثانية أو انتهى الديدلاين
-      card.classList.add("disabled");
-      badge.classList.add("used-badge");
-      badge.textContent = deadlinePassed ? "انتهى الديدلاين" : "فعّلت خاصية";
-    } else {
-      badge.classList.add("available");
-      badge.textContent = "متاحة";
+
+function renderInfoRow(team) {
+  const feat = JSON.parse(localStorage.getItem(K_FEAT)||'{}')[team] || {};
+  const opp  = getOpponent(team, CURRENT_GW);
+  const totalUsed = Object.values(CHIPS_CONFIG)
+    .reduce((s,c) => s + (feat[c.key]?.uses?.length||0), 0);
+  const totalMax  = Object.values(CHIPS_CONFIG).reduce((s,c)=>s+c.maxUses,0);
+
+  document.getElementById('info-row').innerHTML = `
+    <div class="info-chip">
+      <div class="info-chip-val">${CURRENT_GW}</div>
+      <div class="info-chip-lbl">الجولة الحالية</div>
+    </div>
+    <div class="info-chip">
+      <div class="info-chip-val" style="color:var(--green)">${totalMax-totalUsed}/${totalMax}</div>
+      <div class="info-chip-lbl">خواص متبقية</div>
+    </div>
+    <div class="info-chip">
+      <div class="info-chip-val" style="color:var(--gold);font-size:.85rem">${opp||'راحة'}</div>
+      <div class="info-chip-lbl">خصمك هذه الجولة</div>
+    </div>
+    <div class="info-chip">
+      <div class="info-chip-val" style="color:${isDeadlinePassed()?'var(--red)':'var(--green)'}">
+        ${isDeadlinePassed()?'⛔ مغلق':'✅ مفتوح'}
+      </div>
+      <div class="info-chip-lbl">باب التفعيل</div>
+    </div>`;
+}
+
+function renderChips(team) {
+  const feat   = JSON.parse(localStorage.getItem(K_FEAT)||'{}')[team] || {};
+  const gw     = CURRENT_GW;
+  const half   = gw <= 19 ? 1 : 2;
+  const deadlinePassed = isDeadlinePassed();
+  const alreadyActive  = feat.activatedThisGW !== null;
+  const grid   = document.getElementById('chips-grid');
+
+  grid.innerHTML = Object.values(CHIPS_CONFIG).map(c => {
+    const cd     = feat[c.key] || { uses:[], activeGW:null };
+    const used   = cd.uses || [];
+    const usedInHalf = c.halfRule ? used.filter(u => (half===1?u<=19:u>=20)).length : used.length;
+    const maxThisHalf = c.halfRule ? 1 : c.maxUses;
+    const exhausted   = c.halfRule ? usedInHalf >= maxThisHalf : used.length >= c.maxUses;
+    const isActiveGW  = cd.activeGW === gw;
+    const locked      = !isActiveGW && (deadlinePassed || (alreadyActive && !isActiveGW));
+
+    // status
+    let badgeCls = 'cb-avail', badgeTxt = 'متاحة';
+    let cardCls  = c.cls;
+    if (isActiveGW)        { badgeCls='cb-active'; badgeTxt='مفعّلة ✓'; cardCls+=' cc-active'; }
+    else if (exhausted)    { badgeCls='cb-used';   badgeTxt='مستهلكة ✗'; cardCls+=' cc-used'; }
+    else if (deadlinePassed){ badgeCls='cb-locked'; badgeTxt='الديدلاين انتهى 🔒'; cardCls+=' cc-locked'; }
+    else if (alreadyActive){ badgeCls='cb-locked'; badgeTxt='فعّلت خاصية'; cardCls+=' cc-disabled'; }
+
+    // uses dots
+    const dots = Array.from({length:c.maxUses},(_,i)=>{
+      const usedTotal = used.length;
+      const cls = i < usedTotal
+        ? (used[i]===gw ? 'use-dot filled active-dot' : 'use-dot filled')
+        : 'use-dot';
+      return `<div class="${cls}"></div>`;
+    }).join('');
+
+    // half tag
+    const halfTag = c.halfRule
+      ? `<div class="half-tag">${half===1?'الدور الأول':'الدور الثاني'}</div>` : '';
+
+    return `
+      <div class="chip-card ${cardCls}" onclick="onChipClick('${c.key}')">
+        ${halfTag}
+        <span class="chip-icon">${c.icon}</span>
+        <div class="chip-name">${c.label}</div>
+        <div class="chip-desc">${c.desc}</div>
+        <div class="chip-footer">
+          <div class="chip-uses">${dots}</div>
+          <span class="chip-badge ${badgeCls}">${badgeTxt}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderHistory(team) {
+  const feat = JSON.parse(localStorage.getItem(K_FEAT)||'{}')[team] || {};
+  const hist = (feat.history||[]).slice().reverse();
+  const box  = document.getElementById('hist-box');
+  if (!hist.length) { box.innerHTML='<div class="hist-empty">لم يتم تفعيل أي خاصية بعد</div>'; return; }
+
+  box.innerHTML = hist.map(h=>{
+    const cfg = CHIPS_CONFIG[h.chip];
+    return `<div class="hist-row">
+      <div>
+        <div class="hist-feat">${cfg?.icon||'⚡'} ${cfg?.label||h.chip}</div>
+        ${h.detail?`<div class="hist-detail">${h.detail}</div>`:''}
+      </div>
+      <div class="hist-gw">GW${h.gw} · ${h.date||''}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════
+   CHIP CLICK
+══════════════════════════════════════════════ */
+function onChipClick(key) {
+  const team = sessionStorage.getItem(K_SESS);
+  if (!team) return;
+  const feat = JSON.parse(localStorage.getItem(K_FEAT)||'{}');
+  const tf   = feat[team];
+  const cd   = tf[key];
+  const cfg  = CHIPS_CONFIG[key];
+  const gw   = CURRENT_GW;
+  const half = gw <= 19 ? 1 : 2;
+
+  if (isDeadlinePassed())  return showToast('انتهى الديدلاين لهذه الجولة ⛔','error');
+  if (cd.activeGW === gw)  return showToast('هذه الخاصية مفعّلة بالفعل هذه الجولة','info');
+  if (tf.activatedThisGW)  return showToast('فعّلت خاصية بالفعل في هذه الجولة','error');
+
+  // Check exhausted
+  const usedInHalf = cfg.halfRule
+    ? (cd.uses||[]).filter(u=>(half===1?u<=19:u>=20)).length
+    : (cd.uses||[]).length;
+  const maxThisHalf = cfg.halfRule ? 1 : cfg.maxUses;
+  if (usedInHalf >= maxThisHalf) return showToast('هذه الخاصية مستهلكة في هذا الدور','error');
+
+  // Open appropriate modal
+  if (key === 'one_v_one')     { open1v1Modal(team);    return; }
+  if (key === 'double_player') { openDoubleModal(team); return; }
+  if (key === 'player_borrow') { openBorrowModal(team); return; }
+
+  // bonus_win — simple confirm
+  openConfirm(cfg.icon, `تفعيل: ${cfg.label}`,
+    `${cfg.desc}<br><br><strong>الجولة ${gw}</strong>`,
+    `⚠️ هذه الخاصية لن تتكرر (${cfg.maxUses===1?'مرة واحدة فقط':'مرة في كل دور'}) طوال الموسم!`,
+    () => doActivate(key, team, {})
+  );
+}
+
+function openConfirm(icon, title, sub, warn, onOk) {
+  document.getElementById('m-icon').textContent  = icon;
+  document.getElementById('m-title').textContent = title;
+  document.getElementById('m-sub').innerHTML     = sub;
+  const w = document.getElementById('m-warn');
+  if (warn) { w.style.display='block'; w.textContent=warn; }
+  else      { w.style.display='none'; }
+  const btn = document.getElementById('m-ok-btn');
+  btn.onclick = () => { closeModal('modal-confirm'); onOk(); };
+  document.getElementById('modal-confirm').classList.add('open');
+}
+
+/* ── 1v1 ── */
+function open1v1Modal(team) {
+  const feat = JSON.parse(localStorage.getItem(K_FEAT)||'{}');
+  const opp  = getOpponent(team, CURRENT_GW);
+
+  // Check if opp already activated 1v1 this GW
+  const oppActivated = opp && feat[opp]?.one_v_one?.activeGW === CURRENT_GW;
+  document.getElementById('1v1-cancel-warn').style.display = oppActivated ? 'flex' : 'none';
+
+  // My players
+  const myP = LEAGUE[team] || [];
+  document.getElementById('sel-my').innerHTML =
+    myP.map(p=>`<option value="${p}">${p}</option>`).join('');
+  document.getElementById('lbl-my').textContent = `لاعبك (${team})`;
+
+  // Opp players
+  const oppP = opp ? (LEAGUE[opp]||[]) : [];
+  document.getElementById('sel-opp').innerHTML =
+    oppP.length
+      ? oppP.map(p=>`<option value="${p}">${p} — ${opp}</option>`).join('')
+      : `<option value="">لا يوجد خصم (جولة راحة)</option>`;
+  document.getElementById('lbl-opp').textContent = opp ? `لاعب الخصم (${opp})` : 'لا يوجد خصم';
+  document.getElementById('sel-opp').disabled = !opp;
+
+  document.getElementById('modal-1v1').classList.add('open');
+}
+
+function confirm1v1() {
+  const team   = sessionStorage.getItem(K_SESS);
+  const myP    = document.getElementById('sel-my').value;
+  const oppRaw = document.getElementById('sel-opp').value;
+  const oppP   = oppRaw.split(' — ')[0];
+  const opp    = getOpponent(team, CURRENT_GW);
+  if (!myP || !oppRaw) { showToast('اختر اللاعبين أولاً','error'); return; }
+
+  // Check mutual cancel
+  const feat       = JSON.parse(localStorage.getItem(K_FEAT)||'{}');
+  const oppActivated = opp && feat[opp]?.one_v_one?.activeGW === CURRENT_GW;
+  const detail = oppActivated
+    ? `${myP} vs ${oppP} (تكنسلت — الخصم فعّلها)`
+    : `${myP} vs ${oppP}`;
+
+  closeModal('modal-1v1');
+  doActivate('one_v_one', team, { myPlayer:myP, oppPlayer:oppP, mutual_cancel:oppActivated, detail });
+}
+
+/* ── DOUBLE PLAYER ── */
+function openDoubleModal(team) {
+  const players = LEAGUE[team] || [];
+  document.getElementById('sel-double-player').innerHTML =
+    players.map(p=>`<option value="${p}">${p}</option>`).join('');
+  document.getElementById('modal-double').classList.add('open');
+}
+
+function confirmDouble() {
+  const team = sessionStorage.getItem(K_SESS);
+  const p    = document.getElementById('sel-double-player').value;
+  if (!p) { showToast('اختر لاعباً','error'); return; }
+  closeModal('modal-double');
+  doActivate('double_player', team, { chosenPlayer:p, detail:`دبل: ${p}` });
+}
+
+/* ── BORROW ── */
+function openBorrowModal(team) {
+  const opp  = getOpponent(team, CURRENT_GW);
+  const myP  = LEAGUE[team] || [];
+  document.getElementById('sel-borrow-out').innerHTML =
+    myP.map(p=>`<option value="${p}">${p}</option>`).join('');
+
+  // All players from other teams excluding opponent
+  const allOther = Object.entries(LEAGUE)
+    .filter(([t]) => t !== team && t !== opp)
+    .flatMap(([t,players]) => players.map(p=>`<option value="${p}__${t}">${p} — ${t}</option>`));
+  document.getElementById('sel-borrow-in').innerHTML = allOther.join('') ||
+    '<option value="">لا يوجد خيارات</option>';
+
+  const w = document.getElementById('borrow-warn');
+  w.style.display = opp ? 'none' : 'block';
+  w.textContent   = opp ? '' : 'أنت في راحة هذه الجولة — لا يمكن الاستعارة.';
+
+  document.getElementById('modal-borrow').classList.add('open');
+}
+
+function confirmBorrow() {
+  const team = sessionStorage.getItem(K_SESS);
+  const out  = document.getElementById('sel-borrow-out').value;
+  const inRaw = document.getElementById('sel-borrow-in').value;
+  if (!out || !inRaw) { showToast('اختر اللاعبين أولاً','error'); return; }
+  const [inPlayer, inTeam] = inRaw.split('__');
+  const opp = getOpponent(team, CURRENT_GW);
+  if (inTeam === opp) { showToast('لا يمكن استعارة لاعب من الخصم ⛔','error'); return; }
+  closeModal('modal-borrow');
+  doActivate('player_borrow', team, { outPlayer:out, inPlayer, inTeam, detail:`${out} OUT → ${inPlayer} (${inTeam}) IN` });
+}
+
+/* ══════════════════════════════════════════════
+   ACTIVATE
+══════════════════════════════════════════════ */
+function doActivate(key, team, extra) {
+  const feat = JSON.parse(localStorage.getItem(K_FEAT)||'{}');
+  const tf   = feat[team];
+  const gw   = CURRENT_GW;
+  const now  = new Date().toLocaleString('ar-EG',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+
+  tf[key].uses    = [...(tf[key].uses||[]), gw];
+  tf[key].activeGW = gw;
+  Object.assign(tf[key], extra);
+  tf.activatedThisGW = key;
+
+  // History entry
+  tf.history.push({
+    chip: key, gw, date: now,
+    detail: extra.detail || '',
+  });
+
+  // Mutual cancel for 1v1
+  if (key === 'one_v_one' && extra.mutual_cancel) {
+    const opp = getOpponent(team, gw);
+    if (opp && feat[opp]) {
+      feat[opp].one_v_one.canceled_gw = gw;
+      feat[opp].history.push({ chip:'one_v_one', gw, date:now, detail:`تكنسلت (${team} فعّلها أيضاً)` });
     }
   }
-}
- 
-function renderHistory(team) {
-  const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
-  const tf = features[team] || {};
-  const box = document.getElementById("history-box");
-  const icons = { bonus: "🏆", penalty: "⚔️", "1v1": "⚡" };
-  const names = { bonus: "مكسب بونص", penalty: "نقص خصمك", "1v1": "وان تو وان" };
- 
-  const used = ["bonus", "penalty", "1v1"].filter(k => tf[k] && tf[k].used);
- 
-  if (used.length === 0) {
-    box.innerHTML = `<div class="history-row" style="color:var(--muted);font-size:13px;justify-content:center;">لم يتم تفعيل أي خاصية بعد</div>`;
-    return;
-  }
- 
-  box.innerHTML = used.map(k => {
-    const f = tf[k];
-    let extra = "";
-    if (k === "1v1" && f.myPlayer) extra = ` · ${f.myPlayer} vs ${f.oppPlayer}`;
-    return `<div class="history-row">
-      <span class="feat-label">${icons[k]} ${names[k]}${extra}</span>
-      <span class="gw-tag">جولة ${f.gw}</span>
-    </div>`;
-  }).join("");
-}
- 
-// ══════════════════════════════════════════════
-//  ACTIVATE FEATURE
-// ══════════════════════════════════════════════
-let _pendingFeature = null;
- 
-function activateFeature(key) {
-  const team = sessionStorage.getItem(KEY_SESSION);
-  if (!team) return;
- 
-  const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
-  const tf = features[team];
- 
-  if (tf[key].used)       return showToast("هذه الخاصية مستهلكة نهائياً", "error");
-  if (tf.activeThisGW)    return showToast("فعّلت خاصية بالفعل هذه الجولة", "error");
-  if (DEADLINE && new Date() > new Date(DEADLINE)) return showToast("انتهى الديدلاين لهذه الجولة ⛔", "error");
- 
-  _pendingFeature = key;
- 
-  if (key === "1v1") {
-    open1v1Modal(team);
-  } else {
-    const names = { bonus: "مكسب بونص", penalty: "نقص خصمك" };
-    const descs = {
-      bonus:   "لو كسبت الماتش ستحصل على +3 نقاط إضافية. لو خسرت ستُستهلك بدون فائدة.",
-      penalty: "سيتم خصم 15 نقطة من إجمالي نقاط خصمك في هذه الجولة.",
-    };
-    document.getElementById("confirm-icon").textContent  = key === "bonus" ? "🏆" : "⚔️";
-    document.getElementById("confirm-title").textContent = "تفعيل: " + names[key];
-    document.getElementById("confirm-sub").textContent   = descs[key] + "\n\nهذه الخاصية ستُستهلك نهائياً ولا يمكن استخدامها مرة أخرى طوال الموسم.";
-    document.getElementById("confirm-yes-btn").onclick   = doActivate;
-    document.getElementById("modal-confirm").classList.add("open");
-  }
-}
- 
-function doActivate() {
-  const team = sessionStorage.getItem(KEY_SESSION);
-  const key  = _pendingFeature;
-  if (!team || !key) return;
- 
-  const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
-  features[team][key].used = true;
-  features[team][key].gw   = CURRENT_GW;
-  features[team].activeThisGW = key;
-  localStorage.setItem(KEY_FEATURES, JSON.stringify(features));
- 
-  closeModal("modal-confirm");
-  closeModal("modal-1v1");
-  renderFeatures(team);
+
+  localStorage.setItem(K_FEAT, JSON.stringify(feat));
+
+  const cfg = CHIPS_CONFIG[key];
+  showToast(`✅ تم تفعيل ${cfg.icon} ${cfg.label} في الجولة ${gw}`, 'success');
+  renderInfoRow(team);
+  renderChips(team);
   renderHistory(team);
- 
-  const names = { bonus: "مكسب بونص", penalty: "نقص خصمك", "1v1": "وان تو وان" };
-  showToast("✅ تم تفعيل خاصية " + names[key], "success");
-  _pendingFeature = null;
 }
- 
-// ══════════════════════════════════════════════
-//  1v1 MODAL
-// ══════════════════════════════════════════════
-function open1v1Modal(team) {
-  // My players
-  const myPlayers = LEAGUE[team] || [];
-  const selMy = document.getElementById("sel-my-player");
-  selMy.innerHTML = myPlayers.map(p => `<option value="${p}">${p}</option>`).join("");
- 
-  // All other players
-  const selOpp = document.getElementById("sel-opp-player");
-  const oppPlayers = Object.entries(LEAGUE)
-    .filter(([t]) => t !== team)
-    .flatMap(([t, players]) => players.map(p => `<option value="${p} (${t})">${p} — ${t}</option>`));
-  selOpp.innerHTML = oppPlayers.join("");
- 
-  document.getElementById("modal-1v1").classList.add("open");
-}
- 
-function confirm1v1() {
-  const team = sessionStorage.getItem(KEY_SESSION);
-  const myPlayer  = document.getElementById("sel-my-player").value;
-  const oppRaw    = document.getElementById("sel-opp-player").value;
-  const oppPlayer = oppRaw.split(" (")[0];
- 
-  const features = JSON.parse(localStorage.getItem(KEY_FEATURES) || "{}");
-  features[team]["1v1"].used      = true;
-  features[team]["1v1"].gw        = CURRENT_GW;
-  features[team]["1v1"].myPlayer  = myPlayer;
-  features[team]["1v1"].oppPlayer = oppPlayer;
-  features[team].activeThisGW = "1v1";
-  localStorage.setItem(KEY_FEATURES, JSON.stringify(features));
- 
-  closeModal("modal-1v1");
-  renderFeatures(team);
-  renderHistory(team);
-  showToast(`✅ وان تو وان: ${myPlayer} vs ${oppPlayer}`, "success");
-  _pendingFeature = null;
-}
- 
-// ══════════════════════════════════════════════
-//  CHANGE PASSWORD
-// ══════════════════════════════════════════════
+
+/* ══════════════════════════════════════════════
+   CHANGE PASSWORD
+══════════════════════════════════════════════ */
 function changePassword() {
-  const team    = sessionStorage.getItem(KEY_SESSION);
-  const oldPass = document.getElementById("inp-old-pass").value;
-  const newPass = document.getElementById("inp-new-pass").value;
-  const msg     = document.getElementById("pass-msg");
- 
-  const passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
- 
-  msg.style.display = "block";
- 
-  if (passwords[team] !== oldPass) {
-    msg.className = "pass-msg err";
-    msg.textContent = "الباسورد الحالي غلط";
-    return;
-  }
- 
-  if (newPass.length < 4) {
-    msg.className = "pass-msg err";
-    msg.textContent = "الباسورد الجديد قصير جداً (4 أحرف على الأقل)";
-    return;
-  }
- 
-  if (oldPass === newPass) {
-    msg.className = "pass-msg err";
-    msg.textContent = "الباسورد الجديد نفس القديم";
-    return;
-  }
- 
-  passwords[team] = newPass;
-  localStorage.setItem(KEY_PASSWORDS, JSON.stringify(passwords));
- 
-  msg.className = "pass-msg ok";
-  msg.textContent = "✅ تم تغيير الباسورد بنجاح";
-  document.getElementById("inp-old-pass").value = "";
-  document.getElementById("inp-new-pass").value = "";
-  setTimeout(() => msg.style.display = "none", 3000);
+  const team = sessionStorage.getItem(K_SESS);
+  const old  = document.getElementById('p-old').value;
+  const nw   = document.getElementById('p-new').value;
+  const msg  = document.getElementById('pass-msg');
+  const pwd  = JSON.parse(localStorage.getItem(K_PWD)||'{}');
+  msg.style.display='block';
+  if (pwd[team]!==old)    { msg.className='pass-msg pm-err'; msg.textContent='الباسورد الحالي غلط'; return; }
+  if (nw.length<4)        { msg.className='pass-msg pm-err'; msg.textContent='الباسورد قصير جداً (4 حروف على الأقل)'; return; }
+  if (old===nw)           { msg.className='pass-msg pm-err'; msg.textContent='الباسورد الجديد نفس القديم'; return; }
+  pwd[team]=nw; localStorage.setItem(K_PWD,JSON.stringify(pwd));
+  msg.className='pass-msg pm-ok'; msg.textContent='✅ تم تغيير الباسورد بنجاح';
+  document.getElementById('p-old').value='';
+  document.getElementById('p-new').value='';
+  setTimeout(()=>msg.style.display='none',3000);
 }
- 
-// ══════════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════════
-function closeModal(id) {
-  document.getElementById(id).classList.remove("open");
+
+/* ══════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════ */
+function getOpponent(team, gw) {
+  const matchups = FIXTURES[gw] || [];
+  const fix = matchups.find(m=>m.includes(team));
+  if (!fix) return null;
+  const opp = fix[0]===team?fix[1]:fix[0];
+  return opp==='BYE'?null:opp;
 }
- 
-function showToast(msg, type = "success") {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className   = `toast ${type} show`;
-  setTimeout(() => t.classList.remove("show"), 3000);
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+let _toastTimer=null;
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`toast ${type} show`;
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
 }
- 
+
 // Close modals on overlay click
-document.querySelectorAll(".modal-overlay").forEach(overlay => {
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) overlay.classList.remove("open");
-  });
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
 });
- 
-// ══════════════════════════════════════════════
-//  STARTUP
-// ══════════════════════════════════════════════
-initPasswords();
-initFeatures();
- 
-// جلب الديدلاين من FPL تلقائياً
-fetchFPLDeadline();
- 
-// لو في جلسة محفوظة ارجع للداشبورد
-const savedSession = sessionStorage.getItem(KEY_SESSION);
-if (savedSession && LEAGUE[savedSession]) {
-  showDashboard(savedSession);
-  fetchFPLDeadline(); // تحديث الديدلاين عند فتح الداشبورد
-}
+
+/* ══════════════════════════════════════════════
+   STARTUP
+══════════════════════════════════════════════ */
+initStorage();
+fetchDeadline();
+
+// Resume session
+const saved = sessionStorage.getItem(K_SESS);
+if (saved && LEAGUE[saved]) showDash(saved);
 </script>
 </body>
 </html>
