@@ -1,0 +1,29 @@
+{
+  "_comment": "هيكل بيانات الخواص — نفس الشكل المستخدم في localStorage بصفحة khawas.html. الدور الأول = GW1-19, الدور الثاني = GW20-38.",
+  "Black Tech": {
+    "one_v_one": {
+      "h1": { "gw": 7, "myPlayer": "Elfiky", "oppTeam": "The Pharaohs", "oppPlayer": "Hussein", "status": "used" },
+      "h2": null
+    },
+    "bonus3": { "used": true, "gw": 12, "won": true, "status": "used" },
+    "double_player": {
+      "h1": { "gw": 3, "doubledPlayer": "Omar", "zeroedPlayer": "Elfiky", "status": "used" },
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "The Pharaohs": {
+    "one_v_one": {
+      "h1": { "gw": 7, "myPlayer": "Hussein", "oppTeam": "Black Tech", "oppPlayer": "Elfiky", "status": "used" },
+      "h2": null
+    },
+    "bonus3": { "used": false, "gw": null, "won": null, "status": null },
+    "double_player": { "h1": null, "h2": null },
+    "borrow": { "h1": null, "h2": null },
+    "activeThisGW": null
+  }
+}
