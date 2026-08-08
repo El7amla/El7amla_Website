@@ -1,6 +1,6 @@
 {
   "current_gw": 1,
-  "last_updated": "2026-08-07 23:39:12",
+  "last_updated": "2026-08-08 21:06:57",
   "teams": [
     {
       "name": "Black Tech",
@@ -13,6 +13,7 @@
       "gd": 0,
       "matchPts": 0,
       "bonus": 0,
+      "chipBonus": 0,
       "total": 0
     },
     {
@@ -26,6 +27,7 @@
       "gd": 0,
       "matchPts": 0,
       "bonus": 0,
+      "chipBonus": 0,
       "total": 0
     },
     {
@@ -39,6 +41,7 @@
       "gd": 0,
       "matchPts": 0,
       "bonus": 0,
+      "chipBonus": 0,
       "total": 0
     },
     {
@@ -52,6 +55,7 @@
       "gd": 0,
       "matchPts": 0,
       "bonus": 0,
+      "chipBonus": 0,
       "total": 0
     },
     {
@@ -65,6 +69,7 @@
       "gd": 0,
       "matchPts": 0,
       "bonus": 0,
+      "chipBonus": 0,
       "total": 0
     }
   ],
