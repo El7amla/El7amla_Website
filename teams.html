@@ -32,7 +32,6 @@
     html { scroll-behavior: smooth; }
     body { font-family:'Cairo',sans-serif; background:var(--bg-primary); color:var(--text-primary); min-height:100vh; direction:rtl; }
 
-    /* ══ NAVBAR ══ */
     .site-nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); background:rgba(15,23,42,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); z-index:1000; display:flex; align-items:center; padding:0 20px; }
     .nav-inner { max-width:1200px; margin:0 auto; width:100%; display:flex; align-items:center; }
     .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; margin-left:auto; flex-shrink:0; }
@@ -47,13 +46,11 @@
     .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; margin-right:auto; background:none; border:none; }
     .hamburger span { display:block; width:24px; height:2px; background:var(--text-primary); border-radius:2px; }
 
-    /* ══ PAGE ══ */
     .page-wrap { max-width:1200px; margin:0 auto; padding:calc(var(--nav-h) + 28px) 16px 60px; }
     .page-header { text-align:center; margin-bottom:28px; }
     .page-title { font-family:'Orbitron',sans-serif; font-size:clamp(1.1rem,3.5vw,1.9rem); font-weight:900; background:linear-gradient(90deg,#60a5fa,#f1f5f9,#60a5fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
     .page-sub { font-size:.85rem; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; }
 
-    /* ══ TEAM SELECTOR CARDS ══ */
     .teams-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -79,7 +76,6 @@
     .team-card-name { font-weight: 800; font-size: .85rem; }
     .team-card-sub  { font-size: .7rem; color: var(--text-muted); }
 
-    /* ══ SUMMARY ROW ══ */
     .summary-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -96,7 +92,6 @@
     .sum-val { font-family:'Orbitron',sans-serif; font-size: 1.4rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
     .sum-lbl { font-size: .72rem; color: var(--text-muted); }
 
-    /* ══ TABLE ══ */
     .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
     .section-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
     .section-title { font-size:1.2rem; font-weight:900; }
@@ -143,13 +138,11 @@
 
     .bonus-cell { font-weight:900; color:var(--gold); font-size:.9rem; }
 
-    /* STATE */
     .state-box { text-align:center; padding:60px 20px; color:var(--text-muted); }
     .state-box .si { font-size:2.5rem; margin-bottom:12px; }
     .spinner { width:44px; height:44px; border:3px solid rgba(59,130,246,.2); border-top-color:var(--blue-accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 16px; }
     @keyframes spin { to { transform:rotate(360deg); } }
 
-    /* RESPONSIVE */
     @media (max-width:900px) {
       .teams-grid { grid-template-columns:repeat(3,1fr); }
       .summary-row { grid-template-columns:repeat(2,1fr); }
@@ -171,7 +164,6 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="site-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
@@ -244,7 +236,7 @@
 
 <script>
 /* ══ CONFIG ══ */
-const RAW = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main";
+const RAW = "https://raw.githubusercontent.com/El7amla/__CONFIRM_REPOSITORY_NAME__/main";
 
 const TEAM_META = {
   "Falcons":      { color:"#3b82f6", em:"🦅" },
@@ -300,6 +292,20 @@ let standingsData = null;
 let selectedTeam  = null;
 const TEAMS = Object.keys(TEAM_META);
 
+// Every name that could ever originate from current_standings.json
+// (i.e. anything read from `standingsData`, as opposed to the hardcoded
+// TEAM_META/FIXTURES config above) is passed through this before being
+// inserted via innerHTML. Defense-in-depth even where the current data
+// flow happens to be trusted, since admin.html/the Worker control that file.
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /* ══ INIT ══ */
 async function init() {
   try {
@@ -319,12 +325,16 @@ function buildTeamCards() {
     const tData = standingsData.teams.find(t => t.name === name);
     const rank  = standingsData.teams.findIndex(t => t.name === name) + 1;
     const rankEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+    // `name` here comes from TEAMS (Object.keys(TEAM_META)) — a fixed,
+    // hardcoded roster, not attacker-influenced JSON data — but it is
+    // still escaped for consistency/defense-in-depth.
+    const safeName = escapeHtml(name);
     return `
       <div class="team-card" id="tc-${name.replace(/\s/g,'_')}"
            onclick="selectTeam('${name}')"
            style="border-color:${meta.color}44">
         <div class="team-card-em">${meta.em}</div>
-        <div class="team-card-name" style="color:${meta.color}">${name}</div>
+        <div class="team-card-name" style="color:${meta.color}">${safeName}</div>
         <div class="team-card-sub">${rankEmoji} · ${tData?.total ?? 0} نقطة</div>
       </div>`;
   }).join('');
@@ -358,21 +368,6 @@ function selectTeam(name) {
 function renderTeamResults(teamName) {
   const meta     = TEAM_META[teamName];
   const currentGW = standingsData.current_gw || 1;
-  const allTeams  = TEAMS;
-
-  /* ── compute bonus winner per GW from standings data ──
-     We don't have per-GW raw data here in the HTML, so we derive
-     bonus from standings.teams bonus field is aggregate.
-     Instead we embed the per-GW bonus logic using the GW data
-     from current_standings which the Python script writes.
-     Since we only have aggregate bonus in standings, we show
-     the match results without per-GW bonus breakdown,
-     and show total bonus from standings at the end.
-
-     For the match scores: standings has gf/ga as season totals,
-     not per-GW. So we show what we CAN show from standings:
-     the aggregate stats, and per-GW opponent from fixtures.
-  ──────────────────────────────────────────────────────── */
 
   /* Get team stats from standings */
   const tData  = standingsData.teams.find(t => t.name === teamName) || {};
@@ -381,35 +376,12 @@ function renderTeamResults(teamName) {
   /* Update icon and title */
   document.getElementById('tbl-icon').textContent  = meta.em;
   document.getElementById('tbl-icon').style.background = `linear-gradient(135deg,${meta.color}99,${meta.color})`;
+  // textContent — safe by construction, teamName comes from the
+  // hardcoded TEAMS list anyway (see selectTeam callers)
   document.getElementById('tbl-title').innerHTML =
-    `${teamName} — سجل المباريات <small>Match History · حتى الجولة ${currentGW}</small>`;
+    `${escapeHtml(teamName)} — سجل المباريات <small>Match History · حتى الجولة ${currentGW}</small>`;
 
-  /* ── Build match rows from fixtures ── */
   const tbody = document.getElementById('matches-tbody');
-
-  let rows = '';
-  let runningMP    = 0;
-  let runningBonus = 0;
-  let matchCount   = 0;
-  let wins = 0, draws = 0, losses = 0;
-
-  /* We need per-GW scores. Since the Python script saves gf/ga as season totals
-     we reconstruct match results from the fixtures + standings match counts.
-     For score display we'll show "—" for points and derive W/D/L from
-     the fixture list up to currentGW using only what we have.
-
-     The REAL per-GW points are in the gw JSON files which the script processes.
-     The script stores per-GW data in current_standings only as aggregates.
-     So for this page we fetch current_standings which has:
-       won, draw, lost, matchPts, bonus, total, gf, ga, gd
-     We can show the fixture schedule with results coded as W/D/L
-     IF we had per-GW data. Since we only have aggregates here,
-     we'll show the schedule and mark played GWs — for actual scores
-     we'd need a gw_history.json. Let's build the table with what we have
-     and show per-GW scores as "—" with honest labeling.
-
-     However — we DO have the GW json files on GitHub.
-     Let's fetch them! */
 
   document.getElementById('results-section').style.display = 'block';
   tbody.innerHTML = `<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--text-muted)"><div class="spinner" style="margin:0 auto 10px"></div>جارٍ تحميل نتائج الجولات…</td></tr>`;
@@ -501,6 +473,7 @@ async function fetchAndRenderGWs(teamName, currentGW, meta, tData, rank) {
       /* Real match */
       const opp = myFix[0] === teamName ? myFix[1] : myFix[0];
       const oppMeta = TEAM_META[opp] || { em:'⚽', color:'#64748b' };
+      const safeOpp = escapeHtml(opp);
 
       let myPts = null, oppPts = null;
       if (data && data[teamName] && data[opp]) {
@@ -531,7 +504,7 @@ async function fetchAndRenderGWs(teamName, currentGW, meta, tData, rank) {
           <td>
             <div class="opp-cell">
               <span class="opp-em">${oppMeta.em}</span>
-              <span style="color:${oppMeta.color};font-weight:800">${opp}</span>
+              <span style="color:${oppMeta.color};font-weight:800">${safeOpp}</span>
             </div>
           </td>
           <td class="hide-sm">${myPtsDisp}</td>
@@ -599,10 +572,3 @@ init();
 </script>
 </body>
 </html>
-<!-- 
-  ملاحظة مهمة:
-  الصفحة دي بتحمّل بيانات كل جولة من:
-  https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/data/gw_history/gw{N}.json
-  
-  محتاج تضيف هذا الكود لـ update_standings.py عشان يحفظ ملفات الجولات:
--->
