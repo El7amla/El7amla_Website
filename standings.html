@@ -38,9 +38,6 @@
       direction: rtl;
     }
 
-    /* ══════════════════════════════════════
-       NAVBAR (consistent across all pages)
-    ══════════════════════════════════════ */
     .site-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -60,7 +57,6 @@
       display: flex;
       align-items: center;
     }
-    /* LOGO */
     .nav-logo {
       display: flex;
       align-items: center;
@@ -81,16 +77,12 @@
     .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
     .logo-ar { font-family:'Cairo',sans-serif; font-size:1.05rem; font-weight:900; color:var(--text-primary); }
     .logo-en { font-family:'Orbitron',sans-serif; font-size:.5rem; font-weight:700; color:var(--blue-accent); letter-spacing:2.5px; text-transform:uppercase; }
-    /* LINKS */
     .nav-links { display:flex; align-items:center; margin-right:auto; }
     .nav-links a { color:var(--text-muted); text-decoration:none; font-size:.9rem; font-weight:600; padding:8px 18px; border-bottom:3px solid transparent; transition:.2s; height:var(--nav-h); display:flex; align-items:center; }
     .nav-links a:hover, .nav-links a.active { color:var(--blue-accent); border-bottom-color:var(--blue-accent); background:rgba(59,130,246,.06); }
     .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; margin-right:auto; background:none; border:none; }
     .hamburger span { display:block; width:24px; height:2px; background:var(--text-primary); border-radius:2px; }
 
-    /* ══════════════════════════════════════
-       PAGE HEADER BAND (below fixed nav)
-    ══════════════════════════════════════ */
     .site-header {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
       border-bottom: 1px solid var(--border);
@@ -126,12 +118,8 @@
     }
     .live-badge::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--live-green); animation:pulse 1.4s infinite; }
 
-    /* ══════════════════════════════════════
-       MAIN CONTENT
-    ══════════════════════════════════════ */
     .main-content { max-width:1200px; margin:0 auto; padding:32px 16px 60px; }
 
-    /* Section heading */
     .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:20px; margin-top:44px; }
     .section-heading:first-of-type { margin-top:0; }
     .section-icon { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; }
@@ -140,9 +128,6 @@
     .section-title { font-size:1.3rem; font-weight:900; color:var(--text-primary); }
     .section-title small { display:block; font-size:.75rem; font-weight:400; color:var(--text-muted); margin-top:1px; }
 
-    /* ══════════════════════════════════════
-       TABLE
-    ══════════════════════════════════════ */
     .table-wrap { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 30px rgba(0,0,0,.4); }
     table { width:100%; border-collapse:collapse; font-size:.88rem; }
     thead tr { background:linear-gradient(90deg,#1d4ed8,#2563eb); }
@@ -158,14 +143,12 @@
     tbody tr.rank-3:hover { background:linear-gradient(90deg,rgba(205,124,62,.16),rgba(205,124,62,.05)); }
     tbody td { padding:12px 10px; text-align:center; vertical-align:middle; }
 
-    /* RANK BADGE */
     .rank-badge { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-weight:900; font-size:.85rem; }
     .rank-badge.gold   { background:linear-gradient(135deg,#fbbf24,#f59e0b); color:#78350f; }
     .rank-badge.silver { background:linear-gradient(135deg,#e2e8f0,#94a3b8); color:#1e293b; }
     .rank-badge.bronze { background:linear-gradient(135deg,#cd7c3e,#92400e); color:#fef3c7; }
     .rank-badge.other  { background:rgba(51,65,85,.8); color:var(--text-muted); }
 
-    /* CELL TYPES */
     .team-name { font-weight:700; font-size:.92rem; display:flex; align-items:center; justify-content:center; gap:8px; }
     .team-dot  { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
     .pts-total { font-weight:900; font-size:1rem; color:var(--blue-accent); }
@@ -177,21 +160,17 @@
     .player-pts { font-weight:900; font-size:1rem; color:#a78bfa; }
     .team-pill { display:inline-block; padding:2px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25); color:#93c5fd; }
 
-    /* STATES */
     .state-box { text-align:center; padding:60px 20px; color:var(--text-muted); }
     .state-box .icon { font-size:2.5rem; margin-bottom:12px; }
     .spinner { width:44px; height:44px; border:3px solid rgba(59,130,246,.2); border-top-color:var(--blue-accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 16px; }
 
-    /* META */
     .meta-footer { margin-top:40px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
     .meta-chip { background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:10px 20px; font-size:.82rem; color:var(--text-muted); display:flex; align-items:center; gap:8px; }
     .meta-chip span { color:var(--text-primary); font-weight:700; }
 
-    /* ANIMATIONS */
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
     @keyframes spin  { to { transform:rotate(360deg); } }
 
-    /* RESPONSIVE */
     @media (max-width:900px) { .hide-md { display:none !important; } }
     @media (max-width:600px) {
       thead th, tbody td { padding:9px 6px; font-size:.74rem; }
@@ -211,7 +190,6 @@
 </head>
 <body>
 
-<!-- ════════════ NAVBAR ════════════ -->
 <nav class="site-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
@@ -235,7 +213,6 @@
   </div>
 </nav>
 
-<!-- ════════════ HEADER BAND ════════════ -->
 <header class="site-header">
   <div class="header-inner">
     <div class="league-title">El7amla 2v2 Fantasy League 2025/26</div>
@@ -244,10 +221,8 @@
   </div>
 </header>
 
-<!-- ════════════ MAIN ════════════ -->
 <main class="main-content">
 
-  <!-- Teams -->
   <div class="section-heading">
     <div class="section-icon icon-teams">🏆</div>
     <div class="section-title">ترتيب الفرق <small>Team Standings</small></div>
@@ -256,7 +231,6 @@
     <div class="state-box"><div class="spinner"></div><p>جارٍ تحميل البيانات…</p></div>
   </div>
 
-  <!-- Players -->
   <div class="section-heading">
     <div class="section-icon icon-players">⚡</div>
     <div class="section-title">ترتيب اللاعبين <small>Player Rankings</small></div>
@@ -265,7 +239,6 @@
     <div class="state-box"><div class="spinner"></div><p>جارٍ تحميل البيانات…</p></div>
   </div>
 
-  <!-- Meta -->
   <div class="meta-footer" id="meta-footer" style="display:none">
     <div class="meta-chip">📅 آخر تحديث: <span id="meta-updated">—</span></div>
     <div class="meta-chip">🗓️ الجولة الحالية: <span id="meta-gw">—</span></div>
@@ -281,6 +254,19 @@
     'Boys':         '#f97316',
     'The Pharaohs': '#eab308',
   };
+
+  // Every team/player name (sourced from current_standings.json, which
+  // admin.html/the Worker can write) that gets inserted into innerHTML
+  // MUST go through this. This is what prevents stored XSS via a
+  // malicious name reaching the page.
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   function rankBadge(rank) {
     const map = { 1:['gold','🥇'], 2:['silver','🥈'], 3:['bronze','🥉'] };
@@ -302,12 +288,13 @@
     const rows = teams.map((t, i) => {
       const rank  = i + 1;
       const cls   = rank <= 3 ? `rank-${rank}` : '';
+      const safeName = escapeHtml(t.name);
       const color = TEAM_COLORS[t.name] || '#64748b';
       const gd    = t.gd !== undefined ? t.gd : (t.gf != null && t.ga != null ? t.gf - t.ga : null);
       return `
         <tr class="${cls}">
           <td>${rankBadge(rank)}</td>
-          <td><div class="team-name"><span class="team-dot" style="background:${color}"></span>${t.name}</div></td>
+          <td><div class="team-name"><span class="team-dot" style="background:${color}"></span>${safeName}</div></td>
           <td class="hide-sm">${t.played}</td>
           <td class="hide-sm">${t.won}</td>
           <td class="hide-sm">${t.draw}</td>
@@ -341,12 +328,14 @@
     const rows = players.map((p, i) => {
       const rank  = i + 1;
       const cls   = rank <= 3 ? `rank-${rank}` : '';
+      const safeName = escapeHtml(p.name);
+      const safeTeam = escapeHtml(p.team);
       const color = TEAM_COLORS[p.team] || '#64748b';
       return `
         <tr class="${cls}">
           <td>${rankBadge(rank)}</td>
-          <td style="font-weight:800">${p.name}</td>
-          <td><span class="team-pill" style="border-color:${color}55;color:${color}">${p.team}</span></td>
+          <td style="font-weight:800">${safeName}</td>
+          <td><span class="team-pill" style="border-color:${color}55;color:${color}">${safeTeam}</span></td>
           <td><span class="player-pts">${p.points.toLocaleString()}</span></td>
         </tr>`;
     }).join('');
@@ -365,7 +354,7 @@
   }
 
   async function loadStandings() {
-    const url = `https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/data/current_standings.json?v=${Date.now()}`;
+    const url = `https://raw.githubusercontent.com/El7amla/__CONFIRM_REPOSITORY_NAME__/main/data/current_standings.json?v=${Date.now()}`;
     try {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
