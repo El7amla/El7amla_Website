@@ -412,7 +412,7 @@
     <!-- Hero Image -->
     <div class="hero-img-wrap">
       <img
-        src="https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main/assets/champion.png"
+        src="https://raw.githubusercontent.com/El7amla/__CONFIRM_REPOSITORY_NAME__/main/assets/champion.png"
         onerror="this.style.display='none'; document.getElementById('fallback-img').style.display='block'"
         alt="El7amla Champion Falcon"
       />
@@ -633,7 +633,7 @@
 
 <!-- ════ DATA ENGINE ════ -->
 <script>
-const RAW = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main";
+const RAW = "https://raw.githubusercontent.com/El7amla/__CONFIRM_REPOSITORY_NAME__/main";
 const TEAM_META = {
   "Falcons":      { color:"#3b82f6", em:"🦅" },
   "Smokers":      { color:"#22c55e", em:"💨" },
@@ -644,6 +644,20 @@ const TEAM_META = {
 
 let standingsData = null, fixturesData = null;
 let currentGW = 1, viewGW = 1;
+
+// team.name / player.name / player.team below are read from
+// current_standings.json — a file admin.html (via the Worker) can write.
+// Every one of those values MUST pass through this before being placed
+// into innerHTML. This is the fix for the stored-XSS sink identified in
+// the security audit — previously these were interpolated unescaped.
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 async function init() {
   try {
@@ -688,14 +702,15 @@ function renderChampionSidebar() {
   const team = standingsData?.teams?.[0];
   if (!team) { renderChampionFallback(); return; }
 
-  const meta = TEAM_META[team.name] || { em:"🦅", color:"#3b82f6" };
-  const gd   = team.gd ?? ((team.gf || 0) - (team.ga || 0));
+  const meta  = TEAM_META[team.name] || { em:"🦅", color:"#3b82f6" };
+  const gd    = team.gd ?? ((team.gf || 0) - (team.ga || 0));
   const winRate = team.played ? Math.round((team.won / team.played) * 100) : '—';
+  const safeName = escapeHtml(team.name);
 
   document.getElementById('card-best-team').querySelector('.side-card-body').innerHTML = `
     <div class="champ-crown">👑</div>
     <div class="champ-team-em">${meta.em}</div>
-    <div class="champ-team-name" style="color:${meta.color}">${team.name}</div>
+    <div class="champ-team-name" style="color:${meta.color}">${safeName}</div>
     <div class="season-label">بطل الموسم 2025 / 26</div>
 
     <div class="trophy-row">
@@ -750,13 +765,15 @@ function renderMVPSidebar() {
   if (!player) { renderMVPFallback(); return; }
 
   const meta = TEAM_META[player.team] || { color:"#64748b" };
+  const safeName = escapeHtml(player.name);
+  const safeTeam = escapeHtml(player.team);
 
   document.getElementById('card-best-player').querySelector('.side-card-body').innerHTML = `
     <div class="mvp-pts">${(player.points || 0).toLocaleString()}</div>
     <div class="mvp-sub">نقطة — أعلى نقاط في الدوري</div>
-    <div class="mvp-name">⚡ ${player.name}</div>
+    <div class="mvp-name">⚡ ${safeName}</div>
     <div class="bplayer-team" style="text-align:center;margin-bottom:14px">
-      <span class="team-pill" style="border-color:${meta.color}55;color:${meta.color}">${player.team}</span>
+      <span class="team-pill" style="border-color:${meta.color}55;color:${meta.color}">${safeTeam}</span>
     </div>
 
     <div class="stat-row">
@@ -803,11 +820,14 @@ function renderGW(gw) {
     if (home === "BYE" || away === "BYE") {
       const team = home === "BYE" ? away : home;
       const meta = TEAM_META[team] || { em:"⚽", color:"#64748b" };
-      return `<div class="match-card bye fade-up"><div class="match-row"><div class="match-team home"><div class="team-icon" style="border-color:${meta.color}">${meta.em}</div><div class="match-team-name">${team}</div></div><div class="score-center"><div class="score-nums" style="font-size:1rem;color:var(--text-muted)">BYE</div><div class="score-tag bye">راحة</div></div><div class="match-team away"></div></div></div>`;
+      const safeTeam = escapeHtml(team);
+      return `<div class="match-card bye fade-up"><div class="match-row"><div class="match-team home"><div class="team-icon" style="border-color:${meta.color}">${meta.em}</div><div class="match-team-name">${safeTeam}</div></div><div class="score-center"><div class="score-nums" style="font-size:1rem;color:var(--text-muted)">BYE</div><div class="score-tag bye">راحة</div></div><div class="match-team away"></div></div></div>`;
     }
 
     const hMeta = TEAM_META[home] || { em:"⚽", color:"#64748b" };
     const aMeta = TEAM_META[away] || { em:"⚽", color:"#64748b" };
+    const safeHome = escapeHtml(home);
+    const safeAway = escapeHtml(away);
     const tag = isPlayed
       ? `<div class="score-tag done">انتهت</div>`
       : isCurrent
@@ -823,7 +843,7 @@ function renderGW(gw) {
         <div class="match-row">
           <div class="match-team home">
             <div class="team-icon" style="border-color:${hMeta.color}">${hMeta.em}</div>
-            <div class="match-team-name">${home}</div>
+            <div class="match-team-name">${safeHome}</div>
             ${home === "Falcons" && isPlayed ? '<div style="font-size:.65rem;color:var(--gold);font-weight:800">🏆 بطل</div>' : ''}
           </div>
           <div class="score-center">
@@ -832,7 +852,7 @@ function renderGW(gw) {
           </div>
           <div class="match-team away">
             <div class="team-icon" style="border-color:${aMeta.color}">${aMeta.em}</div>
-            <div class="match-team-name">${away}</div>
+            <div class="match-team-name">${safeAway}</div>
             ${away === "Falcons" && isPlayed ? '<div style="font-size:.65rem;color:var(--gold);font-weight:800">🏆 بطل</div>' : ''}
           </div>
         </div>
