@@ -123,15 +123,24 @@
       margin-bottom: 10px;
     }
 
-    /* ── TOKEN SECTION ── */
-    .token-section {
-      background: rgba(251,191,36,.06);
-      border: 1px solid rgba(251,191,36,.25);
+    /* ── LOGIN SECTION ── */
+    .login-section {
+      background: rgba(59,130,246,.06);
+      border: 1px solid rgba(59,130,246,.25);
       border-radius: 12px; padding: 16px 20px; margin-bottom: 24px;
     }
-    .token-section h3 { color: var(--gold); font-size: 0.95rem; margin-bottom: 10px; }
-    .token-row { display: flex; gap: 10px; align-items: flex-end; }
-    .token-row > div { flex: 1; }
+    .login-section h3 { color: var(--blue); font-size: 0.95rem; margin-bottom: 10px; }
+    .login-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+    .login-row > div { flex: 1; min-width: 160px; }
+    .login-status { font-size: 0.8rem; margin-top: 10px; }
+    .login-status.ok  { color: var(--green); }
+    .login-status.err { color: var(--red); }
+    .session-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; color: var(--green);
+      background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3);
+      padding: 4px 12px; border-radius: 20px;
+    }
 
     /* ── STATUS ── */
     .status-bar {
@@ -212,29 +221,34 @@
     <h1>⚙️ لوحة تحكم El7amla</h1>
     <small>Admin Panel — تحديث بيانات الترتيب</small>
   </div>
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <span id="session-indicator"></span>
     <button class="btn btn-ghost" onclick="loadCurrentData()">🔄 تحميل البيانات الحالية</button>
-    <button class="btn btn-green" id="save-btn" onclick="saveToGitHub()">💾 حفظ على GitHub</button>
+    <button class="btn btn-green" id="save-btn" onclick="saveViaWorker()">💾 حفظ (عبر Worker)</button>
   </div>
 </div>
 
 <div class="page">
 
-  <!-- TOKEN -->
-  <div class="token-section">
-    <h3>🔑 GitHub Personal Access Token</h3>
-    <div class="info-box">
-      محتاج token عشان تقدر تحفظ. اعمله من:
-      <strong>GitHub → Settings → Developer Settings → Personal Access Tokens → Tokens (classic)</strong>
-      — اديله صلاحية <strong>repo</strong>. بيتحفظ في المتصفح فقط ومش بيتبعت لأي مكان.
+  <!-- LOGIN -->
+  <div class="login-section">
+    <h3>🔐 تسجيل دخول الأدمن</h3>
+    <div class="info-box" style="margin-bottom:14px">
+      الحفظ يتطلب تسجيل دخول. لا يتم تخزين أي GitHub token في المتصفح — كل التوثيق
+      يتم عبر Cloudflare Worker، وجلسة الدخول صالحة لمدة 30 دقيقة فقط ولا تُحفظ بعد إغلاق الصفحة.
     </div>
-    <div class="token-row">
+    <div class="login-row">
       <div>
-        <label>GitHub Token</label>
-        <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+        <label>اسم المستخدم</label>
+        <input type="text" id="admin-username" autocomplete="username" />
       </div>
-      <button class="btn btn-blue" onclick="saveToken()">حفظ Token</button>
+      <div>
+        <label>الباسورد</label>
+        <input type="password" id="admin-password" autocomplete="current-password" />
+      </div>
+      <button class="btn btn-blue" onclick="doLogin()">دخول</button>
     </div>
+    <div class="login-status" id="login-status"></div>
   </div>
 
   <!-- TABS -->
@@ -310,37 +324,123 @@
 <script>
   /* ═══════════════════════════════════════════
      CONFIG
+     Fill in your deployed Worker URL after running
+     `wrangler deploy` (see worker/README.md).
+     This value is NOT sensitive — it's just an endpoint address.
   ═══════════════════════════════════════════ */
-  const REPO_OWNER = 'El7amla';
-  const REPO_NAME  = 'El7amla_WebSite';
-  const FILE_PATH  = 'data/current_standings.json';
-  const BRANCH     = 'main';
+  const WORKER_URL = 'https://el7amla-admin.mariophenomenon.workers.dev';
+
+  // CONFIRM the repo name/casing below matches your actual GitHub repo exactly
+  // (GitHub paths are case-sensitive) before relying on this.
+  const RAW_STANDINGS_URL =
+    'https://raw.githubusercontent.com/El7amla/__CONFIRM_REPOSITORY_NAME__/main/data/current_standings.json';
 
   const TEAM_NAMES = ['Falcons', 'Smokers', 'Black Tech', 'Boys', 'The Pharaohs'];
 
   /* ═══════════════════════════════════════════
      STATE
+     sessionToken lives ONLY in memory — never localStorage/sessionStorage.
+     Reloading the page always requires logging in again. This is
+     deliberate: it removes the "credential sitting in browser storage
+     forever" risk entirely.
   ═══════════════════════════════════════════ */
   let teams   = [];
   let players = [];
-  let fileSHA = '';    // needed for GitHub update
+  let sessionToken     = null;
+  let sessionExpiresAt = 0;
+
+  /* ═══════════════════════════════════════════
+     ESCAPING HELPER
+     Every place a team/player name is interpolated into innerHTML
+     MUST go through this. This is what closes the stored-XSS sink —
+     even if a name somehow contained HTML, it renders as inert text.
+  ═══════════════════════════════════════════ */
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Client-side defense-in-depth only — the Worker re-validates and
+  // re-sanitizes every field server-side regardless of what reaches it.
+  function sanitizeInput(str) {
+    return String(str ?? '').replace(/[<>"'`;]/g, '').slice(0, 40);
+  }
 
   /* ═══════════════════════════════════════════
      INIT
   ═══════════════════════════════════════════ */
   window.onload = () => {
-    const saved = localStorage.getItem('gh_token_el7amla');
-    if (saved) document.getElementById('gh-token').value = saved;
     setNow();
     loadCurrentData();
+    updateSessionIndicator();
   };
 
-  function saveToken() {
-    const t = document.getElementById('gh-token').value.trim();
-    if (!t) return showStatus('أدخل الـ Token أولاً', 'error');
-    localStorage.setItem('gh_token_el7amla', t);
-    showStatus('✅ تم حفظ الـ Token', 'success');
+  /* ═══════════════════════════════════════════
+     AUTH (via Worker — no GitHub token ever touches this page)
+  ═══════════════════════════════════════════ */
+  async function doLogin() {
+    const username = document.getElementById('admin-username').value.trim();
+    const password = document.getElementById('admin-password').value;
+    const statusEl = document.getElementById('login-status');
+
+    if (!username || !password) {
+      statusEl.className = 'login-status err';
+      statusEl.textContent = 'أدخل اسم المستخدم والباسورد';
+      return;
+    }
+
+    statusEl.className = 'login-status';
+    statusEl.textContent = '⏳ جارٍ التحقق…';
+
+    try {
+      const res = await fetch(`${WORKER_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        statusEl.className = 'login-status err';
+        statusEl.textContent = '❌ ' + (data.error || 'فشل تسجيل الدخول');
+        sessionToken = null;
+        updateSessionIndicator();
+        return;
+      }
+
+      sessionToken     = data.token;
+      sessionExpiresAt = Date.now() + (data.expiresInSeconds * 1000);
+      document.getElementById('admin-password').value = '';
+      statusEl.className = 'login-status ok';
+      statusEl.textContent = '✅ تم تسجيل الدخول — الجلسة صالحة 30 دقيقة';
+      updateSessionIndicator();
+    } catch (e) {
+      console.error(e);
+      statusEl.className = 'login-status err';
+      statusEl.textContent = '❌ تعذّر الاتصال بالـ Worker';
+      sessionToken = null;
+      updateSessionIndicator();
+    }
   }
+
+  function hasValidSession() {
+    return !!sessionToken && Date.now() < sessionExpiresAt;
+  }
+
+  function updateSessionIndicator() {
+    const el = document.getElementById('session-indicator');
+    if (hasValidSession()) {
+      const mins = Math.max(0, Math.round((sessionExpiresAt - Date.now()) / 60000));
+      el.innerHTML = `<span class="session-pill">🟢 مسجّل — ينتهي خلال ~${mins} د</span>`;
+    } else {
+      el.innerHTML = `<span class="session-pill" style="color:var(--muted);border-color:var(--border);background:transparent">⚪ غير مسجّل دخول</span>`;
+    }
+  }
+  setInterval(updateSessionIndicator, 15000);
 
   /* ═══════════════════════════════════════════
      TABS
@@ -355,24 +455,15 @@
   }
 
   /* ═══════════════════════════════════════════
-     LOAD FROM GITHUB
+     LOAD (public read — no credential needed, same
+     pattern already used by standings.html / teams.html / index.html)
   ═══════════════════════════════════════════ */
   async function loadCurrentData() {
     showStatus('⏳ جارٍ تحميل البيانات…', 'loading');
     try {
-      const token = document.getElementById('gh-token').value.trim();
-      const headers = { 'Accept': 'application/vnd.github.v3+json' };
-      if (token) headers['Authorization'] = `token ${token}`;
-
-      const res = await fetch(
-        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}&t=${Date.now()}`,
-        { headers }
-      );
-      if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
-      const file = await res.json();
-      fileSHA = file.sha;
-
-      const data = JSON.parse(atob(file.content.replace(/\n/g, '')));
+      const res = await fetch(`${RAW_STANDINGS_URL}?t=${Date.now()}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
 
       teams   = data.teams   || [];
       players = data.players || [];
@@ -382,15 +473,14 @@
 
       renderTeams();
       renderPlayers();
-      showStatus('✅ تم تحميل البيانات من GitHub', 'success');
+      showStatus('✅ تم تحميل البيانات', 'success');
     } catch (e) {
       console.error(e);
-      // fallback — init empty forms
       if (teams.length === 0) initDefaultTeams();
       if (players.length === 0) initDefaultPlayers();
       renderTeams();
       renderPlayers();
-      showStatus('⚠️ تعذّر التحميل من GitHub — جرّب بدون token أو تحقق من الاتصال', 'error');
+      showStatus('⚠️ تعذّر التحميل — تحقق من الاتصال', 'error');
     }
   }
 
@@ -423,15 +513,15 @@
     div.innerHTML = `
       <div class="team-row-header">
         <div>
-          <div class="team-row-name">#${i+1} — <span class="t-name-label">${t.name || 'فريق جديد'}</span></div>
+          <div class="team-row-name">#${i+1} — <span class="t-name-label">${escapeHtml(t.name || 'فريق جديد')}</span></div>
         </div>
         <button class="remove-btn" onclick="removeTeam(${i})">🗑 حذف</button>
       </div>
       <div class="grid-2" style="margin-bottom:12px">
         <div>
           <label>اسم الفريق</label>
-          <input type="text" value="${t.name}" placeholder="Falcons"
-            oninput="updateTeam(${i},'name',this.value)" />
+          <input type="text" value="${escapeHtml(t.name)}" placeholder="Falcons"
+            oninput="updateTeam(${i},'name',sanitizeInput(this.value))" />
         </div>
         <div>
           <label>لعب (Played)</label>
@@ -479,11 +569,11 @@
 
   function updateTeam(i, field, val) {
     teams[i][field] = val;
-    // update label
     if (field === 'name') {
       const rows = document.querySelectorAll('.team-row');
       if (rows[i]) {
         const label = rows[i].querySelector('.t-name-label');
+        // textContent, not innerHTML — safe by construction, no escaping needed
         if (label) label.textContent = val || 'فريق جديد';
       }
     }
@@ -491,9 +581,7 @@
 
   function autoCalc(i) {
     const t = teams[i];
-    // matchPts = won*3 + draw*1  (auto suggestion — user can override)
     const auto = (t.won * 3) + (t.draw * 1);
-    // only auto-fill if not manually set or zero
     if (!t._matchPtsManual) {
       t.matchPts = auto;
       const el = document.getElementById(`matchPts-${i}`);
@@ -527,18 +615,17 @@
   function buildPlayerRow(p, i) {
     const div = document.createElement('div');
     div.className = 'player-row';
-    // build team options from current teams list
     const teamOpts = buildTeamOpts(p.team);
     div.innerHTML = `
       <div class="player-row-header">
-        <div style="font-weight:700">#${i+1} — ${p.name || 'لاعب جديد'}</div>
+        <div style="font-weight:700">#${i+1} — ${escapeHtml(p.name || 'لاعب جديد')}</div>
         <button class="remove-btn" onclick="removePlayer(${i})">🗑 حذف</button>
       </div>
       <div class="grid-3">
         <div>
           <label>اسم اللاعب</label>
-          <input type="text" value="${p.name}" placeholder="الاسم"
-            oninput="updatePlayer(${i},'name',this.value);rerenderPlayerHeader(this,${i})" />
+          <input type="text" value="${escapeHtml(p.name)}" placeholder="الاسم"
+            oninput="updatePlayer(${i},'name',sanitizeInput(this.value));rerenderPlayerHeader(this,${i})" />
         </div>
         <div>
           <label>الفريق</label>
@@ -554,15 +641,18 @@
   }
 
   function buildTeamOpts(selected) {
-    // use current teams list, fallback to defaults
     const names = teams.length > 0 ? teams.map(t => t.name).filter(Boolean) : TEAM_NAMES;
-    return names.map(n => `<option value="${n}" ${n===selected?'selected':''}>${n}</option>`).join('');
+    return names.map(n => {
+      const safe = escapeHtml(n);
+      return `<option value="${safe}" ${n===selected?'selected':''}>${safe}</option>`;
+    }).join('');
   }
 
   function rerenderPlayerHeader(input, i) {
     const row = input.closest('.player-row');
     if (row) {
       const hdr = row.querySelector('.player-row-header div');
+      // textContent — safe by construction
       if (hdr) hdr.textContent = `#${i+1} — ${input.value || 'لاعب جديد'}`;
     }
   }
@@ -595,9 +685,12 @@
 
   /* ═══════════════════════════════════════════
      BUILD JSON
+     Schema is unchanged from the original admin.html output, so
+     standings.html / teams.html / index.html need no changes to
+     read it. The Worker re-validates/re-sanitizes this exact shape
+     server-side before writing.
   ═══════════════════════════════════════════ */
   function buildJSON() {
-    // sort teams by total desc
     const sortedTeams = [...teams]
       .filter(t => t.name)
       .sort((a,b) => b.total - a.total)
@@ -612,7 +705,6 @@
         total: t.total
       }));
 
-    // sort players by points desc
     const sortedPlayers = [...players]
       .filter(p => p.name)
       .sort((a,b) => b.points - a.points)
@@ -632,65 +724,45 @@
   }
 
   /* ═══════════════════════════════════════════
-     SAVE TO GITHUB
+     SAVE — via Worker only. No GitHub token ever
+     touches this page.
   ═══════════════════════════════════════════ */
-  async function saveToGitHub() {
-    const token = document.getElementById('gh-token').value.trim();
-    if (!token) return showStatus('❌ أدخل GitHub Token أولاً', 'error');
+  async function saveViaWorker() {
+    if (!hasValidSession()) {
+      showStatus('❌ سجّل الدخول أولاً (الجلسة غير صالحة أو منتهية)', 'error');
+      return;
+    }
 
     const btn = document.getElementById('save-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-inline"></span> جارٍ الحفظ…';
-    showStatus('⏳ جارٍ الحفظ على GitHub…', 'loading');
+    showStatus('⏳ جارٍ الحفظ عبر الـ Worker…', 'loading');
 
     try {
       const data = buildJSON();
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
 
-      // get latest SHA if we don't have it
-      if (!fileSHA) {
-        const r = await fetch(
-          `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`,
-          { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } }
-        );
-        if (r.ok) { const f = await r.json(); fileSHA = f.sha; }
-      }
-
-      const body = {
-        message: `Update standings — GW${data.current_gw} — ${data.last_updated}`,
-        content,
-        branch: BRANCH,
-      };
-      if (fileSHA) body.sha = fileSHA;
-
-      const res = await fetch(
-        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Content-Type': 'application/json',
-            'Accept': 'application/vnd.github.v3+json'
-          },
-          body: JSON.stringify(body)
-        }
-      );
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || res.status);
-      }
+      const res = await fetch(`${WORKER_URL}/save-standings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify(data),
+      });
 
       const result = await res.json();
-      fileSHA = result.content?.sha || '';
+
+      if (!res.ok) {
+        throw new Error(result.error || `HTTP ${res.status}`);
+      }
 
       showStatus(`✅ تم الحفظ بنجاح — الجولة ${data.current_gw}`, 'success');
-    } catch(e) {
+    } catch (e) {
       console.error(e);
       showStatus(`❌ فشل الحفظ: ${e.message}`, 'error');
     } finally {
       btn.disabled = false;
-      btn.innerHTML = '💾 حفظ على GitHub';
+      btn.innerHTML = '💾 حفظ (عبر Worker)';
     }
   }
 
