@@ -1,42 +1,634 @@
 {
   "fixtures": {
-    "1": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "2": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "3": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "4": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "5": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "6": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "7": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "8": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "9": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "10": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "11": [["BYE", "BYE"]],
-    "12": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "13": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "14": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "15": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "16": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "17": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "18": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "19": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "20": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "21": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "22": [["BYE", "BYE"]],
-    "23": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "24": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "25": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "26": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "27": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "28": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "29": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "30": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "31": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "32": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "33": [["Black Tech", "The Pharaohs"], ["Smokers", "Falcons"], ["Boys", "BYE"]],
-    "34": [["Smokers", "The Pharaohs"], ["Black Tech", "Boys"], ["Falcons", "BYE"]],
-    "35": [["Smokers", "Black Tech"], ["Falcons", "Boys"], ["The Pharaohs", "BYE"]],
-    "36": [["Smokers", "Boys"], ["Falcons", "The Pharaohs"], ["Black Tech", "BYE"]],
-    "37": [["Falcons", "Black Tech"], ["The Pharaohs", "Boys"], ["Smokers", "BYE"]],
-    "38": [["BYE", "BYE"]]
+    "1": [
+      [
+        "Black Tech",
+        "Falcons"
+      ],
+      [
+        "The Pharaohs",
+        "Boys"
+      ],
+      [
+        "Unknown1",
+        "The Masterminds"
+      ],
+      [
+        "الزرازير",
+        "الاوديسي"
+      ]
+    ],
+    "2": [
+      [
+        "Black Tech",
+        "The Pharaohs"
+      ],
+      [
+        "Unknown1",
+        "Falcons"
+      ],
+      [
+        "الزرازير",
+        "Boys"
+      ],
+      [
+        "الاوديسي",
+        "The Masterminds"
+      ]
+    ],
+    "3": [
+      [
+        "Black Tech",
+        "Unknown1"
+      ],
+      [
+        "الزرازير",
+        "The Pharaohs"
+      ],
+      [
+        "الاوديسي",
+        "Falcons"
+      ],
+      [
+        "The Masterminds",
+        "Boys"
+      ]
+    ],
+    "4": [
+      [
+        "Black Tech",
+        "الزرازير"
+      ],
+      [
+        "الاوديسي",
+        "Unknown1"
+      ],
+      [
+        "The Masterminds",
+        "The Pharaohs"
+      ],
+      [
+        "Boys",
+        "Falcons"
+      ]
+    ],
+    "5": [
+      [
+        "Black Tech",
+        "الاوديسي"
+      ],
+      [
+        "The Masterminds",
+        "الزرازير"
+      ],
+      [
+        "Boys",
+        "Unknown1"
+      ],
+      [
+        "Falcons",
+        "The Pharaohs"
+      ]
+    ],
+    "6": [
+      [
+        "Black Tech",
+        "The Masterminds"
+      ],
+      [
+        "Boys",
+        "الاوديسي"
+      ],
+      [
+        "Falcons",
+        "الزرازير"
+      ],
+      [
+        "The Pharaohs",
+        "Unknown1"
+      ]
+    ],
+    "7": [
+      [
+        "Black Tech",
+        "Boys"
+      ],
+      [
+        "Falcons",
+        "The Masterminds"
+      ],
+      [
+        "The Pharaohs",
+        "الاوديسي"
+      ],
+      [
+        "Unknown1",
+        "الزرازير"
+      ]
+    ],
+    "8": [
+      [
+        "Falcons",
+        "Black Tech"
+      ],
+      [
+        "Boys",
+        "The Pharaohs"
+      ],
+      [
+        "The Masterminds",
+        "Unknown1"
+      ],
+      [
+        "الاوديسي",
+        "الزرازير"
+      ]
+    ],
+    "9": [
+      [
+        "The Pharaohs",
+        "Black Tech"
+      ],
+      [
+        "Falcons",
+        "Unknown1"
+      ],
+      [
+        "Boys",
+        "الزرازير"
+      ],
+      [
+        "The Masterminds",
+        "الاوديسي"
+      ]
+    ],
+    "10": [
+      [
+        "Unknown1",
+        "Black Tech"
+      ],
+      [
+        "The Pharaohs",
+        "الزرازير"
+      ],
+      [
+        "Falcons",
+        "الاوديسي"
+      ],
+      [
+        "Boys",
+        "The Masterminds"
+      ]
+    ],
+    "11": [
+      [
+        "الزرازير",
+        "Black Tech"
+      ],
+      [
+        "Unknown1",
+        "الاوديسي"
+      ],
+      [
+        "The Pharaohs",
+        "The Masterminds"
+      ],
+      [
+        "Falcons",
+        "Boys"
+      ]
+    ],
+    "12": [
+      [
+        "الاوديسي",
+        "Black Tech"
+      ],
+      [
+        "الزرازير",
+        "The Masterminds"
+      ],
+      [
+        "Unknown1",
+        "Boys"
+      ],
+      [
+        "The Pharaohs",
+        "Falcons"
+      ]
+    ],
+    "13": [
+      [
+        "The Masterminds",
+        "Black Tech"
+      ],
+      [
+        "الاوديسي",
+        "Boys"
+      ],
+      [
+        "الزرازير",
+        "Falcons"
+      ],
+      [
+        "Unknown1",
+        "The Pharaohs"
+      ]
+    ],
+    "14": [
+      [
+        "Boys",
+        "Black Tech"
+      ],
+      [
+        "The Masterminds",
+        "Falcons"
+      ],
+      [
+        "الاوديسي",
+        "The Pharaohs"
+      ],
+      [
+        "الزرازير",
+        "Unknown1"
+      ]
+    ],
+    "15": [
+      [
+        "Black Tech",
+        "Falcons"
+      ],
+      [
+        "The Pharaohs",
+        "Boys"
+      ],
+      [
+        "Unknown1",
+        "The Masterminds"
+      ],
+      [
+        "الزرازير",
+        "الاوديسي"
+      ]
+    ],
+    "16": [
+      [
+        "Black Tech",
+        "The Pharaohs"
+      ],
+      [
+        "Unknown1",
+        "Falcons"
+      ],
+      [
+        "الزرازير",
+        "Boys"
+      ],
+      [
+        "الاوديسي",
+        "The Masterminds"
+      ]
+    ],
+    "17": [
+      [
+        "Black Tech",
+        "Unknown1"
+      ],
+      [
+        "الزرازير",
+        "The Pharaohs"
+      ],
+      [
+        "الاوديسي",
+        "Falcons"
+      ],
+      [
+        "The Masterminds",
+        "Boys"
+      ]
+    ],
+    "18": [
+      [
+        "Black Tech",
+        "الزرازير"
+      ],
+      [
+        "الاوديسي",
+        "Unknown1"
+      ],
+      [
+        "The Masterminds",
+        "The Pharaohs"
+      ],
+      [
+        "Boys",
+        "Falcons"
+      ]
+    ],
+    "19": [
+      [
+        "Black Tech",
+        "الاوديسي"
+      ],
+      [
+        "The Masterminds",
+        "الزرازير"
+      ],
+      [
+        "Boys",
+        "Unknown1"
+      ],
+      [
+        "Falcons",
+        "The Pharaohs"
+      ]
+    ],
+    "20": [
+      [
+        "Black Tech",
+        "The Masterminds"
+      ],
+      [
+        "Boys",
+        "الاوديسي"
+      ],
+      [
+        "Falcons",
+        "الزرازير"
+      ],
+      [
+        "The Pharaohs",
+        "Unknown1"
+      ]
+    ],
+    "21": [
+      [
+        "Black Tech",
+        "Boys"
+      ],
+      [
+        "Falcons",
+        "The Masterminds"
+      ],
+      [
+        "The Pharaohs",
+        "الاوديسي"
+      ],
+      [
+        "Unknown1",
+        "الزرازير"
+      ]
+    ],
+    "22": [
+      [
+        "Falcons",
+        "Black Tech"
+      ],
+      [
+        "Boys",
+        "The Pharaohs"
+      ],
+      [
+        "The Masterminds",
+        "Unknown1"
+      ],
+      [
+        "الاوديسي",
+        "الزرازير"
+      ]
+    ],
+    "23": [
+      [
+        "The Pharaohs",
+        "Black Tech"
+      ],
+      [
+        "Falcons",
+        "Unknown1"
+      ],
+      [
+        "Boys",
+        "الزرازير"
+      ],
+      [
+        "The Masterminds",
+        "الاوديسي"
+      ]
+    ],
+    "24": [
+      [
+        "Unknown1",
+        "Black Tech"
+      ],
+      [
+        "The Pharaohs",
+        "الزرازير"
+      ],
+      [
+        "Falcons",
+        "الاوديسي"
+      ],
+      [
+        "Boys",
+        "The Masterminds"
+      ]
+    ],
+    "25": [
+      [
+        "الزرازير",
+        "Black Tech"
+      ],
+      [
+        "Unknown1",
+        "الاوديسي"
+      ],
+      [
+        "The Pharaohs",
+        "The Masterminds"
+      ],
+      [
+        "Falcons",
+        "Boys"
+      ]
+    ],
+    "26": [
+      [
+        "الاوديسي",
+        "Black Tech"
+      ],
+      [
+        "الزرازير",
+        "The Masterminds"
+      ],
+      [
+        "Unknown1",
+        "Boys"
+      ],
+      [
+        "The Pharaohs",
+        "Falcons"
+      ]
+    ],
+    "27": [
+      [
+        "The Masterminds",
+        "Black Tech"
+      ],
+      [
+        "الاوديسي",
+        "Boys"
+      ],
+      [
+        "الزرازير",
+        "Falcons"
+      ],
+      [
+        "Unknown1",
+        "The Pharaohs"
+      ]
+    ],
+    "28": [
+      [
+        "Boys",
+        "Black Tech"
+      ],
+      [
+        "The Masterminds",
+        "Falcons"
+      ],
+      [
+        "الاوديسي",
+        "The Pharaohs"
+      ],
+      [
+        "الزرازير",
+        "Unknown1"
+      ]
+    ],
+    "29": [
+      [
+        "Black Tech",
+        "Falcons"
+      ],
+      [
+        "The Pharaohs",
+        "Boys"
+      ],
+      [
+        "Unknown1",
+        "The Masterminds"
+      ],
+      [
+        "الزرازير",
+        "الاوديسي"
+      ]
+    ],
+    "30": [
+      [
+        "Black Tech",
+        "The Pharaohs"
+      ],
+      [
+        "Unknown1",
+        "Falcons"
+      ],
+      [
+        "الزرازير",
+        "Boys"
+      ],
+      [
+        "الاوديسي",
+        "The Masterminds"
+      ]
+    ],
+    "31": [
+      [
+        "Black Tech",
+        "Unknown1"
+      ],
+      [
+        "الزرازير",
+        "The Pharaohs"
+      ],
+      [
+        "الاوديسي",
+        "Falcons"
+      ],
+      [
+        "The Masterminds",
+        "Boys"
+      ]
+    ],
+    "32": [
+      [
+        "Black Tech",
+        "الزرازير"
+      ],
+      [
+        "الاوديسي",
+        "Unknown1"
+      ],
+      [
+        "The Masterminds",
+        "The Pharaohs"
+      ],
+      [
+        "Boys",
+        "Falcons"
+      ]
+    ],
+    "33": [
+      [
+        "Black Tech",
+        "الاوديسي"
+      ],
+      [
+        "The Masterminds",
+        "الزرازير"
+      ],
+      [
+        "Boys",
+        "Unknown1"
+      ],
+      [
+        "Falcons",
+        "The Pharaohs"
+      ]
+    ],
+    "34": [
+      [
+        "Black Tech",
+        "The Masterminds"
+      ],
+      [
+        "Boys",
+        "الاوديسي"
+      ],
+      [
+        "Falcons",
+        "الزرازير"
+      ],
+      [
+        "The Pharaohs",
+        "Unknown1"
+      ]
+    ],
+    "35": [
+      [
+        "Black Tech",
+        "Boys"
+      ],
+      [
+        "Falcons",
+        "The Masterminds"
+      ],
+      [
+        "The Pharaohs",
+        "الاوديسي"
+      ],
+      [
+        "Unknown1",
+        "الزرازير"
+      ]
+    ]
   }
 }
