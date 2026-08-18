@@ -2,32 +2,50 @@
   "teams": {
     "Black Tech": {
       "players": {
-        "Elfiky": 7002106,
-        "Omar": 1216533
-      }
-    },
-    "The Pharaohs": {
-      "players": {
-        "Hussein": 275539,
-        "Ahmed": 1545049
-      }
-    },
-    "Smokers": {
-      "players": {
-        "Body": 1679155,
-        "Tawheed": 2208753
+        "Elfiky": 43949,
+        "Saady": 3492393
       }
     },
     "Falcons": {
       "players": {
-        "Nasser": 2134302,
-        "Mahmoud": 8656672
+        "Nasser": 1102089,
+        "Tawheed": 4696525
+      }
+    },
+    "The Pharaohs": {
+      "players": {
+        "Hussein": 1338459,
+        "Ahmed Nour": 3915093
+      }
+    },
+    "Unknown1": {
+      "players": {
+        "Omar": 4638841,
+        "Mahmoud": 4648250
+      }
+    },
+    "الزرازير": {
+      "players": {
+        "M.Yasser": 92255,
+        "Abolmagd": 1421188
+      }
+    },
+    "الاوديسي": {
+      "players": {
+        "Amgad": 749755,
+        "Karim Yasser": 778545
+      }
+    },
+    "The Masterminds": {
+      "players": {
+        "Body": 1697319,
+        "Shika": 5145412
       }
     },
     "Boys": {
       "players": {
-        "Ali": 8703485,
-        "Magdy": 5857198
+        "Ali": null,
+        "Magdy": null
       }
     }
   }
