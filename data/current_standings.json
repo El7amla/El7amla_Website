@@ -1,9 +1,23 @@
 {
   "current_gw": 1,
-  "last_updated": "2026-08-17 23:28:50",
+  "last_updated": "2026-08-18 23:27:55",
   "teams": [
     {
       "name": "Black Tech",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gf": 0,
+      "ga": 0,
+      "gd": 0,
+      "matchPts": 0,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 0
+    },
+    {
+      "name": "Falcons",
       "played": 0,
       "won": 0,
       "draw": 0,
@@ -31,7 +45,7 @@
       "total": 0
     },
     {
-      "name": "Smokers",
+      "name": "Unknown1",
       "played": 0,
       "won": 0,
       "draw": 0,
@@ -45,7 +59,35 @@
       "total": 0
     },
     {
-      "name": "Falcons",
+      "name": "الزرازير",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gf": 0,
+      "ga": 0,
+      "gd": 0,
+      "matchPts": 0,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 0
+    },
+    {
+      "name": "الاوديسي",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gf": 0,
+      "ga": 0,
+      "gd": 0,
+      "matchPts": 0,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 0
+    },
+    {
+      "name": "The Masterminds",
       "played": 0,
       "won": 0,
       "draw": 0,
@@ -80,28 +122,8 @@
       "points": 0
     },
     {
-      "name": "Omar",
+      "name": "Saady",
       "team": "Black Tech",
-      "points": 0
-    },
-    {
-      "name": "Hussein",
-      "team": "The Pharaohs",
-      "points": 0
-    },
-    {
-      "name": "Ahmed",
-      "team": "The Pharaohs",
-      "points": 0
-    },
-    {
-      "name": "Body",
-      "team": "Smokers",
-      "points": 0
-    },
-    {
-      "name": "Tawheed",
-      "team": "Smokers",
       "points": 0
     },
     {
@@ -110,8 +132,58 @@
       "points": 0
     },
     {
-      "name": "Mahmoud",
+      "name": "Tawheed",
       "team": "Falcons",
+      "points": 0
+    },
+    {
+      "name": "Hussein",
+      "team": "The Pharaohs",
+      "points": 0
+    },
+    {
+      "name": "Ahmed Nour",
+      "team": "The Pharaohs",
+      "points": 0
+    },
+    {
+      "name": "Omar",
+      "team": "Unknown1",
+      "points": 0
+    },
+    {
+      "name": "Mahmoud",
+      "team": "Unknown1",
+      "points": 0
+    },
+    {
+      "name": "M.Yasser",
+      "team": "الزرازير",
+      "points": 0
+    },
+    {
+      "name": "Abolmagd",
+      "team": "الزرازير",
+      "points": 0
+    },
+    {
+      "name": "Amgad",
+      "team": "الاوديسي",
+      "points": 0
+    },
+    {
+      "name": "Karim Yasser",
+      "team": "الاوديسي",
+      "points": 0
+    },
+    {
+      "name": "Body",
+      "team": "The Masterminds",
+      "points": 0
+    },
+    {
+      "name": "Shika",
+      "team": "The Masterminds",
       "points": 0
     },
     {
