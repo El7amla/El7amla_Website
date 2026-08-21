@@ -150,7 +150,7 @@
     .rank-badge.other  { background:rgba(51,65,85,.8); color:var(--text-muted); }
 
     .team-name { font-weight:700; font-size:.92rem; display:flex; align-items:center; justify-content:center; gap:8px; }
-    .team-dot  { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .team-em   { font-size:1.1rem; }
     .pts-total { font-weight:900; font-size:1rem; color:var(--blue-accent); }
     .pts-match { font-weight:700; color:var(--text-primary); }
     .pts-bonus { font-weight:700; color:var(--gold); }
@@ -158,7 +158,7 @@
     .gd-neg { color:#f87171; font-weight:700; }
     .gd-zer { color:var(--text-muted); }
     .player-pts { font-weight:900; font-size:1rem; color:#a78bfa; }
-    .team-pill { display:inline-block; padding:2px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25); color:#93c5fd; }
+    .team-pill { display:inline-flex; align-items:center; gap:5px; padding:2px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25); color:#93c5fd; }
 
     .state-box { text-align:center; padding:60px 20px; color:var(--text-muted); }
     .state-box .icon { font-size:2.5rem; margin-bottom:12px; }
@@ -206,6 +206,7 @@
       <a href="teams.html">👥 الفرق</a>
       <a href="standings.html" class="active">📊 الترتيب</a>
       <a href="fixtures.html">📅 المباريات</a>
+      <a href="khawas.html">✨ الخواص</a>
     </div>
     <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')">
       <span></span><span></span><span></span>
@@ -247,18 +248,20 @@
 </main>
 
 <script>
-  const TEAM_COLORS = {
-    'Falcons':      '#3b82f6',
-    'Smokers':      '#22c55e',
-    'Black Tech':   '#a855f7',
-    'Boys':         '#f97316',
-    'The Pharaohs': '#eab308',
+  const REPO_NAME = "El7amla-League";
+  const RAW = `https://raw.githubusercontent.com/El7amla/${REPO_NAME}/main`;
+
+  const TEAM_META = {
+    "Black Tech":       { color:"#a855f7", em:"💻" },
+    "The Pharaohs":     { color:"#eab308", em:"🏺" },
+    "Falcons":          { color:"#3b82f6", em:"🦅" },
+    "Boys":             { color:"#f97316", em:"⚽" },
+    "Royal Authority":  { color:"#ef4444", em:"👑" },
+    "The Masterminds":  { color:"#06b6d4", em:"🧠" },
+    "الزرازير":         { color:"#8b5cf6", em:"🦇" },
+    "الاوديسي":         { color:"#10b981", em:"🌌" }
   };
 
-  // Every team/player name (sourced from current_standings.json, which
-  // admin.html/the Worker can write) that gets inserted into innerHTML
-  // MUST go through this. This is what prevents stored XSS via a
-  // malicious name reaching the page.
   function escapeHtml(str) {
     return String(str ?? '')
       .replace(/&/g, '&amp;')
@@ -281,30 +284,54 @@
     return `<span class="gd-zer">0</span>`;
   }
 
-  function buildTeamsTable(teams) {
+  function calculateKhawasBonus(khawasData, teamName) {
+    if (!khawasData) return 0;
+    let totalKhawasBonus = 0;
+    Object.keys(khawasData).forEach(gw => {
+      if (khawasData[gw] && khawasData[gw][teamName]) {
+        const bonus = khawasData[gw][teamName].bonus || khawasData[gw][teamName].points || 0;
+        totalKhawasBonus += bonus;
+      }
+    });
+    return totalKhawasBonus;
+  }
+
+  function buildTeamsTable(teams, khawasData) {
     if (!teams?.length)
       return `<div class="state-box"><div class="icon">📭</div><p>لا توجد بيانات فرق متاحة</p></div>`;
 
     const rows = teams.map((t, i) => {
-      const rank  = i + 1;
-      const cls   = rank <= 3 ? `rank-${rank}` : '';
+      const rank     = i + 1;
+      const cls      = rank <= 3 ? `rank-${rank}` : '';
       const safeName = escapeHtml(t.name);
-      const color = TEAM_COLORS[t.name] || '#64748b';
-      const gd    = t.gd !== undefined ? t.gd : (t.gf != null && t.ga != null ? t.gf - t.ga : null);
+      const meta     = TEAM_META[t.name] || { color: '#64748b', em: '⚽' };
+      const gd       = t.gd !== undefined ? t.gd : (t.gf != null && t.ga != null ? t.gf - t.ga : null);
+
+      const khawasBonus = calculateKhawasBonus(khawasData, t.name);
+      const matchPts    = t.matchPts ?? t.points ?? 0;
+      const baseBonus   = t.bonus ?? 0;
+      const totalBonus  = baseBonus + khawasBonus;
+      const totalPts    = t.total ?? (matchPts + totalBonus);
+
       return `
         <tr class="${cls}">
           <td>${rankBadge(rank)}</td>
-          <td><div class="team-name"><span class="team-dot" style="background:${color}"></span>${safeName}</div></td>
-          <td class="hide-sm">${t.played}</td>
-          <td class="hide-sm">${t.won}</td>
-          <td class="hide-sm">${t.draw}</td>
-          <td class="hide-sm">${t.lost}</td>
+          <td>
+            <div class="team-name">
+              <span class="team-em">${meta.em}</span>
+              <span style="color:${meta.color}">${safeName}</span>
+            </div>
+          </td>
+          <td class="hide-sm">${t.played ?? 0}</td>
+          <td class="hide-sm">${t.won ?? 0}</td>
+          <td class="hide-sm">${t.draw ?? 0}</td>
+          <td class="hide-sm">${t.lost ?? 0}</td>
           <td class="hide-md">${t.gf ?? '—'}</td>
           <td class="hide-md">${t.ga ?? '—'}</td>
           <td class="hide-md">${gdCell(gd)}</td>
-          <td><span class="pts-match">${t.matchPts}</span></td>
-          <td><span class="pts-bonus">${t.bonus}</span></td>
-          <td><span class="pts-total">${t.total}</span></td>
+          <td><span class="pts-match">${matchPts}</span></td>
+          <td><span class="pts-bonus">+${totalBonus}</span></td>
+          <td><span class="pts-total">${totalPts}</span></td>
         </tr>`;
     }).join('');
 
@@ -315,7 +342,7 @@
         <th class="hide-sm">تعادل</th><th class="hide-sm">خسارة</th>
         <th class="hide-md">له</th><th class="hide-md">عليه</th>
         <th class="hide-md">الفارق</th>
-        <th>نقاط الماتشات</th><th>بونص</th><th>الإجمالي</th>
+        <th>نقاط الماتشات</th><th>بونص والخواص</th><th>الإجمالي</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
@@ -325,18 +352,24 @@
     if (!players?.length)
       return `<div class="state-box"><div class="icon">📭</div><p>لا توجد بيانات لاعبين متاحة</p></div>`;
 
-    const rows = players.map((p, i) => {
-      const rank  = i + 1;
-      const cls   = rank <= 3 ? `rank-${rank}` : '';
+    const sortedPlayers = [...players].sort((a,b) => (b.points || 0) - (a.points || 0));
+
+    const rows = sortedPlayers.map((p, i) => {
+      const rank     = i + 1;
+      const cls      = rank <= 3 ? `rank-${rank}` : '';
       const safeName = escapeHtml(p.name);
       const safeTeam = escapeHtml(p.team);
-      const color = TEAM_COLORS[p.team] || '#64748b';
+      const meta     = TEAM_META[p.team] || { color: '#64748b', em: '⚽' };
       return `
         <tr class="${cls}">
           <td>${rankBadge(rank)}</td>
           <td style="font-weight:800">${safeName}</td>
-          <td><span class="team-pill" style="border-color:${color}55;color:${color}">${safeTeam}</span></td>
-          <td><span class="player-pts">${p.points.toLocaleString()}</span></td>
+          <td>
+            <span class="team-pill" style="border-color:${meta.color}55;color:${meta.color}">
+              <span>${meta.em}</span> ${safeTeam}
+            </span>
+          </td>
+          <td><span class="player-pts">${(p.points || 0).toLocaleString()}</span></td>
         </tr>`;
     }).join('');
 
@@ -354,16 +387,29 @@
   }
 
   async function loadStandings() {
-    const url = `https://raw.githubusercontent.com/El7amla/__CONFIRM_REPOSITORY_NAME__/main/data/current_standings.json?v=${Date.now()}`;
+    const standingsUrl = `${RAW}/data/current_standings.json?v=${Date.now()}`;
+    const khawasUrl    = `${RAW}/data/khawas.json?v=${Date.now()}`;
+
     try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      document.getElementById('teams-wrap').innerHTML   = buildTeamsTable(data.teams);
-      document.getElementById('players-wrap').innerHTML = buildPlayersTable(data.players);
-      if (data.last_updated || data.current_gw) {
-        document.getElementById('meta-updated').textContent  = data.last_updated || '—';
-        document.getElementById('meta-gw').textContent       = data.current_gw   || '—';
+      const [standingsRes, khawasRes] = await Promise.all([
+        fetch(standingsUrl),
+        fetch(khawasUrl).catch(() => null)
+      ]);
+
+      if (!standingsRes.ok) throw new Error(`HTTP ${standingsRes.status}`);
+      const standingsData = await standingsRes.json();
+
+      let khawasData = null;
+      if (khawasRes && khawasRes.ok) {
+        khawasData = await khawasRes.json();
+      }
+
+      document.getElementById('teams-wrap').innerHTML   = buildTeamsTable(standingsData.teams, khawasData);
+      document.getElementById('players-wrap').innerHTML = buildPlayersTable(standingsData.players);
+
+      if (standingsData.last_updated || standingsData.current_gw) {
+        document.getElementById('meta-updated').textContent = standingsData.last_updated || '—';
+        document.getElementById('meta-gw').textContent      = standingsData.current_gw   || '—';
         document.getElementById('meta-footer').style.display = 'flex';
       }
     } catch (err) {
