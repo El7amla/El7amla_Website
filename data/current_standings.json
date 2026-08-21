@@ -1,6 +1,6 @@
 {
   "current_gw": 1,
-  "last_updated": "2026-08-20 23:31:48",
+  "last_updated": "2026-08-21 13:21:06",
   "teams": [
     {
       "name": "Black Tech",
@@ -45,7 +45,7 @@
       "total": 0
     },
     {
-      "name": "Unknown1",
+      "name": "Royal Authority",
       "played": 0,
       "won": 0,
       "draw": 0,
@@ -148,12 +148,12 @@
     },
     {
       "name": "Omar",
-      "team": "Unknown1",
+      "team": "Royal Authority",
       "points": 0
     },
     {
       "name": "Mahmoud",
-      "team": "Unknown1",
+      "team": "Royal Authority",
       "points": 0
     },
     {
