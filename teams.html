@@ -104,7 +104,6 @@
     tbody tr.win-row  { background:linear-gradient(90deg,rgba(34,197,94,.10),rgba(34,197,94,.02)); }
     tbody tr.draw-row { background:linear-gradient(90deg,rgba(251,191,36,.10),rgba(251,191,36,.02)); }
     tbody tr.loss-row { background:linear-gradient(90deg,rgba(239,68,68,.08),rgba(239,68,68,.02)); }
-    tbody tr.bye-row  { opacity:.55; }
     tbody td { padding:12px 12px; text-align:center; vertical-align:middle; }
 
     .gw-badge { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-family:'Orbitron',sans-serif; font-size:.75rem; font-weight:700; background:rgba(51,65,85,.8); color:var(--text-muted); }
@@ -115,7 +114,6 @@
     .rb-win  { background:rgba(34,197,94,.15);  border:1px solid rgba(34,197,94,.35);  color:var(--green); }
     .rb-draw { background:rgba(251,191,36,.15);  border:1px solid rgba(251,191,36,.35);  color:var(--gold); }
     .rb-loss { background:rgba(239,68,68,.12);   border:1px solid rgba(239,68,68,.3);   color:var(--red); }
-    .rb-bye  { background:rgba(100,116,139,.12); border:1px solid rgba(100,116,139,.3); color:var(--text-muted); }
 
     .mp-cell { font-weight:900; font-size:.95rem; }
     .bonus-cell { font-weight:800; color:var(--gold); font-size:.85rem; }
@@ -216,13 +214,9 @@ const TEAM_META = {
   "الاوديسي":         { color:"#10b981", em:"🌌" }
 };
 
-const FIXTURES = {
-  1:  [["Black Tech","The Pharaohs"],["Falcons","Boys"],["Royal Authority","The Masterminds"],["الزرازير","الاوديسي"]],
-  2:  [["Black Tech","Falcons"],["The Pharaohs","Boys"],["Royal Authority","الزرازير"],["The Masterminds","الاوديسي"]]
-};
-
 /* ══ STATE ══ */
 let standingsData = null;
+let fixturesData  = null;
 let khawasData    = null;
 let selectedTeam  = null;
 const TEAMS = Object.keys(TEAM_META);
@@ -239,19 +233,23 @@ function escapeHtml(str) {
 /* ══ INIT ══ */
 async function init() {
   try {
-    const [standingsRes, khawasRes] = await Promise.all([
+    const [standingsRes, fixturesRes, khawasRes] = await Promise.all([
       fetch(`${RAW}/data/current_standings.json?v=${Date.now()}`),
+      fetch(`${RAW}/data/fixtures.json?v=${Date.now()}`).catch(() => null),
       fetch(`${RAW}/data/khawas.json?v=${Date.now()}`).catch(() => null)
     ]);
 
     if (standingsRes && standingsRes.ok) {
       standingsData = await standingsRes.json();
     }
+    if (fixturesRes && fixturesRes.ok) {
+      fixturesData = await fixturesRes.json();
+    }
     if (khawasRes && khawasRes.ok) {
       khawasData = await khawasRes.json();
     }
   } catch(e) {
-    console.warn("بيانات افتراضية مؤقتة");
+    console.warn("حدث خطأ أثناء جلب الملفات");
   } finally {
     if (!standingsData) {
       standingsData = { current_gw: 1, teams: TEAMS.map(name => ({ name, total: 0 })) };
@@ -341,14 +339,28 @@ async function fetchAndRenderGWs(teamName, currentGW, meta, tData, rank) {
     let runTotal = 0, wins = 0, draws = 0, losses = 0;
 
     for (let i = 0; i < gwResults.length; i++) {
-      const gw      = i + 1;
-      const data    = gwResults[i];
-      const matchups = FIXTURES[gw] || [];
-      const myFix   = matchups.find(m => m.includes(teamName));
+      const gw   = i + 1;
+      const data = gwResults[i];
+
+      // جلب المواجهات ديناميكياً من ملف fixtures.json
+      let matchups = [];
+      if (fixturesData && fixturesData[gw]) {
+        matchups = fixturesData[gw];
+      } else if (fixturesData && fixturesData.rounds && fixturesData.rounds[gw]) {
+        matchups = fixturesData.rounds[gw];
+      }
+
+      const myFix = matchups.find(m => Array.isArray(m) ? m.includes(teamName) : (m.home === teamName || m.away === teamName));
 
       if (!myFix) continue;
 
-      const opp = myFix[0] === teamName ? myFix[1] : myFix[0];
+      let opp = "";
+      if (Array.isArray(myFix)) {
+        opp = myFix[0] === teamName ? myFix[1] : myFix[0];
+      } else {
+        opp = myFix.home === teamName ? myFix.away : myFix.home;
+      }
+
       const oppMeta = TEAM_META[opp] || { em:'⚽', color:'#64748b' };
 
       let myPts = null, oppPts = null;
@@ -363,10 +375,10 @@ async function fetchAndRenderGWs(teamName, currentGW, meta, tData, rank) {
         else if (myPts === oppPts){ resultClass='draw-row'; resultBadge=`<span class="result-badge rb-draw">تعادل 🟡</span>`; mp=1; draws++; }
         else                      { resultClass='loss-row'; resultBadge=`<span class="result-badge rb-loss">خسارة ❌</span>`; mp=0; losses++; }
       } else {
-        resultBadge = `<span class="result-badge rb-bye" style="opacity:.6">لم تُلعب</span>`;
+        resultBadge = `<span class="result-badge" style="opacity:.6">لم تُلعب</span>`;
       }
 
-      // قراءة البيانات من ملف الخواص
+      // قراءة بيانات الخواص
       let bonusPts = 0;
       let khawasHtml = '—';
       
