@@ -68,7 +68,6 @@
     .gw-btn.played  { border-color:rgba(34,197,94,.3); color:rgba(34,197,94,.8); }
     .gw-btn.current { border-color:var(--gold); color:var(--gold); box-shadow:0 0 8px rgba(251,191,36,.25); }
     .gw-btn.active  { background:var(--blue-accent)!important; border-color:var(--blue-accent)!important; color:#fff!important; box-shadow:0 0 12px rgba(59,130,246,.4); }
-    /* small dot on played */
     .gw-btn.played::after { content:''; position:absolute; top:4px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--green); }
     .gw-btn.active::after { display:none; }
 
@@ -121,15 +120,12 @@
     .fix-tag.soon { background:rgba(59,130,246,.15); color:var(--blue-accent); }
     .fix-tag.bye  { background:rgba(100,116,139,.15); color:var(--text-muted); }
 
-    /* full-bye week */
     .full-bye { padding:48px 20px; text-align:center; color:var(--text-muted); }
     .full-bye .bi { font-size:2.5rem; margin-bottom:12px; }
 
-    /* state */
     .state-box { text-align:center; padding:48px 20px; color:var(--text-muted); }
     .spinner { width:40px; height:40px; border:3px solid rgba(59,130,246,.2); border-top-color:var(--blue-accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 12px; }
 
-    /* meta */
     .meta-footer { margin-top:32px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
     .meta-chip { background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:9px 18px; font-size:.81rem; color:var(--text-muted); display:flex; align-items:center; gap:7px; }
     .meta-chip span { color:var(--text-primary); font-weight:700; }
@@ -173,6 +169,7 @@
       <a href="teams.html">👥 الفرق</a>
       <a href="standings.html">📊 الترتيب</a>
       <a href="fixtures.html" class="active">📅 المباريات</a>
+      <a href="khawas.html">✨ الخواص</a>
     </div>
     <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')">
       <span></span><span></span><span></span>
@@ -194,7 +191,7 @@
   </div>
 
   <!-- MATCH PANEL -->
-  <div class="gw-panel">
+  <div class="gw-panel" id="gw-panel">
     <div class="gw-panel-hdr">
       <span id="panel-title">اختر جولة</span>
       <span id="panel-status"></span>
@@ -213,35 +210,43 @@
 </div>
 
 <script>
-const RAW = "https://raw.githubusercontent.com/El7amla/El7amla_WebSite/main";
 const TEAM_META = {
-  "Falcons":      { color:"#3b82f6", em:"🦅" },
-  "Smokers":      { color:"#22c55e", em:"💨" },
-  "Black Tech":   { color:"#a855f7", em:"💻" },
-  "Boys":         { color:"#f97316", em:"⚽" },
-  "The Pharaohs": { color:"#eab308", em:"🏺" },
+  "Black Tech":       { color:"#a855f7", em:"💻" },
+  "The Pharaohs":     { color:"#eab308", em:"🏺" },
+  "Falcons":          { color:"#3b82f6", em:"🦅" },
+  "Boys":             { color:"#f97316", em:"⚽" },
+  "Royal Authority":  { color:"#ef4444", em:"👑" },
+  "The Masterminds":  { color:"#06b6d4", em:"🧠" },
+  "الزرازير":         { color:"#8b5cf6", em:"🦇" },
+  "الاوديسي":         { color:"#10b981", em:"🌌" },
+  "Smokers":          { color:"#22c55e", em:"💨" }
 };
 
-let fixtures  = {};
-let currentGW = 1;
+let fixtures   = {};
+let khawasData = {};
+let currentGW  = 1;
 let selectedGW = null;
 
 async function init() {
   try {
-    const [standings, fixturesData] = await Promise.all([
-      fetch(`${RAW}/data/current_standings.json?v=${Date.now()}`).then(r => r.json()),
-      fetch(`${RAW}/fixtures.json?v=${Date.now()}`).then(r => r.json()),
+    const [standingsRes, fixturesRes, khawasRes] = await Promise.all([
+      fetch(`./data/current_standings.json?v=${Date.now()}`).then(r => r.ok ? r.json() : {}),
+      fetch(`./data/fixtures.json?v=${Date.now()}`).then(r => r.ok ? r.json() : (fetch(`./fixtures.json?v=${Date.now()}`).then(r => r.json()))),
+      fetch(`./data/khawas.json?v=${Date.now()}`).then(r => r.ok ? r.json() : {}).catch(() => ({}))
     ]);
-    fixtures  = fixturesData.fixtures || {};
-    currentGW = standings.current_gw || 1;
+
+    fixtures   = fixturesRes.fixtures || fixturesRes || {};
+    khawasData = khawasRes || {};
+    currentGW  = standingsRes.current_gw || 1;
 
     document.getElementById('meta-gw').textContent      = currentGW;
-    document.getElementById('meta-updated').textContent  = standings.last_updated || '—';
+    document.getElementById('meta-updated').textContent  = standingsRes.last_updated || '—';
     document.getElementById('meta-footer').style.display = 'flex';
 
     buildGrid();
     selectGW(currentGW);
   } catch(e) {
+    console.error(e);
     document.getElementById('panel-body').innerHTML =
       `<div class="state-box"><div style="font-size:2rem">⚠️</div><p>فشل تحميل البيانات</p></div>`;
   }
@@ -262,7 +267,6 @@ function buildGrid() {
 }
 
 function selectGW(gw) {
-  /* De-activate old */
   if (selectedGW) {
     const old = document.getElementById(`gwb-${selectedGW}`);
     if (old) old.classList.remove('active');
@@ -272,7 +276,6 @@ function selectGW(gw) {
   if (btn) btn.classList.add('active');
 
   renderGW(gw);
-  document.getElementById('gw-panel').scrollIntoView?.({ behavior:'smooth', block:'nearest' });
 }
 
 function renderGW(gw) {
@@ -287,6 +290,12 @@ function renderGW(gw) {
   document.getElementById('panel-status').innerHTML  =
     `<span class="fix-tag ${statusTag}">${statusLabel}</span>`;
 
+  if (!matchups || matchups.length === 0) {
+    document.getElementById('panel-body').innerHTML =
+      `<div class="state-box"><div style="font-size:2rem">📭</div><p>لا توجد مباريات معلنة لهذه الجولة</p></div>`;
+    return;
+  }
+
   const allBye = matchups.every(m => m[0] === "BYE" && m[1] === "BYE");
   if (allBye) {
     document.getElementById('panel-body').innerHTML = `
@@ -299,9 +308,9 @@ function renderGW(gw) {
   }
 
   const html = matchups.map(m => {
-    const [home, away] = m;
+    const home = m[0] || m.home;
+    const away = m[1] || m.away;
 
-    /* Single BYE */
     if (home === "BYE" || away === "BYE") {
       const team = home === "BYE" ? away : home;
       const meta = TEAM_META[team] || { em:"⚽", color:"#64748b" };
@@ -330,7 +339,7 @@ function renderGW(gw) {
           <div class="fix-team">
             <div class="fix-icon" style="border-color:${hMeta.color}">${hMeta.em}</div>
             <div class="fix-name">${home}</div>
-            <div class="fix-role">الضيف</div>
+            <div class="fix-role">مستضيف</div>
           </div>
           <div class="fix-score">
             <div class="fix-nums" style="color:var(--text-muted);font-size:1.2rem">VS</div>
@@ -345,8 +354,7 @@ function renderGW(gw) {
       </div>`;
   }).join('');
 
-  document.getElementById('panel-body').innerHTML = html ||
-    `<div class="state-box"><div style="font-size:2rem">📭</div><p>لا توجد مباريات</p></div>`;
+  document.getElementById('panel-body').innerHTML = html;
 }
 
 init();
