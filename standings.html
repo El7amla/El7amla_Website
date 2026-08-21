@@ -248,9 +248,6 @@
 </main>
 
 <script>
-  const REPO_NAME = "El7amla-League";
-  const RAW = `https://raw.githubusercontent.com/El7amla/${REPO_NAME}/main`;
-
   const TEAM_META = {
     "Black Tech":       { color:"#a855f7", em:"💻" },
     "The Pharaohs":     { color:"#eab308", em:"🏺" },
@@ -387,8 +384,9 @@
   }
 
   async function loadStandings() {
-    const standingsUrl = `${RAW}/data/current_standings.json?v=${Date.now()}`;
-    const khawasUrl    = `${RAW}/data/khawas.json?v=${Date.now()}`;
+    // استخدام مسارات نسبية مباشرة للـ JSON لتفادي أخطاء روابط الـ URL أو أسماء الريبو المختلفة
+    const standingsUrl = `./data/current_standings.json?v=${Date.now()}`;
+    const khawasUrl    = `./data/khawas.json?v=${Date.now()}`;
 
     try {
       const [standingsRes, khawasRes] = await Promise.all([
