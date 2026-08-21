@@ -1,10 +1,66 @@
 {
-  "Black Tech": {},
-  "Falcons": {},
-  "The Pharaohs": {},
-  "Royal Authority": {},
-  "الزرازير": {},
-  "الاوديسي": {},
-  "The Masterminds": {},
-  "Boys": {}
+  "Black Tech": {
+    "43949": {
+      "points": 26
+    },
+    "3492393": {
+      "points": 26
+    }
+  },
+  "Falcons": {
+    "1102089": {
+      "points": 15
+    },
+    "4696525": {
+      "points": 9
+    }
+  },
+  "The Pharaohs": {
+    "1338459": {
+      "points": 20
+    },
+    "3915093": {
+      "points": 29
+    }
+  },
+  "Royal Authority": {
+    "4638841": {
+      "points": 23
+    },
+    "4648250": {
+      "points": 15
+    }
+  },
+  "الزرازير": {
+    "92255": {
+      "points": 9
+    },
+    "1421188": {
+      "points": 17
+    }
+  },
+  "الاوديسي": {
+    "749755": {
+      "points": 15
+    },
+    "778545": {
+      "points": 6
+    }
+  },
+  "The Masterminds": {
+    "1697319": {
+      "points": 15
+    },
+    "5145412": {
+      "points": 11
+    }
+  },
+  "Boys": {
+    "7999563": {
+      "points": 12
+    },
+    "7652885": {
+      "points": 24
+    }
+  }
 }
