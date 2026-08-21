@@ -124,7 +124,7 @@
     background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); margin-bottom: 24px;
   }
 
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
 
   .feature-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
@@ -139,7 +139,6 @@
   .feature-card.c-blue::before   { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
   .feature-card.c-green::before  { background: linear-gradient(90deg, #22c55e, #16a34a); }
   .feature-card.c-purple::before { background: linear-gradient(90deg, #a855f7, #7e22ce); }
-  .feature-card.c-orange::before { background: linear-gradient(90deg, #f97316, #c2410c); }
 
   .feat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .feat-icon { font-size: 30px; }
@@ -277,7 +276,7 @@
   </div>
   <div class="half-pill" id="half-pill">—</div>
 
-  <div class="section-title">الخواص الأربعة</div>
+  <div class="section-title">الخواص المتاحة</div>
   <div class="features-grid" id="features-grid"><!-- injected --></div>
 
   <div class="section-title">الإعدادات</div>
@@ -298,19 +297,11 @@
 <!-- ════════ 1v1 MODAL ════════ -->
 <div class="modal-overlay" id="modal-1v1">
   <div class="modal-box">
-    <div class="modal-title">⚔️ وان تو وان</div>
-    <div class="modal-sub">اختر لاعباً من فريقك وفريق وخصم منافس ولاعبه. لو الفريقان فعّلا 1v1 ضد بعض في نفس الجولة، تُلغى الخاصية عند الطرفين تلقائياً.</div>
+    <div class="modal-title">⚔️ وان تو وان (1v1)</div>
+    <div class="modal-sub">اختر لاعباً من فريقك ليدخل الموازنة المباشرة. الخصم بيتم تحديده تلقائياً بناءً على مواجهات الجولة.</div>
     <div class="field-group">
-      <label>لاعبك</label>
+      <label>اختر لاعبك للمواجهة</label>
       <select id="sel-my-player"></select>
-    </div>
-    <div class="field-group">
-      <label>الفريق الخصم</label>
-      <select id="sel-opp-team" onchange="populateOppPlayers()"></select>
-    </div>
-    <div class="field-group">
-      <label>لاعب الخصم</label>
-      <select id="sel-opp-player"></select>
     </div>
     <div class="modal-actions">
       <button class="btn-confirm" onclick="confirm1v1()">تأكيد التفعيل</button>
@@ -335,30 +326,6 @@
   </div>
 </div>
 
-<!-- ════════ BORROW MODAL ════════ -->
-<div class="modal-overlay" id="modal-borrow">
-  <div class="modal-box">
-    <div class="modal-title">🔄 استعارة لاعب</div>
-    <div class="modal-sub">اللاعب اللي هيتستبعد (OUT) من فريقك، ولاعب هتستعيره (IN) من فريق تاني ليضاف لنتيجتك. لا يمكن الاستعارة من الفريق اللي بتواجهه في نفس الجولة.</div>
-    <div class="field-group">
-      <label>لاعبك اللي هيتستبعد (OUT)</label>
-      <select id="sel-borrow-out"></select>
-    </div>
-    <div class="field-group">
-      <label>خصمك في هذه الجولة (يُستبعد من الاستعارة)</label>
-      <select id="sel-borrow-block" onchange="populateBorrowIn()"></select>
-    </div>
-    <div class="field-group">
-      <label>اللاعب اللي هتستعيره (IN)</label>
-      <select id="sel-borrow-in"></select>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-confirm" onclick="confirmBorrow()">تأكيد التفعيل</button>
-      <button class="btn-cancel" onclick="closeModal('modal-borrow')">إلغاء</button>
-    </div>
-  </div>
-</div>
-
 <!-- ════════ CONFIRM MODAL (bonus3) ════════ -->
 <div class="modal-overlay" id="modal-confirm">
   <div class="modal-box">
@@ -376,14 +343,17 @@
 
 <script>
 // ══════════════════════════════════════════════
-//  LEAGUE DATA — عدّل هنا لو أسماء الفرق/اللاعبين اتغيرت
+//  LEAGUE DATA — الفرق واللاعبين
 // ══════════════════════════════════════════════
 const LEAGUE = {
-  "Black Tech":    ["Elfiky", "Omar"],
-  "The Pharaohs":  ["Hussein", "Ahmed"],
-  "Smokers":       ["Body", "Tawheed"],
-  "Falcons":       ["Nasser", "Mahmoud"],
-  "Boys":          ["Ali", "Magdy"],
+  "Black Tech":       ["Elfiky", "Omar"],
+  "The Pharaohs":     ["Hussein", "Ahmed"],
+  "Falcons":          ["Nasser", "Mahmoud"],
+  "Boys":             ["Ali", "Magdy"],
+  "Royal Authority":  ["Royal1", "Royal2"],
+  "The Masterminds":  ["Master1", "Master2"],
+  "الزرازير":         ["Zarzor1", "Zarzor2"],
+  "الاوديسي":         ["Odyssey1", "Odyssey2"]
 };
 
 // ══════════════════════════════════════════════
@@ -392,29 +362,24 @@ const LEAGUE = {
 const CHIP_DEFS = {
   one_v_one: {
     label: "وان تو وان", icon: "⚔️", color: "c-blue", perHalf: true,
-    desc: "مواجهة فردية بين لاعب منك ولاعب من فريق خصم بنفس الجولة. لو الفريقان فعّلوها ضد بعض بنفس الجولة، تُلغى عند الاثنين. الفائز يمنح فريقه +1 نقطة مباراة إضافية.",
+    desc: "تختار لاعب منك ضد لاعب من الخصم، الفائز بوان تو وان يضمن الـ 3 نقاط المباشرة لفريقه في حالة الفوز بالمواجهة.",
     limitLabel: "مرتان بالموسم (مرة بكل دور)"
   },
   bonus3: {
     label: "بونص X3", icon: "🚀", color: "c-green", perHalf: false,
-    desc: "لو كسبت الماتش في الجولة دي، تاخد +3 نقاط إضافية فوق نقاط الفوز (يبقى 6 بدل 3). لو تعادلت أو خسرت، الخاصية تضيع بدون أي بونص.",
+    desc: "لو كسبت الماتش في الجولة دي، تاخد +3 نقاط إضافية فوق نقاط الفوز (يبقى 6 بدل 3).",
     limitLabel: "مرة واحدة بس طول الموسم"
   },
   double_player: {
     label: "دبل نقاط لاعب", icon: "✖️2", color: "c-purple", perHalf: true,
     desc: "تختار لاعب واحد تتضاعف نقاطه (×2)، ونقاط زميله في فريقك تتلغي تماماً وتبقى صفر لهذه الجولة.",
     limitLabel: "مرتان بالموسم (مرة بكل دور)"
-  },
-  borrow: {
-    label: "استعارة لاعب", icon: "🔄", color: "c-orange", perHalf: true,
-    desc: "تستبعد لاعب من فريقك وتستعير لاعب من أي فريق تاني بالدوري بدلاً منه لهذه الجولة فقط. نقاط اللاعب المُستعار تُحسب لفريقه الأصلي كالمعتاد كمان. ممنوع الاستعارة من خصمك في نفس الجولة.",
-    limitLabel: "مرتان بالموسم (مرة بكل دور)"
   }
 };
 const CHIP_KEYS = Object.keys(CHIP_DEFS);
 
-// الدور الأول: GW1-19 | الدور الثاني: GW20-38
-function halfOfGW(gw) { return gw <= 19 ? 1 : 2; }
+// الدور الأول: GW1-17 | الدور الثاني: GW18-35
+function halfOfGW(gw) { return gw <= 17 ? 1 : 2; }
 
 // ══════════════════════════════════════════════
 //  FPL API — جلب الجولة والديدلاين الحاليين
@@ -426,7 +391,7 @@ const PROXIES = [
 ];
 
 let CURRENT_GW = 1;
-let DEADLINE = null;      // ISO string للجولة الحالية/القادمة
+let DEADLINE = null;
 let _countdownTimer = null;
 
 async function fetchFPLDeadline() {
@@ -445,7 +410,7 @@ async function fetchFPLDeadline() {
   }
 
   if (!data) {
-    console.warn("تعذّر جلب بيانات FPL من كل البروكسيات — هيتم الاعتماد على آخر قيمة معروفة.");
+    console.warn("تعذّر جلب بيانات FPL — الاعتماد على القيمة الافتراضية.");
     updateDeadlineUI();
     return;
   }
@@ -453,9 +418,6 @@ async function fetchFPLDeadline() {
   const events = data.events || [];
   const now = new Date();
 
-  // الطريقة الصح اللي بتشتغل صح حتى أول الموسم الجديد:
-  // ناخد أقرب جولة ديدلاينها لسه في المستقبل (مش معتمدين على is_current
-  // لأنه ممكن يفضل فاضي/غلط لحد ما أول جولة تتقفل رسمياً من فانتزي)
   const upcoming = events
     .filter(e => e.deadline_time && new Date(e.deadline_time) > now)
     .sort((a, b) => new Date(a.deadline_time) - new Date(b.deadline_time));
@@ -464,12 +426,11 @@ async function fetchFPLDeadline() {
   if (upcoming.length > 0) {
     chosen = upcoming[0];
   } else {
-    // الموسم خلص أو مفيش جولات مستقبلية — نورّي آخر جولة كمرجع
     chosen = events[events.length - 1] || null;
   }
 
   if (chosen) {
-    CURRENT_GW = chosen.id;
+    CURRENT_GW = Math.min(chosen.id, 35); // أقصى حد 35 جولة
     DEADLINE = chosen.deadline_time;
   }
   updateDeadlineUI();
@@ -490,7 +451,7 @@ function updateDeadlineUI() {
   label.style.color = passed ? "var(--red)" : "var(--gold)";
 
   const half = halfOfGW(CURRENT_GW);
-  pill.textContent = half === 1 ? "الدور الأول (GW 1–19)" : "الدور الثاني (GW 20–38)";
+  pill.textContent = half === 1 ? "الدور الأول (GW 1–17)" : "الدور الثاني (GW 18–35)";
 
   clearInterval(_countdownTimer);
   const cd = document.getElementById("gw-countdown");
@@ -511,16 +472,16 @@ function updateDeadlineUI() {
 // ══════════════════════════════════════════════
 //  STORAGE KEYS
 // ══════════════════════════════════════════════
-const KEY_PASSWORDS = "kh_passwords_v2";
-const KEY_FEATURES  = "kh_features_v2";
-const KEY_SESSION   = "kh_session_v2";
-const KEY_FIRST     = "kh_first_login_v2";
+const KEY_PASSWORDS = "kh_passwords_v3";
+const KEY_FEATURES  = "kh_features_v3";
+const KEY_SESSION   = "kh_session_v3";
+const KEY_FIRST     = "kh_first_login_v3";
 
 function initPasswords() {
   let passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
   let changed = false;
   for (const team of Object.keys(LEAGUE)) {
-    if (!passwords[team]) { passwords[team] = team; changed = true; }
+    if (!passwords[team]) { passwords[team] = "123456"; changed = true; }
   }
   if (changed) localStorage.setItem(KEY_PASSWORDS, JSON.stringify(passwords));
 }
@@ -530,8 +491,7 @@ function blankTeamFeatures() {
     one_v_one:     { h1: null, h2: null },
     bonus3:        { used: false, gw: null, won: null },
     double_player: { h1: null, h2: null },
-    borrow:        { h1: null, h2: null },
-    activeThisGW:  null   // { key, gw }
+    activeThisGW:  null
   };
 }
 
@@ -550,7 +510,6 @@ function saveAllFeatures(f) { localStorage.setItem(KEY_FEATURES, JSON.stringify(
 // ══════════════════════════════════════════════
 //  CHIP STATE HELPERS
 // ══════════════════════════════════════════════
-// بيرجع slot الخاصية الحالية (بتاعة النص ده لو perHalf) أو null لو لسه متاحة
 function getChipSlot(tf, key) {
   const def = CHIP_DEFS[key];
   if (def.perHalf) {
@@ -560,11 +519,9 @@ function getChipSlot(tf, key) {
   return tf[key].used ? tf[key] : null;
 }
 
-// هل الخاصية دي متاحة للتفعيل دلوقتي؟
 function chipAvailability(team, key) {
   const features = getAllFeatures();
   const tf = features[team];
-  const def = CHIP_DEFS[key];
   const deadlinePassed = DEADLINE && new Date() > new Date(DEADLINE);
   const slot = getChipSlot(tf, key);
 
@@ -655,7 +612,7 @@ function renderFeatures(team) {
       badgeHtml = `<span class="feat-badge used-badge">مُستخدمة (GW ${slot.gw}) ✗</span>`;
     } else if (status === "canceled") {
       card.classList.add("canceled");
-      badgeHtml = `<span class="feat-badge canceled-badge">ملغاة (تصادم مع الخصم) GW ${slot.gw} ⚠️</span>`;
+      badgeHtml = `<span class="feat-badge canceled-badge">ملغاة GW ${slot.gw} ⚠️</span>`;
     } else if (status === "blocked-other-active") {
       card.classList.add("disabled");
       badgeHtml = `<span class="feat-badge active-badge">فعّلت خاصية تانية هذه الجولة</span>`;
@@ -695,9 +652,8 @@ function renderHistory(team) {
     slots.forEach(s => {
       if (!s) return;
       let extra = "";
-      if (key === "one_v_one" && s.myPlayer) extra = ` · ${s.myPlayer} ضد ${s.oppPlayer} (${s.oppTeam})`;
+      if (key === "one_v_one" && s.myPlayer) extra = ` · لاعبك: ${s.myPlayer}`;
       if (key === "double_player" && s.doubledPlayer) extra = ` · ${s.doubledPlayer} ×2`;
-      if (key === "borrow" && s.outPlayer) extra = ` · OUT: ${s.outPlayer} → IN: ${s.inPlayer} (${s.inTeam})`;
       const statusTxt = s.status === "canceled" ? " — ملغاة ⚠️" : "";
       rows.push(`<div class="history-row">
         <span class="feat-label">${def.icon} ${def.label}${extra}${statusTxt}</span>
@@ -720,200 +676,132 @@ function openChipModal(team, key) {
   _activeTeam = team;
   if (key === "one_v_one")     return open1v1Modal(team);
   if (key === "double_player") return openDoubleModal(team);
-  if (key === "borrow")        return openBorrowModal(team);
   if (key === "bonus3")        return openBonusConfirm(team);
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove("open");
 }
 
 // ── 1v1 ──
 function open1v1Modal(team) {
   const selMy = document.getElementById("sel-my-player");
-  selMy.innerHTML = LEAGUE[team].map(p => `<option value="${p}">${p}</option>`).join("");
-
-  const selOppTeam = document.getElementById("sel-opp-team");
-  selOppTeam.innerHTML = Object.keys(LEAGUE).filter(t => t !== team)
-    .map(t => `<option value="${t}">${t}</option>`).join("");
-
-  populateOppPlayers();
+  selMy.innerHTML = (LEAGUE[team] || []).map(p => `<option value="${p}">${p}</option>`).join("");
   document.getElementById("modal-1v1").classList.add("open");
 }
-function populateOppPlayers() {
-  const oppTeam = document.getElementById("sel-opp-team").value;
-  const sel = document.getElementById("sel-opp-player");
-  sel.innerHTML = (LEAGUE[oppTeam] || []).map(p => `<option value="${p}">${p}</option>`).join("");
-}
+
 function confirm1v1() {
   const team = _activeTeam;
-  const myPlayer  = document.getElementById("sel-my-player").value;
-  const oppTeam   = document.getElementById("sel-opp-team").value;
-  const oppPlayer = document.getElementById("sel-opp-player").value;
+  const myPlayer = document.getElementById("sel-my-player").value;
   const half = halfOfGW(CURRENT_GW);
 
   const features = getAllFeatures();
-  const myEntry = { gw: CURRENT_GW, myPlayer, oppTeam, oppPlayer, status: "used" };
-  features[team].one_v_one["h" + half] = myEntry;
-  features[team].activeThisGW = { key: "one_v_one", gw: CURRENT_GW };
+  const entry = { gw: CURRENT_GW, myPlayer: myPlayer, status: "active" };
 
-  // قاعدة الإلغاء المتبادل: لو الخصم فعّل 1v1 ضدي بنفس الجولة والنص
-  const oppTf = features[oppTeam];
-  const oppSlot = oppTf ? oppTf.one_v_one["h" + half] : null;
-  let canceled = false;
-  if (oppSlot && oppSlot.status === "used" && oppSlot.oppTeam === team && oppSlot.gw === CURRENT_GW) {
-    myEntry.status = "canceled";
-    oppSlot.status = "canceled";
-    canceled = true;
-  }
+  features[team].one_v_one["h" + half] = entry;
+  features[team].activeThisGW = { key: "one_v_one", gw: CURRENT_GW };
 
   saveAllFeatures(features);
   closeModal("modal-1v1");
+  showToast("تم تفعيل خاصية ⚔️ وان تو وان بنجاح!", "success");
   renderFeatures(team);
   renderHistory(team);
-
-  if (canceled) {
-    showToast(`⚠️ إلغاء متبادل! ${team} و${oppTeam} فعّلوا 1v1 ضد بعض — الخاصية ضاعت عند الاثنين`, "info");
-  } else {
-    showToast(`✅ تم تفعيل وان تو وان: ${myPlayer} ضد ${oppPlayer} (${oppTeam})`, "success");
-  }
 }
 
-// ── Double Player ──
+// ── DOUBLE PLAYER ──
 function openDoubleModal(team) {
   const sel = document.getElementById("sel-double-player");
-  sel.innerHTML = LEAGUE[team].map(p => `<option value="${p}">${p}</option>`).join("");
+  sel.innerHTML = (LEAGUE[team] || []).map(p => `<option value="${p}">${p}</option>`).join("");
   document.getElementById("modal-double").classList.add("open");
 }
+
 function confirmDouble() {
   const team = _activeTeam;
   const doubledPlayer = document.getElementById("sel-double-player").value;
-  const otherPlayer = LEAGUE[team].find(p => p !== doubledPlayer);
   const half = halfOfGW(CURRENT_GW);
 
   const features = getAllFeatures();
-  features[team].double_player["h" + half] = { gw: CURRENT_GW, doubledPlayer, zeroedPlayer: otherPlayer, status: "used" };
+  const entry = { gw: CURRENT_GW, doubledPlayer: doubledPlayer, status: "active" };
+
+  features[team].double_player["h" + half] = entry;
   features[team].activeThisGW = { key: "double_player", gw: CURRENT_GW };
-  saveAllFeatures(features);
 
+  saveAllFeatures(features);
   closeModal("modal-double");
+  showToast("تم تفعيل خاصية ✖️2 دبل نقاط لاعب بنجاح!", "success");
   renderFeatures(team);
   renderHistory(team);
-  showToast(`✅ دبل نقاط مفعّلة على ${doubledPlayer} (×2) — نقاط ${otherPlayer} صفر هذه الجولة`, "success");
 }
 
-// ── Borrow ──
-function openBorrowModal(team) {
-  const selOut = document.getElementById("sel-borrow-out");
-  selOut.innerHTML = LEAGUE[team].map(p => `<option value="${p}">${p}</option>`).join("");
-
-  const selBlock = document.getElementById("sel-borrow-block");
-  selBlock.innerHTML = `<option value="">— بدون تحديد —</option>` +
-    Object.keys(LEAGUE).filter(t => t !== team).map(t => `<option value="${t}">${t}</option>`).join("");
-
-  populateBorrowIn();
-  document.getElementById("modal-borrow").classList.add("open");
-}
-function populateBorrowIn() {
-  const team = _activeTeam;
-  const blockTeam = document.getElementById("sel-borrow-block").value;
-  const sel = document.getElementById("sel-borrow-in");
-  const opts = [];
-  for (const [t, players] of Object.entries(LEAGUE)) {
-    if (t === team) continue;
-    if (blockTeam && t === blockTeam) continue; // ممنوع الاستعارة من خصمك بنفس الجولة
-    players.forEach(p => opts.push(`<option value="${t}::${p}">${p} — ${t}</option>`));
-  }
-  sel.innerHTML = opts.join("");
-}
-function confirmBorrow() {
-  const team = _activeTeam;
-  const outPlayer = document.getElementById("sel-borrow-out").value;
-  const blockTeam = document.getElementById("sel-borrow-block").value;
-  const [inTeam, inPlayer] = document.getElementById("sel-borrow-in").value.split("::");
-
-  if (!inTeam || !inPlayer) { showToast("اختار لاعب تستعيره الأول", "error"); return; }
-  if (blockTeam && inTeam === blockTeam) { showToast("ممنوع تستعير من خصمك في نفس الجولة ⛔", "error"); return; }
-
-  const half = halfOfGW(CURRENT_GW);
-  const features = getAllFeatures();
-  features[team].borrow["h" + half] = { gw: CURRENT_GW, outPlayer, inTeam, inPlayer, status: "used" };
-  features[team].activeThisGW = { key: "borrow", gw: CURRENT_GW };
-  saveAllFeatures(features);
-
-  closeModal("modal-borrow");
-  renderFeatures(team);
-  renderHistory(team);
-  showToast(`✅ استعارة مفعّلة — OUT: ${outPlayer} → IN: ${inPlayer} (${inTeam})`, "success");
-}
-
-// ── Bonus3 (مرة واحدة بالموسم) ──
+// ── BONUS X3 ──
 function openBonusConfirm(team) {
-  document.getElementById("confirm-icon").textContent = "🚀";
-  document.getElementById("confirm-title").textContent = "تفعيل: بونص X3";
-  document.getElementById("confirm-sub").textContent =
-    "لو كسبت الماتش هذه الجولة، هتاخد +3 نقاط إضافية فوق نقاط الفوز (يبقى 6 بدل 3).\nلو تعادلت أو خسرت، الخاصية تضيع بدون أي بونص.\n\nدي خاصية تُستخدم مرة واحدة بس طول الموسم كله ولا يمكن التراجع.";
-  document.getElementById("confirm-yes-btn").onclick = () => confirmBonus(team);
+  document.getElementById("confirm-title").textContent = "تأكيد تفعيل بونص X3";
+  document.getElementById("confirm-sub").textContent = "هل أنت متأكد من تفعيل خاصية بونص X3 لهذه الجولة؟\nتذكر: الميزة تُستخدم مرة واحدة فقط طوال الموسم!";
+  document.getElementById("confirm-yes-btn").onclick = confirmBonus3;
   document.getElementById("modal-confirm").classList.add("open");
 }
-function confirmBonus(team) {
-  const features = getAllFeatures();
-  features[team].bonus3 = { used: true, gw: CURRENT_GW, won: null, status: "used" };
-  features[team].activeThisGW = { key: "bonus3", gw: CURRENT_GW };
-  saveAllFeatures(features);
 
+function confirmBonus3() {
+  const team = _activeTeam;
+  const features = getAllFeatures();
+
+  features[team].bonus3 = { used: true, gw: CURRENT_GW, status: "active" };
+  features[team].activeThisGW = { key: "bonus3", gw: CURRENT_GW };
+
+  saveAllFeatures(features);
   closeModal("modal-confirm");
+  showToast("تم تفعيل خاصية 🚀 بونص X3 بنجاح!", "success");
   renderFeatures(team);
   renderHistory(team);
-  showToast("✅ تم تفعيل بونص X3 لهذه الجولة", "success");
 }
 
 // ══════════════════════════════════════════════
-//  CHANGE PASSWORD
+//  SETTINGS & UTILS
 // ══════════════════════════════════════════════
 function changePassword() {
   const team = sessionStorage.getItem(KEY_SESSION);
-  const oldPass = document.getElementById("inp-old-pass").value;
-  const newPass = document.getElementById("inp-new-pass").value;
-  const msg = document.getElementById("pass-msg");
+  const oldP = document.getElementById("inp-old-pass").value;
+  const newP = document.getElementById("inp-new-pass").value;
+  const msg  = document.getElementById("pass-msg");
   const passwords = JSON.parse(localStorage.getItem(KEY_PASSWORDS) || "{}");
 
-  msg.style.display = "block";
+  if (passwords[team] !== oldP) {
+    msg.className = "pass-msg err"; msg.textContent = "الباسورد الحالي غير صحيح"; msg.style.display = "block"; return;
+  }
+  if (!newP || newP.length < 4) {
+    msg.className = "pass-msg err"; msg.textContent = "الباسورد الجديد يجب أن يكون 4 خانات على الأقل"; msg.style.display = "block"; return;
+  }
 
-  if (passwords[team] !== oldPass) { msg.className = "pass-msg err"; msg.textContent = "الباسورد الحالي غلط"; return; }
-  if (newPass.length < 4) { msg.className = "pass-msg err"; msg.textContent = "الباسورد الجديد قصير جداً (4 أحرف على الأقل)"; return; }
-  if (oldPass === newPass) { msg.className = "pass-msg err"; msg.textContent = "الباسورد الجديد نفس القديم"; return; }
-
-  passwords[team] = newPass;
+  passwords[team] = newP;
   localStorage.setItem(KEY_PASSWORDS, JSON.stringify(passwords));
-
-  msg.className = "pass-msg ok";
-  msg.textContent = "✅ تم تغيير الباسورد بنجاح";
+  msg.className = "pass-msg ok"; msg.textContent = "تم تغيير الباسورد بنجاح"; msg.style.display = "block";
   document.getElementById("inp-old-pass").value = "";
   document.getElementById("inp-new-pass").value = "";
   setTimeout(() => msg.style.display = "none", 3000);
 }
 
-// ══════════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════════
-function closeModal(id) { document.getElementById(id).classList.remove("open"); }
-function showToast(msg, type = "success") {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = `toast ${type} show`;
-  setTimeout(() => t.classList.remove("show"), 4000);
+function showToast(text, type = "info") {
+  const toast = document.getElementById("toast");
+  toast.textContent = text;
+  toast.className = `toast ${type} show`;
+  setTimeout(() => toast.classList.remove("show"), 3500);
 }
-document.querySelectorAll(".modal-overlay").forEach(overlay => {
-  overlay.addEventListener("click", e => { if (e.target === overlay) overlay.classList.remove("open"); });
+
+// ══════════════════════════════════════════════
+//  INIT ON LOAD
+// ══════════════════════════════════════════════
+window.addEventListener("DOMContentLoaded", () => {
+  initPasswords();
+  initFeatures();
+  fetchFPLDeadline();
+
+  const activeSession = sessionStorage.getItem(KEY_SESSION);
+  if (activeSession && LEAGUE[activeSession]) {
+    showDashboard(activeSession);
+  } else {
+    document.getElementById("login-page").style.display = "flex";
+  }
 });
-
-// ══════════════════════════════════════════════
-//  STARTUP
-// ══════════════════════════════════════════════
-initPasswords();
-initFeatures();
-fetchFPLDeadline();
-setInterval(fetchFPLDeadline, 5 * 60 * 1000); // إعادة جلب الديدلاين كل 5 دقايق
-
-const savedSession = sessionStorage.getItem(KEY_SESSION);
-if (savedSession && LEAGUE[savedSession]) showDashboard(savedSession);
 </script>
 </body>
 </html>
