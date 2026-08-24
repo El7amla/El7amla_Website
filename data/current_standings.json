@@ -1,6 +1,6 @@
 {
   "current_gw": 1,
-  "last_updated": "2026-08-23 23:27:22",
+  "last_updated": "2026-08-24 23:27:37",
   "teams": [
     {
       "name": "الزرازير",
@@ -8,9 +8,9 @@
       "won": 1,
       "draw": 0,
       "lost": 0,
-      "gf": 101,
-      "ga": 60,
-      "gd": 41,
+      "gf": 125,
+      "ga": 82,
+      "gd": 43,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
@@ -22,23 +22,9 @@
       "won": 1,
       "draw": 0,
       "lost": 0,
-      "gf": 108,
-      "ga": 81,
-      "gd": 27,
-      "matchPts": 3,
-      "bonus": 0,
-      "chipBonus": 0,
-      "total": 3
-    },
-    {
-      "name": "Black Tech",
-      "played": 1,
-      "won": 1,
-      "draw": 0,
-      "lost": 0,
-      "gf": 108,
-      "ga": 95,
-      "gd": 13,
+      "gf": 145,
+      "ga": 119,
+      "gd": 26,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
@@ -50,27 +36,27 @@
       "won": 1,
       "draw": 0,
       "lost": 0,
-      "gf": 77,
-      "ga": 65,
-      "gd": 12,
+      "gf": 107,
+      "ga": 84,
+      "gd": 23,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
       "total": 3
     },
     {
-      "name": "The Masterminds",
+      "name": "Black Tech",
       "played": 1,
-      "won": 0,
+      "won": 1,
       "draw": 0,
-      "lost": 1,
-      "gf": 65,
-      "ga": 77,
-      "gd": -12,
-      "matchPts": 0,
+      "lost": 0,
+      "gf": 130,
+      "ga": 125,
+      "gd": 5,
+      "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 0
+      "total": 3
     },
     {
       "name": "Falcons",
@@ -78,9 +64,23 @@
       "won": 0,
       "draw": 0,
       "lost": 1,
-      "gf": 95,
-      "ga": 108,
-      "gd": -13,
+      "gf": 125,
+      "ga": 130,
+      "gd": -5,
+      "matchPts": 0,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 0
+    },
+    {
+      "name": "The Masterminds",
+      "played": 1,
+      "won": 0,
+      "draw": 0,
+      "lost": 1,
+      "gf": 84,
+      "ga": 107,
+      "gd": -23,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -92,9 +92,9 @@
       "won": 0,
       "draw": 0,
       "lost": 1,
-      "gf": 81,
-      "ga": 108,
-      "gd": -27,
+      "gf": 119,
+      "ga": 145,
+      "gd": -26,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -106,9 +106,9 @@
       "won": 0,
       "draw": 0,
       "lost": 1,
-      "gf": 60,
-      "ga": 101,
-      "gd": -41,
+      "gf": 82,
+      "ga": 125,
+      "gd": -43,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -117,84 +117,84 @@
   ],
   "players": [
     {
-      "name": "Hussein",
-      "team": "The Pharaohs",
-      "points": 63
-    },
-    {
       "name": "Nasser",
       "team": "Falcons",
-      "points": 58
+      "points": 77
     },
     {
-      "name": "Elfiky",
-      "team": "Black Tech",
-      "points": 57
-    },
-    {
-      "name": "Saady",
-      "team": "Black Tech",
-      "points": 51
-    },
-    {
-      "name": "M.Yasser",
-      "team": "الزرازير",
-      "points": 51
-    },
-    {
-      "name": "Abolmagd",
-      "team": "الزرازير",
-      "points": 50
+      "name": "Hussein",
+      "team": "The Pharaohs",
+      "points": 76
     },
     {
       "name": "Ahmed Nour",
       "team": "The Pharaohs",
-      "points": 45
+      "points": 69
+    },
+    {
+      "name": "Elfiky",
+      "team": "Black Tech",
+      "points": 68
+    },
+    {
+      "name": "Abolmagd",
+      "team": "الزرازير",
+      "points": 63
+    },
+    {
+      "name": "Saady",
+      "team": "Black Tech",
+      "points": 62
+    },
+    {
+      "name": "M.Yasser",
+      "team": "الزرازير",
+      "points": 62
     },
     {
       "name": "Magdy",
       "team": "Boys",
-      "points": 42
+      "points": 61
     },
     {
       "name": "Mahmoud",
       "team": "Royal Authority",
-      "points": 40
+      "points": 59
     },
     {
       "name": "Ali",
       "team": "Boys",
-      "points": 39
+      "points": 58
     },
     {
       "name": "Tawheed",
       "team": "Falcons",
-      "points": 37
+      "points": 48
     },
     {
       "name": "Omar",
       "team": "Royal Authority",
-      "points": 37
+      "points": 48
     },
     {
       "name": "Body",
       "team": "The Masterminds",
-      "points": 35
+      "points": 46
     },
     {
       "name": "Amgad",
       "team": "الاوديسي",
-      "points": 30
+      "points": 41
     },
     {
       "name": "Karim Yasser",
       "team": "الاوديسي",
-      "points": 30
+      "points": 41
     },
     {
       "name": "Shika",
       "team": "The Masterminds",
-      "points": 30
+      "points": 38
     }
   ]
 }
