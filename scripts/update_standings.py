@@ -1,61 +1,49 @@
 # update_standings.py
 # ====================
 # El7amla 2v2 Fantasy League — Standings Calculator
-# Fetches live FPL data and generates current_standings.json
+# Fetches FPL data and generates current_standings.json
+#
+# UPDATED:
+#   - Adds match results to current_standings.json
+#   - Each match contains:
+#       gw
+#       home
+#       away
+#       homePts
+#       awayPts
+#       result
+#       winner
+#   - Keeps existing team standings
+#   - Keeps existing player standings
+#   - Keeps chips system
+#   - Keeps GW history files
+#
+# Rules:
+#   - Player points counted only on gameweeks their team PLAYED (not BYE)
+#   - Team match points:
+#         3 = win
+#         1 = draw
+#         0 = loss
+#
+#   - NO regular GW bonus.
+#
+# Chips System:
+#   - one_v_one:
+#       2x/season
+#       once per half: GW1-19, GW20-35
+#
+#   - bonus3:
+#       1x/season
+#       If the team wins its fixture that GW,
+#       +3 extra league points.
+#
+#   - double_player:
+#       2x/season
+#       once per half.
+#
+# Final Team Total:
+#     total = matchPts + chipBonus
 
-"""
-Rules:
-  - Player points counted only on gameweeks their team PLAYED (not BYE)
-  - Team match points:
-        3 = win
-        1 = draw
-        0 = loss
-
-  - NO regular GW bonus.
-    The old +1 bonus for the highest-scoring team has been removed.
-
-Chips System (data/chips.json):
-  - one_v_one:
-        2x/season
-        once per half: GW1-19, GW20-35
-        Player vs player duel against the scheduled opponent
-        from fixtures.json.
-
-        The duel determines the match winner:
-          winner = 3 league points
-          loser  = 0 league points
-          draw    = 1 league point each
-
-        If both teams activate 1v1 against each other
-        in the same fixture, both activations are canceled.
-
-  - bonus3:
-        1x/season only.
-        If the team WINS its fixture that GW,
-        +3 extra league points are added.
-
-  - double_player:
-        2x/season
-        once per half.
-
-        Chosen player's GW points ×2,
-        teammate's points = 0.
-
-        This affects the team's GW total used for:
-          - match result
-          - GF
-          - GA
-
-  - Chip effects only apply to TEAM standings.
-  - Individual PLAYER standings remain based on RAW FPL points.
-
-Final Team Total:
-    total = matchPts + chipBonus
-
-Run:
-    pip install requests
-    python update_standings.py
-"""
 
 import json
 import time
@@ -95,7 +83,6 @@ FPL_BASE = "https://fantasy.premierleague.com/api"
 FPL_BOOTSTRAP = f"{FPL_BASE}/bootstrap-static/"
 FPL_PICKS = f"{FPL_BASE}/entry/{{entry_id}}/event/{{gw}}/picks/"
 
-# Polite delay between FPL API calls
 API_DELAY = 0.8
 
 HEADERS = {
@@ -114,30 +101,32 @@ def fpl_get(url: str, retries: int = 3) -> dict | None:
     """
 
     for attempt in range(1, retries + 1):
+
         try:
-            r = requests.get(
+            response = requests.get(
                 url,
                 headers=HEADERS,
                 timeout=15,
             )
 
-            if r.status_code == 200:
-                return r.json()
+            if response.status_code == 200:
+                return response.json()
 
-            elif r.status_code == 404:
-                # GW not played yet / endpoint unavailable
+            if response.status_code == 404:
                 return None
 
-            else:
-                log.warning(
-                    f"HTTP {r.status_code} — {url} "
-                    f"(attempt {attempt})"
-                )
-
-        except requests.RequestException as e:
             log.warning(
-                f"Request error — {url} "
-                f"(attempt {attempt}): {e}"
+                f"HTTP {response.status_code} — "
+                f"{url} "
+                f"(attempt {attempt})"
+            )
+
+        except requests.RequestException as exc:
+
+            log.warning(
+                f"Request error — "
+                f"{url} "
+                f"(attempt {attempt}): {exc}"
             )
 
         if attempt < retries:
@@ -159,6 +148,7 @@ def get_current_gw() -> int:
         )
 
     for event in reversed(data["events"]):
+
         if event["finished"]:
             return event["id"]
 
@@ -170,11 +160,9 @@ def get_player_gw_points(
     gw: int,
 ) -> int | None:
     """
-    Return the net points for an FPL entry in a given gameweek.
+    Return the net points for an FPL entry in a given GW.
 
-    Net = active-chip-adjusted points minus transfer cost.
-
-    Returns None if the GW hasn't been played yet.
+    FPL points minus transfer cost.
     """
 
     url = FPL_PICKS.format(
@@ -197,15 +185,12 @@ def get_player_gw_points(
         0,
     )
 
-    # FPL already returns transfer cost as negative.
     transfer_cost = entry_history.get(
         "event_transfers_cost",
         0,
     )
 
-    net_points = points - transfer_cost
-
-    return net_points
+    return points - transfer_cost
 
 
 # ─────────────────────────────────────────────
@@ -220,8 +205,9 @@ def load_league() -> dict:
     with open(
         LEAGUE_FILE,
         encoding="utf-8",
-    ) as f:
-        return json.load(f)["teams"]
+    ) as file:
+
+        return json.load(file)["teams"]
 
 
 def load_fixtures() -> dict[int, list]:
@@ -239,8 +225,9 @@ def load_fixtures() -> dict[int, list]:
     with open(
         FIXTURES_FILE,
         encoding="utf-8",
-    ) as f:
-        raw = json.load(f)["fixtures"]
+    ) as file:
+
+        raw = json.load(file)["fixtures"]
 
     return {
         int(gw): matchups
@@ -256,17 +243,20 @@ def load_chips() -> dict:
     """
 
     if not CHIPS_FILE.exists():
+
         log.info(
             "chips.json not found — "
             "running without chip adjustments"
         )
+
         return {}
 
     with open(
         CHIPS_FILE,
         encoding="utf-8",
-    ) as f:
-        data = json.load(f)
+    ) as file:
+
+        data = json.load(file)
 
     data.pop("_comment", None)
 
@@ -274,12 +264,12 @@ def load_chips() -> dict:
 
 
 # ─────────────────────────────────────────────
-# CHIPS SYSTEM — HELPERS
+# CHIPS SYSTEM
 # ─────────────────────────────────────────────
 
 def half_key(gw: int) -> str:
     """
-    GW1-19  = first half
+    GW1-19 = first half
     GW20-35 = second half
     """
 
@@ -293,13 +283,7 @@ def get_chip_slot(
     gw: int,
 ) -> dict | None:
     """
-    Return the activated chip record for:
-
-        team
-        chip_key
-        exact GW
-
-    Only status == "used" is accepted.
+    Return the activated chip record.
     """
 
     team_chips = chips.get(team)
@@ -307,7 +291,7 @@ def get_chip_slot(
     if not team_chips:
         return None
 
-    # bonus3 is a single-use chip
+    # bonus3 is single-use
     if chip_key == "bonus3":
 
         slot = team_chips.get("bonus3")
@@ -322,7 +306,6 @@ def get_chip_slot(
 
         return None
 
-    # one_v_one / double_player
     slot = (
         team_chips.get(chip_key) or {}
     ).get(
@@ -349,8 +332,7 @@ def get_scheduled_opponent(
     gw: int,
 ) -> str | None:
     """
-    Return the team scheduled to play `team`
-    in `gw`.
+    Return the scheduled opponent.
     """
 
     for matchup in fixtures.get(gw, []):
@@ -378,13 +360,7 @@ def get_1v1_duel_for_match(
     raw_player_pts: dict,
 ) -> tuple[str, dict] | None:
     """
-    Resolve a valid 1v1 activation for this fixture.
-
-    Rules:
-      - If both teams activate 1v1 against each other,
-        both activations are canceled.
-      - Opponent is determined from fixtures.json.
-      - Player points are compared using RAW FPL points.
+    Resolve a valid 1v1 activation.
     """
 
     home_duel = get_chip_slot(
@@ -401,7 +377,7 @@ def get_1v1_duel_for_match(
         gw,
     )
 
-    # Both activated against each other
+    # Both activated
     if home_duel and away_duel:
 
         log.info(
@@ -424,9 +400,9 @@ def get_1v1_duel_for_match(
         duel = away_duel
 
     else:
+
         return None
 
-    # Verify fixture
     if (
         get_scheduled_opponent(
             fixtures,
@@ -435,6 +411,7 @@ def get_1v1_duel_for_match(
         )
         != opponent
     ):
+
         log.warning(
             f"GW{gw}: 1v1 fixture mismatch "
             f"for {team} — ignoring activation"
@@ -457,8 +434,7 @@ def get_1v1_duel_for_match(
 
         log.warning(
             f"GW{gw}: 1v1 missing player data "
-            f"for {team} vs {opponent} — "
-            f"ignoring activation"
+            f"for {team} vs {opponent}"
         )
 
         return None
@@ -489,9 +465,7 @@ def team_player_points_dict(
             player_name: raw_points
         }
 
-    for both players of a team.
-
-    Uses the shared cache to avoid duplicate API calls.
+    Uses shared cache.
     """
 
     players = league[team_name]["players"]
@@ -520,12 +494,12 @@ def team_player_points_dict(
 
             time.sleep(API_DELAY)
 
-        p = cache[key]
+        points = cache[key]
 
-        if p is None:
+        if points is None:
             return None
 
-        result[player_name] = p
+        result[player_name] = points
 
     return result
 
@@ -541,17 +515,12 @@ def compute_adjusted_team_points(
     chips: dict,
 ) -> int | None:
     """
-    Return the team's chip-adjusted total
-    points for this GW.
+    Double Player affects team GW points.
 
-    Only Double Player affects this total.
-
-    This value is used for:
+    Used for:
       - match result
       - GF
       - GA
-
-    Bonus is NOT applied here.
     """
 
     own = raw_player_pts.get(team)
@@ -560,8 +529,6 @@ def compute_adjusted_team_points(
         return None
 
     adjusted = dict(own)
-
-    # ── Double Player ──
 
     dbl = get_chip_slot(
         chips,
@@ -596,7 +563,7 @@ def compute_adjusted_team_points(
 
 
 # ─────────────────────────────────────────────
-# BONUS3 CHIP
+# BONUS3
 # ─────────────────────────────────────────────
 
 def apply_bonus3_if_won(
@@ -606,13 +573,7 @@ def apply_bonus3_if_won(
     stats: dict,
 ) -> None:
     """
-    Bonus3 chip:
-
-    +3 extra league points if the team
-    has an active bonus3 chip AND wins
-    its fixture this GW.
-
-    This is NOT the old regular GW bonus.
+    Bonus3 gives +3 league points if the team wins.
     """
 
     slot = get_chip_slot(
@@ -633,389 +594,86 @@ def apply_bonus3_if_won(
 
 
 # ─────────────────────────────────────────────
-# LEGACY STANDINGS CALCULATION
+# MATCH RESULTS
 # ─────────────────────────────────────────────
 
-def calculate_standings(
-    current_gw: int,
-    chips: dict | None = None,
-) -> list[dict]:
+def build_match_result(
+    gw: int,
+    home: str,
+    away: str,
+    home_pts: int,
+    away_pts: int,
+    duel_result=None,
+) -> dict:
+    """
+    Build a JSON-safe match result.
 
-    league = load_league()
-    fixtures = load_fixtures()
+    This is used by standings.html to display
+    actual scores instead of only fixtures.
+    """
 
-    chips = (
-        chips
-        if chips is not None
-        else load_chips()
-    )
+    winner = None
 
-    team_names = list(
-        league.keys()
-    )
+    if duel_result:
 
-    # ── Initialise team stats ──
+        duel_team, duel = duel_result
 
-    stats = {}
+        if duel["myPts"] > duel["oppPts"]:
+            winner = duel_team
 
-    for team in team_names:
+        elif duel["oppPts"] > duel["myPts"]:
+            winner = duel["opponent"]
 
-        stats[team] = {
-            "played": 0,
-            "won": 0,
-            "draw": 0,
-            "lost": 0,
+        result_type = (
+            "home_win"
+            if winner == home
+            else "away_win"
+            if winner == away
+            else "draw"
+        )
 
-            "gf": 0,
-            "ga": 0,
-            "gd": 0,
-
-            "matchPts": 0,
-
-            # Old regular bonus removed
-            "bonus": 0,
-
-            # Bonus3 only
-            "chipBonus": 0,
-
-            "total": 0,
+        return {
+            "gw": gw,
+            "home": home,
+            "away": away,
+            "homePts": home_pts,
+            "awayPts": away_pts,
+            "result": result_type,
+            "winner": winner,
+            "type": "1v1",
+            "duel": {
+                "team": duel_team,
+                "myPlayer": duel["myPlayer"],
+                "oppPlayer": duel["oppPlayer"],
+                "myPts": duel["myPts"],
+                "oppPts": duel["oppPts"],
+            },
         }
 
-    # ── Cache ──
+    if home_pts > away_pts:
 
-    pts_cache = {}
+        winner = home
+        result_type = "home_win"
 
-    log.info(
-        f"Processing GW 1 → {current_gw}"
-    )
+    elif away_pts > home_pts:
 
-    # ─────────────────────────────────────
-    # GAMEWEEKS
-    # ─────────────────────────────────────
+        winner = away
+        result_type = "away_win"
 
-    for gw in range(
-        1,
-        current_gw + 1,
-    ):
+    else:
 
-        matchups = fixtures.get(
-            gw,
-            [],
-        )
+        result_type = "draw"
 
-        # ── Raw player points ──
-
-        raw_player_pts = {}
-
-        for team in team_names:
-
-            raw_player_pts[team] = (
-                team_player_points_dict(
-                    team,
-                    gw,
-                    league,
-                    pts_cache,
-                )
-            )
-
-        # ── Adjusted team points ──
-
-        gw_team_pts = {}
-
-        for team in team_names:
-
-            gw_team_pts[team] = (
-                compute_adjusted_team_points(
-                    team,
-                    gw,
-                    raw_player_pts,
-                    chips,
-                )
-            )
-
-        log.info(
-            f"GW{gw}: Processing "
-            f"{len(matchups)} fixture(s)"
-        )
-
-        # ─────────────────────────────────
-        # FIXTURES
-        # ─────────────────────────────────
-
-        for matchup in matchups:
-
-            home, away = (
-                matchup[0],
-                matchup[1],
-            )
-
-            if (
-                home == "BYE"
-                or away == "BYE"
-            ):
-                continue
-
-            home_pts = gw_team_pts.get(
-                home
-            )
-
-            away_pts = gw_team_pts.get(
-                away
-            )
-
-            if (
-                home_pts is None
-                or away_pts is None
-            ):
-
-                log.warning(
-                    f"GW{gw}: Missing points "
-                    f"for {home} vs {away} "
-                    f"— skipping"
-                )
-
-                continue
-
-            # ── Played ──
-
-            stats[home]["played"] += 1
-            stats[away]["played"] += 1
-
-            # ── GF / GA ──
-
-            stats[home]["gf"] += home_pts
-            stats[home]["ga"] += away_pts
-
-            stats[away]["gf"] += away_pts
-            stats[away]["ga"] += home_pts
-
-            # ─────────────────────────────
-            # 1v1
-            # ─────────────────────────────
-
-            duel_result = (
-                get_1v1_duel_for_match(
-                    chips,
-                    fixtures,
-                    home,
-                    away,
-                    gw,
-                    raw_player_pts,
-                )
-            )
-
-            if duel_result:
-
-                duel_team, duel = (
-                    duel_result
-                )
-
-                # ── 1v1 WIN ──
-
-                if (
-                    duel["myPts"]
-                    > duel["oppPts"]
-                ):
-
-                    winner = duel_team
-                    loser = duel["opponent"]
-
-                    stats[winner]["won"] += 1
-
-                    stats[winner][
-                        "matchPts"
-                    ] += 3
-
-                    stats[loser]["lost"] += 1
-
-                    apply_bonus3_if_won(
-                        chips,
-                        winner,
-                        gw,
-                        stats,
-                    )
-
-                    log.info(
-                        f"GW{gw}: 1v1 WIN → "
-                        f"{winner} "
-                        f"({duel['myPlayer']} "
-                        f"{duel['myPts']}) vs "
-                        f"{loser} "
-                        f"({duel['oppPlayer']} "
-                        f"{duel['oppPts']})"
-                    )
-
-                # ── 1v1 LOSS ──
-
-                elif (
-                    duel["oppPts"]
-                    > duel["myPts"]
-                ):
-
-                    winner = duel["opponent"]
-                    loser = duel_team
-
-                    stats[winner]["won"] += 1
-
-                    stats[winner][
-                        "matchPts"
-                    ] += 3
-
-                    stats[loser]["lost"] += 1
-
-                    apply_bonus3_if_won(
-                        chips,
-                        winner,
-                        gw,
-                        stats,
-                    )
-
-                    log.info(
-                        f"GW{gw}: 1v1 LOSS → "
-                        f"{loser}; WIN → "
-                        f"{winner}"
-                    )
-
-                # ── 1v1 DRAW ──
-
-                else:
-
-                    stats[home]["draw"] += 1
-                    stats[home][
-                        "matchPts"
-                    ] += 1
-
-                    stats[away]["draw"] += 1
-                    stats[away][
-                        "matchPts"
-                    ] += 1
-
-                    log.info(
-                        f"GW{gw}: 1v1 DRAW → "
-                        f"{home} vs {away} "
-                        f"({duel['myPts']}-"
-                        f"{duel['oppPts']})"
-                    )
-
-            # ─────────────────────────────
-            # NORMAL MATCH
-            # ─────────────────────────────
-
-            elif home_pts > away_pts:
-
-                stats[home]["won"] += 1
-
-                stats[home][
-                    "matchPts"
-                ] += 3
-
-                stats[away]["lost"] += 1
-
-                apply_bonus3_if_won(
-                    chips,
-                    home,
-                    gw,
-                    stats,
-                )
-
-                log.info(
-                    f"GW{gw}: "
-                    f"{home} {home_pts} – "
-                    f"{away_pts} {away} "
-                    f"→ WIN {home}"
-                )
-
-            elif away_pts > home_pts:
-
-                stats[away]["won"] += 1
-
-                stats[away][
-                    "matchPts"
-                ] += 3
-
-                stats[home]["lost"] += 1
-
-                apply_bonus3_if_won(
-                    chips,
-                    away,
-                    gw,
-                    stats,
-                )
-
-                log.info(
-                    f"GW{gw}: "
-                    f"{home} {home_pts} – "
-                    f"{away_pts} {away} "
-                    f"→ WIN {away}"
-                )
-
-            else:
-
-                stats[home]["draw"] += 1
-                stats[home][
-                    "matchPts"
-                ] += 1
-
-                stats[away]["draw"] += 1
-                stats[away][
-                    "matchPts"
-                ] += 1
-
-                log.info(
-                    f"GW{gw}: "
-                    f"{home} {home_pts} – "
-                    f"{away_pts} {away} "
-                    f"→ DRAW"
-                )
-
-    # ─────────────────────────────────────
-    # FINAL TOTALS
-    # ─────────────────────────────────────
-
-    for team in team_names:
-
-        s = stats[team]
-
-        s["gd"] = (
-            s["gf"]
-            - s["ga"]
-        )
-
-        # IMPORTANT:
-        # Regular Bonus removed.
-        #
-        # Total =
-        #   Match Points
-        #   +
-        #   Bonus3 Chip Points
-
-        s["total"] = (
-            s["matchPts"]
-            + s["chipBonus"]
-        )
-
-    # ─────────────────────────────────────
-    # SORT
-    # ─────────────────────────────────────
-
-    sorted_teams = sorted(
-        team_names,
-        key=lambda t: (
-            -stats[t]["total"],
-            -stats[t]["gd"],
-            -stats[t]["matchPts"],
-            -stats[t]["gf"],
-            -stats[t]["won"],
-        ),
-    )
-
-    return [
-        {
-            "name": t,
-            **stats[t],
-        }
-        for t in sorted_teams
-    ]
+    return {
+        "gw": gw,
+        "home": home,
+        "away": away,
+        "homePts": home_pts,
+        "awayPts": away_pts,
+        "result": result_type,
+        "winner": winner,
+        "type": "normal",
+    }
 
 
 # ─────────────────────────────────────────────
@@ -1029,10 +687,8 @@ def calculate_player_standings(
     pts_cache: dict,
 ) -> list[dict]:
     """
-    Sum each player's RAW points only on
-    gameweeks their team actually played.
-
-    Chips do NOT affect player standings.
+    Sum raw player points only for GWs
+    where the player's team actually played.
     """
 
     def team_has_bye(
@@ -1047,24 +703,15 @@ def calculate_player_standings(
 
             if team in matchup:
 
-                return (
-                    "BYE"
-                    in matchup
-                )
+                return "BYE" in matchup
 
         return True
 
     player_totals = []
 
-    for (
-        team_name,
-        team_data,
-    ) in league.items():
+    for team_name, team_data in league.items():
 
-        for (
-            player_name,
-            entry_id,
-        ) in team_data["players"].items():
+        for player_name, entry_id in team_data["players"].items():
 
             total = 0
 
@@ -1110,8 +757,15 @@ def calculate_player_standings(
 def write_output(
     team_rows: list,
     player_rows: list,
+    matches: list,
     current_gw: int,
 ) -> None:
+    """
+    Write current_standings.json.
+
+    NEW:
+      matches = all processed match results.
+    """
 
     OUTPUT_FILE.parent.mkdir(
         parents=True,
@@ -1127,19 +781,24 @@ def write_output(
     payload = {
         "current_gw": current_gw,
         "last_updated": now,
+
         "teams": team_rows,
+
         "players": player_rows,
+
+        # NEW
+        "matches": matches,
     }
 
     with open(
         OUTPUT_FILE,
         "w",
         encoding="utf-8",
-    ) as f:
+    ) as file:
 
         json.dump(
             payload,
-            f,
+            file,
             ensure_ascii=False,
             indent=2,
         )
@@ -1150,15 +809,422 @@ def write_output(
 
 
 # ─────────────────────────────────────────────
+# MAIN CALCULATOR
+# ─────────────────────────────────────────────
+
+def _run_with_shared_cache(
+    current_gw: int,
+    league: dict,
+    fixtures: dict,
+    chips: dict,
+) -> tuple[list, list]:
+    """
+    Calculate team standings and match results.
+
+    Returns:
+        (
+            team_rows,
+            match_results
+        )
+    """
+
+    team_names = list(
+        league.keys()
+    )
+
+    stats = {
+        team: {
+            "played": 0,
+            "won": 0,
+            "draw": 0,
+            "lost": 0,
+
+            "gf": 0,
+            "ga": 0,
+            "gd": 0,
+
+            "matchPts": 0,
+
+            "bonus": 0,
+
+            "chipBonus": 0,
+
+            "total": 0,
+        }
+        for team in team_names
+    }
+
+    gw_team_pts = {}
+
+    match_results = []
+
+    for gw in range(
+        1,
+        current_gw + 1,
+    ):
+
+        matchups = fixtures.get(
+            gw,
+            [],
+        )
+
+        # ─────────────────────────────────
+        # Raw player points
+        # ─────────────────────────────────
+
+        raw_player_pts = {}
+
+        for team in team_names:
+
+            raw_player_pts[team] = (
+                team_player_points_dict(
+                    team,
+                    gw,
+                    league,
+                    _shared_cache,
+                )
+            )
+
+        # ─────────────────────────────────
+        # Adjusted team points
+        # ─────────────────────────────────
+
+        gw_team_pts[gw] = {}
+
+        for team in team_names:
+
+            gw_team_pts[gw][team] = (
+                compute_adjusted_team_points(
+                    team,
+                    gw,
+                    raw_player_pts,
+                    chips,
+                )
+            )
+
+        # ─────────────────────────────────
+        # Save GW history
+        # ─────────────────────────────────
+
+        gw_hist = {}
+
+        for team in team_names:
+
+            gw_hist[team] = {}
+
+            for player_name, entry_id in league[team]["players"].items():
+
+                key = (
+                    entry_id,
+                    gw,
+                )
+
+                pts = _shared_cache.get(key)
+
+                if pts is not None:
+
+                    gw_hist[team][str(entry_id)] = {
+                        "player": player_name,
+                        "points": pts,
+                    }
+
+        gw_hist_dir = (
+            REPO_ROOT
+            / "data"
+            / "gw_history"
+        )
+
+        gw_hist_dir.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        gw_hist_file = (
+            gw_hist_dir
+            / f"gw{gw}.json"
+        )
+
+        with open(
+            gw_hist_file,
+            "w",
+            encoding="utf-8",
+        ) as file:
+
+            json.dump(
+                gw_hist,
+                file,
+                ensure_ascii=False,
+                indent=2,
+            )
+
+        # ─────────────────────────────────
+        # Fixtures
+        # ─────────────────────────────────
+
+        log.info(
+            f"GW{gw}: Processing "
+            f"{len(matchups)} fixture(s)"
+        )
+
+        for matchup in matchups:
+
+            if len(matchup) < 2:
+                continue
+
+            home, away = (
+                matchup[0],
+                matchup[1],
+            )
+
+            if (
+                home == "BYE"
+                or away == "BYE"
+            ):
+                continue
+
+            home_pts = gw_team_pts[gw].get(home)
+            away_pts = gw_team_pts[gw].get(away)
+
+            if (
+                home_pts is None
+                or away_pts is None
+            ):
+
+                log.warning(
+                    f"GW{gw}: Missing points "
+                    f"for {home} vs {away} "
+                    f"— skipping"
+                )
+
+                continue
+
+            # ─────────────────────────────
+            # Played
+            # ─────────────────────────────
+
+            stats[home]["played"] += 1
+            stats[away]["played"] += 1
+
+            # ─────────────────────────────
+            # GF / GA
+            # ─────────────────────────────
+
+            stats[home]["gf"] += home_pts
+            stats[home]["ga"] += away_pts
+
+            stats[away]["gf"] += away_pts
+            stats[away]["ga"] += home_pts
+
+            # ─────────────────────────────
+            # 1v1
+            # ─────────────────────────────
+
+            duel_result = get_1v1_duel_for_match(
+                chips,
+                fixtures,
+                home,
+                away,
+                gw,
+                raw_player_pts,
+            )
+
+            # Create match result
+            match_result = build_match_result(
+                gw,
+                home,
+                away,
+                home_pts,
+                away_pts,
+                duel_result,
+            )
+
+            match_results.append(
+                match_result
+            )
+
+            # ─────────────────────────────
+            # 1v1 RESULT
+            # ─────────────────────────────
+
+            if duel_result:
+
+                duel_team, duel = duel_result
+
+                if duel["myPts"] > duel["oppPts"]:
+
+                    winner = duel_team
+                    loser = duel["opponent"]
+
+                    stats[winner]["won"] += 1
+                    stats[winner]["matchPts"] += 3
+                    stats[loser]["lost"] += 1
+
+                    apply_bonus3_if_won(
+                        chips,
+                        winner,
+                        gw,
+                        stats,
+                    )
+
+                    log.info(
+                        f"GW{gw}: 1v1 WIN → "
+                        f"{winner} "
+                        f"({duel['myPlayer']} "
+                        f"{duel['myPts']}) vs "
+                        f"{loser} "
+                        f"({duel['oppPlayer']} "
+                        f"{duel['oppPts']})"
+                    )
+
+                elif duel["oppPts"] > duel["myPts"]:
+
+                    winner = duel["opponent"]
+                    loser = duel_team
+
+                    stats[winner]["won"] += 1
+                    stats[winner]["matchPts"] += 3
+                    stats[loser]["lost"] += 1
+
+                    apply_bonus3_if_won(
+                        chips,
+                        winner,
+                        gw,
+                        stats,
+                    )
+
+                    log.info(
+                        f"GW{gw}: 1v1 LOSS → "
+                        f"{loser}; WIN → {winner}"
+                    )
+
+                else:
+
+                    stats[home]["draw"] += 1
+                    stats[home]["matchPts"] += 1
+
+                    stats[away]["draw"] += 1
+                    stats[away]["matchPts"] += 1
+
+                    log.info(
+                        f"GW{gw}: 1v1 DRAW → "
+                        f"{home} vs {away} "
+                        f"({duel['myPts']}-"
+                        f"{duel['oppPts']})"
+                    )
+
+            # ─────────────────────────────
+            # NORMAL RESULT
+            # ─────────────────────────────
+
+            elif home_pts > away_pts:
+
+                stats[home]["won"] += 1
+                stats[home]["matchPts"] += 3
+                stats[away]["lost"] += 1
+
+                apply_bonus3_if_won(
+                    chips,
+                    home,
+                    gw,
+                    stats,
+                )
+
+                log.info(
+                    f"GW{gw}: "
+                    f"{home} {home_pts} – "
+                    f"{away_pts} {away} "
+                    f"→ WIN {home}"
+                )
+
+            elif away_pts > home_pts:
+
+                stats[away]["won"] += 1
+                stats[away]["matchPts"] += 3
+                stats[home]["lost"] += 1
+
+                apply_bonus3_if_won(
+                    chips,
+                    away,
+                    gw,
+                    stats,
+                )
+
+                log.info(
+                    f"GW{gw}: "
+                    f"{home} {home_pts} – "
+                    f"{away_pts} {away} "
+                    f"→ WIN {away}"
+                )
+
+            else:
+
+                stats[home]["draw"] += 1
+                stats[home]["matchPts"] += 1
+
+                stats[away]["draw"] += 1
+                stats[away]["matchPts"] += 1
+
+                log.info(
+                    f"GW{gw}: "
+                    f"{home} {home_pts} – "
+                    f"{away_pts} {away} "
+                    f"→ DRAW"
+                )
+
+    # ─────────────────────────────────────
+    # FINAL TOTALS
+    # ─────────────────────────────────────
+
+    for team in team_names:
+
+        stats[team]["gd"] = (
+            stats[team]["gf"]
+            - stats[team]["ga"]
+        )
+
+        stats[team]["total"] = (
+            stats[team]["matchPts"]
+            + stats[team]["chipBonus"]
+        )
+
+    # ─────────────────────────────────────
+    # SORT
+    # ─────────────────────────────────────
+
+    sorted_teams = sorted(
+        team_names,
+        key=lambda team: (
+            -stats[team]["total"],
+            -stats[team]["gd"],
+            -stats[team]["matchPts"],
+            -stats[team]["gf"],
+            -stats[team]["won"],
+        ),
+    )
+
+    team_rows = [
+        {
+            "name": team,
+            **stats[team],
+        }
+        for team in sorted_teams
+    ]
+
+    return team_rows, match_results
+
+
+# ─────────────────────────────────────────────
 # MAIN
 # ─────────────────────────────────────────────
 
 def main():
 
     log.info("═" * 55)
+
     log.info(
         "El7amla Standings Updater — start"
     )
+
     log.info("═" * 55)
 
     # ─────────────────────────────────────
@@ -1220,14 +1286,16 @@ def main():
     _shared_cache = {}
 
     # ─────────────────────────────────────
-    # 5. Calculate team standings
+    # 5. Calculate standings + matches
     # ─────────────────────────────────────
 
-    team_rows = _run_with_shared_cache(
-        current_gw,
-        league,
-        fixtures,
-        chips,
+    team_rows, match_results = (
+        _run_with_shared_cache(
+            current_gw,
+            league,
+            fixtures,
+            chips,
+        )
     )
 
     # ─────────────────────────────────────
@@ -1248,13 +1316,19 @@ def main():
     )
 
     # ─────────────────────────────────────
-    # 7. Write output
+    # 7. Write JSON
     # ─────────────────────────────────────
 
     write_output(
         team_rows,
         player_rows,
+        match_results,
         current_gw,
+    )
+
+    log.info(
+        f"Match results written: "
+        f"{len(match_results)}"
     )
 
     log.info("═" * 55)
@@ -1263,511 +1337,10 @@ def main():
 
 
 # ─────────────────────────────────────────────
-# SHARED CACHE BRIDGE
+# SHARED CACHE
 # ─────────────────────────────────────────────
 
 _shared_cache: dict = {}
-
-
-def _run_with_shared_cache(
-    current_gw: int,
-    league: dict,
-    fixtures: dict,
-    chips: dict,
-) -> list:
-    """
-    Run standings calculation while storing
-    all fetched (entry_id, gw) → points
-    in _shared_cache.
-
-    Also writes GW history files.
-    """
-
-    team_names = list(
-        league.keys()
-    )
-
-    # ─────────────────────────────────────
-    # Initialize stats
-    # ─────────────────────────────────────
-
-    stats = {
-        team: {
-            "played": 0,
-            "won": 0,
-            "draw": 0,
-            "lost": 0,
-
-            "gf": 0,
-            "ga": 0,
-            "gd": 0,
-
-            "matchPts": 0,
-
-            # Kept in JSON for compatibility,
-            # but no longer calculated.
-            "bonus": 0,
-
-            "chipBonus": 0,
-
-            "total": 0,
-        }
-        for team in team_names
-    }
-
-    # ─────────────────────────────────────
-    # Per-GW adjusted points
-    # ─────────────────────────────────────
-
-    gw_team_pts = {}
-
-    # ─────────────────────────────────────
-    # Process GWs
-    # ─────────────────────────────────────
-
-    for gw in range(
-        1,
-        current_gw + 1,
-    ):
-
-        matchups = fixtures.get(
-            gw,
-            [],
-        )
-
-        # ─────────────────────────────────
-        # Raw player points
-        # ─────────────────────────────────
-
-        raw_player_pts = {}
-
-        for team in team_names:
-
-            raw_player_pts[team] = (
-                team_player_points_dict(
-                    team,
-                    gw,
-                    league,
-                    _shared_cache,
-                )
-            )
-
-        # ─────────────────────────────────
-        # Adjusted team points
-        # ─────────────────────────────────
-
-        gw_team_pts[gw] = {}
-
-        for team in team_names:
-
-            gw_team_pts[gw][team] = (
-                compute_adjusted_team_points(
-                    team,
-                    gw,
-                    raw_player_pts,
-                    chips,
-                )
-            )
-
-        # ─────────────────────────────────
-        # Save GW history
-        # ─────────────────────────────────
-
-        gw_hist = {}
-
-        for team in team_names:
-
-            gw_hist[team] = {}
-
-            for (
-                player_name,
-                entry_id,
-            ) in league[team]["players"].items():
-
-                key = (
-                    entry_id,
-                    gw,
-                )
-
-                pts = _shared_cache.get(
-                    key
-                )
-
-                if pts is not None:
-
-                    gw_hist[team][
-                        str(entry_id)
-                    ] = {
-                        "points": pts
-                    }
-
-        gw_hist_dir = (
-            REPO_ROOT
-            / "data"
-            / "gw_history"
-        )
-
-        gw_hist_dir.mkdir(
-            parents=True,
-            exist_ok=True,
-        )
-
-        gw_hist_file = (
-            gw_hist_dir
-            / f"gw{gw}.json"
-        )
-
-        with open(
-            gw_hist_file,
-            "w",
-            encoding="utf-8",
-        ) as f:
-
-            json.dump(
-                gw_hist,
-                f,
-                ensure_ascii=False,
-                indent=2,
-            )
-
-        # ─────────────────────────────────
-        # Process fixtures
-        # ─────────────────────────────────
-
-        log.info(
-            f"GW{gw}: Processing fixtures…"
-        )
-
-        for matchup in matchups:
-
-            home, away = (
-                matchup[0],
-                matchup[1],
-            )
-
-            if (
-                home == "BYE"
-                or away == "BYE"
-            ):
-                continue
-
-            home_pts = (
-                gw_team_pts[gw]
-                .get(home)
-            )
-
-            away_pts = (
-                gw_team_pts[gw]
-                .get(away)
-            )
-
-            if (
-                home_pts is None
-                or away_pts is None
-            ):
-
-                log.warning(
-                    f"GW{gw}: Missing pts "
-                    f"for {home} vs {away} "
-                    f"— skipping"
-                )
-
-                continue
-
-            # ─────────────────────────────
-            # Played
-            # ─────────────────────────────
-
-            stats[home][
-                "played"
-            ] += 1
-
-            stats[away][
-                "played"
-            ] += 1
-
-            # ─────────────────────────────
-            # GF / GA
-            # ─────────────────────────────
-
-            stats[home]["gf"] += (
-                home_pts
-            )
-
-            stats[home]["ga"] += (
-                away_pts
-            )
-
-            stats[away]["gf"] += (
-                away_pts
-            )
-
-            stats[away]["ga"] += (
-                home_pts
-            )
-
-            # ─────────────────────────────
-            # 1v1
-            # ─────────────────────────────
-
-            duel_result = (
-                get_1v1_duel_for_match(
-                    chips,
-                    fixtures,
-                    home,
-                    away,
-                    gw,
-                    raw_player_pts,
-                )
-            )
-
-            if duel_result:
-
-                duel_team, duel = (
-                    duel_result
-                )
-
-                # ── 1v1 WIN ──
-
-                if (
-                    duel["myPts"]
-                    > duel["oppPts"]
-                ):
-
-                    winner = duel_team
-                    loser = duel["opponent"]
-
-                    stats[winner][
-                        "won"
-                    ] += 1
-
-                    stats[winner][
-                        "matchPts"
-                    ] += 3
-
-                    stats[loser][
-                        "lost"
-                    ] += 1
-
-                    apply_bonus3_if_won(
-                        chips,
-                        winner,
-                        gw,
-                        stats,
-                    )
-
-                    log.info(
-                        f"GW{gw}: 1v1 WIN → "
-                        f"{winner} "
-                        f"({duel['myPlayer']} "
-                        f"{duel['myPts']}) vs "
-                        f"{loser} "
-                        f"({duel['oppPlayer']} "
-                        f"{duel['oppPts']})"
-                    )
-
-                # ── 1v1 LOSS ──
-
-                elif (
-                    duel["oppPts"]
-                    > duel["myPts"]
-                ):
-
-                    winner = duel["opponent"]
-                    loser = duel_team
-
-                    stats[winner][
-                        "won"
-                    ] += 1
-
-                    stats[winner][
-                        "matchPts"
-                    ] += 3
-
-                    stats[loser][
-                        "lost"
-                    ] += 1
-
-                    apply_bonus3_if_won(
-                        chips,
-                        winner,
-                        gw,
-                        stats,
-                    )
-
-                    log.info(
-                        f"GW{gw}: 1v1 LOSS → "
-                        f"{loser}; "
-                        f"WIN → {winner}"
-                    )
-
-                # ── 1v1 DRAW ──
-
-                else:
-
-                    stats[home][
-                        "draw"
-                    ] += 1
-
-                    stats[home][
-                        "matchPts"
-                    ] += 1
-
-                    stats[away][
-                        "draw"
-                    ] += 1
-
-                    stats[away][
-                        "matchPts"
-                    ] += 1
-
-                    log.info(
-                        f"GW{gw}: 1v1 DRAW → "
-                        f"{home} vs {away} "
-                        f"({duel['myPts']}-"
-                        f"{duel['oppPts']})"
-                    )
-
-            # ─────────────────────────────
-            # NORMAL MATCH
-            # ─────────────────────────────
-
-            elif home_pts > away_pts:
-
-                stats[home][
-                    "won"
-                ] += 1
-
-                stats[home][
-                    "matchPts"
-                ] += 3
-
-                stats[away][
-                    "lost"
-                ] += 1
-
-                apply_bonus3_if_won(
-                    chips,
-                    home,
-                    gw,
-                    stats,
-                )
-
-                log.info(
-                    f"GW{gw}: "
-                    f"{home} {home_pts} – "
-                    f"{away_pts} {away} "
-                    f"→ WIN {home}"
-                )
-
-            elif away_pts > home_pts:
-
-                stats[away][
-                    "won"
-                ] += 1
-
-                stats[away][
-                    "matchPts"
-                ] += 3
-
-                stats[home][
-                    "lost"
-                ] += 1
-
-                apply_bonus3_if_won(
-                    chips,
-                    away,
-                    gw,
-                    stats,
-                )
-
-                log.info(
-                    f"GW{gw}: "
-                    f"{home} {home_pts} – "
-                    f"{away_pts} {away} "
-                    f"→ WIN {away}"
-                )
-
-            # ─────────────────────────────
-            # DRAW
-            # ─────────────────────────────
-
-            else:
-
-                stats[home][
-                    "draw"
-                ] += 1
-
-                stats[home][
-                    "matchPts"
-                ] += 1
-
-                stats[away][
-                    "draw"
-                ] += 1
-
-                stats[away][
-                    "matchPts"
-                ] += 1
-
-                log.info(
-                    f"GW{gw}: "
-                    f"{home} {home_pts} – "
-                    f"{away_pts} {away} "
-                    f"→ DRAW"
-                )
-
-    # ─────────────────────────────────────
-    # FINAL TOTALS
-    # ─────────────────────────────────────
-
-    for team in team_names:
-
-        s = stats[team]
-
-        s["gd"] = (
-            s["gf"]
-            - s["ga"]
-        )
-
-        # ─────────────────────────────────
-        # NO REGULAR BONUS
-        # ─────────────────────────────────
-        #
-        # Total consists ONLY of:
-        #
-        #   Match Points
-        #   +
-        #   Bonus3 Chip Points
-        #
-
-        s["total"] = (
-            s["matchPts"]
-            + s["chipBonus"]
-        )
-
-    # ─────────────────────────────────────
-    # SORT TEAMS
-    # ─────────────────────────────────────
-
-    sorted_teams = sorted(
-        team_names,
-        key=lambda t: (
-            -stats[t]["total"],
-            -stats[t]["gd"],
-            -stats[t]["matchPts"],
-            -stats[t]["gf"],
-            -stats[t]["won"],
-        ),
-    )
-
-    return [
-        {
-            "name": team,
-            **stats[team],
-        }
-        for team in sorted_teams
-    ]
 
 
 # ─────────────────────────────────────────────
