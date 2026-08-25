@@ -1,6 +1,6 @@
 {
   "current_gw": 1,
-  "last_updated": "2026-08-24 23:27:37",
+  "last_updated": "2026-08-25 19:10:11",
   "teams": [
     {
       "name": "الزرازير",
@@ -9,8 +9,8 @@
       "draw": 0,
       "lost": 0,
       "gf": 125,
-      "ga": 82,
-      "gd": 43,
+      "ga": 86,
+      "gd": 39,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
@@ -37,8 +37,8 @@
       "draw": 0,
       "lost": 0,
       "gf": 107,
-      "ga": 84,
-      "gd": 23,
+      "ga": 86,
+      "gd": 21,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
@@ -78,9 +78,9 @@
       "won": 0,
       "draw": 0,
       "lost": 1,
-      "gf": 84,
+      "gf": 86,
       "ga": 107,
-      "gd": -23,
+      "gd": -21,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -106,9 +106,9 @@
       "won": 0,
       "draw": 0,
       "lost": 1,
-      "gf": 82,
+      "gf": 86,
       "ga": 125,
-      "gd": -43,
+      "gd": -39,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -179,22 +179,64 @@
     {
       "name": "Body",
       "team": "The Masterminds",
-      "points": 46
+      "points": 48
     },
     {
       "name": "Amgad",
       "team": "الاوديسي",
-      "points": 41
+      "points": 43
     },
     {
       "name": "Karim Yasser",
       "team": "الاوديسي",
-      "points": 41
+      "points": 43
     },
     {
       "name": "Shika",
       "team": "The Masterminds",
       "points": 38
+    }
+  ],
+  "matches": [
+    {
+      "gw": 1,
+      "home": "Black Tech",
+      "away": "Falcons",
+      "homePts": 130,
+      "awayPts": 125,
+      "result": "home_win",
+      "winner": "Black Tech",
+      "type": "normal"
+    },
+    {
+      "gw": 1,
+      "home": "The Pharaohs",
+      "away": "Boys",
+      "homePts": 145,
+      "awayPts": 119,
+      "result": "home_win",
+      "winner": "The Pharaohs",
+      "type": "normal"
+    },
+    {
+      "gw": 1,
+      "home": "Royal Authority",
+      "away": "The Masterminds",
+      "homePts": 107,
+      "awayPts": 86,
+      "result": "home_win",
+      "winner": "Royal Authority",
+      "type": "normal"
+    },
+    {
+      "gw": 1,
+      "home": "الزرازير",
+      "away": "الاوديسي",
+      "homePts": 125,
+      "awayPts": 86,
+      "result": "home_win",
+      "winner": "الزرازير",
+      "type": "normal"
     }
   ]
 }
