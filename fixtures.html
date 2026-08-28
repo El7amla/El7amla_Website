@@ -9,46 +9,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
-
     *, *::before, *::after {
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     :root {
-      --bg-primary:#0f172a;
-      --bg-card:#1e293b;
-      --border:#334155;
+      --bg-primary: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
 
-      --text-primary:#f1f5f9;
-      --text-muted:#94a3b8;
+      --text-primary: #f1f5f9;
+      --text-muted: #94a3b8;
 
-      --blue-accent:#3b82f6;
-      --blue-dark:#1d4ed8;
+      --blue-accent: #3b82f6;
+      --blue-dark: #1d4ed8;
 
-      --gold:#fbbf24;
-      --green:#22c55e;
-      --red:#ef4444;
+      --gold: #fbbf24;
+      --green: #22c55e;
+      --red: #ef4444;
 
-      --draw:#f59e0b;
-
-      --nav-h:68px;
+      --nav-h: 68px;
     }
 
     html {
-      scroll-behavior:smooth;
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family:'Cairo',sans-serif;
-      background:var(--bg-primary);
-      color:var(--text-primary);
-      min-height:100vh;
-      direction:rtl;
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      direction: rtl;
     }
 
     /* =========================
@@ -56,52 +56,50 @@
     ========================= */
 
     .site-nav {
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
 
-      height:var(--nav-h);
+      height: var(--nav-h);
 
-      background:rgba(15,23,42,.96);
-      backdrop-filter:blur(12px);
+      background: rgba(15, 23, 42, .96);
+      backdrop-filter: blur(12px);
 
-      border-bottom:1px solid var(--border);
+      border-bottom: 1px solid var(--border);
 
-      z-index:1000;
+      z-index: 1000;
 
-      display:flex;
-      align-items:center;
+      display: flex;
+      align-items: center;
 
-      padding:0 20px;
+      padding: 0 20px;
     }
 
     .nav-inner {
-      max-width:1200px;
-      margin:0 auto;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
 
-      width:100%;
-
-      display:flex;
-      align-items:center;
+      display: flex;
+      align-items: center;
     }
 
     .nav-logo {
-      display:flex;
-      align-items:center;
+      display: flex;
+      align-items: center;
+      gap: 11px;
 
-      gap:11px;
+      text-decoration: none;
 
-      text-decoration:none;
+      margin-left: auto;
 
-      margin-left:auto;
-
-      flex-shrink:0;
+      flex-shrink: 0;
     }
 
     .logo-mark {
-      width:44px;
-      height:44px;
+      width: 44px;
+      height: 44px;
 
       background:
         linear-gradient(
@@ -111,134 +109,129 @@
           #60a5fa
         );
 
-      border-radius:12px;
+      border-radius: 12px;
 
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      box-shadow:
-        0 0 18px rgba(59,130,246,.4);
+      box-shadow: 0 0 18px rgba(59,130,246,.4);
 
-      flex-shrink:0;
+      flex-shrink: 0;
     }
 
     .logo-mark svg {
-      width:26px;
-      height:26px;
+      width: 26px;
+      height: 26px;
 
-      fill:none;
-      stroke:#fff;
+      fill: none;
+      stroke: #fff;
 
-      stroke-width:2;
-
-      stroke-linecap:round;
-      stroke-linejoin:round;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .logo-text {
-      display:flex;
-      flex-direction:column;
-
-      line-height:1.1;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
     }
 
     .logo-ar {
-      font-family:'Cairo',sans-serif;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
 
-      font-size:1.05rem;
-      font-weight:900;
-
-      color:var(--text-primary);
+      color: var(--text-primary);
     }
 
     .logo-en {
-      font-family:'Orbitron',sans-serif;
+      font-family: 'Orbitron', sans-serif;
 
-      font-size:.5rem;
-      font-weight:700;
+      font-size: .5rem;
+      font-weight: 700;
 
-      color:var(--blue-accent);
+      color: var(--blue-accent);
 
-      letter-spacing:2.5px;
+      letter-spacing: 2.5px;
 
-      text-transform:uppercase;
+      text-transform: uppercase;
     }
 
     .nav-links {
-      display:flex;
-      align-items:center;
+      display: flex;
+      align-items: center;
 
-      margin-right:auto;
+      margin-right: auto;
     }
 
     .nav-links a {
-      color:var(--text-muted);
+      color: var(--text-muted);
 
-      text-decoration:none;
+      text-decoration: none;
 
-      font-size:.9rem;
-      font-weight:600;
+      font-size: .9rem;
+      font-weight: 600;
 
-      padding:8px 18px;
+      padding: 8px 18px;
 
-      border-bottom:3px solid transparent;
+      border-bottom: 3px solid transparent;
 
-      transition:.2s;
+      transition: .2s;
 
-      height:var(--nav-h);
+      height: var(--nav-h);
 
-      display:flex;
-      align-items:center;
+      display: flex;
+      align-items: center;
     }
 
     .nav-links a:hover,
     .nav-links a.active {
-      color:var(--blue-accent);
+      color: var(--blue-accent);
 
-      border-bottom-color:var(--blue-accent);
+      border-bottom-color: var(--blue-accent);
 
-      background:rgba(59,130,246,.06);
+      background: rgba(59,130,246,.06);
     }
 
     .hamburger {
-      display:none;
+      display: none;
 
-      flex-direction:column;
+      flex-direction: column;
 
-      gap:5px;
+      gap: 5px;
 
-      cursor:pointer;
+      cursor: pointer;
 
-      padding:4px;
+      padding: 4px;
 
-      margin-right:auto;
+      margin-right: auto;
 
-      background:none;
+      background: none;
 
-      border:none;
+      border: none;
     }
 
     .hamburger span {
-      display:block;
+      display: block;
 
-      width:24px;
-      height:2px;
+      width: 24px;
+      height: 2px;
 
-      background:var(--text-primary);
+      background: var(--text-primary);
 
-      border-radius:2px;
+      border-radius: 2px;
     }
-
 
     /* =========================
        PAGE
     ========================= */
 
     .page-wrap {
-      max-width:1200px;
+      max-width: 1200px;
 
-      margin:0 auto;
+      margin: 0 auto;
 
       padding:
         calc(var(--nav-h) + 28px)
@@ -247,22 +240,18 @@
     }
 
     .page-header {
-      text-align:center;
+      text-align: center;
 
-      margin-bottom:28px;
+      margin-bottom: 28px;
     }
 
     .page-title {
-      font-family:'Orbitron',sans-serif;
+      font-family: 'Orbitron', sans-serif;
 
       font-size:
-        clamp(
-          1.1rem,
-          3.5vw,
-          1.9rem
-        );
+        clamp(1.1rem, 3.5vw, 1.9rem);
 
-      font-weight:900;
+      font-weight: 900;
 
       background:
         linear-gradient(
@@ -272,162 +261,150 @@
           #60a5fa
         );
 
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
 
-      background-clip:text;
+      background-clip: text;
 
-      margin-bottom:4px;
+      margin-bottom: 4px;
     }
 
     .page-sub {
-      font-size:.85rem;
+      font-size: .85rem;
 
-      color:var(--text-muted);
+      color: var(--text-muted);
 
-      letter-spacing:2px;
+      letter-spacing: 2px;
 
-      text-transform:uppercase;
+      text-transform: uppercase;
     }
-
 
     /* =========================
        GW GRID
     ========================= */
 
     .gw-grid {
-      display:grid;
+      display: grid;
 
       grid-template-columns:
-        repeat(
-          auto-fill,
-          minmax(56px,1fr)
-        );
+        repeat(auto-fill, minmax(56px, 1fr));
 
-      gap:7px;
+      gap: 7px;
 
-      background:var(--bg-card);
+      background: var(--bg-card);
 
-      border:1px solid var(--border);
+      border: 1px solid var(--border);
 
-      border-radius:16px;
+      border-radius: 16px;
 
-      padding:18px;
+      padding: 18px;
 
-      margin-bottom:24px;
+      margin-bottom: 24px;
 
       box-shadow:
         0 4px 24px rgba(0,0,0,.35);
     }
 
     .gw-btn {
-      font-family:'Orbitron',sans-serif;
+      font-family: 'Orbitron', sans-serif;
 
-      font-size:.72rem;
-      font-weight:700;
+      font-size: .72rem;
+      font-weight: 700;
 
-      padding:8px 4px;
+      padding: 8px 4px;
 
-      border-radius:8px;
+      border-radius: 8px;
 
-      border:1px solid var(--border);
+      border: 1px solid var(--border);
 
-      background:var(--bg-primary);
+      background: var(--bg-primary);
 
-      color:var(--text-muted);
+      color: var(--text-muted);
 
-      cursor:pointer;
+      cursor: pointer;
 
-      text-align:center;
+      text-align: center;
 
-      transition:.2s;
+      transition: .2s;
 
-      position:relative;
+      position: relative;
     }
 
     .gw-btn:hover {
-      border-color:var(--blue-accent);
+      border-color: var(--blue-accent);
 
-      color:var(--blue-accent);
+      color: var(--blue-accent);
 
-      background:
-        rgba(59,130,246,.07);
+      background: rgba(59,130,246,.07);
     }
 
     .gw-btn.played {
-      border-color:
-        rgba(34,197,94,.3);
+      border-color: rgba(34,197,94,.3);
 
-      color:
-        rgba(34,197,94,.8);
+      color: rgba(34,197,94,.8);
     }
 
     .gw-btn.current {
-      border-color:var(--gold);
+      border-color: var(--gold);
 
-      color:var(--gold);
+      color: var(--gold);
 
       box-shadow:
         0 0 8px rgba(251,191,36,.25);
     }
 
     .gw-btn.active {
-      background:
-        var(--blue-accent)!important;
+      background: var(--blue-accent) !important;
 
-      border-color:
-        var(--blue-accent)!important;
+      border-color: var(--blue-accent) !important;
 
-      color:#fff!important;
+      color: #fff !important;
 
       box-shadow:
         0 0 12px rgba(59,130,246,.4);
     }
 
     .gw-btn.played::after {
-      content:'';
+      content: '';
 
-      position:absolute;
+      position: absolute;
 
-      top:4px;
+      top: 4px;
+      left: 50%;
 
-      left:50%;
+      transform: translateX(-50%);
 
-      transform:
-        translateX(-50%);
+      width: 4px;
+      height: 4px;
 
-      width:4px;
-      height:4px;
+      border-radius: 50%;
 
-      border-radius:50%;
-
-      background:var(--green);
+      background: var(--green);
     }
 
     .gw-btn.active::after {
-      display:none;
+      display: none;
     }
-
 
     /* =========================
        PANEL
     ========================= */
 
     .gw-panel {
-      background:var(--bg-card);
+      background: var(--bg-card);
 
-      border:1px solid var(--border);
+      border: 1px solid var(--border);
 
-      border-radius:16px;
+      border-radius: 16px;
 
-      overflow:hidden;
+      overflow: hidden;
 
       box-shadow:
         0 4px 24px rgba(0,0,0,.4);
     }
 
     .gw-panel-hdr {
-      padding:14px 20px;
+      padding: 14px 20px;
 
       background:
         linear-gradient(
@@ -436,448 +413,348 @@
           #2563eb
         );
 
-      display:flex;
+      display: flex;
 
-      align-items:center;
+      align-items: center;
 
-      justify-content:space-between;
+      justify-content: space-between;
 
-      font-weight:800;
+      font-weight: 800;
 
-      font-size:.92rem;
+      font-size: .92rem;
     }
 
     .gw-panel-body {
-      padding:18px;
+      padding: 18px;
     }
-
 
     /* =========================
        MATCH CARD
     ========================= */
 
     .fix-card {
+      background: var(--bg-primary);
 
-      background:var(--bg-primary);
+      border: 1px solid var(--border);
 
-      border:1px solid var(--border);
+      border-radius: 12px;
 
-      border-radius:14px;
+      padding: 18px 16px;
 
-      padding:18px 16px;
-
-      margin-bottom:12px;
+      margin-bottom: 10px;
 
       transition:
         border-color .2s,
-        transform .2s,
-        box-shadow .2s;
-
-      position:relative;
-
-      overflow:hidden;
+        transform .2s;
     }
 
     .fix-card:last-child {
-      margin-bottom:0;
+      margin-bottom: 0;
     }
 
     .fix-card:hover {
+      border-color: var(--blue-accent);
 
-      border-color:
-        var(--blue-accent);
-
-      transform:
-        translateY(-2px);
-
-      box-shadow:
-        0 8px 25px
-        rgba(0,0,0,.25);
+      transform: translateY(-2px);
     }
 
+    .fix-card.bye-fix {
+      opacity: .55;
 
-    /* WIN STATES */
-
-    .fix-card.home-win {
-      border-right:
-        4px solid var(--green);
+      border-style: dashed;
     }
 
-    .fix-card.away-win {
-      border-left:
-        4px solid var(--green);
+    .fix-card.win-home {
+      border-right: 3px solid var(--green);
     }
 
-    .fix-card.draw {
-      border-color:
-        rgba(245,158,11,.6);
+    .fix-card.win-away {
+      border-left: 3px solid var(--green);
     }
 
+    .fix-card.draw-match {
+      border-color: rgba(251,191,36,.45);
+    }
 
     .fix-row {
-
-      display:grid;
+      display: grid;
 
       grid-template-columns:
         1fr auto 1fr;
 
-      align-items:center;
+      align-items: center;
 
-      gap:14px;
+      gap: 14px;
     }
 
-
-    /* TEAM */
-
     .fix-team {
+      display: flex;
 
-      display:flex;
+      flex-direction: column;
 
-      flex-direction:column;
+      align-items: center;
 
-      align-items:center;
+      gap: 8px;
 
-      gap:8px;
-
-      text-align:center;
+      text-align: center;
     }
 
     .fix-icon {
+      width: 58px;
+      height: 58px;
 
-      width:58px;
-      height:58px;
+      border-radius: 14px;
 
-      border-radius:14px;
+      background: var(--bg-card);
 
-      background:var(--bg-card);
+      border: 2px solid var(--border);
 
-      border:2px solid var(--border);
+      display: flex;
 
-      display:flex;
+      align-items: center;
+      justify-content: center;
 
-      align-items:center;
+      font-size: 2.1rem;
 
-      justify-content:center;
-
-      font-size:2.1rem;
-
-      transition:border-color .2s;
+      transition: border-color .2s;
     }
 
     .fix-card:hover .fix-icon {
-      border-color:
-        var(--blue-accent);
+      border-color: var(--blue-accent);
     }
 
     .fix-name {
+      font-weight: 800;
 
-      font-weight:800;
-
-      font-size:.92rem;
+      font-size: .92rem;
     }
 
     .fix-role {
+      font-size: .72rem;
 
-      font-size:.72rem;
-
-      color:var(--text-muted);
+      color: var(--text-muted);
     }
 
-
-    /* WINNER NAME */
-
-    .winner-name {
-      color:var(--green);
-
-      text-shadow:
-        0 0 10px
-        rgba(34,197,94,.25);
-    }
-
-
-    /* SCORE */
+    /* =========================
+       SCORE
+    ========================= */
 
     .fix-score {
+      display: flex;
 
-      display:flex;
+      flex-direction: column;
 
-      flex-direction:column;
+      align-items: center;
 
-      align-items:center;
+      gap: 7px;
 
-      gap:7px;
-
-      min-width:130px;
+      min-width: 130px;
     }
 
     .fix-nums {
+      font-family: 'Orbitron', sans-serif;
 
-      font-family:'Orbitron',sans-serif;
+      font-size: 1.7rem;
 
-      font-size:2rem;
+      font-weight: 900;
 
-      font-weight:900;
+      letter-spacing: 2px;
 
-      letter-spacing:4px;
+      direction: ltr;
 
-      white-space:nowrap;
+      white-space: nowrap;
     }
 
-    .score-vs {
-
-      color:var(--text-muted);
-
-      font-size:1.25rem;
-
-      letter-spacing:1px;
+    .score-home {
+      color: var(--text-primary);
     }
 
+    .score-away {
+      color: var(--text-primary);
+    }
 
-    /* RESULT TAG */
+    .score-winner {
+      color: var(--green) !important;
+
+      text-shadow:
+        0 0 10px rgba(34,197,94,.25);
+    }
+
+    .score-loser {
+      color: var(--red) !important;
+    }
+
+    .score-draw {
+      color: var(--gold) !important;
+    }
 
     .fix-tag {
+      font-size: .66rem;
 
-      font-size:.66rem;
+      font-weight: 700;
 
-      font-weight:700;
+      letter-spacing: 1.5px;
 
-      letter-spacing:1.5px;
+      text-transform: uppercase;
 
-      text-transform:uppercase;
+      padding: 2px 10px;
 
-      padding:3px 10px;
-
-      border-radius:10px;
-
-      white-space:nowrap;
+      border-radius: 10px;
     }
 
     .fix-tag.done {
+      background: rgba(34,197,94,.15);
 
-      background:
-        rgba(34,197,94,.15);
-
-      color:var(--green);
+      color: var(--green);
     }
 
     .fix-tag.live {
+      background: rgba(251,191,36,.15);
 
-      background:
-        rgba(251,191,36,.15);
+      color: var(--gold);
 
-      color:var(--gold);
-
-      animation:
-        pulse 1.4s infinite;
+      animation: pulse 1.4s infinite;
     }
 
     .fix-tag.soon {
+      background: rgba(59,130,246,.15);
 
-      background:
-        rgba(59,130,246,.15);
-
-      color:var(--blue-accent);
+      color: var(--blue-accent);
     }
 
     .fix-tag.bye {
+      background: rgba(100,116,139,.15);
 
-      background:
-        rgba(100,116,139,.15);
-
-      color:var(--text-muted);
+      color: var(--text-muted);
     }
 
-    .fix-tag.draw {
+    .result-label {
+      font-size: .67rem;
 
-      background:
-        rgba(245,158,11,.15);
+      color: var(--text-muted);
 
-      color:var(--draw);
+      margin-top: -2px;
     }
 
-
-    /* 1V1 */
-
-    .match-type {
-
-      margin-top:8px;
-
-      padding:5px 12px;
-
-      border-radius:10px;
-
-      background:
-        rgba(168,85,247,.12);
-
-      border:
-        1px solid
-        rgba(168,85,247,.3);
-
-      color:#c084fc;
-
-      font-size:.72rem;
-
-      font-weight:800;
-
-      text-align:center;
-
-      white-space:nowrap;
-    }
-
-
-    /* RESULT TEXT */
-
-    .result-text {
-
-      font-size:.7rem;
-
-      color:var(--text-muted);
-
-      font-weight:700;
-
-      min-height:17px;
-
-      text-align:center;
-    }
-
-
-    /* BYE */
-
-    .fix-card.bye-fix {
-
-      opacity:.55;
-
-      border-style:dashed;
-    }
-
-
-    /* EMPTY */
+    /* =========================
+       BYE
+    ========================= */
 
     .full-bye {
+      padding: 48px 20px;
 
-      padding:48px 20px;
+      text-align: center;
 
-      text-align:center;
-
-      color:var(--text-muted);
+      color: var(--text-muted);
     }
 
     .full-bye .bi {
+      font-size: 2.5rem;
 
-      font-size:2.5rem;
-
-      margin-bottom:12px;
+      margin-bottom: 12px;
     }
 
-
-    /* STATE */
+    /* =========================
+       STATE
+    ========================= */
 
     .state-box {
+      text-align: center;
 
-      text-align:center;
+      padding: 48px 20px;
 
-      padding:48px 20px;
-
-      color:var(--text-muted);
+      color: var(--text-muted);
     }
 
     .spinner {
+      width: 40px;
+      height: 40px;
 
-      width:40px;
-      height:40px;
+      border: 3px solid rgba(59,130,246,.2);
 
-      border:3px solid
-        rgba(59,130,246,.2);
+      border-top-color: var(--blue-accent);
 
-      border-top-color:
-        var(--blue-accent);
-
-      border-radius:50%;
+      border-radius: 50%;
 
       animation:
         spin .8s linear infinite;
 
-      margin:
-        0 auto 12px;
+      margin: 0 auto 12px;
     }
 
-
-    /* META */
+    /* =========================
+       META
+    ========================= */
 
     .meta-footer {
+      margin-top: 32px;
 
-      margin-top:32px;
+      display: flex;
 
-      display:flex;
+      flex-wrap: wrap;
 
-      flex-wrap:wrap;
+      gap: 14px;
 
-      gap:14px;
-
-      justify-content:center;
+      justify-content: center;
     }
 
     .meta-chip {
+      background: var(--bg-card);
 
-      background:var(--bg-card);
+      border: 1px solid var(--border);
 
-      border:1px solid var(--border);
+      border-radius: 10px;
 
-      border-radius:10px;
+      padding: 9px 18px;
 
-      padding:9px 18px;
+      font-size: .81rem;
 
-      font-size:.81rem;
+      color: var(--text-muted);
 
-      color:var(--text-muted);
+      display: flex;
 
-      display:flex;
+      align-items: center;
 
-      align-items:center;
-
-      gap:7px;
+      gap: 7px;
     }
 
     .meta-chip span {
+      color: var(--text-primary);
 
-      color:var(--text-primary);
-
-      font-weight:700;
+      font-weight: 700;
     }
 
-
-    /* ANIMATIONS */
+    /* =========================
+       ANIMATIONS
+    ========================= */
 
     @keyframes spin {
-
       to {
-        transform:rotate(360deg);
+        transform: rotate(360deg);
       }
     }
 
     @keyframes pulse {
-
-      0%,100% {
-        opacity:1;
-        transform:scale(1);
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
       }
 
       50% {
-        opacity:.4;
-        transform:scale(1.3);
+        opacity: .4;
+        transform: scale(1.3);
       }
     }
 
     @keyframes fadeUp {
-
       from {
-        opacity:0;
-        transform:translateY(8px);
+        opacity: 0;
+        transform: translateY(8px);
       }
 
       to {
-        opacity:1;
-        transform:translateY(0);
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
@@ -886,24 +763,23 @@
         fadeUp .25s ease forwards;
     }
 
+    /* =========================
+       MOBILE
+    ========================= */
 
-    /* MOBILE */
-
-    @media (max-width:768px) {
+    @media (max-width: 768px) {
 
       .nav-links {
+        display: none;
 
-        display:none;
+        flex-direction: column;
 
-        flex-direction:column;
+        position: fixed;
 
-        position:fixed;
+        top: var(--nav-h);
 
-        top:var(--nav-h);
-
-        left:0;
-
-        right:0;
+        left: 0;
+        right: 0;
 
         background:
           rgba(15,23,42,.97);
@@ -911,114 +787,91 @@
         border-bottom:
           1px solid var(--border);
 
-        padding:
-          10px 16px 18px;
+        padding: 10px 16px 18px;
 
-        z-index:999;
+        z-index: 999;
       }
 
       .nav-links.open {
-        display:flex;
+        display: flex;
       }
 
       .nav-links a {
+        height: auto;
 
-        height:auto;
+        padding: 11px 14px;
 
-        padding:11px 14px;
+        border-bottom: none;
 
-        border-bottom:none;
+        border-radius: 8px;
 
-        border-radius:8px;
-
-        width:100%;
+        width: 100%;
       }
 
       .nav-links a.active {
-
         background:
           rgba(59,130,246,.12);
       }
 
       .hamburger {
-        display:flex;
+        display: flex;
       }
 
       .fix-nums {
+        font-size: 1.35rem;
 
-        font-size:1.4rem;
-
-        letter-spacing:2px;
+        letter-spacing: 1px;
       }
 
       .fix-icon {
+        width: 46px;
+        height: 46px;
 
-        width:46px;
-        height:46px;
-
-        font-size:1.6rem;
+        font-size: 1.6rem;
       }
 
       .fix-score {
-        min-width:100px;
+        min-width: 95px;
       }
     }
 
-
-    @media (max-width:480px) {
+    @media (max-width: 480px) {
 
       .gw-grid {
-
         grid-template-columns:
-          repeat(
-            auto-fill,
-            minmax(46px,1fr)
-          );
+          repeat(auto-fill, minmax(46px,1fr));
 
-        gap:5px;
+        gap: 5px;
 
-        padding:12px;
+        padding: 12px;
       }
 
       .gw-btn {
+        font-size: .65rem;
 
-        font-size:.65rem;
-
-        padding:7px 2px;
+        padding: 7px 2px;
       }
 
       .fix-row {
-        gap:6px;
+        gap: 5px;
       }
 
       .fix-name {
-        font-size:.78rem;
-      }
-
-      .fix-role {
-        font-size:.65rem;
+        font-size: .78rem;
       }
 
       .fix-nums {
-        font-size:1.15rem;
-        letter-spacing:1px;
+        font-size: 1.15rem;
       }
 
       .fix-score {
-        min-width:75px;
-      }
-
-      .match-type {
-        font-size:.6rem;
-        padding:4px 7px;
+        min-width: 75px;
       }
     }
-
   </style>
 </head>
 
 <body>
-
 
 <!-- =========================
      NAVBAR
@@ -1033,37 +886,24 @@
       <div class="logo-mark">
 
         <svg viewBox="0 0 24 24">
-
           <path d="M6 2h12v6a6 6 0 01-12 0V2z"/>
-
           <path d="M6 4H3a2 2 0 000 4h3"/>
-
           <path d="M18 4h3a2 2 0 010 4h-3"/>
-
           <path d="M12 14v4"/>
-
           <path d="M8 22h8"/>
-
           <path d="M9 18h6"/>
-
         </svg>
 
       </div>
 
       <div class="logo-text">
-
-        <span class="logo-ar">
-          الحمله
-        </span>
-
+        <span class="logo-ar">الحمله</span>
         <span class="logo-en">
           El7amla · 2v2 Fantasy
         </span>
-
       </div>
 
     </a>
-
 
     <div class="nav-links" id="nav-links">
 
@@ -1089,22 +929,18 @@
 
     </div>
 
-
     <button
       class="hamburger"
       onclick="document.getElementById('nav-links').classList.toggle('open')"
     >
-
       <span></span>
       <span></span>
       <span></span>
-
     </button>
 
   </div>
 
 </nav>
-
 
 
 <!-- =========================
@@ -1113,7 +949,6 @@
 
 <div class="page-wrap">
 
-
   <div class="page-header">
 
     <div class="page-title">
@@ -1121,33 +956,22 @@
     </div>
 
     <div class="page-sub">
-      38 جولة — الموسم 2025 / 26
+      35 جولة — الموسم 2025 / 26
     </div>
 
   </div>
 
 
+  <!-- GW GRID -->
 
-  <!-- =========================
-       GW BUTTONS
-  ========================= -->
-
-  <div
-    class="gw-grid"
-    id="gw-grid"
-  >
+  <div class="gw-grid" id="gw-grid">
+    <!-- Built by JS -->
   </div>
 
 
+  <!-- MATCH PANEL -->
 
-  <!-- =========================
-       MATCH PANEL
-  ========================= -->
-
-  <div
-    class="gw-panel"
-    id="gw-panel"
-  >
+  <div class="gw-panel" id="gw-panel">
 
     <div class="gw-panel-hdr">
 
@@ -1155,11 +979,9 @@
         اختر جولة
       </span>
 
-      <span id="panel-status">
-      </span>
+      <span id="panel-status"></span>
 
     </div>
-
 
     <div
       class="gw-panel-body"
@@ -1181,10 +1003,7 @@
   </div>
 
 
-
-  <!-- =========================
-       META
-  ========================= -->
+  <!-- META -->
 
   <div
     class="meta-footer"
@@ -1193,24 +1012,13 @@
   >
 
     <div class="meta-chip">
-
       🗓️ الجولة الحالية:
-
-      <span id="meta-gw">
-        —
-      </span>
-
+      <span id="meta-gw">—</span>
     </div>
 
-
     <div class="meta-chip">
-
       📅 آخر تحديث:
-
-      <span id="meta-updated">
-        —
-      </span>
-
+      <span id="meta-updated">—</span>
     </div>
 
   </div>
@@ -1218,221 +1026,318 @@
 </div>
 
 
-
 <script>
 
-/* =====================================================
-   TEAM DATA
-===================================================== */
+/* =========================================================
+   TEAM META
+========================================================= */
 
 const TEAM_META = {
 
   "Black Tech": {
-    color:"#a855f7",
-    em:"💻"
+    color: "#a855f7",
+    em: "💻"
   },
 
   "The Pharaohs": {
-    color:"#eab308",
-    em:"🏺"
+    color: "#eab308",
+    em: "🏺"
   },
 
   "Falcons": {
-    color:"#3b82f6",
-    em:"🦅"
+    color: "#3b82f6",
+    em: "🦅"
   },
 
   "Boys": {
-    color:"#f97316",
-    em:"⚽"
+    color: "#f97316",
+    em: "⚽"
   },
 
   "Royal Authority": {
-    color:"#ef4444",
-    em:"👑"
+    color: "#ef4444",
+    em: "👑"
   },
 
   "The Masterminds": {
-    color:"#06b6d4",
-    em:"🧠"
+    color: "#06b6d4",
+    em: "🧠"
   },
 
   "الزرازير": {
-    color:"#8b5cf6",
-    em:"🦇"
+    color: "#8b5cf6",
+    em: "🦇"
   },
 
   "الاوديسي": {
-    color:"#10b981",
-    em:"🌌"
+    color: "#10b981",
+    em: "🌌"
   },
 
   "Smokers": {
-    color:"#22c55e",
-    em:"💨"
+    color: "#22c55e",
+    em: "💨"
   }
 
 };
 
 
-
-/* =====================================================
+/* =========================================================
    GLOBAL DATA
-===================================================== */
+========================================================= */
 
 let fixtures = {};
 
-let matches = [];
-
-let matchesByGW = {};
-
-let khawasData = {};
+let standingsData = {};
 
 let currentGW = 1;
 
 let selectedGW = null;
 
 
+/*
+  Cache for GW history.
 
-/* =====================================================
+  Example:
+
+  gwHistory[1] = {
+    "Black Tech": {
+      "12345": {
+        points: 75
+      }
+    }
+  }
+*/
+
+const gwHistory = {};
+
+
+/* =========================================================
+   LOAD JSON
+========================================================= */
+
+async function loadJSON(url) {
+
+  const response = await fetch(
+    `${url}?v=${Date.now()}`
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed loading ${url}`
+    );
+  }
+
+  return response.json();
+}
+
+
+/* =========================================================
+   LOAD FIXTURES
+========================================================= */
+
+async function loadFixtures() {
+
+  /*
+    IMPORTANT:
+
+    Your real fixtures.json is in the ROOT:
+
+      ./fixtures.json
+
+    So we try that FIRST.
+
+    Only if it doesn't exist, we try:
+
+      ./data/fixtures.json
+  */
+
+  try {
+
+    const data = await loadJSON(
+      "./fixtures.json"
+    );
+
+    console.log(
+      "Fixtures loaded from ./fixtures.json"
+    );
+
+    return data.fixtures || data;
+
+  } catch (e) {
+
+    console.warn(
+      "Root fixtures.json not found."
+    );
+
+  }
+
+
+  try {
+
+    const data = await loadJSON(
+      "./data/fixtures.json"
+    );
+
+    console.log(
+      "Fixtures loaded from ./data/fixtures.json"
+    );
+
+    return data.fixtures || data;
+
+  } catch (e) {
+
+    console.error(
+      "Could not load fixtures.json",
+      e
+    );
+
+    return {};
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD GW HISTORY
+========================================================= */
+
+async function loadGWHistory(gw) {
+
+  if (gwHistory[gw]) {
+    return gwHistory[gw];
+  }
+
+  try {
+
+    const data = await loadJSON(
+      `./data/gw_history/gw${gw}.json`
+    );
+
+    gwHistory[gw] = data;
+
+    return data;
+
+  } catch (e) {
+
+    console.warn(
+      `GW${gw} history not found`
+    );
+
+    gwHistory[gw] = null;
+
+    return null;
+  }
+
+}
+
+
+/* =========================================================
    INIT
-===================================================== */
+========================================================= */
 
 async function init() {
 
   try {
 
+    /*
+      Load standings and fixtures.
+    */
+
     const [
-
       standingsRes,
-
-      fixturesRes,
-
-      khawasRes
-
+      fixturesRes
     ] = await Promise.all([
 
-      fetch(
-        `./data/current_standings.json?v=${Date.now()}`
-      )
-      .then(r => {
+      loadJSON(
+        "./data/current_standings.json"
+      ).catch(() => ({})),
 
-        if (!r.ok) {
-
-          throw new Error(
-            "current_standings.json not found"
-          );
-
-        }
-
-        return r.json();
-
-      }),
-
-
-      fetch(
-        `./data/fixtures.json?v=${Date.now()}`
-      )
-      .then(r =>
-        r.ok
-          ? r.json()
-          : {}
-      )
-      .catch(() => ({})),
-
-
-      fetch(
-        `./data/khawas.json?v=${Date.now()}`
-      )
-      .then(r =>
-        r.ok
-          ? r.json()
-          : {}
-      )
-      .catch(() => ({}))
+      loadFixtures()
 
     ]);
 
 
+    standingsData = standingsRes || {};
 
-    /* =========================
-       STANDINGS
-    ========================= */
+    fixtures = fixturesRes || {};
+
+
+    /*
+      Current GW comes from standings.
+    */
 
     currentGW =
-      standingsRes.current_gw || 1;
+      Number(
+        standingsData.current_gw
+      ) || 1;
 
 
-    matches =
-      Array.isArray(
-        standingsRes.matches
-      )
-        ? standingsRes.matches
-        : [];
+    /*
+      Number of actual fixture rounds.
+
+      Your fixtures.json contains 35 rounds.
+    */
+
+    const availableGWs =
+      Object.keys(fixtures)
+        .map(Number)
+        .filter(Number.isFinite);
+
+    const maxGW =
+      availableGWs.length
+        ? Math.max(...availableGWs)
+        : 35;
 
 
-    matchesByGW =
-      standingsRes.matches_by_gw || {};
-
-
-
-    /* =========================
-       FIXTURES
-    ========================= */
-
-    fixtures =
-      fixturesRes.fixtures ||
-      fixturesRes ||
-      {};
-
-
-    khawasData =
-      khawasRes || {};
-
-
-
-    /* =========================
-       META
-    ========================= */
+    /*
+      Metadata
+    */
 
     document.getElementById(
-      'meta-gw'
+      "meta-gw"
+    ).textContent = currentGW;
+
+    document.getElementById(
+      "meta-updated"
     ).textContent =
-      currentGW;
-
+      standingsData.last_updated || "—";
 
     document.getElementById(
-      'meta-updated'
+      "meta-footer"
+    ).style.display = "flex";
+
+
+    /*
+      Update subtitle dynamically.
+    */
+
+    document.querySelector(
+      ".page-sub"
     ).textContent =
-      standingsRes.last_updated || '—';
+      `${maxGW} جولة — الموسم 2025 / 26`;
 
 
-    document.getElementById(
-      'meta-footer'
-    ).style.display =
-      'flex';
+    /*
+      Build buttons.
+    */
+
+    buildGrid(maxGW);
 
 
-
-    /* =========================
-       BUILD PAGE
-    ========================= */
-
-    buildGrid();
+    /*
+      Open current GW.
+    */
 
     selectGW(currentGW);
 
+  } catch (e) {
 
-  } catch(e) {
-
-    console.error(
-      "Fixtures loading error:",
-      e
-    );
-
+    console.error(e);
 
     document.getElementById(
-      'panel-body'
+      "panel-body"
     ).innerHTML = `
 
       <div class="state-box">
@@ -1445,14 +1350,6 @@ async function init() {
           فشل تحميل البيانات
         </p>
 
-        <small style="
-          display:block;
-          margin-top:8px;
-          color:#64748b;
-        ">
-          ${e.message}
-        </small>
-
       </div>
 
     `;
@@ -1462,64 +1359,59 @@ async function init() {
 }
 
 
+/* =========================================================
+   BUILD GW GRID
+========================================================= */
 
-/* =====================================================
-   BUILD GAMEWEEK GRID
-===================================================== */
-
-function buildGrid() {
+function buildGrid(maxGW) {
 
   const grid =
     document.getElementById(
-      'gw-grid'
+      "gw-grid"
     );
 
-
-  let html = '';
+  let html = "";
 
 
   for (
     let gw = 1;
-    gw <= 38;
+    gw <= maxGW;
     gw++
   ) {
+
+    /*
+      GW < current = finished
+      GW == current = current
+      GW > current = upcoming
+    */
 
     const played =
       gw < currentGW;
 
-
-    const isCur =
+    const isCurrent =
       gw === currentGW;
 
 
-    let cls =
-      'gw-btn';
+    let cls = "gw-btn";
 
 
     if (played) {
-      cls += ' played';
+      cls += " played";
     }
 
-
-    if (isCur) {
-      cls += ' current';
+    if (isCurrent) {
+      cls += " current";
     }
 
 
     html += `
 
       <button
-
         class="${cls}"
-
         id="gwb-${gw}"
-
         onclick="selectGW(${gw})"
-
       >
-
         ${gw}
-
       </button>
 
     `;
@@ -1527,16 +1419,14 @@ function buildGrid() {
   }
 
 
-  grid.innerHTML =
-    html;
+  grid.innerHTML = html;
 
 }
 
 
-
-/* =====================================================
-   SELECT GAMEWEEK
-===================================================== */
+/* =========================================================
+   SELECT GW
+========================================================= */
 
 function selectGW(gw) {
 
@@ -1547,20 +1437,16 @@ function selectGW(gw) {
         `gwb-${selectedGW}`
       );
 
-
     if (old) {
-
       old.classList.remove(
-        'active'
+        "active"
       );
-
     }
 
   }
 
 
-  selectedGW =
-    gw;
+  selectedGW = gw;
 
 
   const btn =
@@ -1570,11 +1456,7 @@ function selectGW(gw) {
 
 
   if (btn) {
-
-    btn.classList.add(
-      'active'
-    );
-
+    btn.classList.add("active");
   }
 
 
@@ -1583,297 +1465,181 @@ function selectGW(gw) {
 }
 
 
+/* =========================================================
+   GET MATCHUPS
+========================================================= */
 
-/* =====================================================
-   GET MATCHES FOR GAMEWEEK
-===================================================== */
-
-function getMatchesForGW(gw) {
+function getMatchups(gw) {
 
   /*
-    Priority:
+    JSON keys are strings.
 
-    1) matches_by_gw
-    2) matches array
-    3) fixtures.json
+    Example:
 
+      "1": [...]
+      "2": [...]
   */
 
-
-  const gwKey =
-    String(gw);
-
-
-
-  /* =========================
-     1. matches_by_gw
-  ========================= */
-
-  if (
-    matchesByGW &&
-    matchesByGW[gwKey] &&
-    Array.isArray(
-      matchesByGW[gwKey]
-    )
-  ) {
-
-    return matchesByGW[gwKey];
-
-  }
-
-
-
-  /* =========================
-     2. matches
-  ========================= */
-
-  if (
-    Array.isArray(matches) &&
-    matches.length > 0
-  ) {
-
-    const result =
-      matches.filter(
-        m =>
-          Number(m.gw) ===
-          Number(gw)
-      );
-
-
-    if (result.length > 0) {
-
-      return result;
-
-    }
-
-  }
-
-
-
-  /* =========================
-     3. FIXTURES
-  ========================= */
-
-  const fixtureGW =
-    fixtures[gwKey];
-
-
-  if (
-    Array.isArray(fixtureGW)
-  ) {
-
-    return fixtureGW;
-
-  }
-
-
-  return [];
-
-}
-
-
-
-/* =====================================================
-   FIND MATCH
-===================================================== */
-
-function findMatch(
-  home,
-  away,
-  gw
-) {
-
-  const gwMatches =
-    getMatchesForGW(gw);
-
-
-  return gwMatches.find(
-    m => {
-
-      const mHome =
-        m.home ||
-        m[0];
-
-
-      const mAway =
-        m.away ||
-        m[1];
-
-
-      return (
-
-        mHome === home &&
-        mAway === away
-
-      );
-
-    }
+  return (
+    fixtures[String(gw)] ||
+    fixtures[gw] ||
+    []
   );
 
 }
 
 
+/* =========================================================
+   GET PLAYER POINTS FROM GW HISTORY
+========================================================= */
 
-/* =====================================================
-   GET RESULT CLASS
-===================================================== */
+function getTeamGWPoints(
+  team,
+  gw,
+  history
+) {
 
-function getResultClass(match) {
-
-  if (!match) {
-    return '';
+  if (!history) {
+    return null;
   }
 
 
-  if (
-    match.result ===
-    'home_win'
-  ) {
+  const teamData =
+    history[team];
 
-    return 'home-win';
 
+  if (!teamData) {
+    return null;
   }
 
 
-  if (
-    match.result ===
-    'away_win'
-  ) {
-
-    return 'away-win';
-
-  }
+  let total = 0;
 
 
-  if (
-    match.result ===
-    'draw'
-  ) {
+  Object.values(
+    teamData
+  ).forEach(player => {
 
-    return 'draw';
+    if (
+      player &&
+      typeof player.points === "number"
+    ) {
 
-  }
+      total += player.points;
+
+    }
+
+  });
 
 
-  return '';
+  return total;
 
 }
 
 
+/* =========================================================
+   FORMAT SCORE
+========================================================= */
 
-/* =====================================================
-   RESULT TEXT
-===================================================== */
+function formatScore(
+  homePts,
+  awayPts
+) {
 
-function getResultText(match) {
+  return `
+    <span
+      class="${
+        homePts > awayPts
+          ? "score-winner"
+          : homePts < awayPts
+            ? "score-loser"
+            : "score-draw"
+      }"
+    >
+      ${homePts}
+    </span>
 
-  if (!match) {
+    <span style="color:var(--text-muted)">
+      -
+    </span>
 
-    return '';
-
-  }
-
-
-  if (
-    match.result ===
-    'home_win'
-  ) {
-
-    return '🏆 فوز صاحب الأرض';
-
-  }
-
-
-  if (
-    match.result ===
-    'away_win'
-  ) {
-
-    return '🏆 فوز الضيف';
-
-  }
-
-
-  if (
-    match.result ===
-    'draw'
-  ) {
-
-    return '🤝 تعادل';
-
-  }
-
-
-  return '';
+    <span
+      class="${
+        awayPts > homePts
+          ? "score-winner"
+          : awayPts < homePts
+            ? "score-loser"
+            : "score-draw"
+      }"
+    >
+      ${awayPts}
+    </span>
+  `;
 
 }
 
 
+/* =========================================================
+   RENDER GW
+========================================================= */
 
-/* =====================================================
-   RENDER GAMEWEEK
-===================================================== */
-
-function renderGW(gw) {
+async function renderGW(gw) {
 
   const matchups =
-    getMatchesForGW(gw);
+    getMatchups(gw);
 
 
   const played =
     gw < currentGW;
 
-
-  const isCur =
+  const isCurrent =
     gw === currentGW;
 
 
   const statusLabel =
-    isCur
-      ? 'جارية الآن'
+    isCurrent
+      ? "جارية الآن"
       : played
-        ? 'انتهت'
-        : 'قادمة';
+        ? "انتهت"
+        : "قادمة";
 
 
   const statusTag =
-    isCur
-      ? 'live'
+    isCurrent
+      ? "live"
       : played
-        ? 'done'
-        : 'soon';
+        ? "done"
+        : "soon";
 
-
-
-  /* =========================
-     PANEL HEADER
-  ========================= */
 
   document.getElementById(
-    'panel-title'
+    "panel-title"
   ).textContent =
     `الجولة ${gw}`;
 
 
   document.getElementById(
-    'panel-status'
+    "panel-status"
   ).innerHTML = `
 
     <span
       class="fix-tag ${statusTag}"
     >
-
       ${statusLabel}
-
     </span>
 
   `;
 
 
+  /*
+    IMPORTANT FIX:
 
-  /* =========================
-     EMPTY
-  ========================= */
+    Do NOT show "لا توجد مباريات"
+    just because GW history isn't available.
+
+    Fixtures can exist even when
+    GW hasn't been played yet.
+  */
 
   if (
     !matchups ||
@@ -1881,7 +1647,7 @@ function renderGW(gw) {
   ) {
 
     document.getElementById(
-      'panel-body'
+      "panel-body"
     ).innerHTML = `
 
       <div class="state-box">
@@ -1899,29 +1665,46 @@ function renderGW(gw) {
     `;
 
     return;
+  }
+
+
+  /*
+    Load GW history only when useful.
+
+    For finished GWs:
+      we need scores.
+
+    For current/upcoming:
+      history may not exist.
+  */
+
+  let history = null;
+
+
+  if (played) {
+
+    history =
+      await loadGWHistory(gw);
 
   }
 
 
-
-  /* =========================
-     BYE
-  ========================= */
+  /*
+    Check full BYE.
+  */
 
   const allBye =
     matchups.every(
       m =>
-        (
-          m[0] === "BYE" &&
-          m[1] === "BYE"
-        )
+        m[0] === "BYE" &&
+        m[1] === "BYE"
     );
 
 
   if (allBye) {
 
     document.getElementById(
-      'panel-body'
+      "panel-body"
     ).innerHTML = `
 
       <div class="full-bye fade-up">
@@ -1930,17 +1713,19 @@ function renderGW(gw) {
           😴
         </div>
 
-        <div style="
-          font-weight:800;
-          font-size:1rem;
-          margin-bottom:6px;
-        ">
+        <div
+          style="
+            font-weight:800;
+            font-size:1rem;
+            margin-bottom:6px
+          "
+        >
           جولة راحة كاملة
         </div>
 
-        <div style="
-          font-size:.85rem;
-        ">
+        <div
+          style="font-size:.85rem"
+        >
           لا توجد مباريات في هذه الجولة
         </div>
 
@@ -1953,516 +1738,351 @@ function renderGW(gw) {
   }
 
 
+  /*
+    Render matches.
+  */
 
-  /* =========================
-     MATCH CARDS
-  ========================= */
+  const cards = [];
 
-  const html =
-    matchups
-      .map(m => {
 
+  for (
+    const m of matchups
+  ) {
 
-        /*
-          Match can be:
+    const home =
+      m[0] || m.home;
 
-          ["Black Tech","Falcons"]
+    const away =
+      m[1] || m.away;
 
-          OR
 
-          {
-            home:"Black Tech",
-            away:"Falcons"
-          }
+    /*
+      BYE
+    */
 
-        */
+    if (
+      home === "BYE" ||
+      away === "BYE"
+    ) {
 
+      const team =
+        home === "BYE"
+          ? away
+          : home;
 
-        const home =
-          m.home ||
-          m[0];
 
+      const meta =
+        TEAM_META[team] || {
+          em: "⚽",
+          color: "#64748b"
+        };
 
-        const away =
-          m.away ||
-          m[1];
 
+      cards.push(`
 
+        <div
+          class="fix-card bye-fix fade-up"
+        >
 
-        /* =========================
-           BYE
-        ========================= */
+          <div class="fix-row">
 
-        if (
-          home === "BYE" ||
-          away === "BYE"
-        ) {
+            <div class="fix-team">
 
-          const team =
-            home === "BYE"
-              ? away
-              : home;
-
-
-          const meta =
-            TEAM_META[team] ||
-            {
-              em:"⚽",
-              color:"#64748b"
-            };
-
-
-          return `
-
-            <div
-              class="fix-card bye-fix fade-up"
-            >
-
-              <div class="fix-row">
-
-                <div class="fix-team">
-
-                  <div
-                    class="fix-icon"
-                    style="
-                      border-color:
-                      ${meta.color}
-                    "
-                  >
-
-                    ${meta.em}
-
-                  </div>
-
-                  <div class="fix-name">
-                    ${team}
-                  </div>
-
-                </div>
-
-
-                <div class="fix-score">
-
-                  <div
-                    class="fix-nums"
-                    style="
-                      font-size:1rem;
-                      color:var(--text-muted);
-                    "
-                  >
-                    BYE
-                  </div>
-
-                  <div class="fix-tag bye">
-                    راحة
-                  </div>
-
-                </div>
-
-
-                <div class="fix-team"></div>
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-
-
-
-        /* =========================
-           GET ACTUAL RESULT
-        ========================= */
-
-        const resultMatch =
-          findMatch(
-            home,
-            away,
-            gw
-          );
-
-
-
-        const hMeta =
-          TEAM_META[home] ||
-          {
-            em:"⚽",
-            color:"#64748b"
-          };
-
-
-        const aMeta =
-          TEAM_META[away] ||
-          {
-            em:"⚽",
-            color:"#64748b"
-          };
-
-
-
-        const resultClass =
-          getResultClass(
-            resultMatch
-          );
-
-
-        const resultText =
-          getResultText(
-            resultMatch
-          );
-
-
-
-        /*
-          Determine whether
-          we actually have scores
-        */
-
-        const hasScore =
-          resultMatch &&
-          resultMatch.homePts !== undefined &&
-          resultMatch.awayPts !== undefined;
-
-
-
-        let scoreHTML = '';
-
-        let tagHTML = '';
-
-        let typeHTML = '';
-
-
-
-        /* =========================
-           MATCH WITH SCORE
-        ========================= */
-
-        if (hasScore) {
-
-          scoreHTML = `
-
-            <div class="fix-nums">
-
-              ${resultMatch.homePts}
-
-              <span
+              <div
+                class="fix-icon"
                 style="
-                  color:var(--text-muted);
-                  margin:0 3px;
+                  border-color:${meta.color}
                 "
               >
-                -
-              </span>
+                ${meta.em}
+              </div>
 
-              ${resultMatch.awayPts}
+              <div class="fix-name">
+                ${team}
+              </div>
 
             </div>
 
-          `;
 
-
-
-          /* RESULT TAG */
-
-          if (
-            resultMatch.result ===
-            'draw'
-          ) {
-
-            tagHTML = `
+            <div class="fix-score">
 
               <div
-                class="fix-tag draw"
+                class="fix-nums"
+                style="
+                  font-size:1rem;
+                  color:var(--text-muted)
+                "
               >
-                🤝 تعادل
+                BYE
               </div>
 
-            `;
-
-          }
-
-          else {
-
-            tagHTML = `
-
-              <div
-                class="fix-tag done"
-              >
-                ✓ انتهت
+              <div class="fix-tag bye">
+                راحة
               </div>
 
-            `;
-
-          }
-
-
-
-          /* 1V1 */
-
-          if (
-            resultMatch.type ===
-            '1v1'
-          ) {
-
-            typeHTML = `
-
-              <div class="match-type">
-
-                ⚔️ 1v1 Match
-
-              </div>
-
-            `;
-
-          }
-
-        }
-
-
-        /* =========================
-           UPCOMING MATCH
-        ========================= */
-
-        else {
-
-          scoreHTML = `
-
-            <div
-              class="fix-nums score-vs"
-            >
-              VS
             </div>
 
-          `;
+
+            <div class="fix-team"></div>
+
+          </div>
+
+        </div>
+
+      `);
+
+      continue;
+    }
 
 
-          tagHTML = `
+    /*
+      TEAM META
+    */
+
+    const hMeta =
+      TEAM_META[home] || {
+        em: "⚽",
+        color: "#64748b"
+      };
+
+
+    const aMeta =
+      TEAM_META[away] || {
+        em: "⚽",
+        color: "#64748b"
+      };
+
+
+    /*
+      Get scores.
+
+      For a finished GW, read:
+        data/gw_history/gwX.json
+
+      For upcoming/current:
+        no score yet.
+    */
+
+    let homePts = null;
+    let awayPts = null;
+
+
+    if (history) {
+
+      homePts =
+        getTeamGWPoints(
+          home,
+          gw,
+          history
+        );
+
+      awayPts =
+        getTeamGWPoints(
+          away,
+          gw,
+          history
+        );
+
+    }
+
+
+    /*
+      Has a valid result?
+    */
+
+    const hasScore =
+      homePts !== null &&
+      awayPts !== null;
+
+
+    let cardClass =
+      "fix-card fade-up";
+
+
+    let scoreHTML = "";
+
+
+    let resultHTML = "";
+
+
+    if (hasScore) {
+
+      /*
+        Determine winner/draw.
+      */
+
+      if (homePts > awayPts) {
+
+        cardClass +=
+          " win-home";
+
+        resultHTML = `
+          <div class="result-label">
+            🏆 فوز ${home}
+          </div>
+        `;
+
+      }
+
+      else if (awayPts > homePts) {
+
+        cardClass +=
+          " win-away";
+
+        resultHTML = `
+          <div class="result-label">
+            🏆 فوز ${away}
+          </div>
+        `;
+
+      }
+
+      else {
+
+        cardClass +=
+          " draw-match";
+
+        resultHTML = `
+          <div class="result-label">
+            🤝 تعادل
+          </div>
+        `;
+
+      }
+
+
+      scoreHTML = `
+
+        <div class="fix-nums">
+          ${formatScore(
+            homePts,
+            awayPts
+          )}
+        </div>
+
+        <div class="fix-tag done">
+          انتهت
+        </div>
+
+        ${resultHTML}
+
+      `;
+
+    }
+
+    else {
+
+      /*
+        Upcoming/current fixture.
+      */
+
+      scoreHTML = `
+
+        <div
+          class="fix-nums"
+          style="
+            color:var(--text-muted);
+            font-size:1.2rem
+          "
+        >
+          VS
+        </div>
+
+        <div
+          class="fix-tag ${statusTag}"
+        >
+          ${statusLabel}
+        </div>
+
+      `;
+
+    }
+
+
+    cards.push(`
+
+      <div class="${cardClass}">
+
+        <div class="fix-row">
+
+          <!-- HOME -->
+
+          <div class="fix-team">
 
             <div
-              class="fix-tag ${statusTag}"
+              class="fix-icon"
+              style="
+                border-color:${hMeta.color}
+              "
             >
-              ${statusLabel}
+              ${hMeta.em}
             </div>
 
-          `;
+            <div class="fix-name">
+              ${home}
+            </div>
 
-        }
-
-
-
-        /* =========================
-           WINNER CLASS
-        ========================= */
-
-        let homeNameClass =
-          'fix-name';
-
-
-        let awayNameClass =
-          'fix-name';
-
-
-        if (
-          resultMatch &&
-          resultMatch.result ===
-          'home_win'
-        ) {
-
-          homeNameClass +=
-            ' winner-name';
-
-        }
-
-
-        if (
-          resultMatch &&
-          resultMatch.result ===
-          'away_win'
-        ) {
-
-          awayNameClass +=
-            ' winner-name';
-
-        }
-
-
-
-        /* =========================
-           CARD
-        ========================= */
-
-        return `
-
-          <div
-            class="
-              fix-card
-              ${resultClass}
-              fade-up
-            "
-          >
-
-            <div class="fix-row">
-
-
-              <!-- HOME -->
-
-              <div class="fix-team">
-
-                <div
-                  class="fix-icon"
-                  style="
-                    border-color:
-                    ${hMeta.color}
-                  "
-                >
-
-                  ${hMeta.em}
-
-                </div>
-
-
-                <div
-                  class="${homeNameClass}"
-                >
-
-                  ${home}
-
-                </div>
-
-
-                <div class="fix-role">
-
-                  مستضيف
-
-                </div>
-
-              </div>
-
-
-
-              <!-- SCORE -->
-
-              <div class="fix-score">
-
-                ${scoreHTML}
-
-                ${tagHTML}
-
-                ${
-                  resultText
-                    ? `
-                      <div
-                        class="result-text"
-                      >
-                        ${resultText}
-                      </div>
-                    `
-                    : ''
-                }
-
-                ${typeHTML}
-
-              </div>
-
-
-
-              <!-- AWAY -->
-
-              <div class="fix-team">
-
-                <div
-                  class="fix-icon"
-                  style="
-                    border-color:
-                    ${aMeta.color}
-                  "
-                >
-
-                  ${aMeta.em}
-
-                </div>
-
-
-                <div
-                  class="${awayNameClass}"
-                >
-
-                  ${away}
-
-                </div>
-
-
-                <div class="fix-role">
-
-                  الضيف
-
-                </div>
-
-              </div>
-
-
+            <div class="fix-role">
+              مستضيف
             </div>
 
           </div>
 
-        `;
 
-      })
-      .join('');
+          <!-- SCORE -->
 
+          <div class="fix-score">
+
+            ${scoreHTML}
+
+          </div>
+
+
+          <!-- AWAY -->
+
+          <div class="fix-team">
+
+            <div
+              class="fix-icon"
+              style="
+                border-color:${aMeta.color}
+              "
+            >
+              ${aMeta.em}
+            </div>
+
+            <div class="fix-name">
+              ${away}
+            </div>
+
+            <div class="fix-role">
+              الضيف
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `);
+
+  }
 
 
   document.getElementById(
-    'panel-body'
+    "panel-body"
   ).innerHTML =
-    html;
+    cards.join("");
 
 }
 
 
-
-/* =====================================================
-   INITIAL LOAD
-===================================================== */
+/* =========================================================
+   START
+========================================================= */
 
 init();
-
-
-
-/* =====================================================
-   AUTO REFRESH
-===================================================== */
-
-setInterval(
-  () => {
-
-    /*
-      Preserve selected GW
-      while refreshing data.
-    */
-
-    const keepGW =
-      selectedGW ||
-      currentGW;
-
-
-    init().then(() => {
-
-      if (keepGW) {
-
-        selectGW(
-          keepGW
-        );
-
-      }
-
-    });
-
-  },
-  30000
-);
 
 </script>
 
