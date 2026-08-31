@@ -1,6 +1,6 @@
 {
   "current_gw": 1,
-  "last_updated": "2026-08-31 22:20:23",
+  "last_updated": "2026-08-31 22:29:03",
   "teams": [
     {
       "name": "الزرازير",
@@ -197,6 +197,50 @@
       "points": 41
     }
   ],
+  "matches_by_gw": {
+    "1": [
+      {
+        "gw": 1,
+        "home": "Black Tech",
+        "away": "Falcons",
+        "homePts": 130,
+        "awayPts": 125,
+        "result": "home_win",
+        "winner": "Black Tech",
+        "type": "normal"
+      },
+      {
+        "gw": 1,
+        "home": "The Pharaohs",
+        "away": "Boys",
+        "homePts": 145,
+        "awayPts": 119,
+        "result": "home_win",
+        "winner": "The Pharaohs",
+        "type": "normal"
+      },
+      {
+        "gw": 1,
+        "home": "Royal Authority",
+        "away": "The Masterminds",
+        "homePts": 107,
+        "awayPts": 89,
+        "result": "home_win",
+        "winner": "Royal Authority",
+        "type": "normal"
+      },
+      {
+        "gw": 1,
+        "home": "الزرازير",
+        "away": "الاوديسي",
+        "homePts": 125,
+        "awayPts": 86,
+        "result": "home_win",
+        "winner": "الزرازير",
+        "type": "normal"
+      }
+    ]
+  },
   "matches": [
     {
       "gw": 1,
