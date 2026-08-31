@@ -1299,6 +1299,7 @@ async function init() {
       "meta-gw"
     ).textContent = currentGW;
 
+    
     document.getElementById(
       "meta-updated"
     ).textContent =
@@ -1472,12 +1473,22 @@ function selectGW(gw) {
 function getMatchups(gw) {
 
   /*
-    JSON keys are strings.
+    The fixtures file contains the schedule only:
 
-    Example:
+      fixtures.json
+        -> fixtures["1"]
+        -> fixtures["2"]
+        -> ...
 
-      "1": [...]
-      "2": [...]
+    The actual played scores are stored by the updater in
+    current_standings.json as:
+
+      matches_by_gw: {
+        "1": [...],
+        "2": [...]
+      }
+
+    We keep fixtures.json as the fallback for upcoming rounds.
   */
 
   return (
@@ -1485,6 +1496,112 @@ function getMatchups(gw) {
     fixtures[gw] ||
     []
   );
+
+}
+
+
+/* =========================================================
+   GET SAVED MATCH RESULTS
+========================================================= */
+
+function getSavedMatches(gw) {
+
+  /*
+    Preferred format:
+
+      matches_by_gw["2"]
+
+    Backward-compatible format:
+
+      matches: [
+        { gw: 1, ... },
+        { gw: 2, ... }
+      ]
+  */
+
+  const byGW =
+    standingsData.matches_by_gw;
+
+  if (byGW) {
+
+    const matches =
+      byGW[String(gw)] ||
+      byGW[gw];
+
+    if (Array.isArray(matches)) {
+      return matches;
+    }
+
+  }
+
+
+  const allMatches =
+    standingsData.matches;
+
+  if (Array.isArray(allMatches)) {
+
+    return allMatches.filter(
+      match =>
+        Number(match.gw) === Number(gw)
+    );
+
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================================================
+   FIND SAVED MATCH
+========================================================= */
+
+function findSavedMatch(
+  home,
+  away,
+  gw
+) {
+
+  const matches =
+    getSavedMatches(gw);
+
+  if (!matches.length) {
+    return null;
+  }
+
+
+  /*
+    First try exact home/away order.
+  */
+
+  let match =
+    matches.find(m =>
+      String(m.home) === String(home) &&
+      String(m.away) === String(away)
+    );
+
+
+  if (match) {
+    return match;
+  }
+
+
+  /*
+    Fallback for data generated before the final
+    home/away structure was standardized.
+  */
+
+  match =
+    matches.find(m =>
+      (
+        String(m.home) === String(away) &&
+        String(m.away) === String(home)
+      )
+    );
+
+
+  return match || null;
 
 }
 
@@ -1547,6 +1664,7 @@ function formatScore(
 ) {
 
   return `
+
     <span
       class="${
         homePts > awayPts
@@ -1575,6 +1693,65 @@ function formatScore(
       ${awayPts}
     </span>
   `;
+
+}
+
+
+/* =========================================================
+   GET RESULT CLASS
+========================================================= */
+
+function getResultClass(
+  homePts,
+  awayPts,
+  savedMatch
+) {
+
+  if (
+    savedMatch &&
+    savedMatch.result
+  ) {
+
+    if (
+      savedMatch.result === "home_win"
+    ) {
+      return "win-home";
+    }
+
+    if (
+      savedMatch.result === "away_win"
+    ) {
+      return "win-away";
+    }
+
+    if (
+      savedMatch.result === "draw"
+    ) {
+      return "draw-match";
+    }
+
+  }
+
+
+  if (
+    homePts === null ||
+    awayPts === null
+  ) {
+    return "";
+  }
+
+
+  if (homePts > awayPts) {
+    return "win-home";
+  }
+
+
+  if (awayPts > homePts) {
+    return "win-away";
+  }
+
+
+  return "draw-match";
 
 }
 
@@ -1632,13 +1809,42 @@ async function renderGW(gw) {
 
 
   /*
-    IMPORTANT FIX:
+    IMPORTANT:
 
-    Do NOT show "لا توجد مباريات"
-    just because GW history isn't available.
+    Do not depend on GW history for the result anymore.
 
-    Fixtures can exist even when
-    GW hasn't been played yet.
+    update_standings.py now stores the complete match result
+    directly inside current_standings.json.
+
+    This means GW2 can be displayed immediately after the
+    updater writes the new JSON, without requiring the browser
+    to calculate the score itself.
+  */
+
+  const savedMatches =
+    getSavedMatches(gw);
+
+
+  /*
+    Keep the old GW history as a fallback for old data files.
+  */
+
+  let history = null;
+
+  if (
+    played &&
+    savedMatches.length === 0
+  ) {
+
+    history =
+      await loadGWHistory(gw);
+
+  }
+
+
+  /*
+    Fixtures can still be displayed even if the results have not
+    been generated yet.
   */
 
   if (
@@ -1665,26 +1871,6 @@ async function renderGW(gw) {
     `;
 
     return;
-  }
-
-
-  /*
-    Load GW history only when useful.
-
-    For finished GWs:
-      we need scores.
-
-    For current/upcoming:
-      history may not exist.
-  */
-
-  let history = null;
-
-
-  if (played) {
-
-    history =
-      await loadGWHistory(gw);
 
   }
 
@@ -1854,20 +2040,71 @@ async function renderGW(gw) {
 
 
     /*
-      Get scores.
-
-      For a finished GW, read:
-        data/gw_history/gwX.json
-
-      For upcoming/current:
-        no score yet.
+      Get the saved result for this exact fixture.
     */
+
+    const savedMatch =
+      findSavedMatch(
+        home,
+        away,
+        gw
+      );
+
 
     let homePts = null;
     let awayPts = null;
 
 
-    if (history) {
+    /*
+      PRIMARY SOURCE:
+
+        current_standings.json
+          -> matches_by_gw
+
+      This is the new source of truth for match scores.
+    */
+
+    if (savedMatch) {
+
+      if (
+        savedMatch.homePts !== undefined &&
+        savedMatch.awayPts !== undefined
+      ) {
+
+        const hp =
+          Number(savedMatch.homePts);
+
+        const ap =
+          Number(savedMatch.awayPts);
+
+        if (
+          Number.isFinite(hp) &&
+          Number.isFinite(ap)
+        ) {
+
+          homePts = hp;
+          awayPts = ap;
+
+        }
+
+      }
+
+    }
+
+
+    /*
+      FALLBACK SOURCE:
+
+        data/gw_history/gwX.json
+
+      This keeps old generated data working.
+    */
+
+    if (
+      homePts === null &&
+      awayPts === null &&
+      history
+    ) {
 
       homePts =
         getTeamGWPoints(
@@ -1886,10 +2123,6 @@ async function renderGW(gw) {
     }
 
 
-    /*
-      Has a valid result?
-    */
-
     const hasScore =
       homePts !== null &&
       awayPts !== null;
@@ -1899,53 +2132,96 @@ async function renderGW(gw) {
       "fix-card fade-up";
 
 
+    if (hasScore) {
+
+      cardClass +=
+        " " +
+        getResultClass(
+          homePts,
+          awayPts,
+          savedMatch
+        );
+
+    }
+
+
+    /*
+      1v1 indicator.
+
+      It is taken directly from the saved match object:
+
+        type: "1v1"
+    */
+
+    let oneVOneHTML = "";
+
+
+    if (
+      savedMatch &&
+      String(savedMatch.type)
+        .toLowerCase() === "1v1"
+    ) {
+
+      oneVOneHTML = `
+
+        <div class="match-chip">
+          ⚔️ 1v1 Match
+        </div>
+
+      `;
+
+    }
+
+
     let scoreHTML = "";
-
-
     let resultHTML = "";
 
 
     if (hasScore) {
 
-      /*
-        Determine winner/draw.
-      */
+      const winnerName =
+        savedMatch &&
+        savedMatch.winner
+          ? savedMatch.winner
+          : homePts > awayPts
+            ? home
+            : awayPts > homePts
+              ? away
+              : null;
+
 
       if (homePts > awayPts) {
 
-        cardClass +=
-          " win-home";
-
         resultHTML = `
+
           <div class="result-label">
-            🏆 فوز ${home}
+            🏆 فوز ${winnerName || home}
           </div>
+
         `;
 
       }
 
       else if (awayPts > homePts) {
 
-        cardClass +=
-          " win-away";
-
         resultHTML = `
+
           <div class="result-label">
-            🏆 فوز ${away}
+            🏆 فوز ${winnerName || away}
           </div>
+
         `;
 
       }
 
       else {
 
-        cardClass +=
-          " draw-match";
-
         resultHTML = `
+
           <div class="result-label">
             🤝 تعادل
           </div>
+
         `;
 
       }
@@ -1966,6 +2242,8 @@ async function renderGW(gw) {
 
         ${resultHTML}
 
+        ${oneVOneHTML}
+
       `;
 
     }
@@ -1973,7 +2251,7 @@ async function renderGW(gw) {
     else {
 
       /*
-        Upcoming/current fixture.
+        Upcoming/current fixture without a saved result.
       */
 
       scoreHTML = `
@@ -1993,6 +2271,8 @@ async function renderGW(gw) {
         >
           ${statusLabel}
         </div>
+
+        ${oneVOneHTML}
 
       `;
 
@@ -2088,3 +2368,5 @@ init();
 
 </body>
 </html>
+      
+    
