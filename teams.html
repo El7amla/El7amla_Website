@@ -897,40 +897,38 @@
 <nav class="site-nav">
   <div class="nav-inner">
 
-```
-<a href="index.html" class="nav-logo">
-  <div class="logo-mark">
-    <svg viewBox="0 0 24 24">
-      <path d="M6 2h12v6a6 6 0 01-12 0V2z"/>
-      <path d="M6 4H3a2 2 0 000 4h3"/>
-      <path d="M18 4h3a2 2 0 010 4h-3"/>
-      <path d="M12 14v4"/>
-      <path d="M8 22h8"/>
-      <path d="M9 18h6"/>
-    </svg>
-  </div>
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 2h12v6a6 6 0 01-12 0V2z"/>
+          <path d="M6 4H3a2 2 0 000 4h3"/>
+          <path d="M18 4h3a2 2 0 010 4h-3"/>
+          <path d="M12 14v4"/>
+          <path d="M8 22h8"/>
+          <path d="M9 18h6"/>
+        </svg>
+      </div>
 
-  <div class="logo-text">
-    <span class="logo-ar">الحمله</span>
-    <span class="logo-en">El7amla · 2v2 Fantasy</span>
-  </div>
-</a>
+      <div class="logo-text">
+        <span class="logo-ar">الحمله</span>
+        <span class="logo-en">El7amla · 2v2 Fantasy</span>
+      </div>
+    </a>
 
-<div class="nav-links" id="nav-links">
-  <a href="index.html">🏠 الرئيسية</a>
-  <a href="teams.html" class="active">👥 الفرق</a>
-  <a href="standings.html">📊 الترتيب</a>
-  <a href="fixtures.html">📅 المباريات</a>
-  <a href="khawas.html">✨ الخواص</a>
-</div>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">🏠 الرئيسية</a>
+      <a href="teams.html" class="active">👥 الفرق</a>
+      <a href="standings.html">📊 الترتيب</a>
+      <a href="fixtures.html">📅 المباريات</a>
+      <a href="khawas.html">✨ الخواص</a>
+    </div>
 
-<button class="hamburger"
-        onclick="document.getElementById('nav-links').classList.toggle('open')">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-```
+    <button class="hamburger"
+            onclick="document.getElementById('nav-links').classList.toggle('open')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
   </div>
 </nav>
@@ -961,18 +959,16 @@
 
   <div id="players-section">
 
-```
-<div class="players-box">
+    <div class="players-box">
 
-  <div class="players-title">
-    👤 اختر اللاعب / المدير
-  </div>
+      <div class="players-title">
+        👤 اختر اللاعب / المدير
+      </div>
 
-  <div class="players-grid" id="players-grid">
-  </div>
+      <div class="players-grid" id="players-grid">
+      </div>
 
-</div>
-```
+    </div>
 
   </div>
 
@@ -982,69 +978,67 @@
 
   <div id="fpl-section">
 
-```
-<div class="fpl-card">
+    <div class="fpl-card">
 
-  <div class="fpl-header">
+      <div class="fpl-header">
 
-    <div class="fpl-header-top">
+        <div class="fpl-header-top">
 
-      <div>
-        <div class="fpl-title" id="fpl-title">
-          🏟️ تشكيلة FPL
+          <div>
+            <div class="fpl-title" id="fpl-title">
+              🏟️ تشكيلة FPL
+            </div>
+
+            <div class="fpl-subtitle" id="fpl-subtitle">
+              التشكيلة الرسمية للجولة
+            </div>
+          </div>
+
+          <div class="gw-select-wrap">
+
+            <label for="lineup-gw">
+              الجولة
+            </label>
+
+            <select id="lineup-gw"
+                    onchange="loadSelectedLineup()">
+            </select>
+
+          </div>
+
         </div>
 
-        <div class="fpl-subtitle" id="fpl-subtitle">
-          التشكيلة الرسمية للجولة
+      </div>
+
+
+      <div class="fpl-summary" id="fpl-summary">
+      </div>
+
+
+      <div class="pitch-wrap">
+
+        <div class="pitch">
+
+          <div class="formation" id="formation">
+          </div>
+
         </div>
-      </div>
-
-      <div class="gw-select-wrap">
-
-        <label for="lineup-gw">
-          الجولة
-        </label>
-
-        <select id="lineup-gw"
-                onchange="loadSelectedLineup()">
-        </select>
 
       </div>
 
-    </div>
 
-  </div>
+      <div class="bench-section">
 
+        <div class="bench-title">
+          🪑 الدكة
+        </div>
 
-  <div class="fpl-summary" id="fpl-summary">
-  </div>
+        <div class="bench-grid" id="bench-grid">
+        </div>
 
-
-  <div class="pitch-wrap">
-
-    <div class="pitch">
-
-      <div class="formation" id="formation">
       </div>
 
     </div>
-
-  </div>
-
-
-  <div class="bench-section">
-
-    <div class="bench-title">
-      🪑 الدكة
-    </div>
-
-    <div class="bench-grid" id="bench-grid">
-    </div>
-
-  </div>
-
-</div>
-```
 
   </div>
 
@@ -1054,50 +1048,48 @@
 
   <div id="results-section" style="display:none">
 
-```
-<div class="summary-row" id="summary-row">
-</div>
+    <div class="summary-row" id="summary-row">
+    </div>
 
-<div class="section-heading">
+    <div class="section-heading">
 
-  <div class="section-icon"
-       id="tbl-icon"
-       style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">
-    ⚽
-  </div>
+      <div class="section-icon"
+           id="tbl-icon"
+           style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">
+        ⚽
+      </div>
 
-  <div class="section-title"
-       id="tbl-title">
-    سجل المباريات
-    <small>Match History</small>
-  </div>
+      <div class="section-title"
+           id="tbl-title">
+        سجل المباريات
+        <small>Match History</small>
+      </div>
 
-</div>
+    </div>
 
-<div class="table-wrap">
+    <div class="table-wrap">
 
-  <table>
+      <table>
 
-    <thead>
-      <tr>
-        <th>الجولة</th>
-        <th>الخصم</th>
-        <th class="hide-sm">نقاط الفريق</th>
-        <th class="hide-sm">نقاط الخصم</th>
-        <th>النتيجة</th>
-        <th>ماتش</th>
-        <th>خاصية / بونص</th>
-        <th>المجموع</th>
-      </tr>
-    </thead>
+        <thead>
+          <tr>
+            <th>الجولة</th>
+            <th>الخصم</th>
+            <th class="hide-sm">نقاط الفريق</th>
+            <th class="hide-sm">نقاط الخصم</th>
+            <th>النتيجة</th>
+            <th>ماتش</th>
+            <th>خاصية / بونص</th>
+            <th>المجموع</th>
+          </tr>
+        </thead>
 
-    <tbody id="matches-tbody">
-    </tbody>
+        <tbody id="matches-tbody">
+        </tbody>
 
-  </table>
+      </table>
 
-</div>
-```
+    </div>
 
   </div>
 
@@ -1107,3202 +1099,1222 @@
 
 /* =========================================================
    CONFIG
+   ─────────────────────────────────────────────────────────
+   IMPORTANT FIX:
+   The old code fetched everything from a hardcoded GitHub
+   RAW URL (with a placeholder repo name). That silently
+   failed every single request. This page now reads data
+   the same way index.html / standings.html / fixtures.html
+   do: relative local paths, with a couple of fallback paths
+   because file locations are inconsistent across the repo
+   (e.g. league.json and fixtures.json live at repo root,
+   NOT under data/).
 ========================================================= */
 
-const REPO_NAME = "El7amla-League";
-
-const RAW =
-  `https://raw.githubusercontent.com/El7amla/${REPO_NAME}/main`;
-
+const PATHS = {
+  standings: ["./data/current_standings.json"],
+  fixtures:  ["./fixtures.json", "./data/fixtures.json"],
+  league:    ["./league.json", "./data/league.json"],
+  chips:     ["./chips.json", "./data/khawas.json", "./data/chips.json"],
+  gwHistory: gw => [`./data/gw_history/gw${gw}.json`],
+  gwLineups: gw => [`./data/gw_lineups/gw${gw}.json`]
+};
 
 /* =========================================================
    TEAM META
 ========================================================= */
 
 const TEAM_META = {
-
-  "Black Tech": {
-    color:"#a855f7",
-    em:"💻"
-  },
-
-  "The Pharaohs": {
-    color:"#eab308",
-    em:"🏺"
-  },
-
-  "Falcons": {
-    color:"#3b82f6",
-    em:"🦅"
-  },
-
-  "Boys": {
-    color:"#f97316",
-    em:"⚽"
-  },
-
-  "Royal Authority": {
-    color:"#ef4444",
-    em:"👑"
-  },
-
-  "The Masterminds": {
-    color:"#06b6d4",
-    em:"🧠"
-  },
-
-  "الزرازير": {
-    color:"#8b5cf6",
-    em:"🦇"
-  },
-
-  "الاوديسي": {
-    color:"#10b981",
-    em:"🌌"
-  }
-
+  "Black Tech":      { color:"#a855f7", em:"💻" },
+  "The Pharaohs":    { color:"#eab308", em:"🏺" },
+  "Falcons":         { color:"#3b82f6", em:"🦅" },
+  "Boys":            { color:"#f97316", em:"⚽" },
+  "Royal Authority": { color:"#ef4444", em:"👑" },
+  "The Masterminds": { color:"#06b6d4", em:"🧠" },
+  "الزرازير":        { color:"#8b5cf6", em:"🦇" },
+  "الاوديسي":        { color:"#10b981", em:"🌌" },
+  "Smokers":         { color:"#22c55e", em:"💨" }
 };
 
+const FALLBACK_TEAMS = Object.keys(TEAM_META);
 
 /* =========================================================
    STATE
 ========================================================= */
 
 let standingsData = null;
-let fixturesData = null;
-let khawasData = null;
-let leagueData = null;
+let fixturesData  = null;
+let chipsData     = null;
+let leagueData    = null;
 
-let selectedTeam = null;
+let selectedTeam   = null;
 let selectedPlayer = null;
+let currentLineup  = null;
 
 let currentGW = 1;
 
-
 /* =========================================================
-   FALLBACK TEAMS
-========================================================= */
-
-const FALLBACK_TEAMS = Object.keys(TEAM_META);
-
-
-/* =========================================================
-   ESCAPE HTML
+   UTILITIES
 ========================================================= */
 
 function escapeHtml(value) {
-
   return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
-
 }
 
+/*
+  Normalize team names for comparison so Arabic names, extra
+  spaces, or slightly different casing don't break matching.
+*/
+function normalizeTeamName(name) {
+  return String(name ?? "")
+    .normalize("NFC")
+    .trim()
+    .replace(/\s+/g, " ");
+}
 
-/* =========================================================
-   FETCH JSON
-========================================================= */
+function teamsEqual(a, b) {
+  return normalizeTeamName(a) === normalizeTeamName(b) && normalizeTeamName(a) !== "";
+}
 
-async function fetchJSON(path) {
+function getTeamMeta(name) {
+  const key = Object.keys(TEAM_META).find(k => teamsEqual(k, name));
+  return TEAM_META[key] || { color: "#64748b", em: "⚽" };
+}
 
-  const response = await fetch(
-    `${RAW}/${path}?v=${Date.now()}`,
-    {
-      cache:"no-store"
+/*
+  Fetch JSON trying multiple candidate paths in order.
+  Returns null (and logs) if every candidate fails — never throws,
+  so a single missing/renamed file can't crash the whole page.
+*/
+async function fetchJSONWithFallback(paths) {
+  for (const path of paths) {
+    try {
+      const res = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+      if (res.ok) {
+        return await res.json();
+      }
+      console.warn(`[teams.html] HTTP ${res.status} for ${path}`);
+    } catch (err) {
+      console.warn(`[teams.html] Fetch failed for ${path}:`, err);
     }
-  );
-
-  if (!response.ok) {
-
-    throw new Error(
-      `HTTP ${response.status} - ${path}`
-    );
-
   }
-
-  return await response.json();
-
+  console.error(`[teams.html] All candidate paths failed:`, paths);
+  return null;
 }
-
 
 /* =========================================================
    INIT
 ========================================================= */
 
 async function init() {
-
   console.log("El7amla Teams: starting...");
 
+  const [standingsRes, fixturesRes, chipsRes, leagueRes] = await Promise.all([
+    fetchJSONWithFallback(PATHS.standings),
+    fetchJSONWithFallback(PATHS.fixtures),
+    fetchJSONWithFallback(PATHS.chips),
+    fetchJSONWithFallback(PATHS.league)
+  ]);
 
-  const results =
-    await Promise.allSettled([
+  standingsData = standingsRes || { current_gw: 1, teams: [] };
+  fixturesData  = fixturesRes  || {};
+  chipsData     = chipsRes     || {};
+  leagueData    = leagueRes    || null;
 
-      fetchJSON("data/current_standings.json"),
+  if (!standingsRes) console.error("[teams.html] Could not load current_standings.json — team ranks/points/matches will be limited.");
+  if (!fixturesRes)  console.error("[teams.html] Could not load fixtures.json — fixture-based fallbacks will be unavailable.");
+  if (!leagueRes)    console.error("[teams.html] Could not load league.json — player lists will be empty (falling back to team names only).");
 
-      fetchJSON("data/fixtures.json"),
-
-      fetchJSON("data/khawas.json"),
-
-      fetchJSON("data/league.json")
-
-    ]);
-
-
-  if (
-    results[0].status === "fulfilled"
-  ) {
-
-    standingsData =
-      results[0].value;
-
-  }
-
-
-  if (
-    results[1].status === "fulfilled"
-  ) {
-
-    fixturesData =
-      results[1].value;
-
-  }
-
-
-  if (
-    results[2].status === "fulfilled"
-  ) {
-
-    khawasData =
-      results[2].value;
-
-  }
-
-
-  if (
-    results[3].status === "fulfilled"
-  ) {
-
-    leagueData =
-      results[3].value;
-
-    console.log(
-      "league.json loaded:",
-      leagueData
-    );
-
-  }
-
-
-  if (!standingsData) {
-
-    standingsData = {
-      current_gw:1,
-      teams:[]
-    };
-
-  }
-
-
-  currentGW =
-    Number(
-      standingsData.current_gw || 1
-    );
-
+  currentGW = Number(standingsData.current_gw || 1);
 
   buildTeamCards();
-
 }
 
-
 /* =========================================================
-   GET STANDINGS TEAMS SAFELY
+   STANDINGS HELPERS
 ========================================================= */
 
 function getStandingsTeams() {
-
-  if (
-    !standingsData ||
-    !standingsData.teams
-  ) {
-
-    return [];
-
-  }
-
-
-  if (
-    Array.isArray(
-      standingsData.teams
-    )
-  ) {
-
-    return standingsData.teams;
-
-  }
-
-
-  if (
-    typeof standingsData.teams === "object"
-  ) {
-
-    return Object.values(
-      standingsData.teams
-    );
-
-  }
-
-
+  if (!standingsData || !standingsData.teams) return [];
+  if (Array.isArray(standingsData.teams)) return standingsData.teams;
+  if (typeof standingsData.teams === "object") return Object.values(standingsData.teams);
   return [];
-
 }
 
+function getTeamStanding(teamName) {
+  return getStandingsTeams().find(t =>
+    teamsEqual(t.name, teamName) || teamsEqual(t.team, teamName) || teamsEqual(t.team_name, teamName)
+  ) || null;
+}
+
+function getTeamRank(teamName) {
+  const teams = getStandingsTeams();
+  const idx = teams.findIndex(t =>
+    teamsEqual(t.name, teamName) || teamsEqual(t.team, teamName) || teamsEqual(t.team_name, teamName)
+  );
+  return idx >= 0 ? idx + 1 : 0;
+}
 
 /* =========================================================
-   GET LEAGUE TEAMS
+   MATCH HELPERS
+   Prefer matches_by_gw (new source of truth). Fall back to the
+   flat "matches" array (what update_standings.py currently
+   writes). Both are supported transparently.
+========================================================= */
+
+function getAllMatches() {
+  if (!standingsData) return [];
+  if (standingsData.matches_by_gw && typeof standingsData.matches_by_gw === "object") {
+    return Object.values(standingsData.matches_by_gw).flat();
+  }
+  if (Array.isArray(standingsData.matches)) {
+    return standingsData.matches;
+  }
+  return [];
+}
+
+function getGWMatches(gw) {
+  if (!standingsData) return [];
+  const byGW = standingsData.matches_by_gw;
+  if (byGW) {
+    const m = byGW[String(gw)] ?? byGW[gw];
+    if (Array.isArray(m)) return m;
+  }
+  return getAllMatches().filter(m => Number(m.gw) === Number(gw));
+}
+
+function getTeamMatches(teamName) {
+  return getAllMatches()
+    .filter(m => teamsEqual(m.home, teamName) || teamsEqual(m.away, teamName))
+    .sort((a, b) => Number(a.gw) - Number(b.gw));
+}
+
+/* =========================================================
+   FIXTURES HELPERS (fallback only, for GWs with no result yet)
+========================================================= */
+
+function getFixtureMatchups(gw) {
+  const fixtures = fixturesData?.fixtures || fixturesData || {};
+  return fixtures[String(gw)] || fixtures[gw] || [];
+}
+
+/* =========================================================
+   CHIPS / KHAWAS HELPERS
+   chips.json is keyed per TEAM -> chip -> half (h1/h2) -> {gw,...}
+   We flatten it into gw -> team -> [chip usages] for display.
+========================================================= */
+
+function buildChipsByGW(chips) {
+  const map = {};
+  if (!chips || typeof chips !== "object") return map;
+
+  for (const [team, chipInfo] of Object.entries(chips)) {
+    if (team.startsWith("_") || !chipInfo || typeof chipInfo !== "object") continue;
+
+    for (const chipKey of ["one_v_one", "double_player", "borrow"]) {
+      const def = chipInfo[chipKey];
+      if (!def) continue;
+      [def.h1, def.h2].forEach(slot => {
+        if (!slot || slot.gw == null) return;
+        if (slot.status && slot.status === "canceled") return;
+        const gw = slot.gw;
+        map[gw] = map[gw] || {};
+        map[gw][team] = map[gw][team] || [];
+        map[gw][team].push({ chip: chipKey, won: slot.won ?? null });
+      });
+    }
+
+    const bonus3 = chipInfo.bonus3;
+    if (bonus3 && bonus3.used && bonus3.gw != null) {
+      const gw = bonus3.gw;
+      map[gw] = map[gw] || {};
+      map[gw][team] = map[gw][team] || [];
+      map[gw][team].push({ chip: "bonus3", won: bonus3.won ?? null });
+    }
+  }
+
+  return map;
+}
+
+function getChipsForTeamGW(chipsByGW, teamName, gw) {
+  const teamsAtGW = chipsByGW[gw] || chipsByGW[String(gw)];
+  if (!teamsAtGW) return [];
+  const key = Object.keys(teamsAtGW).find(k => teamsEqual(k, teamName));
+  return key ? teamsAtGW[key] : [];
+}
+
+/* =========================================================
+   LEAGUE / PLAYERS HELPERS
 ========================================================= */
 
 function getLeagueTeams() {
-
-  /*
-    1) league.json -> teams array
-  */
-
-  if (
-    leagueData &&
-    Array.isArray(
-      leagueData.teams
-    )
-  ) {
-
-    const names =
-      leagueData.teams
-        .map(team => {
-
-          if (
-            typeof team === "string"
-          ) {
-
-            return team;
-
-          }
-
-
-          return (
-            team.name ||
-            team.team ||
-            team.team_name ||
-            team.teamName ||
-            null
-          );
-
-        })
-        .filter(Boolean);
-
-
-    if (names.length) {
-
-      return [
-        ...new Set(names)
-      ];
-
-    }
-
+  if (leagueData && leagueData.teams && typeof leagueData.teams === "object" && !Array.isArray(leagueData.teams)) {
+    const names = Object.keys(leagueData.teams);
+    if (names.length) return names;
   }
 
-
-  /*
-    2) league.json -> teams object
-  */
-
-  if (
-    leagueData &&
-    leagueData.teams &&
-    typeof leagueData.teams === "object" &&
-    !Array.isArray(leagueData.teams)
-  ) {
-
-    const names =
-      Object.keys(
-        leagueData.teams
-      );
-
-
-    if (names.length) {
-
-      return names;
-
-    }
-
-  }
-
-
-  /*
-    3) standings
-  */
-
-  const standings =
-    getStandingsTeams()
-      .map(
-        team =>
-          team.name ||
-          team.team ||
-          team.team_name
-      )
+  if (leagueData && Array.isArray(leagueData.teams)) {
+    const names = leagueData.teams
+      .map(team => (typeof team === "string" ? team : (team.name || team.team || team.team_name || team.teamName || null)))
       .filter(Boolean);
-
-
-  if (standings.length) {
-
-    return [
-      ...new Set(standings)
-    ];
-
+    if (names.length) return [...new Set(names)];
   }
 
-
-  /*
-    4) fallback
-  */
+  const standingsNames = getStandingsTeams()
+    .map(t => t.name || t.team || t.team_name)
+    .filter(Boolean);
+  if (standingsNames.length) return [...new Set(standingsNames)];
 
   return FALLBACK_TEAMS;
-
 }
-
-
-/* =========================================================
-   FIND TEAM OBJECT IN LEAGUE.JSON
-========================================================= */
 
 function findLeagueTeam(teamName) {
+  if (!leagueData) return null;
 
-  if (!leagueData) {
-
-    return null;
-
+  if (leagueData.teams && typeof leagueData.teams === "object" && !Array.isArray(leagueData.teams)) {
+    const key = Object.keys(leagueData.teams).find(k => teamsEqual(k, teamName));
+    if (key) return leagueData.teams[key];
   }
 
-
-  /*
-    teams = Array
-  */
-
-  if (
-    Array.isArray(
-      leagueData.teams
-    )
-  ) {
-
-    const found =
-      leagueData.teams.find(
-        team => {
-
-          if (
-            typeof team === "string"
-          ) {
-
-            return team === teamName;
-
-          }
-
-
-          return (
-            team.name === teamName ||
-            team.team === teamName ||
-            team.team_name === teamName ||
-            team.teamName === teamName
-          );
-
-        }
-      );
-
-
-    if (found) {
-
-      return found;
-
-    }
-
+  if (Array.isArray(leagueData.teams)) {
+    const found = leagueData.teams.find(team => {
+      if (typeof team === "string") return teamsEqual(team, teamName);
+      return teamsEqual(team.name, teamName) || teamsEqual(team.team, teamName) ||
+             teamsEqual(team.team_name, teamName) || teamsEqual(team.teamName, teamName);
+    });
+    if (found) return found;
   }
 
-
-  /*
-    teams = Object
-  */
-
-  if (
-    leagueData.teams &&
-    typeof leagueData.teams === "object" &&
-    !Array.isArray(leagueData.teams)
-  ) {
-
-    if (
-      leagueData.teams[teamName]
-    ) {
-
-      return leagueData.teams[teamName];
-
-    }
-
-  }
-
-
-  /*
-    Root object itself may contain team
-  */
-
-  if (
-    leagueData[teamName]
-  ) {
-
-    return leagueData[teamName];
-
-  }
-
+  if (leagueData[teamName]) return leagueData[teamName];
 
   return null;
-
 }
 
-
-/* =========================================================
-   GET TEAM PLAYERS
-========================================================= */
-
+/*
+  Handles league.json's real shape:
+    "players": { "Elfiky": 43949, "Saady": 3492393 }
+  i.e. key = player name, value = FPL entry id.
+  Also tolerant of an object-of-objects shape for future-proofing.
+*/
 function getTeamPlayers(teamName) {
-
-  const team =
-    findLeagueTeam(teamName);
-
+  const team = findLeagueTeam(teamName);
 
   if (!team) {
-
+    console.error(`[teams.html] No league.json entry found for team "${teamName}"`);
     return [];
-
   }
 
+  let rawPlayers = team.players ?? team.members ?? team.managers ?? team.users ??
+                   team.players_list ?? team.player_list ?? [];
 
-  /*
-    Try all possible player keys
-  */
-
-  let rawPlayers =
-    team.players ??
-    team.members ??
-    team.managers ??
-    team.users ??
-    team.players_list ??
-    team.player_list ??
-    [];
-
-
-  /*
-    Object -> Array
-  */
-
-  if (
-    rawPlayers &&
-    typeof rawPlayers === "object" &&
-    !Array.isArray(rawPlayers)
-  ) {
-
-    rawPlayers =
-      Object.entries(
-        rawPlayers
-      ).map(
-        ([key,value]) => {
-
-          if (
-            typeof value === "object" &&
-            value !== null
-          ) {
-
-            return {
-              ...value,
-
-              entry_id:
-                value.entry_id ??
-                value.entryId ??
-                value.id ??
-                key
-            };
-
-          }
-
-
-          return {
-            name:value,
-            entry_id:key
-          };
-
-        }
-      );
-
+  if (rawPlayers && typeof rawPlayers === "object" && !Array.isArray(rawPlayers)) {
+    rawPlayers = Object.entries(rawPlayers).map(([key, value]) => {
+      if (value && typeof value === "object") {
+        // { "43949": { name: "Elfiky", ... } } shape
+        return {
+          name: value.name || value.player || value.manager || key,
+          entry_id: value.entry_id ?? value.entryId ?? value.id ?? key
+        };
+      }
+      // { "Elfiky": 43949 } shape — the real league.json shape
+      return { name: key, entry_id: value };
+    });
   }
-
 
   if (!Array.isArray(rawPlayers)) {
-
+    console.error(`[teams.html] Unexpected players shape for team "${teamName}":`, rawPlayers);
     return [];
-
   }
 
-
   return rawPlayers
-    .map((player,index) => {
-
-      /*
-        String:
-        "Elfiky"
-      */
-
-      if (
-        typeof player === "string"
-      ) {
-
-        return {
-          name:player,
-          entry_id:null
-        };
-
-      }
-
-
-      if (
-        !player ||
-        typeof player !== "object"
-      ) {
-
-        return null;
-
-      }
-
-
+    .map((player, index) => {
+      if (typeof player === "string") return { name: player, entry_id: null };
+      if (!player || typeof player !== "object") return null;
       return {
-
-        name:
-          player.name ||
-          player.player ||
-          player.manager ||
-          player.username ||
-          player.display_name ||
-          player.displayName ||
-          `Player ${index + 1}`,
-
-        entry_id:
-          player.entry_id ??
-          player.entryId ??
-          player.id ??
-          player.team_id ??
-          player.teamId ??
-          player.entry ??
-          null
-
+        name: player.name || player.player || player.manager || player.username ||
+              player.display_name || player.displayName || `Player ${index + 1}`,
+        entry_id: player.entry_id ?? player.entryId ?? player.id ??
+                  player.team_id ?? player.teamId ?? player.entry ?? null
       };
-
     })
     .filter(Boolean);
-
 }
 
-
 /* =========================================================
-   TEAM CARD ID
+   TEAM CARD ID (stable, safe for Arabic + spaced names)
 ========================================================= */
 
 function teamCardId(name) {
-
-  return "team_" +
-    Array.from(
-      String(name)
-    )
-    .map(
-      char =>
-        char.charCodeAt(0)
-    )
-    .join("_");
-
+  return "team_" + Array.from(String(name)).map(char => char.charCodeAt(0)).join("_");
 }
-
 
 /* =========================================================
    BUILD TEAM CARDS
 ========================================================= */
 
 function buildTeamCards() {
-
-  const grid =
-    document.getElementById(
-      "teams-grid"
-    );
-
-
+  const grid = document.getElementById("teams-grid");
   if (!grid) {
-
-    console.error(
-      "teams-grid not found"
-    );
-
+    console.error("[teams.html] #teams-grid not found in DOM");
     return;
-
   }
 
-
-  const teams =
-    getLeagueTeams();
-
-
-  console.log(
-    "Teams:",
-    teams
-  );
-
+  const teams = getLeagueTeams();
+  console.log("[teams.html] Teams:", teams);
 
   if (!teams.length) {
-
-    grid.innerHTML = `
-
-      <div class="state-box">
-
-        ⚠️ لا توجد فرق متاحة
-
-      </div>
-
-    `;
-
+    grid.innerHTML = `<div class="state-box">⚠️ لا توجد فرق متاحة</div>`;
     return;
-
   }
 
+  grid.innerHTML = teams.map(name => {
+    const meta = getTeamMeta(name);
+    const rank = getTeamRank(name);
+    const tData = getTeamStanding(name) || {};
 
-  const standings =
-    getStandingsTeams();
+    const rankEmoji = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : (rank > 0 ? `#${rank}` : "-");
 
+    return `
+      <div class="team-card"
+           id="${teamCardId(name)}"
+           data-team-name="${escapeHtml(name)}"
+           style="border-color:${meta.color}44">
+        <div class="team-card-em">${meta.em}</div>
+        <div class="team-card-name" style="color:${meta.color}">${escapeHtml(name)}</div>
+        <div class="team-card-sub">${rankEmoji} · ${tData.total ?? 0} نقطة</div>
+      </div>
+    `;
+  }).join("");
 
-  grid.innerHTML =
-    teams.map(
-      name => {
-
-        const meta =
-          TEAM_META[name] ||
-          {
-            color:"#64748b",
-            em:"⚽"
-          };
-
-
-        const tData =
-          standings.find(
-            team =>
-              (
-                team.name === name ||
-                team.team === name ||
-                team.team_name === name
-              )
-          ) || {};
-
-
-        const rankIndex =
-          standings.findIndex(
-            team =>
-              (
-                team.name === name ||
-                team.team === name ||
-                team.team_name === name
-              )
-          );
-
-
-        const rank =
-          rankIndex >= 0
-            ? rankIndex + 1
-            : "-";
-
-
-        const rankEmoji =
-          rank === 1
-            ? "🥇"
-            : rank === 2
-            ? "🥈"
-            : rank === 3
-            ? "🥉"
-            : `#${rank}`;
-
-
-        return `
-
-          <div
-            class="team-card"
-            id="${teamCardId(name)}"
-            data-team-name="${escapeHtml(name)}"
-            style="
-              border-color:${meta.color}44
-            "
-          >
-
-            <div class="team-card-em">
-              ${meta.em}
-            </div>
-
-            <div
-              class="team-card-name"
-              style="
-                color:${meta.color}
-              "
-            >
-              ${escapeHtml(name)}
-            </div>
-
-            <div class="team-card-sub">
-
-              ${rankEmoji}
-
-              ·
-
-              ${tData.total ?? 0}
-
-              نقطة
-
-            </div>
-
-          </div>
-
-        `;
-
-      }
-    ).join("");
-
-
-  /*
-    مهم:
-    نربط click بعد إنشاء الكروت.
-    مش onclick داخل HTML.
-  */
-
-  grid
-    .querySelectorAll(".team-card")
-    .forEach(card => {
-
-      card.addEventListener(
-        "click",
-        function() {
-
-          const teamName =
-            this.dataset.teamName;
-
-
-          console.log(
-            "Selected team:",
-            teamName
-          );
-
-
-          selectTeam(
-            teamName
-          );
-
-        }
-      );
-
+  // Event listeners (never inline onclick) — safe for Arabic/spaced names via data-team-name.
+  grid.querySelectorAll(".team-card").forEach(card => {
+    card.addEventListener("click", function () {
+      selectTeam(this.dataset.teamName);
     });
-
+  });
 }
-
 
 /* =========================================================
    SELECT TEAM
 ========================================================= */
 
 function selectTeam(name) {
+  console.log("[teams.html] selectTeam:", name);
 
-  console.log(
-    "selectTeam:",
-    name
-  );
+  const teams = getLeagueTeams();
 
+  teams.forEach(teamName => {
+    const card = document.getElementById(teamCardId(teamName));
+    if (!card) return;
+    const meta = getTeamMeta(teamName);
 
-  const teams =
-    getLeagueTeams();
-
-
-  teams.forEach(
-    teamName => {
-
-      const card =
-        document.getElementById(
-          teamCardId(teamName)
-        );
-
-
-      if (!card) {
-        return;
-      }
-
-
-      const meta =
-        TEAM_META[teamName] ||
-        {
-          color:"#64748b"
-        };
-
-
-      if (
-        teamName === name
-      ) {
-
-        card.classList.add(
-          "active"
-        );
-
-        card.style.borderColor =
-          meta.color;
-
-        card.style.background =
-          meta.color + "22";
-
-        card.style.boxShadow =
-          `0 0 20px ${meta.color}44`;
-
-      }
-
-      else {
-
-        card.classList.remove(
-          "active"
-        );
-
-        card.style.borderColor =
-          meta.color + "44";
-
-        card.style.background = "";
-
-        card.style.boxShadow = "";
-
-      }
-
+    if (teamsEqual(teamName, name)) {
+      card.classList.add("active");
+      card.style.borderColor = meta.color;
+      card.style.background = meta.color + "22";
+      card.style.boxShadow = `0 0 20px ${meta.color}44`;
+    } else {
+      card.classList.remove("active");
+      card.style.borderColor = meta.color + "44";
+      card.style.background = "";
+      card.style.boxShadow = "";
     }
-  );
-
+  });
 
   selectedTeam = name;
-
   selectedPlayer = null;
 
+  renderTeamResults(name);
+  buildPlayerSelector(name);
 
-  /*
-    الأول:
-    اعرض سجل الفريق فورًا.
-  */
-
-  renderTeamResults(
-    name
-  );
-
-
-  /*
-    الثاني:
-    ابنِ قائمة اللاعبين.
-  */
-
-  buildPlayerSelector(
-    name
-  );
-
-
-  /*
-    Scroll بسيط للقسم.
-  */
-
-  setTimeout(
-    () => {
-
-      const players =
-        document.getElementById(
-          "players-section"
-        );
-
-
-      if (
-        players &&
-        players.style.display !== "none"
-      ) {
-
-        players.scrollIntoView({
-          behavior:"smooth",
-          block:"start"
-        });
-
-      }
-
-    },
-    100
-  );
-
+  setTimeout(() => {
+    const players = document.getElementById("players-section");
+    if (players && players.style.display !== "none") {
+      players.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 100);
 }
-
 
 /* =========================================================
    PLAYER SELECTOR
 ========================================================= */
 
-function buildPlayerSelector(
-  teamName
-) {
+function buildPlayerSelector(teamName) {
+  const section = document.getElementById("players-section");
+  const grid = document.getElementById("players-grid");
+  if (!section || !grid) return;
 
-  const section =
-    document.getElementById(
-      "players-section"
-    );
+  const players = getTeamPlayers(teamName);
+  console.log("[teams.html] Players for", teamName, players);
 
-
-  const grid =
-    document.getElementById(
-      "players-grid"
-    );
-
-
-  if (!section || !grid) {
-
-    return;
-
-  }
-
-
-  const players =
-    getTeamPlayers(
-      teamName
-    );
-
-
-  console.log(
-    "Players for",
-    teamName,
-    players
-  );
-
-
-  /*
-    مفيش players:
-    نعرض رسالة بدل ما نخفي كل حاجة.
-  */
+  section.style.display = "block";
 
   if (!players.length) {
-
-    section.style.display =
-      "block";
-
-
     grid.innerHTML = `
-
-      <div
-        style="
-          grid-column:1/-1;
-          text-align:center;
-          padding:20px;
-          color:var(--text-muted)
-        "
-      >
-
+      <div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-muted)">
         👤 لا توجد بيانات لاعبين لهذا الفريق
-
         <br>
-
-        <small>
-          سيتم عرض سجل مباريات الفريق بالأسفل
-        </small>
-
+        <small>تحقق من ربط الفريق داخل league.json</small>
       </div>
-
     `;
-
-
     hideFPL();
-
-
     return;
-
   }
 
+  grid.innerHTML = players.map((player, index) => `
+    <div class="player-card" id="player-${index}" data-player-index="${index}">
+      <div class="player-avatar">👤</div>
+      <div class="player-info">
+        <div class="player-name">${escapeHtml(player.name)}</div>
+        <div class="player-entry">ENTRY: ${escapeHtml(player.entry_id ?? "N/A")}</div>
+      </div>
+    </div>
+  `).join("");
 
-  section.style.display =
-    "block";
-
-
-  grid.innerHTML =
-    players.map(
-      (player,index) => `
-
-        <div
-          class="player-card"
-          id="player-${index}"
-          data-player-index="${index}"
-        >
-
-          <div class="player-avatar">
-            👤
-          </div>
-
-          <div class="player-info">
-
-            <div class="player-name">
-              ${escapeHtml(
-                player.name
-              )}
-            </div>
-
-            <div class="player-entry">
-
-              ENTRY:
-
-              ${escapeHtml(
-                player.entry_id ??
-                "N/A"
-              )}
-
-            </div>
-
-          </div>
-
-        </div>
-
-      `
-    ).join("");
-
-
-  grid
-    .querySelectorAll(
-      ".player-card"
-    )
-    .forEach(card => {
-
-      card.addEventListener(
-        "click",
-        function() {
-
-          selectPlayer(
-            Number(
-              this.dataset.playerIndex
-            )
-          );
-
-        }
-      );
-
+  grid.querySelectorAll(".player-card").forEach(card => {
+    card.addEventListener("click", function () {
+      selectPlayer(Number(this.dataset.playerIndex));
     });
+  });
 
-
-  /*
-    لو فيه لاعب واحد فقط
-    اختاره تلقائيًا.
-  */
-
-  if (
-    players.length === 1
-  ) {
-
+  if (players.length === 1) {
     selectPlayer(0);
-
   }
-
 }
-
 
 /* =========================================================
    SELECT PLAYER
 ========================================================= */
 
 function selectPlayer(index) {
+  if (!selectedTeam) return;
 
-  if (!selectedTeam) {
-    return;
-  }
-
-
-  const players =
-    getTeamPlayers(
-      selectedTeam
-    );
-
-
-  const player =
-    players[index];
-
+  const players = getTeamPlayers(selectedTeam);
+  const player = players[index];
 
   if (!player) {
-
-    console.warn(
-      "Player not found:",
-      index
-    );
-
+    console.warn("[teams.html] Player not found at index:", index);
     return;
-
   }
 
+  document.querySelectorAll(".player-card").forEach(card => card.classList.remove("active"));
+  const card = document.getElementById(`player-${index}`);
+  if (card) card.classList.add("active");
 
-  document
-    .querySelectorAll(
-      ".player-card"
-    )
-    .forEach(
-      card =>
-        card.classList.remove(
-          "active"
-        )
-    );
-
-
-  const card =
-    document.getElementById(
-      `player-${index}`
-    );
-
-
-  if (card) {
-
-    card.classList.add(
-      "active"
-    );
-
-  }
-
-
-  selectedPlayer =
-    player;
-
-
-  console.log(
-    "Selected player:",
-    selectedPlayer
-  );
-
+  selectedPlayer = player;
+  console.log("[teams.html] Selected player:", selectedPlayer);
 
   showFPL();
-
 }
 
-
 /* =========================================================
-   SHOW FPL
+   SHOW / HIDE FPL
 ========================================================= */
 
 function showFPL() {
+  const section = document.getElementById("fpl-section");
+  if (!section) return;
+  section.style.display = "block";
 
-  const section =
-    document.getElementById(
-      "fpl-section"
-    );
-
-
-  if (!section) {
-    return;
-  }
-
-
-  section.style.display =
-    "block";
-
-
-  const title =
-    document.getElementById(
-      "fpl-title"
-    );
-
-
-  const subtitle =
-    document.getElementById(
-      "fpl-subtitle"
-    );
-
-
-  if (title) {
-
-    title.textContent =
-      `🏟️ ${selectedPlayer.name} — تشكيلة FPL`;
-
-  }
-
-
-  if (subtitle) {
-
-    subtitle.textContent =
-      `Entry ID: ${
-        selectedPlayer.entry_id ??
-        "N/A"
-      }`;
-
-  }
-
+  const title = document.getElementById("fpl-title");
+  const subtitle = document.getElementById("fpl-subtitle");
+  if (title) title.textContent = `🏟️ ${selectedPlayer.name} — تشكيلة FPL`;
+  if (subtitle) subtitle.textContent = `Entry ID: ${selectedPlayer.entry_id ?? "N/A"}`;
 
   buildGWSelector();
-
   loadSelectedLineup();
-
 }
-
-
-/* =========================================================
-   HIDE FPL
-========================================================= */
 
 function hideFPL() {
-
-  const section =
-    document.getElementById(
-      "fpl-section"
-    );
-
-
-  if (section) {
-
-    section.style.display =
-      "none";
-
-  }
-
+  const section = document.getElementById("fpl-section");
+  if (section) section.style.display = "none";
 }
-
 
 /* =========================================================
    GW SELECTOR
 ========================================================= */
 
 function buildGWSelector() {
+  const select = document.getElementById("lineup-gw");
+  if (!select) return;
 
-  const select =
-    document.getElementById(
-      "lineup-gw"
-    );
-
-
-  if (!select) {
-    return;
-  }
-
-
-  const previous =
-    Number(
-      select.value ||
-      currentGW
-    );
-
-
+  const previous = Number(select.value || currentGW);
   select.innerHTML = "";
 
-
-  for (
-    let gw = 1;
-    gw <= currentGW;
-    gw++
-  ) {
-
-    const option =
-      document.createElement(
-        "option"
-      );
-
-
+  for (let gw = 1; gw <= currentGW; gw++) {
+    const option = document.createElement("option");
     option.value = gw;
-
-    option.textContent =
-      `GW ${gw}`;
-
-
-    if (
-      gw === previous
-    ) {
-
-      option.selected =
-        true;
-
-    }
-
-
-    select.appendChild(
-      option
-    );
-
+    option.textContent = `GW ${gw}`;
+    if (gw === previous) option.selected = true;
+    select.appendChild(option);
   }
 
-
-  if (!select.value) {
-
-    select.value =
-      currentGW;
-
-  }
-
+  if (!select.value) select.value = currentGW;
 }
-
 
 /* =========================================================
    LOAD LINEUP
 ========================================================= */
 
 async function loadSelectedLineup() {
+  if (!selectedPlayer) return;
 
-  if (!selectedPlayer) {
-    return;
-  }
+  const select = document.getElementById("lineup-gw");
+  if (!select) return;
 
-
-  const select =
-    document.getElementById(
-      "lineup-gw"
-    );
-
-
-  if (!select) {
-    return;
-  }
-
-
-  const gw =
-    Number(
-      select.value
-    );
-
-
-  const formation =
-    document.getElementById(
-      "formation"
-    );
-
-
-  const bench =
-    document.getElementById(
-      "bench-grid"
-    );
-
+  const gw = Number(select.value);
+  const formation = document.getElementById("formation");
+  const bench = document.getElementById("bench-grid");
 
   if (formation) {
-
     formation.innerHTML = `
-
       <div class="state-box">
-
         <div class="spinner"></div>
-
         جاري تحميل تشكيلة GW${gw}...
-
       </div>
-
     `;
+  }
+  if (bench) bench.innerHTML = "";
 
+  const data = await fetchJSONWithFallback(PATHS.gwLineups(gw));
+
+  if (!data) {
+    console.error(`[teams.html] Could not load lineup data for GW${gw}`);
+    renderLineupError(`تعذر تحميل بيانات تشكيلة GW${gw}`);
+    return;
   }
 
+  console.log(`[teams.html] GW${gw} lineup data:`, data);
 
-  if (bench) {
+  const lineup = extractPlayerLineup(data, selectedPlayer, selectedTeam);
 
-    bench.innerHTML = "";
-
+  if (!lineup) {
+    renderLineupError(`لا توجد تشكيلة مسجلة للاعب ${selectedPlayer.name} في GW${gw}`);
+    return;
   }
 
-
-  try {
-
-    const data =
-      await fetchJSON(
-        `data/gw_lineups/gw${gw}.json`
-      );
-
-
-    console.log(
-      `GW${gw} lineup data:`,
-      data
-    );
-
-
-    const lineup =
-      extractPlayerLineup(
-        data,
-        selectedPlayer
-      );
-
-
-    if (!lineup) {
-
-      renderLineupError(
-        `لا توجد تشكيلة مسجلة للاعب ${selectedPlayer.name} في GW${gw}`
-      );
-
-      return;
-
-    }
-
-
-    renderLineup(
-      lineup,
-      gw
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      `GW${gw} lineup error:`,
-      error
-    );
-
-
-    renderLineupError(
-      `تعذر تحميل بيانات تشكيلة GW${gw}`
-    );
-
-  }
-
+  renderLineup(lineup, gw);
 }
-
 
 /* =========================================================
    EXTRACT PLAYER LINEUP
+   Real generator shape (update_standings.py):
+     { "TeamName": { "entryId": { picks:[...], points, entry_history-derived fields... } } }
+   Legacy/alternate shapes are still supported as fallbacks.
 ========================================================= */
 
-function extractPlayerLineup(
-  data,
-  player
-) {
+function extractPlayerLineup(data, player, teamName) {
+  if (!data || !player) return null;
 
-  if (!data || !player) {
+  const entryId = String(player.entry_id ?? "");
 
-    return null;
-
+  // 1) Real generator shape: keyed by team, then entry id.
+  if (teamName) {
+    const teamKey = Object.keys(data).find(k => teamsEqual(k, teamName));
+    if (teamKey && data[teamKey] && entryId && data[teamKey][entryId]) {
+      return normalizeLineup(data[teamKey][entryId]);
+    }
   }
 
+  // 2) Flat entryId shape.
+  if (entryId && data[entryId]) {
+    return normalizeLineup(data[entryId]);
+  }
 
-  const entryId =
-    String(
-      player.entry_id ??
-      ""
+  // 3) data.players wrapper.
+  if (data.players && typeof data.players === "object") {
+    if (entryId && data.players[entryId]) return normalizeLineup(data.players[entryId]);
+    const found = Object.values(data.players).find(item =>
+      String(item?.entry_id ?? item?.entryId ?? item?.id ?? "") === entryId
     );
+    if (found) return normalizeLineup(found);
+  }
 
-
-  /*
-    الشكل:
-    {
-      "43949": {...}
-    }
-  */
-
-  if (
-    entryId &&
-    data[entryId]
-  ) {
-
-    return normalizeLineup(
-      data[entryId]
+  // 4) Array shape.
+  if (Array.isArray(data)) {
+    const found = data.find(item =>
+      String(item?.entry_id ?? item?.entryId ?? item?.id ?? "") === entryId
     );
-
+    if (found) return normalizeLineup(found);
   }
-
-
-  /*
-    players
-  */
-
-  if (
-    data.players &&
-    typeof data.players === "object"
-  ) {
-
-    if (
-      entryId &&
-      data.players[entryId]
-    ) {
-
-      return normalizeLineup(
-        data.players[entryId]
-      );
-
-    }
-
-
-    const found =
-      Object.values(
-        data.players
-      ).find(
-        item =>
-          String(
-            item?.entry_id ??
-            item?.entryId ??
-            item?.id ??
-            ""
-          ) === entryId
-      );
-
-
-    if (found) {
-
-      return normalizeLineup(
-        found
-      );
-
-    }
-
-  }
-
-
-  /*
-    array
-  */
-
-  if (
-    Array.isArray(data)
-  ) {
-
-    const found =
-      data.find(
-        item =>
-          String(
-            item?.entry_id ??
-            item?.entryId ??
-            item?.id ??
-            ""
-          ) === entryId
-      );
-
-
-    if (found) {
-
-      return normalizeLineup(
-        found
-      );
-
-    }
-
-  }
-
 
   return null;
-
 }
-
 
 /* =========================================================
    NORMALIZE LINEUP
 ========================================================= */
 
-function normalizeLineup(
-  raw
-) {
+function normalizeLineup(raw) {
+  if (!raw) return null;
 
-  if (!raw) {
-    return null;
+  // Real generator shape: raw.picks is the FPL "picks" array
+  // (position 1-11 = starting XI, 12-15 = bench).
+  if (Array.isArray(raw.picks)) {
+    const starters = raw.picks.filter(p => Number(p.position) <= 11).map(normalizePlayer);
+    const bench = raw.picks.filter(p => Number(p.position) > 11).map(normalizePlayer);
+    const captainPick = raw.picks.find(p => p.is_captain);
+    const vicePick = raw.picks.find(p => p.is_vice_captain);
+
+    return {
+      formation: detectFormation(starters),
+      starters,
+      bench,
+      captain: captainPick ? captainPick.element : null,
+      vice: vicePick ? vicePick.element : null,
+      points: Number(raw.net_points ?? raw.points ?? 0),
+      eventPoints: Number(raw.points ?? 0),
+      transfers: Number(raw.transfer_cost ?? 0)
+    };
   }
 
+  // Legacy / alternate shapes.
+  let starters = raw.starters || raw.starting_xi || raw.startingXI || raw.lineup || [];
+  let bench = raw.bench || raw.subs || raw.substitutes || [];
 
-  let starters =
-    raw.starters ||
-    raw.starting_xi ||
-    raw.startingXI ||
-    raw.lineup ||
-    [];
+  if (!Array.isArray(starters) && typeof starters === "object") starters = Object.values(starters);
+  if (!Array.isArray(bench) && typeof bench === "object") bench = Object.values(bench);
 
-
-  let bench =
-    raw.bench ||
-    raw.subs ||
-    raw.substitutes ||
-    [];
-
-
-  if (
-    !Array.isArray(starters) &&
-    typeof starters === "object"
-  ) {
-
-    starters =
-      Object.values(
-        starters
-      );
-
-  }
-
-
-  if (
-    !Array.isArray(bench) &&
-    typeof bench === "object"
-  ) {
-
-    bench =
-      Object.values(
-        bench
-      );
-
-  }
-
-
-  const normalizedStarters =
-    starters.map(
-      normalizePlayer
-    );
-
-
-  const normalizedBench =
-    bench.map(
-      normalizePlayer
-    );
-
+  const normalizedStarters = starters.map(normalizePlayer);
+  const normalizedBench = bench.map(normalizePlayer);
 
   return {
-
-    formation:
-      raw.formation ||
-      raw.form ||
-      detectFormation(
-        normalizedStarters
-      ),
-
-    starters:
-      normalizedStarters,
-
-    bench:
-      normalizedBench,
-
-    captain:
-      raw.captain ??
-      raw.captain_id ??
-      raw.captainId ??
-      null,
-
-    vice:
-      raw.vice_captain ??
-      raw.viceCaptain ??
-      raw.vc ??
-      raw.vice_captain_id ??
-      null,
-
-    points:
-      Number(
-        raw.points ??
-        raw.total_points ??
-        raw.totalPoints ??
-        0
-      ),
-
-    eventPoints:
-      Number(
-        raw.event_points ??
-        raw.eventPoints ??
-        raw.gw_points ??
-        0
-      ),
-
-    transfers:
-      Number(
-        raw.transfers ??
-        raw.transfer_cost ??
-        0
-      )
-
+    formation: raw.formation || raw.form || detectFormation(normalizedStarters),
+    starters: normalizedStarters,
+    bench: normalizedBench,
+    captain: raw.captain ?? raw.captain_id ?? raw.captainId ?? null,
+    vice: raw.vice_captain ?? raw.viceCaptain ?? raw.vc ?? raw.vice_captain_id ?? null,
+    points: Number(raw.points ?? raw.total_points ?? raw.totalPoints ?? 0),
+    eventPoints: Number(raw.event_points ?? raw.eventPoints ?? raw.gw_points ?? 0),
+    transfers: Number(raw.transfers ?? raw.transfer_cost ?? 0)
   };
-
 }
-
 
 /* =========================================================
    NORMALIZE PLAYER
+   NOTE: in the real picks[] shape, "position" is the SQUAD SLOT
+   (1-15), NOT the football position — football position comes
+   from "element_type" (1=GK,2=DEF,3=MID,4=FWD). We must not
+   confuse the two.
 ========================================================= */
 
-function normalizePlayer(
-  player
-) {
-
-  if (!player) {
-
-    return {
-      id:null,
-      name:"Unknown",
-      position:"MID",
-      points:0
-    };
-
-  }
-
-
-  return {
-
-    id:
-      player.id ??
-      player.element ??
-      player.player_id ??
-      null,
-
-    name:
-      player.name ||
-      player.web_name ||
-      player.player_name ||
-      player.full_name ||
-      "Unknown",
-
-    position:
-      String(
-        player.position ||
-        player.pos ||
-        player.element_type ||
-        "MID"
-      ).toUpperCase(),
-
-    points:
-      Number(
-        player.points ??
-        player.total_points ??
-        player.event_points ??
-        0
-      ),
-
-    isCaptain:
-      Boolean(
-        player.captain ||
-        player.is_captain
-      ),
-
-    isVice:
-      Boolean(
-        player.vice ||
-        player.is_vice ||
-        player.vice_captain
-      )
-
-  };
-
+function elementTypeToPosition(v) {
+  if (v === null || v === undefined || v === "") return "MID";
+  const s = String(v).toUpperCase();
+  if (s === "1" || s === "GK" || s === "GKP") return "GK";
+  if (s === "2" || s === "DEF") return "DEF";
+  if (s === "3" || s === "MID") return "MID";
+  if (s === "4" || s === "FWD") return "FWD";
+  return "MID";
 }
 
+function normalizePlayer(player) {
+  if (!player) return { id: null, name: "Unknown", position: "MID", points: 0, isCaptain: false, isVice: false };
+
+  let posSource = player.element_type ?? player.pos ?? player.position_group;
+  if ((posSource === undefined || posSource === null) &&
+      typeof player.position === "string" && isNaN(Number(player.position))) {
+    // Legacy shape where "position" really is the football position (e.g. "DEF").
+    posSource = player.position;
+  }
+
+  return {
+    id: player.element ?? player.id ?? player.player_id ?? null,
+    name: player.player || player.name || player.web_name || player.player_name || player.full_name || "Unknown",
+    position: elementTypeToPosition(posSource),
+    points: Number(player.points ?? player.total_points ?? player.event_points ?? 0),
+    isCaptain: Boolean(player.is_captain ?? player.captain ?? player.isCaptain),
+    isVice: Boolean(player.is_vice_captain ?? player.vice ?? player.is_vice ?? player.vice_captain)
+  };
+}
 
 /* =========================================================
    DETECT FORMATION
 ========================================================= */
 
-function detectFormation(
-  players
-) {
-
-  let def = 0;
-  let mid = 0;
-  let fwd = 0;
-
-
-  players.forEach(
-    player => {
-
-      const pos =
-        String(
-          player.position ||
-          ""
-        ).toUpperCase();
-
-
-      if (
-        pos === "DEF" ||
-        pos === "2"
-      ) {
-
-        def++;
-
-      }
-
-      else if (
-        pos === "MID" ||
-        pos === "3"
-      ) {
-
-        mid++;
-
-      }
-
-      else if (
-        pos === "FWD" ||
-        pos === "4"
-      ) {
-
-        fwd++;
-
-      }
-
-    }
-  );
-
-
-  if (
-    def &&
-    mid &&
-    fwd
-  ) {
-
-    return `${def}-${mid}-${fwd}`;
-
-  }
-
-
+function detectFormation(players) {
+  let def = 0, mid = 0, fwd = 0;
+  players.forEach(player => {
+    const pos = String(player.position || "").toUpperCase();
+    if (pos === "DEF") def++;
+    else if (pos === "MID") mid++;
+    else if (pos === "FWD") fwd++;
+  });
+  if (def && mid && fwd) return `${def}-${mid}-${fwd}`;
   return "4-4-2";
-
 }
-
 
 /* =========================================================
    POSITION GROUP
 ========================================================= */
 
-function getPositionGroup(
-  player
-) {
-
-  const pos =
-    String(
-      player.position ||
-      ""
-    ).toUpperCase();
-
-
-  if (
-    pos === "GK" ||
-    pos === "1"
-  ) {
-
-    return "GK";
-
-  }
-
-
-  if (
-    pos === "DEF" ||
-    pos === "2"
-  ) {
-
-    return "DEF";
-
-  }
-
-
-  if (
-    pos === "MID" ||
-    pos === "3"
-  ) {
-
-    return "MID";
-
-  }
-
-
-  if (
-    pos === "FWD" ||
-    pos === "4"
-  ) {
-
-    return "FWD";
-
-  }
-
-
-  return "MID";
-
+function getPositionGroup(player) {
+  return String(player.position || "MID").toUpperCase();
 }
-
 
 /* =========================================================
    RENDER LINEUP
 ========================================================= */
 
-function renderLineup(
-  lineup,
-  gw
-) {
+function renderLineup(lineup, gw) {
+  currentLineup = lineup;
 
-  const starters =
-    lineup.starters || [];
+  const starters = lineup.starters || [];
+  const gk = starters.filter(p => getPositionGroup(p) === "GK");
+  const def = starters.filter(p => getPositionGroup(p) === "DEF");
+  const mid = starters.filter(p => getPositionGroup(p) === "MID");
+  const fwd = starters.filter(p => getPositionGroup(p) === "FWD");
 
+  document.getElementById("formation").innerHTML =
+    renderPositionRow("حارس", gk, "gk") +
+    renderPositionRow("دفاع", def, "def") +
+    renderPositionRow("وسط", mid, "mid") +
+    renderPositionRow("هجوم", fwd, "fwd");
 
-  const gk =
-    starters.filter(
-      p =>
-        getPositionGroup(p) === "GK"
-    );
-
-
-  const def =
-    starters.filter(
-      p =>
-        getPositionGroup(p) === "DEF"
-    );
-
-
-  const mid =
-    starters.filter(
-      p =>
-        getPositionGroup(p) === "MID"
-    );
-
-
-  const fwd =
-    starters.filter(
-      p =>
-        getPositionGroup(p) === "FWD"
-    );
-
-
-  document.getElementById(
-    "formation"
-  ).innerHTML = `
-
-    ${renderPositionRow(
-      "حارس",
-      gk,
-      "gk"
-    )}
-
-    ${renderPositionRow(
-      "دفاع",
-      def,
-      "def"
-    )}
-
-    ${renderPositionRow(
-      "وسط",
-      mid,
-      "mid"
-    )}
-
-    ${renderPositionRow(
-      "هجوم",
-      fwd,
-      "fwd"
-    )}
-
-  `;
-
-
-  renderBench(
-    lineup.bench || []
-  );
-
-
-  renderFPLSummary(
-    lineup,
-    gw
-  );
-
+  renderBench(lineup.bench || []);
+  renderFPLSummary(lineup, gw);
 }
-
 
 /* =========================================================
    POSITION ROW
 ========================================================= */
 
-function renderPositionRow(
-  label,
-  players,
-  cssClass
-) {
-
-  if (!players.length) {
-
-    return "";
-
-  }
-
-
+function renderPositionRow(label, players, cssClass) {
+  if (!players.length) return "";
   return `
-
     <div>
-
-      <div class="position-label">
-        ${label}
-      </div>
-
+      <div class="position-label">${label}</div>
       <div class="position-row">
-
-        ${
-          players.map(
-            player =>
-              renderFPLPlayer(
-                player,
-                cssClass
-              )
-          ).join("")
-        }
-
+        ${players.map(player => renderFPLPlayer(player, cssClass)).join("")}
       </div>
-
     </div>
-
   `;
-
 }
-
 
 /* =========================================================
    RENDER FPL PLAYER
 ========================================================= */
 
-function renderFPLPlayer(
-  player,
-  cssClass
-) {
-
-  const captain =
-    player.isCaptain ||
-    isSamePlayer(
-      player,
-      selectedLineupData?.captain
-    );
-
-
-  const vice =
-    player.isVice ||
-    isSamePlayer(
-      player,
-      selectedLineupData?.vice
-    );
-
+function renderFPLPlayer(player, cssClass) {
+  const captain = player.isCaptain || isSamePlayer(player, currentLineup?.captain);
+  const vice = player.isVice || isSamePlayer(player, currentLineup?.vice);
 
   return `
-
-    <div
-      class="fpl-player ${cssClass}"
-      title="${escapeHtml(player.name)}"
-    >
-
-      ${
-        captain
-          ? `<div class="captain-badge">C</div>`
-          : ""
-      }
-
-      ${
-        vice && !captain
-          ? `<div class="vice-badge">V</div>`
-          : ""
-      }
-
-      <div class="shirt">
-        ⚽
-      </div>
-
-      <div class="fpl-player-name">
-        ${escapeHtml(player.name)}
-      </div>
-
-      <div class="fpl-player-points">
-        ${player.points} pts
-      </div>
-
+    <div class="fpl-player ${cssClass}" title="${escapeHtml(player.name)}">
+      ${captain ? `<div class="captain-badge">C</div>` : ""}
+      ${(vice && !captain) ? `<div class="vice-badge">V</div>` : ""}
+      <div class="shirt">⚽</div>
+      <div class="fpl-player-name">${escapeHtml(player.name)}</div>
+      <div class="fpl-player-points">${player.points} pts</div>
     </div>
-
   `;
-
 }
-
 
 /* =========================================================
    SAME PLAYER
 ========================================================= */
 
-function isSamePlayer(
-  player,
-  id
-) {
-
-  if (
-    id === null ||
-    id === undefined
-  ) {
-
-    return false;
-
-  }
-
-
-  return String(
-    player.id
-  ) === String(id);
-
+function isSamePlayer(player, id) {
+  if (id === null || id === undefined) return false;
+  return String(player.id) === String(id);
 }
-
 
 /* =========================================================
    BENCH
 ========================================================= */
 
-function renderBench(
-  players
-) {
-
-  const grid =
-    document.getElementById(
-      "bench-grid"
-    );
-
-
-  if (!grid) {
-    return;
-  }
-
+function renderBench(players) {
+  const grid = document.getElementById("bench-grid");
+  if (!grid) return;
 
   if (!players.length) {
-
     grid.innerHTML = `
-
-      <div
-        style="
-          grid-column:1/-1;
-          text-align:center;
-          color:var(--text-muted);
-          padding:15px
-        "
-      >
+      <div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:15px">
         لا توجد بيانات للدكة
       </div>
-
     `;
-
     return;
-
   }
 
-
-  grid.innerHTML =
-    players.map(
-      player => `
-
-        <div class="bench-player">
-
-          <div class="shirt">
-            ⚽
-          </div>
-
-          <div class="bench-player-name">
-            ${escapeHtml(
-              player.name
-            )}
-          </div>
-
-          <div class="bench-player-points">
-            ${player.points} pts
-          </div>
-
-        </div>
-
-      `
-    ).join("");
-
+  grid.innerHTML = players.map(player => `
+    <div class="bench-player">
+      <div class="shirt">⚽</div>
+      <div class="bench-player-name">${escapeHtml(player.name)}</div>
+      <div class="bench-player-points">${player.points} pts</div>
+    </div>
+  `).join("");
 }
-
 
 /* =========================================================
    FPL SUMMARY
 ========================================================= */
 
-function renderFPLSummary(
-  lineup,
-  gw
-) {
+function renderFPLSummary(lineup, gw) {
+  const starters = lineup.starters || [];
+  const starterPoints = starters.reduce((sum, p) => sum + Number(p.points || 0), 0);
+  const benchPoints = (lineup.bench || []).reduce((sum, p) => sum + Number(p.points || 0), 0);
+  const eventPoints = Number(lineup.eventPoints || starterPoints);
+  const transfers = Number(lineup.transfers || 0);
 
-  const starters =
-    lineup.starters || [];
+  const captain = starters.find(p => p.isCaptain || isSamePlayer(p, lineup.captain));
+  const captainPoints = captain ? captain.points * 2 : 0;
 
-
-  const starterPoints =
-    starters.reduce(
-      (sum,player) =>
-        sum +
-        Number(
-          player.points || 0
-        ),
-      0
-    );
-
-
-  const benchPoints =
-    (
-      lineup.bench || []
-    ).reduce(
-      (sum,player) =>
-        sum +
-        Number(
-          player.points || 0
-        ),
-      0
-    );
-
-
-  const eventPoints =
-    Number(
-      lineup.eventPoints ||
-      starterPoints
-    );
-
-
-  const transfers =
-    Number(
-      lineup.transfers || 0
-    );
-
-
-  const captain =
-    starters.find(
-      player =>
-        player.isCaptain ||
-        isSamePlayer(
-          player,
-          lineup.captain
-        )
-    );
-
-
-  const captainPoints =
-    captain
-      ? captain.points * 2
-      : 0;
-
-
-  document.getElementById(
-    "fpl-summary"
-  ).innerHTML = `
-
+  document.getElementById("fpl-summary").innerHTML = `
     <div class="fpl-stat">
-
-      <div
-        class="fpl-stat-value"
-        style="color:var(--blue-accent)"
-      >
-        ${eventPoints}
-      </div>
-
-      <div class="fpl-stat-label">
-        نقاط الجولة GW${gw}
-      </div>
-
+      <div class="fpl-stat-value" style="color:var(--blue-accent)">${eventPoints}</div>
+      <div class="fpl-stat-label">نقاط الجولة GW${gw}</div>
     </div>
-
-
     <div class="fpl-stat">
-
-      <div
-        class="fpl-stat-value"
-        style="color:var(--green)"
-      >
-        ${starterPoints}
-      </div>
-
-      <div class="fpl-stat-label">
-        نقاط الأساسيين
-      </div>
-
+      <div class="fpl-stat-value" style="color:var(--green)">${starterPoints}</div>
+      <div class="fpl-stat-label">نقاط الأساسيين</div>
     </div>
-
-
     <div class="fpl-stat">
-
-      <div
-        class="fpl-stat-value"
-        style="color:var(--gold)"
-      >
-        ${captainPoints}
-      </div>
-
-      <div class="fpl-stat-label">
-        نقاط الكابتن
-      </div>
-
+      <div class="fpl-stat-value" style="color:var(--gold)">${captainPoints}</div>
+      <div class="fpl-stat-label">نقاط الكابتن</div>
     </div>
-
-
     <div class="fpl-stat">
-
-      <div
-        class="fpl-stat-value"
-        style="color:var(--text-muted)"
-      >
-        ${benchPoints}
-      </div>
-
-      <div class="fpl-stat-label">
-        نقاط الدكة
-      </div>
-
+      <div class="fpl-stat-value" style="color:var(--text-muted)">${benchPoints}</div>
+      <div class="fpl-stat-label">نقاط الدكة</div>
     </div>
-
-
     <div class="fpl-stat">
-
-      <div
-        class="fpl-stat-value"
-        style="color:var(--red)"
-      >
-        -${transfers}
-      </div>
-
-      <div class="fpl-stat-label">
-        خصم Transfers
-      </div>
-
+      <div class="fpl-stat-value" style="color:var(--red)">-${transfers}</div>
+      <div class="fpl-stat-label">خصم Transfers</div>
     </div>
-
   `;
-
 }
-
 
 /* =========================================================
    LINEUP ERROR
 ========================================================= */
 
-function renderLineupError(
-  message
-) {
-
-  const formation =
-    document.getElementById(
-      "formation"
-    );
-
-
+function renderLineupError(message) {
+  const formation = document.getElementById("formation");
   if (formation) {
-
     formation.innerHTML = `
-
       <div class="state-box">
-
         ⚠️
-
-        <div style="margin-top:10px">
-
-          ${escapeHtml(
-            message
-          )}
-
-        </div>
-
+        <div style="margin-top:10px">${escapeHtml(message)}</div>
       </div>
-
     `;
-
   }
-
-
-  const bench =
-    document.getElementById(
-      "bench-grid"
-    );
-
-
-  if (bench) {
-
-    bench.innerHTML = "";
-
-  }
-
-
-  const summary =
-    document.getElementById(
-      "fpl-summary"
-    );
-
-
-  if (summary) {
-
-    summary.innerHTML = "";
-
-  }
-
+  const bench = document.getElementById("bench-grid");
+  if (bench) bench.innerHTML = "";
+  const summary = document.getElementById("fpl-summary");
+  if (summary) summary.innerHTML = "";
 }
-
 
 /* =========================================================
    TEAM RESULTS
 ========================================================= */
 
-function renderTeamResults(
-  teamName
-) {
+function renderTeamResults(teamName) {
+  const meta = getTeamMeta(teamName);
+  const teamData = getTeamStanding(teamName) || {};
+  const rank = getTeamRank(teamName);
 
-  const meta =
-    TEAM_META[teamName] ||
-    {
-      color:"#64748b",
-      em:"⚽"
-    };
-
-
-  const standings =
-    getStandingsTeams();
-
-
-  const teamData =
-    standings.find(
-      team =>
-        (
-          team.name === teamName ||
-          team.team === teamName ||
-          team.team_name === teamName
-        )
-    ) || {};
-
-
-  const rankIndex =
-    standings.findIndex(
-      team =>
-        (
-          team.name === teamName ||
-          team.team === teamName ||
-          team.team_name === teamName
-        )
-    );
-
-
-  const rank =
-    rankIndex >= 0
-      ? rankIndex + 1
-      : 0;
-
-
-  const icon =
-    document.getElementById(
-      "tbl-icon"
-    );
-
-
+  const icon = document.getElementById("tbl-icon");
   if (icon) {
-
-    icon.textContent =
-      meta.em;
-
-    icon.style.background =
-      `linear-gradient(
-        135deg,
-        ${meta.color}99,
-        ${meta.color}
-      )`;
-
+    icon.textContent = meta.em;
+    icon.style.background = `linear-gradient(135deg, ${meta.color}99, ${meta.color})`;
   }
 
-
-  const title =
-    document.getElementById(
-      "tbl-title"
-    );
-
-
+  const title = document.getElementById("tbl-title");
   if (title) {
-
     title.innerHTML = `
-
-      ${escapeHtml(teamName)}
-
-      — سجل المباريات
-
-      <small>
-        Match History · حتى الجولة ${currentGW}
-      </small>
-
+      ${escapeHtml(teamName)} — سجل المباريات
+      <small>Match History · حتى الجولة ${currentGW}</small>
     `;
-
   }
 
+  const results = document.getElementById("results-section");
+  if (results) results.style.display = "block";
 
-  const results =
-    document.getElementById(
-      "results-section"
-    );
-
-
-  if (results) {
-
-    results.style.display =
-      "block";
-
-  }
-
-
-  renderSummary(
-    teamData,
-    rank,
-    meta,
-    null
-  );
-
-
-  fetchAndRenderGWs(
-    teamName,
-    currentGW,
-    meta,
-    teamData,
-    rank
-  );
-
+  renderSummary(teamData, rank, meta, null);
+  renderMatchHistory(teamName, meta, teamData, rank);
 }
-
 
 /* =========================================================
    MATCH HISTORY
+   Primary source: current_standings.json (matches_by_gw, or
+   matches[] as a fallback — this is what update_standings.py
+   currently writes). Only if NEITHER exists at all do we fall
+   back to recomputing from data/gw_history/gwN.json, matching
+   fixtures.json for opponents (legacy compatibility path).
 ========================================================= */
 
-async function fetchAndRenderGWs(
-  teamName,
-  currentGW,
-  meta,
-  teamData,
-  rank
-) {
+function renderMatchHistory(teamName, meta, teamData, rank) {
+  const tbody = document.getElementById("matches-tbody");
+  if (!tbody) return;
 
-  const tbody =
-    document.getElementById(
-      "matches-tbody"
-    );
+  const matches = getTeamMatches(teamName);
 
-
-  if (!tbody) {
+  if (matches.length > 0) {
+    renderMatchRows(matches, teamName, teamData, rank, meta);
     return;
   }
 
-
-  try {
-
-    const promises = [];
-
-
-    for (
-      let gw = 1;
-      gw <= currentGW;
-      gw++
-    ) {
-
-      promises.push(
-
-        fetch(
-          `${RAW}/data/gw_history/gw${gw}.json?v=${Date.now()}`,
-          {
-            cache:"no-store"
-          }
-        )
-        .then(
-          response =>
-            response.ok
-              ? response.json()
-              : null
-        )
-        .catch(
-          () => null
-        )
-
-      );
-
-    }
-
-
-    const gwResults =
-      await Promise.all(
-        promises
-      );
-
-
-    let rows = "";
-
-    let runTotal = 0;
-
-    let wins = 0;
-
-    let draws = 0;
-
-    let losses = 0;
-
-
-    for (
-      let i = 0;
-      i < gwResults.length;
-      i++
-    ) {
-
-      const gw =
-        i + 1;
-
-
-      const data =
-        gwResults[i];
-
-
-      let matchups = [];
-
-
-      if (
-        fixturesData &&
-        fixturesData[gw]
-      ) {
-
-        matchups =
-          fixturesData[gw];
-
-      }
-
-      else if (
-        fixturesData &&
-        fixturesData.rounds &&
-        fixturesData.rounds[gw]
-      ) {
-
-        matchups =
-          fixturesData.rounds[gw];
-
-      }
-
-
-      if (
-        !Array.isArray(matchups)
-      ) {
-
-        continue;
-
-      }
-
-
-      const myFix =
-        matchups.find(
-          match => {
-
-            if (
-              Array.isArray(match)
-            ) {
-
-              return match.includes(
-                teamName
-              );
-
-            }
-
-
-            return (
-              match &&
-              (
-                match.home === teamName ||
-                match.away === teamName
-              )
-            );
-
-          }
-        );
-
-
-      if (!myFix) {
-        continue;
-      }
-
-
-      let opp = "";
-
-
-      if (
-        Array.isArray(myFix)
-      ) {
-
-        opp =
-          myFix[0] === teamName
-            ? myFix[1]
-            : myFix[0];
-
-      }
-
-      else {
-
-        opp =
-          myFix.home === teamName
-            ? myFix.away
-            : myFix.home;
-
-      }
-
-
-      const oppMeta =
-        TEAM_META[opp] ||
-        {
-          em:"⚽",
-          color:"#64748b"
-        };
-
-
-      let myPts = null;
-
-      let oppPts = null;
-
-
-      if (
-        data &&
-        data[teamName] &&
-        data[opp]
-      ) {
-
-        myPts =
-          Object.values(
-            data[teamName]
-          ).reduce(
-            (sum,player) =>
-              sum +
-              Number(
-                player.points || 0
-              ),
-            0
-          );
-
-
-        oppPts =
-          Object.values(
-            data[opp]
-          ).reduce(
-            (sum,player) =>
-              sum +
-              Number(
-                player.points || 0
-              ),
-            0
-          );
-
-      }
-
-
-      let resultClass = "";
-
-      let resultBadge = "";
-
-      let mp = 0;
-
-
-      if (
-        myPts !== null &&
-        oppPts !== null
-      ) {
-
-        if (
-          myPts > oppPts
-        ) {
-
-          resultClass =
-            "win-row";
-
-          resultBadge =
-            `<span class="result-badge rb-win">
-              فوز ✅
-            </span>`;
-
-          mp = 3;
-
-          wins++;
-
-        }
-
-        else if (
-          myPts === oppPts
-        ) {
-
-          resultClass =
-            "draw-row";
-
-          resultBadge =
-            `<span class="result-badge rb-draw">
-              تعادل 🟡
-            </span>`;
-
-          mp = 1;
-
-          draws++;
-
-        }
-
-        else {
-
-          resultClass =
-            "loss-row";
-
-          resultBadge =
-            `<span class="result-badge rb-loss">
-              خسارة ❌
-            </span>`;
-
-          mp = 0;
-
-          losses++;
-
-        }
-
-      }
-
-      else {
-
-        resultBadge =
-          `<span
-            class="result-badge"
-            style="opacity:.6"
-          >
-            لم تُلعب
-          </span>`;
-
-      }
-
-
-      let bonusPts = 0;
-
-      let khawasHtml = "—";
-
-
-      if (
-        khawasData &&
-        khawasData[gw] &&
-        khawasData[gw][teamName]
-      ) {
-
-        const info =
-          khawasData[gw][teamName];
-
-
-        const bonusName =
-          info.name ||
-          info.type ||
-          "خاصية";
-
-
-        bonusPts =
-          Number(
-            info.bonus ||
-            info.points ||
-            0
-          );
-
-
-        khawasHtml = `
-
-          <span
-            class="bonus-chip"
-            title="بونص: +${bonusPts}"
-          >
-
-            ${escapeHtml(
-              bonusName
-            )}
-
-            ${
-              bonusPts > 0
-                ? `(+${bonusPts})`
-                : ""
-            }
-
-          </span>
-
-        `;
-
-      }
-
-
-      const gwTotal =
-        mp + bonusPts;
-
-
-      runTotal +=
-        gwTotal;
-
-
-      rows += `
-
-        <tr class="${resultClass}">
-
-          <td>
-            <span class="gw-badge">
-              ${gw}
-            </span>
-          </td>
-
-          <td>
-
-            <div class="opp-cell">
-
-              <span class="opp-em">
-                ${oppMeta.em}
-              </span>
-
-              <span
-                style="
-                  color:${oppMeta.color};
-                  font-weight:800
-                "
-              >
-                ${escapeHtml(opp)}
-              </span>
-
-            </div>
-
-          </td>
-
-          <td class="hide-sm">
-            ${
-              myPts !== null
-                ? myPts
-                : "—"
-            }
-          </td>
-
-          <td class="hide-sm">
-            ${
-              oppPts !== null
-                ? oppPts
-                : "—"
-            }
-          </td>
-
-          <td>
-            ${resultBadge}
-          </td>
-
-          <td class="mp-cell">
-            +${mp}
-          </td>
-
-          <td class="bonus-cell">
-            ${khawasHtml}
-          </td>
-
-          <td
-            style="
-              font-weight:800;
-              color:var(--blue-accent)
-            "
-          >
-            ${runTotal}
-          </td>
-
-        </tr>
-
-      `;
-
-    }
-
-
-    tbody.innerHTML =
-      rows ||
-      `
-
-        <tr>
-
-          <td
-            colspan="8"
-            style="
-              padding:30px;
-              text-align:center;
-              color:var(--text-muted)
-            "
-          >
-            لا توجد بيانات للمباريات الحالية
-          </td>
-
-        </tr>
-
-      `;
-
-
-    renderSummary(
-      teamData,
-      rank,
-      meta,
-      {
-        wins,
-        draws,
-        losses,
-        runTotal
-      }
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "Match history error:",
-      error
-    );
-
-
-    tbody.innerHTML = `
-
-      <tr>
-
-        <td
-          colspan="8"
-          style="
-            padding:30px;
-            text-align:center;
-            color:var(--red)
-          "
-        >
-          ⚠️ تعذر عرض نتائج الجولات الحالية
-        </td>
-
-      </tr>
-
-    `;
-
-  }
-
+  console.warn(`[teams.html] No matches_by_gw/matches entries for "${teamName}" — falling back to gw_history recomputation.`);
+  renderMatchHistoryFromHistory(teamName, meta, teamData, rank);
 }
 
+function renderMatchRows(matches, teamName, teamData, rank, meta) {
+  const tbody = document.getElementById("matches-tbody");
+  const chipsByGW = buildChipsByGW(chipsData);
+
+  let rows = "";
+  let runTotal = 0;
+  let wins = 0, draws = 0, losses = 0;
+
+  matches.forEach(m => {
+    const isHome = teamsEqual(m.home, teamName);
+    const opp = isHome ? m.away : m.home;
+    const myPts = isHome ? m.homePts : m.awayPts;
+    const oppPts = isHome ? m.awayPts : m.homePts;
+    const oppMeta = getTeamMeta(opp);
+
+    let resultClass = "", resultBadge = "", mp = 0;
+
+    if (myPts !== undefined && myPts !== null && oppPts !== undefined && oppPts !== null) {
+      const iWon = m.winner ? teamsEqual(m.winner, teamName) : myPts > oppPts;
+      const oppWon = m.winner ? teamsEqual(m.winner, opp) : oppPts > myPts;
+
+      if (iWon) {
+        resultClass = "win-row";
+        resultBadge = `<span class="result-badge rb-win">فوز ✅</span>`;
+        mp = 3; wins++;
+      } else if (oppWon) {
+        resultClass = "loss-row";
+        resultBadge = `<span class="result-badge rb-loss">خسارة ❌</span>`;
+        mp = 0; losses++;
+      } else {
+        resultClass = "draw-row";
+        resultBadge = `<span class="result-badge rb-draw">تعادل 🟡</span>`;
+        mp = 1; draws++;
+      }
+    } else {
+      resultBadge = `<span class="result-badge" style="opacity:.6">لم تُلعب</span>`;
+    }
+
+    let bonusPts = 0;
+    let khawasHtml = "—";
+    const chips = getChipsForTeamGW(chipsByGW, teamName, m.gw);
+
+    if (chips.length) {
+      const labels = chips.map(c => {
+        if (c.chip === "bonus3") {
+          if (c.won) { bonusPts += 3; return "🚀 X3 (+3)"; }
+          return "🚀 X3";
+        }
+        if (c.chip === "one_v_one") return "⚔️ 1v1";
+        if (c.chip === "double_player") return "✖️2";
+        if (c.chip === "borrow") return "🔁 استعارة";
+        return escapeHtml(c.chip);
+      });
+      khawasHtml = `<span class="bonus-chip">${labels.join("، ")}</span>`;
+    }
+
+    const gwTotal = mp + bonusPts;
+    runTotal += gwTotal;
+
+    rows += `
+      <tr class="${resultClass}">
+        <td><span class="gw-badge">${m.gw}</span></td>
+        <td>
+          <div class="opp-cell">
+            <span class="opp-em">${oppMeta.em}</span>
+            <span style="color:${oppMeta.color};font-weight:800">${escapeHtml(opp)}</span>
+          </div>
+        </td>
+        <td class="hide-sm">${myPts ?? "—"}</td>
+        <td class="hide-sm">${oppPts ?? "—"}</td>
+        <td>${resultBadge}</td>
+        <td class="mp-cell">+${mp}</td>
+        <td class="bonus-cell">${khawasHtml}</td>
+        <td style="font-weight:800;color:var(--blue-accent)">${runTotal}</td>
+      </tr>
+    `;
+  });
+
+  tbody.innerHTML = rows || `
+    <tr>
+      <td colspan="8" style="padding:30px;text-align:center;color:var(--text-muted)">
+        لا توجد بيانات للمباريات الحالية
+      </td>
+    </tr>
+  `;
+
+  renderSummary(teamData, rank, meta, { wins, draws, losses, runTotal });
+}
+
+/*
+  Legacy fallback: only used if current_standings.json has no
+  matches/matches_by_gw data at all for this team. Recomputes
+  scores from data/gw_history/gwN.json against fixtures.json,
+  using local relative paths (no more GitHub RAW calls).
+*/
+async function renderMatchHistoryFromHistory(teamName, meta, teamData, rank) {
+  const tbody = document.getElementById("matches-tbody");
+  if (!tbody) return;
+
+  try {
+    const promises = [];
+    for (let gw = 1; gw <= currentGW; gw++) {
+      promises.push(fetchJSONWithFallback(PATHS.gwHistory(gw)));
+    }
+    const gwResults = await Promise.all(promises);
+
+    let rows = "";
+    let runTotal = 0;
+    let wins = 0, draws = 0, losses = 0;
+
+    for (let i = 0; i < gwResults.length; i++) {
+      const gw = i + 1;
+      const data = gwResults[i];
+
+      const matchups = getFixtureMatchups(gw);
+      if (!Array.isArray(matchups)) continue;
+
+      const myFix = matchups.find(match => {
+        if (Array.isArray(match)) return match.some(t => teamsEqual(t, teamName));
+        return match && (teamsEqual(match.home, teamName) || teamsEqual(match.away, teamName));
+      });
+
+      if (!myFix) continue;
+
+      let opp = "";
+      if (Array.isArray(myFix)) {
+        opp = teamsEqual(myFix[0], teamName) ? myFix[1] : myFix[0];
+      } else {
+        opp = teamsEqual(myFix.home, teamName) ? myFix.away : myFix.home;
+      }
+
+      if (opp === "BYE") continue;
+
+      const oppMeta = getTeamMeta(opp);
+
+      let myPts = null, oppPts = null;
+      if (data) {
+        const myKey = Object.keys(data).find(k => teamsEqual(k, teamName));
+        const oppKey = Object.keys(data).find(k => teamsEqual(k, opp));
+        if (myKey && oppKey) {
+          myPts = Object.values(data[myKey]).reduce((s, p) => s + Number(p.points || 0), 0);
+          oppPts = Object.values(data[oppKey]).reduce((s, p) => s + Number(p.points || 0), 0);
+        }
+      }
+
+      let resultClass = "", resultBadge = "", mp = 0;
+
+      if (myPts !== null && oppPts !== null) {
+        if (myPts > oppPts) {
+          resultClass = "win-row";
+          resultBadge = `<span class="result-badge rb-win">فوز ✅</span>`;
+          mp = 3; wins++;
+        } else if (myPts === oppPts) {
+          resultClass = "draw-row";
+          resultBadge = `<span class="result-badge rb-draw">تعادل 🟡</span>`;
+          mp = 1; draws++;
+        } else {
+          resultClass = "loss-row";
+          resultBadge = `<span class="result-badge rb-loss">خسارة ❌</span>`;
+          mp = 0; losses++;
+        }
+      } else {
+        resultBadge = `<span class="result-badge" style="opacity:.6">لم تُلعب</span>`;
+      }
+
+      const gwTotal = mp;
+      runTotal += gwTotal;
+
+      rows += `
+        <tr class="${resultClass}">
+          <td><span class="gw-badge">${gw}</span></td>
+          <td>
+            <div class="opp-cell">
+              <span class="opp-em">${oppMeta.em}</span>
+              <span style="color:${oppMeta.color};font-weight:800">${escapeHtml(opp)}</span>
+            </div>
+          </td>
+          <td class="hide-sm">${myPts ?? "—"}</td>
+          <td class="hide-sm">${oppPts ?? "—"}</td>
+          <td>${resultBadge}</td>
+          <td class="mp-cell">+${mp}</td>
+          <td class="bonus-cell">—</td>
+          <td style="font-weight:800;color:var(--blue-accent)">${runTotal}</td>
+        </tr>
+      `;
+    }
+
+    tbody.innerHTML = rows || `
+      <tr>
+        <td colspan="8" style="padding:30px;text-align:center;color:var(--text-muted)">
+          لا توجد بيانات للمباريات الحالية
+        </td>
+      </tr>
+    `;
+
+    renderSummary(teamData, rank, meta, { wins, draws, losses, runTotal });
+
+  } catch (error) {
+    console.error("[teams.html] Match history fallback error:", error);
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="padding:30px;text-align:center;color:var(--red)">
+          ⚠️ تعذر عرض نتائج الجولات الحالية
+        </td>
+      </tr>
+    `;
+  }
+}
 
 /* =========================================================
    SUMMARY
 ========================================================= */
 
-function renderSummary(
-  tData,
-  rank,
-  meta,
-  computed
-) {
+function renderSummary(tData, rank, meta, computed) {
+  const rankEmoji = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : (rank > 0 ? `#${rank}` : "-");
 
-  const rankEmoji =
-    rank === 1
-      ? "🥇"
-      : rank === 2
-      ? "🥈"
-      : rank === 3
-      ? "🥉"
-      : (
-          rank > 0
-            ? `#${rank}`
-            : "-"
-        );
+  const wins = computed?.wins ?? tData.won ?? 0;
+  const draws = computed?.draws ?? tData.draw ?? 0;
+  const losses = computed?.losses ?? tData.lost ?? 0;
+  const total = computed?.runTotal ?? tData.total ?? 0;
 
-
-  const wins =
-    computed?.wins ??
-    tData.won ??
-    0;
-
-
-  const draws =
-    computed?.draws ??
-    tData.draw ??
-    0;
-
-
-  const losses =
-    computed?.losses ??
-    tData.lost ??
-    0;
-
-
-  const total =
-    computed?.runTotal ??
-    tData.total ??
-    0;
-
-
-  const summary =
-    document.getElementById(
-      "summary-row"
-    );
-
-
-  if (!summary) {
-    return;
-  }
-
+  const summary = document.getElementById("summary-row");
+  if (!summary) return;
 
   summary.innerHTML = `
-
-    <div
-      class="sum-chip"
-      style="
-        border-color:${meta.color}55
-      "
-    >
-
-      <div
-        class="sum-val"
-        style="
-          color:${meta.color}
-        "
-      >
-        ${rankEmoji}
-      </div>
-
-      <div class="sum-lbl">
-        المركز
-      </div>
-
+    <div class="sum-chip" style="border-color:${meta.color}55">
+      <div class="sum-val" style="color:${meta.color}">${rankEmoji}</div>
+      <div class="sum-lbl">المركز</div>
     </div>
-
-
     <div class="sum-chip">
-
-      <div
-        class="sum-val"
-        style="color:var(--green)"
-      >
-        ${wins}
-      </div>
-
-      <div class="sum-lbl">
-        فوز
-      </div>
-
+      <div class="sum-val" style="color:var(--green)">${wins}</div>
+      <div class="sum-lbl">فوز</div>
     </div>
-
-
     <div class="sum-chip">
-
-      <div
-        class="sum-val"
-        style="color:var(--gold)"
-      >
-        ${draws}
-      </div>
-
-      <div class="sum-lbl">
-        تعادل
-      </div>
-
+      <div class="sum-val" style="color:var(--gold)">${draws}</div>
+      <div class="sum-lbl">تعادل</div>
     </div>
-
-
     <div class="sum-chip">
-
-      <div
-        class="sum-val"
-        style="color:var(--red)"
-      >
-        ${losses}
-      </div>
-
-      <div class="sum-lbl">
-        خسارة
-      </div>
-
+      <div class="sum-val" style="color:var(--red)">${losses}</div>
+      <div class="sum-lbl">خسارة</div>
     </div>
-
-
     <div class="sum-chip">
-
-      <div
-        class="sum-val"
-        style="color:var(--blue-accent)"
-      >
-        ${total}
-      </div>
-
-      <div class="sum-lbl">
-        إجمالي النقاط
-      </div>
-
+      <div class="sum-val" style="color:var(--blue-accent)">${total}</div>
+      <div class="sum-lbl">إجمالي النقاط</div>
     </div>
-
   `;
-
 }
-
 
 /* =========================================================
    START
 ========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  init
-);
+document.addEventListener("DOMContentLoaded", init);
 
 </script>
 
