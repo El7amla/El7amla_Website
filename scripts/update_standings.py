@@ -112,17 +112,46 @@ def fpl_get(url: str, retries: int = 3) -> dict | None:
 
 
 def get_current_gw() -> int:
-    """Return the latest finished FPL gameweek."""
+    """
+    Return the currently active FPL gameweek.
+
+    FPL marks the active event with ``is_current=True``.
+    The old implementation used the latest *finished* event, which
+    caused the updater to remain on GW1 while GW2 was already active.
+
+    Fallbacks:
+      1. Latest event marked is_current.
+      2. Latest finished GW + 1.
+      3. GW1.
+    """
     data = fpl_get(FPL_BOOTSTRAP)
     if not data:
         raise RuntimeError("Cannot fetch FPL bootstrap — check connectivity")
 
     events = data.get("events", [])
+    if not events:
+        raise RuntimeError("FPL bootstrap contains no events")
 
-    for event in reversed(events):
-        if event.get("finished") is True:
-            return int(event["id"])
+    # Primary source of truth: the currently active FPL event.
+    for event in events:
+        if event.get("is_current") is True:
+            gw = int(event["id"])
+            log.info("FPL current GW detected via is_current: %s", gw)
+            return gw
 
+    # Fallback for periods where FPL does not mark an event as current.
+    finished = [
+        int(event["id"])
+        for event in events
+        if event.get("finished") is True
+    ]
+
+    if finished:
+        gw = max(finished) + 1
+        log.info("FPL current GW inferred from finished events: %s", gw)
+        return gw
+
+    log.warning("No current/finished FPL event found — defaulting to GW1")
     return 1
 
 
@@ -697,7 +726,7 @@ def calculate_player_standings(
     cache: dict,
 ) -> list[dict]:
     """Sum RAW player points only for GWs in which their team played."""
-    
+
     def team_has_bye(team: str, gw: int) -> bool:
         for matchup in fixtures.get(gw, []):
             if team in matchup:
@@ -840,3 +869,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
