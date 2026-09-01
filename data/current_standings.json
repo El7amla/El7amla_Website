@@ -1,6 +1,6 @@
 {
   "current_gw": 2,
-  "last_updated": "2026-09-01 21:01:53",
+  "last_updated": "2026-09-01 21:18:49",
   "teams": [
     {
       "name": "الزرازير",
@@ -11,20 +11,6 @@
       "gf": 322,
       "ga": 245,
       "gd": 77,
-      "matchPts": 6,
-      "bonus": 0,
-      "chipBonus": 0,
-      "total": 6
-    },
-    {
-      "name": "Royal Authority",
-      "played": 2,
-      "won": 2,
-      "draw": 0,
-      "lost": 0,
-      "gf": 307,
-      "ga": 248,
-      "gd": 59,
       "matchPts": 6,
       "bonus": 0,
       "chipBonus": 0,
@@ -43,6 +29,20 @@
       "bonus": 0,
       "chipBonus": 0,
       "total": 6
+    },
+    {
+      "name": "Royal Authority",
+      "played": 1,
+      "won": 1,
+      "draw": 0,
+      "lost": 0,
+      "gf": 200,
+      "ga": 159,
+      "gd": 41,
+      "matchPts": 3,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 3
     },
     {
       "name": "The Pharaohs",
@@ -65,8 +65,8 @@
       "draw": 0,
       "lost": 1,
       "gf": 293,
-      "ga": 311,
-      "gd": -18,
+      "ga": 301,
+      "gd": -8,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
@@ -74,13 +74,13 @@
     },
     {
       "name": "The Masterminds",
-      "played": 2,
+      "played": 1,
       "won": 0,
       "draw": 0,
-      "lost": 2,
-      "gf": 275,
-      "ga": 314,
-      "gd": -39,
+      "lost": 1,
+      "gf": 176,
+      "ga": 207,
+      "gd": -31,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -182,11 +182,6 @@
       "points": 136
     },
     {
-      "name": "Shika",
-      "team": "The Masterminds",
-      "points": 134
-    },
-    {
       "name": "Tawheed",
       "team": "Falcons",
       "points": 126
@@ -195,6 +190,11 @@
       "name": "Ali",
       "team": "Boys",
       "points": 126
+    },
+    {
+      "name": "Shika",
+      "team": "The Masterminds",
+      "points": 83
     }
   ],
   "matches": [
@@ -216,16 +216,6 @@
       "awayPts": 119,
       "result": "home_win",
       "winner": "The Pharaohs",
-      "type": "normal"
-    },
-    {
-      "gw": 1,
-      "home": "Royal Authority",
-      "away": "The Masterminds",
-      "homePts": 107,
-      "awayPts": 89,
-      "result": "home_win",
-      "winner": "Royal Authority",
       "type": "normal"
     },
     {
@@ -273,7 +263,7 @@
       "home": "الاوديسي",
       "away": "The Masterminds",
       "homePts": 207,
-      "awayPts": 186,
+      "awayPts": 176,
       "result": "home_win",
       "winner": "الاوديسي",
       "type": "normal"
