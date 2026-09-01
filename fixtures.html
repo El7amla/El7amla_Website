@@ -477,15 +477,20 @@
     }
 
     .fix-row {
-      display: grid;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:14px;
+  direction:ltr;
+}
 
-      grid-template-columns:
-        1fr auto 1fr;
+.fix-team {
+  direction:rtl;
+}
 
-      align-items: center;
-
-      gap: 14px;
-    }
+.fix-score {
+  direction:ltr;
+}
 
     .fix-team {
       display: flex;
