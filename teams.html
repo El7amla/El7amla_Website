@@ -1114,6 +1114,11 @@ const REPO_NAME = "El7amla-League";
 const RAW =
   `https://raw.githubusercontent.com/El7amla/${REPO_NAME}/main`;
 
+
+/* =========================================================
+   TEAM META
+========================================================= */
+
 const TEAM_META = {
 
   "Black Tech": {
@@ -1171,52 +1176,51 @@ let leagueData = null;
 let selectedTeam = null;
 let selectedPlayer = null;
 
-let selectedLineupData = null;
-
 let currentGW = 1;
 
 
 /* =========================================================
-   FALLBACK TEAM LIST
+   FALLBACK TEAMS
 ========================================================= */
 
 const FALLBACK_TEAMS = Object.keys(TEAM_META);
 
 
 /* =========================================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
-function escapeHtml(str) {
+function escapeHtml(value) {
 
-  return String(str ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 
 }
 
 
 /* =========================================================
-   GENERIC FETCH
+   FETCH JSON
 ========================================================= */
 
 async function fetchJSON(path) {
 
-  const url =
-    `${RAW}/${path}?v=${Date.now()}`;
-
-  const response =
-    await fetch(url, {
+  const response = await fetch(
+    `${RAW}/${path}?v=${Date.now()}`,
+    {
       cache:"no-store"
-    });
+    }
+  );
 
   if (!response.ok) {
+
     throw new Error(
-      `HTTP ${response.status}: ${path}`
+      `HTTP ${response.status} - ${path}`
     );
+
   }
 
   return await response.json();
@@ -1230,44 +1234,63 @@ async function fetchJSON(path) {
 
 async function init() {
 
-  try {
-
-    const results =
-      await Promise.allSettled([
-
-        fetchJSON("data/current_standings.json"),
-
-        fetchJSON("data/fixtures.json"),
-
-        fetchJSON("data/khawas.json"),
-
-        fetchJSON("data/league.json")
-
-      ]);
+  console.log("El7amla Teams: starting...");
 
 
-    if (results[0].status === "fulfilled") {
-      standingsData = results[0].value;
-    }
+  const results =
+    await Promise.allSettled([
 
-    if (results[1].status === "fulfilled") {
-      fixturesData = results[1].value;
-    }
+      fetchJSON("data/current_standings.json"),
 
-    if (results[2].status === "fulfilled") {
-      khawasData = results[2].value;
-    }
+      fetchJSON("data/fixtures.json"),
 
-    if (results[3].status === "fulfilled") {
-      leagueData = results[3].value;
-    }
+      fetchJSON("data/khawas.json"),
+
+      fetchJSON("data/league.json")
+
+    ]);
 
 
-  } catch (e) {
+  if (
+    results[0].status === "fulfilled"
+  ) {
 
-    console.warn(
-      "حدث خطأ أثناء تحميل بيانات الدوري",
-      e
+    standingsData =
+      results[0].value;
+
+  }
+
+
+  if (
+    results[1].status === "fulfilled"
+  ) {
+
+    fixturesData =
+      results[1].value;
+
+  }
+
+
+  if (
+    results[2].status === "fulfilled"
+  ) {
+
+    khawasData =
+      results[2].value;
+
+  }
+
+
+  if (
+    results[3].status === "fulfilled"
+  ) {
+
+    leagueData =
+      results[3].value;
+
+    console.log(
+      "league.json loaded:",
+      leagueData
     );
 
   }
@@ -1284,10 +1307,55 @@ async function init() {
 
 
   currentGW =
-    Number(standingsData.current_gw || 1);
+    Number(
+      standingsData.current_gw || 1
+    );
 
 
   buildTeamCards();
+
+}
+
+
+/* =========================================================
+   GET STANDINGS TEAMS SAFELY
+========================================================= */
+
+function getStandingsTeams() {
+
+  if (
+    !standingsData ||
+    !standingsData.teams
+  ) {
+
+    return [];
+
+  }
+
+
+  if (
+    Array.isArray(
+      standingsData.teams
+    )
+  ) {
+
+    return standingsData.teams;
+
+  }
+
+
+  if (
+    typeof standingsData.teams === "object"
+  ) {
+
+    return Object.values(
+      standingsData.teams
+    );
+
+  }
+
+
+  return [];
 
 }
 
@@ -1299,36 +1367,202 @@ async function init() {
 function getLeagueTeams() {
 
   /*
-    نحاول قراءة teams من league.json.
-    لو الشكل مختلف نستخدم TEAM_META.
+    1) league.json -> teams array
   */
 
-  if (!leagueData) {
-    return FALLBACK_TEAMS;
+  if (
+    leagueData &&
+    Array.isArray(
+      leagueData.teams
+    )
+  ) {
+
+    const names =
+      leagueData.teams
+        .map(team => {
+
+          if (
+            typeof team === "string"
+          ) {
+
+            return team;
+
+          }
+
+
+          return (
+            team.name ||
+            team.team ||
+            team.team_name ||
+            team.teamName ||
+            null
+          );
+
+        })
+        .filter(Boolean);
+
+
+    if (names.length) {
+
+      return [
+        ...new Set(names)
+      ];
+
+    }
+
   }
 
 
-  if (Array.isArray(leagueData.teams)) {
+  /*
+    2) league.json -> teams object
+  */
 
-    return leagueData.teams
-      .map(t => {
+  if (
+    leagueData &&
+    leagueData.teams &&
+    typeof leagueData.teams === "object" &&
+    !Array.isArray(leagueData.teams)
+  ) {
 
-        if (typeof t === "string") {
-          return t;
-        }
+    const names =
+      Object.keys(
+        leagueData.teams
+      );
 
-        return t.name ||
-               t.team ||
-               t.team_name ||
-               null;
 
-      })
+    if (names.length) {
+
+      return names;
+
+    }
+
+  }
+
+
+  /*
+    3) standings
+  */
+
+  const standings =
+    getStandingsTeams()
+      .map(
+        team =>
+          team.name ||
+          team.team ||
+          team.team_name
+      )
       .filter(Boolean);
 
+
+  if (standings.length) {
+
+    return [
+      ...new Set(standings)
+    ];
+
   }
 
 
+  /*
+    4) fallback
+  */
+
   return FALLBACK_TEAMS;
+
+}
+
+
+/* =========================================================
+   FIND TEAM OBJECT IN LEAGUE.JSON
+========================================================= */
+
+function findLeagueTeam(teamName) {
+
+  if (!leagueData) {
+
+    return null;
+
+  }
+
+
+  /*
+    teams = Array
+  */
+
+  if (
+    Array.isArray(
+      leagueData.teams
+    )
+  ) {
+
+    const found =
+      leagueData.teams.find(
+        team => {
+
+          if (
+            typeof team === "string"
+          ) {
+
+            return team === teamName;
+
+          }
+
+
+          return (
+            team.name === teamName ||
+            team.team === teamName ||
+            team.team_name === teamName ||
+            team.teamName === teamName
+          );
+
+        }
+      );
+
+
+    if (found) {
+
+      return found;
+
+    }
+
+  }
+
+
+  /*
+    teams = Object
+  */
+
+  if (
+    leagueData.teams &&
+    typeof leagueData.teams === "object" &&
+    !Array.isArray(leagueData.teams)
+  ) {
+
+    if (
+      leagueData.teams[teamName]
+    ) {
+
+      return leagueData.teams[teamName];
+
+    }
+
+  }
+
+
+  /*
+    Root object itself may contain team
+  */
+
+  if (
+    leagueData[teamName]
+  ) {
+
+    return leagueData[teamName];
+
+  }
+
+
+  return null;
 
 }
 
@@ -1339,84 +1573,156 @@ function getLeagueTeams() {
 
 function getTeamPlayers(teamName) {
 
-  if (!leagueData) {
-    return [];
-  }
-
-
-  let team = null;
-
-
-  if (Array.isArray(leagueData.teams)) {
-
-    team =
-      leagueData.teams.find(t => {
-
-        if (typeof t === "string") {
-          return t === teamName;
-        }
-
-        return (
-          t.name === teamName ||
-          t.team === teamName ||
-          t.team_name === teamName
-        );
-
-      });
-
-  }
+  const team =
+    findLeagueTeam(teamName);
 
 
   if (!team) {
+
     return [];
+
   }
 
 
-  const rawPlayers =
-    team.players ||
-    team.managers ||
-    team.members ||
-    team.users ||
+  /*
+    Try all possible player keys
+  */
+
+  let rawPlayers =
+    team.players ??
+    team.members ??
+    team.managers ??
+    team.users ??
+    team.players_list ??
+    team.player_list ??
     [];
 
 
-  if (Array.isArray(rawPlayers)) {
+  /*
+    Object -> Array
+  */
 
-    return rawPlayers
-      .map(player => {
+  if (
+    rawPlayers &&
+    typeof rawPlayers === "object" &&
+    !Array.isArray(rawPlayers)
+  ) {
 
-        if (typeof player === "string") {
+    rawPlayers =
+      Object.entries(
+        rawPlayers
+      ).map(
+        ([key,value]) => {
+
+          if (
+            typeof value === "object" &&
+            value !== null
+          ) {
+
+            return {
+              ...value,
+
+              entry_id:
+                value.entry_id ??
+                value.entryId ??
+                value.id ??
+                key
+            };
+
+          }
+
 
           return {
-            name:player,
-            entry_id:null
+            name:value,
+            entry_id:key
           };
 
         }
-
-        return {
-          name:
-            player.name ||
-            player.player ||
-            player.manager ||
-            player.username ||
-            "Player",
-
-          entry_id:
-            player.entry_id ??
-            player.entryId ??
-            player.id ??
-            player.team_id ??
-            player.teamId ??
-            null
-        };
-
-      });
+      );
 
   }
 
 
-  return [];
+  if (!Array.isArray(rawPlayers)) {
+
+    return [];
+
+  }
+
+
+  return rawPlayers
+    .map((player,index) => {
+
+      /*
+        String:
+        "Elfiky"
+      */
+
+      if (
+        typeof player === "string"
+      ) {
+
+        return {
+          name:player,
+          entry_id:null
+        };
+
+      }
+
+
+      if (
+        !player ||
+        typeof player !== "object"
+      ) {
+
+        return null;
+
+      }
+
+
+      return {
+
+        name:
+          player.name ||
+          player.player ||
+          player.manager ||
+          player.username ||
+          player.display_name ||
+          player.displayName ||
+          `Player ${index + 1}`,
+
+        entry_id:
+          player.entry_id ??
+          player.entryId ??
+          player.id ??
+          player.team_id ??
+          player.teamId ??
+          player.entry ??
+          null
+
+      };
+
+    })
+    .filter(Boolean);
+
+}
+
+
+/* =========================================================
+   TEAM CARD ID
+========================================================= */
+
+function teamCardId(name) {
+
+  return "team_" +
+    Array.from(
+      String(name)
+    )
+    .map(
+      char =>
+        char.charCodeAt(0)
+    )
+    .join("_");
 
 }
 
@@ -1428,108 +1734,179 @@ function getTeamPlayers(teamName) {
 function buildTeamCards() {
 
   const grid =
-    document.getElementById("teams-grid");
+    document.getElementById(
+      "teams-grid"
+    );
+
+
+  if (!grid) {
+
+    console.error(
+      "teams-grid not found"
+    );
+
+    return;
+
+  }
 
 
   const teams =
     getLeagueTeams();
 
 
+  console.log(
+    "Teams:",
+    teams
+  );
+
+
   if (!teams.length) {
 
     grid.innerHTML = `
+
       <div class="state-box">
-        لا توجد فرق متاحة
+
+        ⚠️ لا توجد فرق متاحة
+
       </div>
+
     `;
 
     return;
+
   }
 
 
+  const standings =
+    getStandingsTeams();
+
+
   grid.innerHTML =
-    teams.map(name => {
+    teams.map(
+      name => {
 
-      const meta =
-        TEAM_META[name] ||
-        {
-          color:"#64748b",
-          em:"⚽"
-        };
-
-
-      const tData =
-        standingsData.teams?.find(
-          t => t.name === name
-        ) || {};
+        const meta =
+          TEAM_META[name] ||
+          {
+            color:"#64748b",
+            em:"⚽"
+          };
 
 
-      const rankIndex =
-        standingsData.teams?.findIndex(
-          t => t.name === name
-        ) ?? -1;
+        const tData =
+          standings.find(
+            team =>
+              (
+                team.name === name ||
+                team.team === name ||
+                team.team_name === name
+              )
+          ) || {};
 
 
-      const rank =
-        rankIndex >= 0
-          ? rankIndex + 1
-          : "-";
+        const rankIndex =
+          standings.findIndex(
+            team =>
+              (
+                team.name === name ||
+                team.team === name ||
+                team.team_name === name
+              )
+          );
 
 
-      const rankEmoji =
-        rank === 1
-          ? "🥇"
-          : rank === 2
-          ? "🥈"
-          : rank === 3
-          ? "🥉"
-          : `#${rank}`;
+        const rank =
+          rankIndex >= 0
+            ? rankIndex + 1
+            : "-";
 
 
-      return `
+        const rankEmoji =
+          rank === 1
+            ? "🥇"
+            : rank === 2
+            ? "🥈"
+            : rank === 3
+            ? "🥉"
+            : `#${rank}`;
 
-        <div
-          class="team-card"
-          id="tc-${teamCardId(name)}"
-          onclick="selectTeam(${JSON.stringify(name)})"
-          style="border-color:${meta.color}44"
-        >
 
-          <div class="team-card-em">
-            ${meta.em}
-          </div>
+        return `
 
           <div
-            class="team-card-name"
-            style="color:${meta.color}"
+            class="team-card"
+            id="${teamCardId(name)}"
+            data-team-name="${escapeHtml(name)}"
+            style="
+              border-color:${meta.color}44
+            "
           >
-            ${escapeHtml(name)}
+
+            <div class="team-card-em">
+              ${meta.em}
+            </div>
+
+            <div
+              class="team-card-name"
+              style="
+                color:${meta.color}
+              "
+            >
+              ${escapeHtml(name)}
+            </div>
+
+            <div class="team-card-sub">
+
+              ${rankEmoji}
+
+              ·
+
+              ${tData.total ?? 0}
+
+              نقطة
+
+            </div>
+
           </div>
 
-          <div class="team-card-sub">
-            ${rankEmoji}
-            ·
-            ${tData.total ?? 0}
-            نقطة
-          </div>
+        `;
 
-        </div>
-
-      `;
-
-    }).join("");
-
-}
+      }
+    ).join("");
 
 
-/* =========================================================
-   TEAM CARD ID
-========================================================= */
+  /*
+    مهم:
+    نربط click بعد إنشاء الكروت.
+    مش onclick داخل HTML.
+  */
 
-function teamCardId(name) {
+  grid
+    .querySelectorAll(".team-card")
+    .forEach(card => {
 
-  return String(name)
-    .replace(/[^\w\u0600-\u06FF]+/g,"_");
+      card.addEventListener(
+        "click",
+        function() {
+
+          const teamName =
+            this.dataset.teamName;
+
+
+          console.log(
+            "Selected team:",
+            teamName
+          );
+
+
+          selectTeam(
+            teamName
+          );
+
+        }
+      );
+
+    });
 
 }
 
@@ -1540,57 +1917,73 @@ function teamCardId(name) {
 
 function selectTeam(name) {
 
+  console.log(
+    "selectTeam:",
+    name
+  );
+
+
   const teams =
     getLeagueTeams();
 
 
-  teams.forEach(team => {
+  teams.forEach(
+    teamName => {
 
-    const el =
-      document.getElementById(
-        `tc-${teamCardId(team)}`
-      );
+      const card =
+        document.getElementById(
+          teamCardId(teamName)
+        );
 
 
-    if (!el) {
-      return;
+      if (!card) {
+        return;
+      }
+
+
+      const meta =
+        TEAM_META[teamName] ||
+        {
+          color:"#64748b"
+        };
+
+
+      if (
+        teamName === name
+      ) {
+
+        card.classList.add(
+          "active"
+        );
+
+        card.style.borderColor =
+          meta.color;
+
+        card.style.background =
+          meta.color + "22";
+
+        card.style.boxShadow =
+          `0 0 20px ${meta.color}44`;
+
+      }
+
+      else {
+
+        card.classList.remove(
+          "active"
+        );
+
+        card.style.borderColor =
+          meta.color + "44";
+
+        card.style.background = "";
+
+        card.style.boxShadow = "";
+
+      }
+
     }
-
-
-    const meta =
-      TEAM_META[team] ||
-      {
-        color:"#64748b"
-      };
-
-
-    if (team === name) {
-
-      el.classList.add("active");
-
-      el.style.borderColor =
-        meta.color;
-
-      el.style.background =
-        meta.color + "22";
-
-      el.style.boxShadow =
-        `0 0 20px ${meta.color}44`;
-
-    } else {
-
-      el.classList.remove("active");
-
-      el.style.borderColor =
-        meta.color + "44";
-
-      el.style.background = "";
-
-      el.style.boxShadow = "";
-
-    }
-
-  });
+  );
 
 
   selectedTeam = name;
@@ -1598,10 +1991,54 @@ function selectTeam(name) {
   selectedPlayer = null;
 
 
-  buildPlayerSelector(name);
+  /*
+    الأول:
+    اعرض سجل الفريق فورًا.
+  */
+
+  renderTeamResults(
+    name
+  );
 
 
-  renderTeamResults(name);
+  /*
+    الثاني:
+    ابنِ قائمة اللاعبين.
+  */
+
+  buildPlayerSelector(
+    name
+  );
+
+
+  /*
+    Scroll بسيط للقسم.
+  */
+
+  setTimeout(
+    () => {
+
+      const players =
+        document.getElementById(
+          "players-section"
+        );
+
+
+      if (
+        players &&
+        players.style.display !== "none"
+      ) {
+
+        players.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+      }
+
+    },
+    100
+  );
 
 }
 
@@ -1610,12 +2047,15 @@ function selectTeam(name) {
    PLAYER SELECTOR
 ========================================================= */
 
-function buildPlayerSelector(teamName) {
+function buildPlayerSelector(
+  teamName
+) {
 
   const section =
     document.getElementById(
       "players-section"
     );
+
 
   const grid =
     document.getElementById(
@@ -1623,36 +2063,81 @@ function buildPlayerSelector(teamName) {
     );
 
 
-  const players =
-    getTeamPlayers(teamName);
-
-
-  if (!players.length) {
-
-    section.style.display = "none";
-
-    hideFPL();
+  if (!section || !grid) {
 
     return;
+
   }
 
 
-  section.style.display = "block";
+  const players =
+    getTeamPlayers(
+      teamName
+    );
+
+
+  console.log(
+    "Players for",
+    teamName,
+    players
+  );
+
+
+  /*
+    مفيش players:
+    نعرض رسالة بدل ما نخفي كل حاجة.
+  */
+
+  if (!players.length) {
+
+    section.style.display =
+      "block";
+
+
+    grid.innerHTML = `
+
+      <div
+        style="
+          grid-column:1/-1;
+          text-align:center;
+          padding:20px;
+          color:var(--text-muted)
+        "
+      >
+
+        👤 لا توجد بيانات لاعبين لهذا الفريق
+
+        <br>
+
+        <small>
+          سيتم عرض سجل مباريات الفريق بالأسفل
+        </small>
+
+      </div>
+
+    `;
+
+
+    hideFPL();
+
+
+    return;
+
+  }
+
+
+  section.style.display =
+    "block";
 
 
   grid.innerHTML =
-    players.map((player,index) => {
-
-      const playerName =
-        player.name || `Player ${index + 1}`;
-
-
-      return `
+    players.map(
+      (player,index) => `
 
         <div
           class="player-card"
           id="player-${index}"
-          onclick="selectPlayer(${index})"
+          data-player-index="${index}"
         >
 
           <div class="player-avatar">
@@ -1662,31 +2147,60 @@ function buildPlayerSelector(teamName) {
           <div class="player-info">
 
             <div class="player-name">
-              ${escapeHtml(playerName)}
+              ${escapeHtml(
+                player.name
+              )}
             </div>
 
             <div class="player-entry">
+
               ENTRY:
+
               ${escapeHtml(
-                player.entry_id ?? "N/A"
+                player.entry_id ??
+                "N/A"
               )}
+
             </div>
 
           </div>
 
         </div>
 
-      `;
+      `
+    ).join("");
 
-    }).join("");
+
+  grid
+    .querySelectorAll(
+      ".player-card"
+    )
+    .forEach(card => {
+
+      card.addEventListener(
+        "click",
+        function() {
+
+          selectPlayer(
+            Number(
+              this.dataset.playerIndex
+            )
+          );
+
+        }
+      );
+
+    });
 
 
   /*
-    اختار أول لاعب تلقائيًا
-    حتى تظهر البيانات مباشرة.
+    لو فيه لاعب واحد فقط
+    اختاره تلقائيًا.
   */
 
-  if (players.length === 1) {
+  if (
+    players.length === 1
+  ) {
 
     selectPlayer(0);
 
@@ -1707,7 +2221,9 @@ function selectPlayer(index) {
 
 
   const players =
-    getTeamPlayers(selectedTeam);
+    getTeamPlayers(
+      selectedTeam
+    );
 
 
   const player =
@@ -1715,29 +2231,52 @@ function selectPlayer(index) {
 
 
   if (!player) {
+
+    console.warn(
+      "Player not found:",
+      index
+    );
+
     return;
+
   }
 
 
   document
-    .querySelectorAll(".player-card")
-    .forEach(el => {
-      el.classList.remove("active");
-    });
+    .querySelectorAll(
+      ".player-card"
+    )
+    .forEach(
+      card =>
+        card.classList.remove(
+          "active"
+        )
+    );
 
 
-  const selected =
+  const card =
     document.getElementById(
       `player-${index}`
     );
 
 
-  if (selected) {
-    selected.classList.add("active");
+  if (card) {
+
+    card.classList.add(
+      "active"
+    );
+
   }
 
 
-  selectedPlayer = player;
+  selectedPlayer =
+    player;
+
+
+  console.log(
+    "Selected player:",
+    selectedPlayer
+  );
 
 
   showFPL();
@@ -1757,7 +2296,13 @@ function showFPL() {
     );
 
 
-  section.style.display = "block";
+  if (!section) {
+    return;
+  }
+
+
+  section.style.display =
+    "block";
 
 
   const title =
@@ -1772,16 +2317,26 @@ function showFPL() {
     );
 
 
-  title.textContent =
-    `🏟️ ${selectedPlayer.name} — تشكيلة FPL`;
+  if (title) {
+
+    title.textContent =
+      `🏟️ ${selectedPlayer.name} — تشكيلة FPL`;
+
+  }
 
 
-  subtitle.textContent =
-    `Entry ID: ${selectedPlayer.entry_id ?? "N/A"}`;
+  if (subtitle) {
+
+    subtitle.textContent =
+      `Entry ID: ${
+        selectedPlayer.entry_id ??
+        "N/A"
+      }`;
+
+  }
 
 
   buildGWSelector();
-
 
   loadSelectedLineup();
 
@@ -1794,15 +2349,24 @@ function showFPL() {
 
 function hideFPL() {
 
-  document.getElementById(
-    "fpl-section"
-  ).style.display = "none";
+  const section =
+    document.getElementById(
+      "fpl-section"
+    );
+
+
+  if (section) {
+
+    section.style.display =
+      "none";
+
+  }
 
 }
 
 
 /* =========================================================
-   BUILD GW SELECTOR
+   GW SELECTOR
 ========================================================= */
 
 function buildGWSelector() {
@@ -1813,8 +2377,16 @@ function buildGWSelector() {
     );
 
 
+  if (!select) {
+    return;
+  }
+
+
   const previous =
-    Number(select.value || currentGW);
+    Number(
+      select.value ||
+      currentGW
+    );
 
 
   select.innerHTML = "";
@@ -1827,7 +2399,9 @@ function buildGWSelector() {
   ) {
 
     const option =
-      document.createElement("option");
+      document.createElement(
+        "option"
+      );
 
 
     option.value = gw;
@@ -1836,20 +2410,22 @@ function buildGWSelector() {
       `GW ${gw}`;
 
 
-    if (gw === previous) {
-      option.selected = true;
+    if (
+      gw === previous
+    ) {
+
+      option.selected =
+        true;
+
     }
 
 
-    select.appendChild(option);
+    select.appendChild(
+      option
+    );
 
   }
 
-
-  /*
-    لو الجولة القديمة مش موجودة
-    نختار current GW.
-  */
 
   if (!select.value) {
 
@@ -1862,7 +2438,7 @@ function buildGWSelector() {
 
 
 /* =========================================================
-   LOAD SELECTED LINEUP
+   LOAD LINEUP
 ========================================================= */
 
 async function loadSelectedLineup() {
@@ -1872,35 +2448,57 @@ async function loadSelectedLineup() {
   }
 
 
-  const gw =
-    Number(
-      document.getElementById(
-        "lineup-gw"
-      ).value
+  const select =
+    document.getElementById(
+      "lineup-gw"
     );
 
 
-  if (!gw) {
+  if (!select) {
     return;
   }
 
 
-  selectedLineupData = null;
+  const gw =
+    Number(
+      select.value
+    );
 
 
-  document.getElementById(
-    "formation"
-  ).innerHTML = `
-    <div class="state-box">
-      <div class="spinner"></div>
-      جاري تحميل التشكيلة...
-    </div>
-  `;
+  const formation =
+    document.getElementById(
+      "formation"
+    );
 
 
-  document.getElementById(
-    "bench-grid"
-  ).innerHTML = "";
+  const bench =
+    document.getElementById(
+      "bench-grid"
+    );
+
+
+  if (formation) {
+
+    formation.innerHTML = `
+
+      <div class="state-box">
+
+        <div class="spinner"></div>
+
+        جاري تحميل تشكيلة GW${gw}...
+
+      </div>
+
+    `;
+
+  }
+
+
+  if (bench) {
+
+    bench.innerHTML = "";
+
+  }
 
 
   try {
@@ -1911,33 +2509,40 @@ async function loadSelectedLineup() {
       );
 
 
-    selectedLineupData =
+    console.log(
+      `GW${gw} lineup data:`,
+      data
+    );
+
+
+    const lineup =
       extractPlayerLineup(
         data,
         selectedPlayer
       );
 
 
-    if (!selectedLineupData) {
+    if (!lineup) {
 
       renderLineupError(
         `لا توجد تشكيلة مسجلة للاعب ${selectedPlayer.name} في GW${gw}`
       );
 
       return;
+
     }
 
 
     renderLineup(
-      selectedLineupData,
+      lineup,
       gw
     );
 
 
   } catch (error) {
 
-    console.warn(
-      "Lineup loading error:",
+    console.error(
+      `GW${gw} lineup error:`,
       error
     );
 
@@ -1960,20 +2565,22 @@ function extractPlayerLineup(
   player
 ) {
 
-  if (!data) {
+  if (!data || !player) {
+
     return null;
+
   }
 
 
   const entryId =
     String(
-      player.entry_id ?? ""
+      player.entry_id ??
+      ""
     );
 
 
   /*
-    الشكل المتوقع:
-
+    الشكل:
     {
       "43949": {...}
     }
@@ -1992,7 +2599,7 @@ function extractPlayerLineup(
 
 
   /*
-    لو البيانات داخل players
+    players
   */
 
   if (
@@ -2015,42 +2622,54 @@ function extractPlayerLineup(
     const found =
       Object.values(
         data.players
-      ).find(item =>
-        String(
-          item.entry_id ??
-          item.entryId ??
-          item.id ??
-          ""
-        ) === entryId
+      ).find(
+        item =>
+          String(
+            item?.entry_id ??
+            item?.entryId ??
+            item?.id ??
+            ""
+          ) === entryId
       );
 
 
     if (found) {
-      return normalizeLineup(found);
+
+      return normalizeLineup(
+        found
+      );
+
     }
 
   }
 
 
   /*
-    لو data عبارة عن array
+    array
   */
 
-  if (Array.isArray(data)) {
+  if (
+    Array.isArray(data)
+  ) {
 
     const found =
-      data.find(item =>
-        String(
-          item.entry_id ??
-          item.entryId ??
-          item.id ??
-          ""
-        ) === entryId
+      data.find(
+        item =>
+          String(
+            item?.entry_id ??
+            item?.entryId ??
+            item?.id ??
+            ""
+          ) === entryId
       );
 
 
     if (found) {
-      return normalizeLineup(found);
+
+      return normalizeLineup(
+        found
+      );
+
     }
 
   }
@@ -2065,66 +2684,64 @@ function extractPlayerLineup(
    NORMALIZE LINEUP
 ========================================================= */
 
-function normalizeLineup(raw) {
+function normalizeLineup(
+  raw
+) {
 
   if (!raw) {
     return null;
   }
 
 
-  /*
-    نحاول معرفة الـ XI
-  */
-
-  const starters =
+  let starters =
     raw.starters ||
     raw.starting_xi ||
     raw.startingXI ||
     raw.lineup ||
-    raw.players ||
     [];
 
 
-  const bench =
+  let bench =
     raw.bench ||
     raw.subs ||
     raw.substitutes ||
     [];
 
 
-  let allPlayers =
-    Array.isArray(starters)
-      ? starters
-      : [];
-
-
-  /*
-    بعض النسخ تخزن players كـ object
-  */
-
   if (
-    !Array.isArray(allPlayers) &&
-    typeof allPlayers === "object"
+    !Array.isArray(starters) &&
+    typeof starters === "object"
   ) {
 
-    allPlayers =
-      Object.values(allPlayers);
+    starters =
+      Object.values(
+        starters
+      );
+
+  }
+
+
+  if (
+    !Array.isArray(bench) &&
+    typeof bench === "object"
+  ) {
+
+    bench =
+      Object.values(
+        bench
+      );
 
   }
 
 
   const normalizedStarters =
-    allPlayers.map(
+    starters.map(
       normalizePlayer
     );
 
 
   const normalizedBench =
-    (
-      Array.isArray(bench)
-        ? bench
-        : Object.values(bench || {})
-    ).map(
+    bench.map(
       normalizePlayer
     );
 
@@ -2178,9 +2795,7 @@ function normalizeLineup(raw) {
         raw.transfers ??
         raw.transfer_cost ??
         0
-      ),
-
-    raw
+      )
 
   };
 
@@ -2191,15 +2806,19 @@ function normalizeLineup(raw) {
    NORMALIZE PLAYER
 ========================================================= */
 
-function normalizePlayer(player) {
+function normalizePlayer(
+  player
+) {
 
   if (!player) {
+
     return {
       id:null,
       name:"Unknown",
       position:"MID",
       points:0
     };
+
   }
 
 
@@ -2256,43 +2875,54 @@ function normalizePlayer(player) {
    DETECT FORMATION
 ========================================================= */
 
-function detectFormation(players) {
+function detectFormation(
+  players
+) {
 
   let def = 0;
   let mid = 0;
   let fwd = 0;
 
 
-  players.forEach(player => {
+  players.forEach(
+    player => {
 
-    const pos =
-      String(
-        player.position
-      ).toUpperCase();
+      const pos =
+        String(
+          player.position ||
+          ""
+        ).toUpperCase();
 
 
-    if (
-      pos === "DEF" ||
-      pos === "2"
-    ) {
-      def++;
+      if (
+        pos === "DEF" ||
+        pos === "2"
+      ) {
+
+        def++;
+
+      }
+
+      else if (
+        pos === "MID" ||
+        pos === "3"
+      ) {
+
+        mid++;
+
+      }
+
+      else if (
+        pos === "FWD" ||
+        pos === "4"
+      ) {
+
+        fwd++;
+
+      }
+
     }
-
-    else if (
-      pos === "MID" ||
-      pos === "3"
-    ) {
-      mid++;
-    }
-
-    else if (
-      pos === "FWD" ||
-      pos === "4"
-    ) {
-      fwd++;
-    }
-
-  });
+  );
 
 
   if (
@@ -2312,14 +2942,17 @@ function detectFormation(players) {
 
 
 /* =========================================================
-   PLAYER POSITION
+   POSITION GROUP
 ========================================================= */
 
-function getPositionGroup(player) {
+function getPositionGroup(
+  player
+) {
 
   const pos =
     String(
-      player.position || ""
+      player.position ||
+      ""
     ).toUpperCase();
 
 
@@ -2327,7 +2960,9 @@ function getPositionGroup(player) {
     pos === "GK" ||
     pos === "1"
   ) {
+
     return "GK";
+
   }
 
 
@@ -2335,7 +2970,9 @@ function getPositionGroup(player) {
     pos === "DEF" ||
     pos === "2"
   ) {
+
     return "DEF";
+
   }
 
 
@@ -2343,7 +2980,9 @@ function getPositionGroup(player) {
     pos === "MID" ||
     pos === "3"
   ) {
+
     return "MID";
+
   }
 
 
@@ -2351,7 +2990,9 @@ function getPositionGroup(player) {
     pos === "FWD" ||
     pos === "4"
   ) {
+
     return "FWD";
+
   }
 
 
@@ -2375,25 +3016,29 @@ function renderLineup(
 
   const gk =
     starters.filter(
-      p => getPositionGroup(p) === "GK"
+      p =>
+        getPositionGroup(p) === "GK"
     );
 
 
   const def =
     starters.filter(
-      p => getPositionGroup(p) === "DEF"
+      p =>
+        getPositionGroup(p) === "DEF"
     );
 
 
   const mid =
     starters.filter(
-      p => getPositionGroup(p) === "MID"
+      p =>
+        getPositionGroup(p) === "MID"
     );
 
 
   const fwd =
     starters.filter(
-      p => getPositionGroup(p) === "FWD"
+      p =>
+        getPositionGroup(p) === "FWD"
     );
 
 
@@ -2442,7 +3087,7 @@ function renderLineup(
 
 
 /* =========================================================
-   RENDER POSITION ROW
+   POSITION ROW
 ========================================================= */
 
 function renderPositionRow(
@@ -2452,7 +3097,9 @@ function renderPositionRow(
 ) {
 
   if (!players.length) {
+
     return "";
+
   }
 
 
@@ -2466,13 +3113,15 @@ function renderPositionRow(
 
       <div class="position-row">
 
-        ${players.map(
-          player =>
-            renderFPLPlayer(
-              player,
-              cssClass
-            )
-        ).join("")}
+        ${
+          players.map(
+            player =>
+              renderFPLPlayer(
+                player,
+                cssClass
+              )
+          ).join("")
+        }
 
       </div>
 
@@ -2484,7 +3133,7 @@ function renderPositionRow(
 
 
 /* =========================================================
-   RENDER PLAYER
+   RENDER FPL PLAYER
 ========================================================= */
 
 function renderFPLPlayer(
@@ -2559,7 +3208,9 @@ function isSamePlayer(
     id === null ||
     id === undefined
   ) {
+
     return false;
+
   }
 
 
@@ -2574,7 +3225,9 @@ function isSamePlayer(
    BENCH
 ========================================================= */
 
-function renderBench(players) {
+function renderBench(
+  players
+) {
 
   const grid =
     document.getElementById(
@@ -2582,22 +3235,30 @@ function renderBench(players) {
     );
 
 
+  if (!grid) {
+    return;
+  }
+
+
   if (!players.length) {
 
     grid.innerHTML = `
+
       <div
         style="
           grid-column:1/-1;
           text-align:center;
           color:var(--text-muted);
-          padding:15px;
+          padding:15px
         "
       >
         لا توجد بيانات للدكة
       </div>
+
     `;
 
     return;
+
   }
 
 
@@ -2612,7 +3273,9 @@ function renderBench(players) {
           </div>
 
           <div class="bench-player-name">
-            ${escapeHtml(player.name)}
+            ${escapeHtml(
+              player.name
+            )}
           </div>
 
           <div class="bench-player-points">
@@ -2642,35 +3305,47 @@ function renderFPLSummary(
 
   const starterPoints =
     starters.reduce(
-      (sum,p) =>
-        sum + Number(p.points || 0),
+      (sum,player) =>
+        sum +
+        Number(
+          player.points || 0
+        ),
       0
     );
 
 
   const benchPoints =
-    (lineup.bench || []).reduce(
-      (sum,p) =>
-        sum + Number(p.points || 0),
+    (
+      lineup.bench || []
+    ).reduce(
+      (sum,player) =>
+        sum +
+        Number(
+          player.points || 0
+        ),
       0
     );
 
 
   const eventPoints =
-    lineup.eventPoints ||
-    starterPoints;
+    Number(
+      lineup.eventPoints ||
+      starterPoints
+    );
 
 
   const transfers =
-    lineup.transfers || 0;
+    Number(
+      lineup.transfers || 0
+    );
 
 
   const captain =
     starters.find(
-      p =>
-        p.isCaptain ||
+      player =>
+        player.isCaptain ||
         isSamePlayer(
-          p,
+          player,
           lineup.captain
         )
     );
@@ -2774,33 +3449,63 @@ function renderFPLSummary(
    LINEUP ERROR
 ========================================================= */
 
-function renderLineupError(message) {
+function renderLineupError(
+  message
+) {
 
-  document.getElementById(
-    "formation"
-  ).innerHTML = `
+  const formation =
+    document.getElementById(
+      "formation"
+    );
 
-    <div class="state-box">
 
-      ⚠️
+  if (formation) {
 
-      <div style="margin-top:10px">
-        ${escapeHtml(message)}
+    formation.innerHTML = `
+
+      <div class="state-box">
+
+        ⚠️
+
+        <div style="margin-top:10px">
+
+          ${escapeHtml(
+            message
+          )}
+
+        </div>
+
       </div>
 
-    </div>
+    `;
 
-  `;
-
-
-  document.getElementById(
-    "bench-grid"
-  ).innerHTML = "";
+  }
 
 
-  document.getElementById(
-    "fpl-summary"
-  ).innerHTML = "";
+  const bench =
+    document.getElementById(
+      "bench-grid"
+    );
+
+
+  if (bench) {
+
+    bench.innerHTML = "";
+
+  }
+
+
+  const summary =
+    document.getElementById(
+      "fpl-summary"
+    );
+
+
+  if (summary) {
+
+    summary.innerHTML = "";
+
+  }
 
 }
 
@@ -2821,16 +3526,30 @@ function renderTeamResults(
     };
 
 
+  const standings =
+    getStandingsTeams();
+
+
   const teamData =
-    standingsData.teams?.find(
-      t => t.name === teamName
+    standings.find(
+      team =>
+        (
+          team.name === teamName ||
+          team.team === teamName ||
+          team.team_name === teamName
+        )
     ) || {};
 
 
   const rankIndex =
-    standingsData.teams?.findIndex(
-      t => t.name === teamName
-    ) ?? -1;
+    standings.findIndex(
+      team =>
+        (
+          team.name === teamName ||
+          team.team === teamName ||
+          team.team_name === teamName
+        )
+    );
 
 
   const rank =
@@ -2839,32 +3558,62 @@ function renderTeamResults(
       : 0;
 
 
-  document.getElementById(
-    "tbl-icon"
-  ).textContent =
-    meta.em;
+  const icon =
+    document.getElementById(
+      "tbl-icon"
+    );
 
 
-  document.getElementById(
-    "tbl-icon"
-  ).style.background =
-    `linear-gradient(135deg,${meta.color}99,${meta.color})`;
+  if (icon) {
+
+    icon.textContent =
+      meta.em;
+
+    icon.style.background =
+      `linear-gradient(
+        135deg,
+        ${meta.color}99,
+        ${meta.color}
+      )`;
+
+  }
 
 
-  document.getElementById(
-    "tbl-title"
-  ).innerHTML =
-    `${escapeHtml(teamName)}
-     — سجل المباريات
-     <small>
-       Match History · حتى الجولة ${currentGW}
-     </small>`;
+  const title =
+    document.getElementById(
+      "tbl-title"
+    );
 
 
-  document.getElementById(
-    "results-section"
-  ).style.display =
-    "block";
+  if (title) {
+
+    title.innerHTML = `
+
+      ${escapeHtml(teamName)}
+
+      — سجل المباريات
+
+      <small>
+        Match History · حتى الجولة ${currentGW}
+      </small>
+
+    `;
+
+  }
+
+
+  const results =
+    document.getElementById(
+      "results-section"
+    );
+
+
+  if (results) {
+
+    results.style.display =
+      "block";
+
+  }
 
 
   renderSummary(
@@ -2887,7 +3636,7 @@ function renderTeamResults(
 
 
 /* =========================================================
-   TEAM MATCH HISTORY
+   MATCH HISTORY
 ========================================================= */
 
 async function fetchAndRenderGWs(
@@ -2902,6 +3651,11 @@ async function fetchAndRenderGWs(
     document.getElementById(
       "matches-tbody"
     );
+
+
+  if (!tbody) {
+    return;
+  }
 
 
   try {
@@ -2924,9 +3678,9 @@ async function fetchAndRenderGWs(
           }
         )
         .then(
-          r =>
-            r.ok
-              ? r.json()
+          response =>
+            response.ok
+              ? response.json()
               : null
         )
         .catch(
@@ -2939,7 +3693,9 @@ async function fetchAndRenderGWs(
 
 
     const gwResults =
-      await Promise.all(promises);
+      await Promise.all(
+        promises
+      );
 
 
     let rows = "";
@@ -2967,10 +3723,6 @@ async function fetchAndRenderGWs(
         gwResults[i];
 
 
-      /*
-        Matchups من fixtures
-      */
-
       let matchups = [];
 
 
@@ -2996,16 +3748,39 @@ async function fetchAndRenderGWs(
       }
 
 
+      if (
+        !Array.isArray(matchups)
+      ) {
+
+        continue;
+
+      }
+
+
       const myFix =
         matchups.find(
-          m =>
-            Array.isArray(m)
-              ? m.includes(teamName)
-              :
-                (
-                  m.home === teamName ||
-                  m.away === teamName
-                )
+          match => {
+
+            if (
+              Array.isArray(match)
+            ) {
+
+              return match.includes(
+                teamName
+              );
+
+            }
+
+
+            return (
+              match &&
+              (
+                match.home === teamName ||
+                match.away === teamName
+              )
+            );
+
+          }
         );
 
 
@@ -3017,14 +3792,18 @@ async function fetchAndRenderGWs(
       let opp = "";
 
 
-      if (Array.isArray(myFix)) {
+      if (
+        Array.isArray(myFix)
+      ) {
 
         opp =
           myFix[0] === teamName
             ? myFix[1]
             : myFix[0];
 
-      } else {
+      }
+
+      else {
 
         opp =
           myFix.home === teamName
@@ -3057,9 +3836,10 @@ async function fetchAndRenderGWs(
           Object.values(
             data[teamName]
           ).reduce(
-            (s,p) =>
-              s + Number(
-                p.points || 0
+            (sum,player) =>
+              sum +
+              Number(
+                player.points || 0
               ),
             0
           );
@@ -3069,9 +3849,10 @@ async function fetchAndRenderGWs(
           Object.values(
             data[opp]
           ).reduce(
-            (s,p) =>
-              s + Number(
-                p.points || 0
+            (sum,player) =>
+              sum +
+              Number(
+                player.points || 0
               ),
             0
           );
@@ -3149,18 +3930,14 @@ async function fetchAndRenderGWs(
 
         resultBadge =
           `<span
-             class="result-badge"
-             style="opacity:.6"
-           >
-             لم تُلعب
-           </span>`;
+            class="result-badge"
+            style="opacity:.6"
+          >
+            لم تُلعب
+          </span>`;
 
       }
 
-
-      /*
-        Khawas
-      */
 
       let bonusPts = 0;
 
@@ -3173,20 +3950,20 @@ async function fetchAndRenderGWs(
         khawasData[gw][teamName]
       ) {
 
-        const kInfo =
+        const info =
           khawasData[gw][teamName];
 
 
-        const name =
-          kInfo.name ||
-          kInfo.type ||
+        const bonusName =
+          info.name ||
+          info.type ||
           "خاصية";
 
 
         bonusPts =
           Number(
-            kInfo.bonus ||
-            kInfo.points ||
+            info.bonus ||
+            info.points ||
             0
           );
 
@@ -3198,7 +3975,9 @@ async function fetchAndRenderGWs(
             title="بونص: +${bonusPts}"
           >
 
-            ${escapeHtml(name)}
+            ${escapeHtml(
+              bonusName
+            )}
 
             ${
               bonusPts > 0
@@ -3231,7 +4010,6 @@ async function fetchAndRenderGWs(
             </span>
           </td>
 
-
           <td>
 
             <div class="opp-cell">
@@ -3253,7 +4031,6 @@ async function fetchAndRenderGWs(
 
           </td>
 
-
           <td class="hide-sm">
             ${
               myPts !== null
@@ -3261,7 +4038,6 @@ async function fetchAndRenderGWs(
                 : "—"
             }
           </td>
-
 
           <td class="hide-sm">
             ${
@@ -3271,21 +4047,17 @@ async function fetchAndRenderGWs(
             }
           </td>
 
-
           <td>
             ${resultBadge}
           </td>
-
 
           <td class="mp-cell">
             +${mp}
           </td>
 
-
           <td class="bonus-cell">
             ${khawasHtml}
           </td>
-
 
           <td
             style="
@@ -3306,7 +4078,9 @@ async function fetchAndRenderGWs(
     tbody.innerHTML =
       rows ||
       `
+
         <tr>
+
           <td
             colspan="8"
             style="
@@ -3317,7 +4091,9 @@ async function fetchAndRenderGWs(
           >
             لا توجد بيانات للمباريات الحالية
           </td>
+
         </tr>
+
       `;
 
 
@@ -3334,28 +4110,32 @@ async function fetchAndRenderGWs(
     );
 
 
-  } catch (e) {
+  } catch (error) {
 
-    console.error(e);
+    console.error(
+      "Match history error:",
+      error
+    );
 
 
-    tbody.innerHTML =
-      `
-        <tr>
+    tbody.innerHTML = `
 
-          <td
-            colspan="8"
-            style="
-              padding:30px;
-              text-align:center;
-              color:var(--red)
-            "
-          >
-            ⚠️ تعذر عرض نتائج الجولات الحالية
-          </td>
+      <tr>
 
-        </tr>
-      `;
+        <td
+          colspan="8"
+          style="
+            padding:30px;
+            text-align:center;
+            color:var(--red)
+          "
+        >
+          ⚠️ تعذر عرض نتائج الجولات الحالية
+        </td>
+
+      </tr>
+
+    `;
 
   }
 
@@ -3387,42 +4167,55 @@ function renderSummary(
         );
 
 
-  const w =
+  const wins =
     computed?.wins ??
     tData.won ??
     0;
 
 
-  const d =
+  const draws =
     computed?.draws ??
     tData.draw ??
     0;
 
 
-  const l =
+  const losses =
     computed?.losses ??
     tData.lost ??
     0;
 
 
-  const totalPts =
+  const total =
     computed?.runTotal ??
     tData.total ??
     0;
 
 
-  document.getElementById(
-    "summary-row"
-  ).innerHTML = `
+  const summary =
+    document.getElementById(
+      "summary-row"
+    );
+
+
+  if (!summary) {
+    return;
+  }
+
+
+  summary.innerHTML = `
 
     <div
       class="sum-chip"
-      style="border-color:${meta.color}55"
+      style="
+        border-color:${meta.color}55
+      "
     >
 
       <div
         class="sum-val"
-        style="color:${meta.color}"
+        style="
+          color:${meta.color}
+        "
       >
         ${rankEmoji}
       </div>
@@ -3440,7 +4233,7 @@ function renderSummary(
         class="sum-val"
         style="color:var(--green)"
       >
-        ${w}
+        ${wins}
       </div>
 
       <div class="sum-lbl">
@@ -3456,7 +4249,7 @@ function renderSummary(
         class="sum-val"
         style="color:var(--gold)"
       >
-        ${d}
+        ${draws}
       </div>
 
       <div class="sum-lbl">
@@ -3472,7 +4265,7 @@ function renderSummary(
         class="sum-val"
         style="color:var(--red)"
       >
-        ${l}
+        ${losses}
       </div>
 
       <div class="sum-lbl">
@@ -3488,7 +4281,7 @@ function renderSummary(
         class="sum-val"
         style="color:var(--blue-accent)"
       >
-        ${totalPts}
+        ${total}
       </div>
 
       <div class="sum-lbl">
@@ -3506,9 +4299,13 @@ function renderSummary(
    START
 ========================================================= */
 
-init();
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
 
 </script>
+
 
 </body>
 </html>
