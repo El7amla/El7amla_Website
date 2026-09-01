@@ -1,42 +1,82 @@
 {
   "Black Tech": {
-    "7002106": {
-      "points": 63
+    "43949": {
+      "player": "Elfiky",
+      "points": 115
     },
-    "1216533": {
-      "points": 66
-    }
-  },
-  "The Pharaohs": {
-    "275539": {
-      "points": 75
-    },
-    "1545049": {
-      "points": 36
-    }
-  },
-  "Smokers": {
-    "1679155": {
-      "points": 29
-    },
-    "2208753": {
-      "points": 57
+    "3492393": {
+      "player": "Saady",
+      "points": 78
     }
   },
   "Falcons": {
-    "2134302": {
-      "points": 55
+    "1102089": {
+      "player": "Nasser",
+      "points": 81
     },
-    "8656672": {
-      "points": 50
+    "4696525": {
+      "player": "Tawheed",
+      "points": 78
+    }
+  },
+  "The Pharaohs": {
+    "1338459": {
+      "player": "Hussein",
+      "points": 96
+    },
+    "3915093": {
+      "player": "Ahmed Nour",
+      "points": 72
+    }
+  },
+  "Royal Authority": {
+    "4638841": {
+      "player": "Omar",
+      "points": 106
+    },
+    "4648250": {
+      "player": "Mahmoud",
+      "points": 94
+    }
+  },
+  "الزرازير": {
+    "92255": {
+      "player": "M.Yasser",
+      "points": 99
+    },
+    "1421188": {
+      "player": "Abolmagd",
+      "points": 98
+    }
+  },
+  "الاوديسي": {
+    "749755": {
+      "player": "Amgad",
+      "points": 114
+    },
+    "778545": {
+      "player": "Karim Yasser",
+      "points": 93
+    }
+  },
+  "The Masterminds": {
+    "1697319": {
+      "player": "Body",
+      "points": 93
+    },
+    "994560": {
+      "player": "Shika",
+      "points": 93
     }
   },
   "Boys": {
-    "8703485": {
-      "points": 37
+    "7999563": {
+      "player": "Ali",
+      "points": 68
     },
-    "5857198": {
-      "points": 60
+    "7652885": {
+      "player": "Magdy",
+      "points": 91
     }
   }
 }
