@@ -1,6 +1,6 @@
 {
   "current_gw": 2,
-  "last_updated": "2026-09-01 11:02:57",
+  "last_updated": "2026-09-01 20:19:17",
   "teams": [
     {
       "name": "الزرازير",
@@ -197,92 +197,6 @@
       "points": 126
     }
   ],
-  "matches_by_gw": {
-    "1": [
-      {
-        "gw": 1,
-        "home": "Black Tech",
-        "away": "Falcons",
-        "homePts": 130,
-        "awayPts": 125,
-        "result": "home_win",
-        "winner": "Black Tech",
-        "type": "normal"
-      },
-      {
-        "gw": 1,
-        "home": "The Pharaohs",
-        "away": "Boys",
-        "homePts": 145,
-        "awayPts": 119,
-        "result": "home_win",
-        "winner": "The Pharaohs",
-        "type": "normal"
-      },
-      {
-        "gw": 1,
-        "home": "Royal Authority",
-        "away": "The Masterminds",
-        "homePts": 107,
-        "awayPts": 89,
-        "result": "home_win",
-        "winner": "Royal Authority",
-        "type": "normal"
-      },
-      {
-        "gw": 1,
-        "home": "الزرازير",
-        "away": "الاوديسي",
-        "homePts": 125,
-        "awayPts": 86,
-        "result": "home_win",
-        "winner": "الزرازير",
-        "type": "normal"
-      }
-    ],
-    "2": [
-      {
-        "gw": 2,
-        "home": "Black Tech",
-        "away": "The Pharaohs",
-        "homePts": 193,
-        "awayPts": 168,
-        "result": "home_win",
-        "winner": "Black Tech",
-        "type": "normal"
-      },
-      {
-        "gw": 2,
-        "home": "Royal Authority",
-        "away": "Falcons",
-        "homePts": 200,
-        "awayPts": 159,
-        "result": "home_win",
-        "winner": "Royal Authority",
-        "type": "normal"
-      },
-      {
-        "gw": 2,
-        "home": "الزرازير",
-        "away": "Boys",
-        "homePts": 197,
-        "awayPts": 159,
-        "result": "home_win",
-        "winner": "الزرازير",
-        "type": "normal"
-      },
-      {
-        "gw": 2,
-        "home": "الاوديسي",
-        "away": "The Masterminds",
-        "homePts": 207,
-        "awayPts": 186,
-        "result": "home_win",
-        "winner": "الاوديسي",
-        "type": "normal"
-      }
-    ]
-  },
   "matches": [
     {
       "gw": 1,
