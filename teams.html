@@ -1,52 +1,201 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>الفرق - El7amla Fantasy League</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg-primary:   #0f172a;
-      --bg-card:      #1e293b;
-      --border:       #334155;
-      --text-primary: #f1f5f9;
-      --text-muted:   #94a3b8;
-      --blue-accent:  #3b82f6;
-      --blue-dark:    #1d4ed8;
-      --gold:         #fbbf24;
-      --green:        #22c55e;
-      --red:          #ef4444;
-      --purple:       #a855f7;
-      --nav-h:        68px;
-      --row-hover:    rgba(59,130,246,.08);
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html { scroll-behavior: smooth; }
-    body { font-family:'Cairo',sans-serif; background:var(--bg-primary); color:var(--text-primary); min-height:100vh; direction:rtl; }
+    :root {
+      --bg-primary: #0f172a;
+      --bg-card: #1e293b;
+      --border: #334155;
+      --text-primary: #f1f5f9;
+      --text-muted: #94a3b8;
+      --blue-accent: #3b82f6;
+      --blue-dark: #1d4ed8;
+      --gold: #fbbf24;
+      --green: #22c55e;
+      --red: #ef4444;
+      --purple: #a855f7;
+      --nav-h: 68px;
+      --row-hover: rgba(59,130,246,.08);
+    }
 
-    .site-nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); background:rgba(15,23,42,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); z-index:1000; display:flex; align-items:center; padding:0 20px; }
-    .nav-inner { max-width:1200px; margin:0 auto; width:100%; display:flex; align-items:center; }
-    .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; margin-left:auto; flex-shrink:0; }
-    .logo-mark { width:44px; height:44px; background:linear-gradient(135deg,#1d4ed8,#3b82f6,#60a5fa); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 18px rgba(59,130,246,.4); flex-shrink:0; }
-    .logo-mark svg { width:26px; height:26px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-    .logo-text { display:flex; flex-direction:column; line-height:1.1; }
-    .logo-ar { font-family:'Cairo',sans-serif; font-size:1.05rem; font-weight:900; color:var(--text-primary); }
-    .logo-en { font-family:'Orbitron',sans-serif; font-size:.5rem; font-weight:700; color:var(--blue-accent); letter-spacing:2.5px; text-transform:uppercase; }
-    .nav-links { display:flex; align-items:center; margin-right:auto; }
-    .nav-links a { color:var(--text-muted); text-decoration:none; font-size:.9rem; font-weight:600; padding:8px 18px; border-bottom:3px solid transparent; transition:.2s; height:var(--nav-h); display:flex; align-items:center; }
-    .nav-links a:hover, .nav-links a.active { color:var(--blue-accent); border-bottom-color:var(--blue-accent); background:rgba(59,130,246,.06); }
-    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; margin-right:auto; background:none; border:none; }
-    .hamburger span { display:block; width:24px; height:2px; background:var(--text-primary); border-radius:2px; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-    .page-wrap { max-width:1200px; margin:0 auto; padding:calc(var(--nav-h) + 28px) 16px 60px; }
-    .page-header { text-align:center; margin-bottom:28px; }
-    .page-title { font-family:'Orbitron',sans-serif; font-size:clamp(1.1rem,3.5vw,1.9rem); font-weight:900; background:linear-gradient(90deg,#60a5fa,#f1f5f9,#60a5fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
-    .page-sub { font-size:.85rem; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: rgba(15,23,42,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg,#1d4ed8,#3b82f6,#60a5fa);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 18px rgba(59,130,246,.4);
+      flex-shrink: 0;
+    }
+
+    .logo-mark svg {
+      width: 26px;
+      height: 26px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-ar {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--text-primary);
+    }
+
+    .logo-en {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .5rem;
+      font-weight: 700;
+      color: var(--blue-accent);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      margin-right: auto;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-bottom: 3px solid transparent;
+      transition: .2s;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--blue-accent);
+      border-bottom-color: var(--blue-accent);
+      background: rgba(59,130,246,.06);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      margin-right: auto;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+    }
+
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 28px) 16px 60px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.1rem,3.5vw,1.9rem);
+      font-weight: 900;
+      background: linear-gradient(90deg,#60a5fa,#f1f5f9,#60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .page-sub {
+      font-size: .85rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+
+    /* =========================
+       TEAMS
+    ========================= */
 
     .teams-grid {
       display: grid;
@@ -54,6 +203,7 @@
       gap: 14px;
       margin-bottom: 28px;
     }
+
     .team-card {
       background: var(--bg-card);
       border: 2px solid var(--border);
@@ -67,11 +217,400 @@
       align-items: center;
       gap: 8px;
     }
-    .team-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.4); }
-    .team-card.active { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.5); }
-    .team-card-em   { font-size: 2.2rem; }
-    .team-card-name { font-weight: 800; font-size: .85rem; }
-    .team-card-sub  { font-size: .7rem; color: var(--text-muted); }
+
+    .team-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.4);
+    }
+
+    .team-card.active {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.5);
+    }
+
+    .team-card-em {
+      font-size: 2.2rem;
+    }
+
+    .team-card-name {
+      font-weight: 800;
+      font-size: .85rem;
+    }
+
+    .team-card-sub {
+      font-size: .7rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================
+       PLAYER SELECTOR
+    ========================= */
+
+    #players-section {
+      display: none;
+      margin-bottom: 28px;
+    }
+
+    .players-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .players-title {
+      font-size: 1rem;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .player-card {
+      background: rgba(15,23,42,.55);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: .2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .player-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--blue-accent);
+      background: rgba(59,130,246,.08);
+    }
+
+    .player-card.active {
+      border-color: var(--blue-accent);
+      background: rgba(59,130,246,.12);
+      box-shadow: 0 0 18px rgba(59,130,246,.18);
+    }
+
+    .player-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#1d4ed8,#3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .player-info {
+      min-width: 0;
+    }
+
+    .player-name {
+      font-weight: 900;
+      font-size: .85rem;
+    }
+
+    .player-entry {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--text-muted);
+      font-size: .58rem;
+      margin-top: 3px;
+    }
+
+    /* =========================
+       FPL SECTION
+    ========================= */
+
+    #fpl-section {
+      display: none;
+      margin-bottom: 30px;
+    }
+
+    .fpl-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,.35);
+    }
+
+    .fpl-header {
+      padding: 18px;
+      background: linear-gradient(135deg,rgba(29,78,216,.25),rgba(59,130,246,.05));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fpl-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .fpl-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .fpl-subtitle {
+      color: var(--text-muted);
+      font-size: .72rem;
+      margin-top: 3px;
+    }
+
+    .gw-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gw-select-wrap label {
+      color: var(--text-muted);
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    #lineup-gw {
+      background: #0f172a;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px 12px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #lineup-gw:focus {
+      border-color: var(--blue-accent);
+    }
+
+    .fpl-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(110px,1fr));
+      gap: 10px;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fpl-stat {
+      background: rgba(15,23,42,.55);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .fpl-stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+    }
+
+    .fpl-stat-label {
+      color: var(--text-muted);
+      font-size: .65rem;
+      margin-top: 4px;
+    }
+
+    /* =========================
+       PITCH
+    ========================= */
+
+    .pitch-wrap {
+      padding: 20px;
+    }
+
+    .pitch {
+      max-width: 850px;
+      margin: 0 auto;
+      min-height: 500px;
+      border-radius: 20px;
+      padding: 28px 15px;
+      background:
+        linear-gradient(rgba(34,197,94,.05),rgba(34,197,94,.05)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(34,197,94,.08) 0px,
+          rgba(34,197,94,.08) 70px,
+          rgba(34,197,94,.04) 70px,
+          rgba(34,197,94,.04) 140px
+        );
+      border: 1px solid rgba(34,197,94,.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pitch::before {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(255,255,255,.08);
+      pointer-events: none;
+    }
+
+    .formation {
+      position: relative;
+      z-index: 2;
+      min-height: 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .position-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(12px,5vw,55px);
+      flex-wrap: wrap;
+    }
+
+    .position-label {
+      text-align: center;
+      color: rgba(255,255,255,.38);
+      font-size: .6rem;
+      font-weight: 700;
+      margin-bottom: -4px;
+    }
+
+    .fpl-player {
+      width: 105px;
+      text-align: center;
+      position: relative;
+    }
+
+    .shirt {
+      width: 48px;
+      height: 42px;
+      margin: 0 auto 4px;
+      background: linear-gradient(135deg,#3b82f6,#1d4ed8);
+      clip-path: polygon(20% 0,80% 0,100% 25%,83% 42%,83% 100%,17% 100%,17% 42%,0 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,.4));
+    }
+
+    .fpl-player.gk .shirt {
+      background: linear-gradient(135deg,#eab308,#ca8a04);
+    }
+
+    .fpl-player.def .shirt {
+      background: linear-gradient(135deg,#22c55e,#15803d);
+    }
+
+    .fpl-player.mid .shirt {
+      background: linear-gradient(135deg,#3b82f6,#1d4ed8);
+    }
+
+    .fpl-player.fwd .shirt {
+      background: linear-gradient(135deg,#a855f7,#7e22ce);
+    }
+
+    .fpl-player-name {
+      font-size: .66rem;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fpl-player-points {
+      font-family: 'Orbitron',sans-serif;
+      font-size: .58rem;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+
+    .captain-badge,
+    .vice-badge {
+      position: absolute;
+      top: -7px;
+      right: 4px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron',sans-serif;
+      font-size: .55rem;
+      font-weight: 900;
+      border: 2px solid var(--bg-card);
+    }
+
+    .captain-badge {
+      background: var(--gold);
+      color: #111827;
+    }
+
+    .vice-badge {
+      background: #cbd5e1;
+      color: #111827;
+    }
+
+    /* =========================
+       BENCH
+    ========================= */
+
+    .bench-section {
+      padding: 0 20px 22px;
+    }
+
+    .bench-title {
+      font-size: .9rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .bench-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .bench-player {
+      background: rgba(15,23,42,.6);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 10px 5px;
+      text-align: center;
+    }
+
+    .bench-player .shirt {
+      opacity: .65;
+      transform: scale(.8);
+      margin-bottom: 0;
+    }
+
+    .bench-player-name {
+      font-size: .62rem;
+      font-weight: 700;
+    }
+
+    .bench-player-points {
+      font-family: 'Orbitron',sans-serif;
+      color: var(--text-muted);
+      font-size: .55rem;
+      margin-top: 2px;
+    }
+
+    /* =========================
+       RESULTS
+    ========================= */
 
     .summary-row {
       display: grid;
@@ -79,6 +618,7 @@
       gap: 12px;
       margin-bottom: 24px;
     }
+
     .sum-chip {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -86,75 +626,312 @@
       padding: 14px 12px;
       text-align: center;
     }
-    .sum-val { font-family:'Orbitron',sans-serif; font-size: 1.4rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
-    .sum-lbl { font-size: .72rem; color: var(--text-muted); }
 
-    .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
-    .section-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
-    .section-title { font-size:1.2rem; font-weight:900; }
-    .section-title small { display:block; font-size:.73rem; font-weight:400; color:var(--text-muted); margin-top:1px; }
+    .sum-val {
+      font-family:'Orbitron',sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
 
-    .table-wrap { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 4px 30px rgba(0,0,0,.4); }
-    table { width:100%; border-collapse:collapse; font-size:.88rem; }
-    thead tr { background:linear-gradient(90deg,#1d4ed8,#2563eb); }
-    thead th { padding:13px 12px; text-align:center; font-weight:700; font-size:.78rem; letter-spacing:.4px; color:#e0eaff; white-space:nowrap; }
-    tbody tr { border-bottom:1px solid rgba(51,65,85,.6); transition:background .18s; }
-    tbody tr:last-child { border-bottom:none; }
-    tbody tr:hover { background:var(--row-hover); }
-    tbody tr.win-row  { background:linear-gradient(90deg,rgba(34,197,94,.10),rgba(34,197,94,.02)); }
-    tbody tr.draw-row { background:linear-gradient(90deg,rgba(251,191,36,.10),rgba(251,191,36,.02)); }
-    tbody tr.loss-row { background:linear-gradient(90deg,rgba(239,68,68,.08),rgba(239,68,68,.02)); }
-    tbody td { padding:12px 12px; text-align:center; vertical-align:middle; }
+    .sum-lbl {
+      font-size: .72rem;
+      color: var(--text-muted);
+    }
 
-    .gw-badge { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-family:'Orbitron',sans-serif; font-size:.75rem; font-weight:700; background:rgba(51,65,85,.8); color:var(--text-muted); }
-    .opp-cell { display:flex; align-items:center; justify-content:center; gap:7px; font-weight:700; font-size:.9rem; }
-    .opp-em { font-size:1.1rem; }
+    .section-heading {
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:16px;
+    }
 
-    .result-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:20px; font-size:.74rem; font-weight:800; }
-    .rb-win  { background:rgba(34,197,94,.15);  border:1px solid rgba(34,197,94,.35);  color:var(--green); }
-    .rb-draw { background:rgba(251,191,36,.15);  border:1px solid rgba(251,191,36,.35);  color:var(--gold); }
-    .rb-loss { background:rgba(239,68,68,.12);   border:1px solid rgba(239,68,68,.3);   color:var(--red); }
+    .section-icon {
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.2rem;
+    }
 
-    .mp-cell { font-weight:900; font-size:.95rem; }
-    .bonus-cell { font-weight:800; color:var(--gold); font-size:.85rem; }
-    .bonus-chip { display:inline-block; padding:2px 8px; border-radius:6px; background:rgba(251,191,36,.12); border:1px solid rgba(251,191,36,.3); }
+    .section-title {
+      font-size:1.2rem;
+      font-weight:900;
+    }
 
-    .state-box { text-align:center; padding:60px 20px; color:var(--text-muted); grid-column: 1 / -1; }
-    .spinner { width:44px; height:44px; border:3px solid rgba(59,130,246,.2); border-top-color:var(--blue-accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 16px; }
-    @keyframes spin { to { transform:rotate(360deg); } }
+    .section-title small {
+      display:block;
+      font-size:.73rem;
+      font-weight:400;
+      color:var(--text-muted);
+      margin-top:1px;
+    }
+
+    .table-wrap {
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 4px 30px rgba(0,0,0,.4);
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:.88rem;
+    }
+
+    thead tr {
+      background:linear-gradient(90deg,#1d4ed8,#2563eb);
+    }
+
+    thead th {
+      padding:13px 12px;
+      text-align:center;
+      font-weight:700;
+      font-size:.78rem;
+      letter-spacing:.4px;
+      color:#e0eaff;
+      white-space:nowrap;
+    }
+
+    tbody tr {
+      border-bottom:1px solid rgba(51,65,85,.6);
+      transition:background .18s;
+    }
+
+    tbody tr:last-child {
+      border-bottom:none;
+    }
+
+    tbody tr:hover {
+      background:var(--row-hover);
+    }
+
+    tbody tr.win-row {
+      background:linear-gradient(90deg,rgba(34,197,94,.10),rgba(34,197,94,.02));
+    }
+
+    tbody tr.draw-row {
+      background:linear-gradient(90deg,rgba(251,191,36,.10),rgba(251,191,36,.02));
+    }
+
+    tbody tr.loss-row {
+      background:linear-gradient(90deg,rgba(239,68,68,.08),rgba(239,68,68,.02));
+    }
+
+    tbody td {
+      padding:12px;
+      text-align:center;
+      vertical-align:middle;
+    }
+
+    .gw-badge {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:32px;
+      height:32px;
+      border-radius:8px;
+      font-family:'Orbitron',sans-serif;
+      font-size:.75rem;
+      font-weight:700;
+      background:rgba(51,65,85,.8);
+      color:var(--text-muted);
+    }
+
+    .opp-cell {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      font-weight:700;
+      font-size:.9rem;
+    }
+
+    .opp-em {
+      font-size:1.1rem;
+    }
+
+    .result-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:3px 10px;
+      border-radius:20px;
+      font-size:.74rem;
+      font-weight:800;
+    }
+
+    .rb-win {
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.35);
+      color:var(--green);
+    }
+
+    .rb-draw {
+      background:rgba(251,191,36,.15);
+      border:1px solid rgba(251,191,36,.35);
+      color:var(--gold);
+    }
+
+    .rb-loss {
+      background:rgba(239,68,68,.12);
+      border:1px solid rgba(239,68,68,.3);
+      color:var(--red);
+    }
+
+    .mp-cell {
+      font-weight:900;
+      font-size:.95rem;
+    }
+
+    .bonus-cell {
+      font-weight:800;
+      color:var(--gold);
+      font-size:.85rem;
+    }
+
+    .bonus-chip {
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:6px;
+      background:rgba(251,191,36,.12);
+      border:1px solid rgba(251,191,36,.3);
+    }
+
+    .state-box {
+      text-align:center;
+      padding:60px 20px;
+      color:var(--text-muted);
+      grid-column:1 / -1;
+    }
+
+    .spinner {
+      width:44px;
+      height:44px;
+      border:3px solid rgba(59,130,246,.2);
+      border-top-color:var(--blue-accent);
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      margin:0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform:rotate(360deg);
+      }
+    }
+
+    .error-box {
+      padding:25px;
+      text-align:center;
+      color:var(--red);
+      font-size:.85rem;
+    }
 
     @media (max-width:768px) {
-      .nav-links { display:none; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; background:rgba(15,23,42,.97); border-bottom:1px solid var(--border); padding:10px 16px 18px; z-index:999; }
-      .nav-links.open { display:flex; }
-      .nav-links a { height:auto; padding:11px 14px; border-bottom:none; border-radius:8px; width:100%; }
-      .hamburger { display:flex; }
-      .hide-sm { display:none !important; }
+      .nav-links {
+        display:none;
+        flex-direction:column;
+        position:fixed;
+        top:var(--nav-h);
+        left:0;
+        right:0;
+        background:rgba(15,23,42,.97);
+        border-bottom:1px solid var(--border);
+        padding:10px 16px 18px;
+        z-index:999;
+      }
+
+      .nav-links.open {
+        display:flex;
+      }
+
+      .nav-links a {
+        height:auto;
+        padding:11px 14px;
+        border-bottom:none;
+        border-radius:8px;
+        width:100%;
+      }
+
+      .hamburger {
+        display:flex;
+      }
+
+      .hide-sm {
+        display:none !important;
+      }
+
+      .pitch-wrap {
+        padding:10px;
+      }
+
+      .pitch {
+        min-height:450px;
+        padding:20px 5px;
+      }
+
+      .fpl-player {
+        width:75px;
+      }
+
+      .position-row {
+        gap:8px;
+      }
+
+      .bench-grid {
+        grid-template-columns:repeat(2,1fr);
+      }
     }
   </style>
+
 </head>
+
 <body>
 
 <nav class="site-nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24"><path d="M6 2h12v6a6 6 0 01-12 0V2z"/><path d="M6 4H3a2 2 0 000 4h3"/><path d="M18 4h3a2 2 0 010 4h-3"/><path d="M12 14v4"/><path d="M8 22h8"/><path d="M9 18h6"/></svg>
-      </div>
-      <div class="logo-text">
-        <span class="logo-ar">الحمله</span>
-        <span class="logo-en">El7amla · 2v2 Fantasy</span>
-      </div>
-    </a>
-    <div class="nav-links" id="nav-links">
-      <a href="index.html">🏠 الرئيسية</a>
-      <a href="teams.html" class="active">👥 الفرق</a>
-      <a href="standings.html">📊 الترتيب</a>
-      <a href="fixtures.html">📅 المباريات</a>
-      <a href="khawas.html">✨ الخواص</a>
-    </div>
-    <button class="hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')">
-      <span></span><span></span><span></span>
-    </button>
+
+```
+<a href="index.html" class="nav-logo">
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 2h12v6a6 6 0 01-12 0V2z"/>
+      <path d="M6 4H3a2 2 0 000 4h3"/>
+      <path d="M18 4h3a2 2 0 010 4h-3"/>
+      <path d="M12 14v4"/>
+      <path d="M8 22h8"/>
+      <path d="M9 18h6"/>
+    </svg>
+  </div>
+
+  <div class="logo-text">
+    <span class="logo-ar">الحمله</span>
+    <span class="logo-en">El7amla · 2v2 Fantasy</span>
+  </div>
+</a>
+
+<div class="nav-links" id="nav-links">
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="teams.html" class="active">👥 الفرق</a>
+  <a href="standings.html">📊 الترتيب</a>
+  <a href="fixtures.html">📅 المباريات</a>
+  <a href="khawas.html">✨ الخواص</a>
+</div>
+
+<button class="hamburger"
+        onclick="document.getElementById('nav-links').classList.toggle('open')">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+```
+
   </div>
 </nav>
 
@@ -162,294 +939,2576 @@
 
   <div class="page-header">
     <div class="page-title">نتائج الفرق</div>
-    <div class="page-sub">اختر فريقاً لعرض كل مبارياته ونتائجه والخواص المفعلة</div>
+    <div class="page-sub">
+      اختر فريقاً ثم اللاعب لعرض مباريات الفريق وتشكيلة الـFPL
+    </div>
   </div>
+
+  <!-- =========================
+       TEAMS
+  ========================== -->
 
   <div class="teams-grid" id="teams-grid">
-    <div class="state-box"><div class="spinner"></div></div>
+    <div class="state-box">
+      <div class="spinner"></div>
+      جاري تحميل الفرق...
+    </div>
   </div>
 
+  <!-- =========================
+       PLAYERS
+  ========================== -->
+
+  <div id="players-section">
+
+```
+<div class="players-box">
+
+  <div class="players-title">
+    👤 اختر اللاعب / المدير
+  </div>
+
+  <div class="players-grid" id="players-grid">
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <!-- =========================
+       FPL LINEUP
+  ========================== -->
+
+  <div id="fpl-section">
+
+```
+<div class="fpl-card">
+
+  <div class="fpl-header">
+
+    <div class="fpl-header-top">
+
+      <div>
+        <div class="fpl-title" id="fpl-title">
+          🏟️ تشكيلة FPL
+        </div>
+
+        <div class="fpl-subtitle" id="fpl-subtitle">
+          التشكيلة الرسمية للجولة
+        </div>
+      </div>
+
+      <div class="gw-select-wrap">
+
+        <label for="lineup-gw">
+          الجولة
+        </label>
+
+        <select id="lineup-gw"
+                onchange="loadSelectedLineup()">
+        </select>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="fpl-summary" id="fpl-summary">
+  </div>
+
+
+  <div class="pitch-wrap">
+
+    <div class="pitch">
+
+      <div class="formation" id="formation">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="bench-section">
+
+    <div class="bench-title">
+      🪑 الدكة
+    </div>
+
+    <div class="bench-grid" id="bench-grid">
+    </div>
+
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <!-- =========================
+       TEAM RESULTS
+  ========================== -->
+
   <div id="results-section" style="display:none">
-    <div class="summary-row" id="summary-row"></div>
 
-    <div class="section-heading">
-      <div class="section-icon" id="tbl-icon" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">⚽</div>
-      <div class="section-title" id="tbl-title">سجل المباريات <small>Match History</small></div>
-    </div>
+```
+<div class="summary-row" id="summary-row">
+</div>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>الجولة</th>
-            <th>الخصم</th>
-            <th class="hide-sm">نقاط الفريق</th>
-            <th class="hide-sm">نقاط الخصم</th>
-            <th>النتيجة</th>
-            <th>ماتش</th>
-            <th>خاصية / بونص</th>
-            <th>المجموع</th>
-          </tr>
-        </thead>
-        <tbody id="matches-tbody"></tbody>
-      </table>
-    </div>
+<div class="section-heading">
+
+  <div class="section-icon"
+       id="tbl-icon"
+       style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">
+    ⚽
+  </div>
+
+  <div class="section-title"
+       id="tbl-title">
+    سجل المباريات
+    <small>Match History</small>
+  </div>
+
+</div>
+
+<div class="table-wrap">
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>الجولة</th>
+        <th>الخصم</th>
+        <th class="hide-sm">نقاط الفريق</th>
+        <th class="hide-sm">نقاط الخصم</th>
+        <th>النتيجة</th>
+        <th>ماتش</th>
+        <th>خاصية / بونص</th>
+        <th>المجموع</th>
+      </tr>
+    </thead>
+
+    <tbody id="matches-tbody">
+    </tbody>
+
+  </table>
+
+</div>
+```
+
   </div>
 
 </div>
 
 <script>
-/* ══ CONFIG ══ */
-const REPO_NAME = "El7amla-League"; 
-const RAW = `https://raw.githubusercontent.com/El7amla/${REPO_NAME}/main`;
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const REPO_NAME = "El7amla-League";
+
+const RAW =
+  `https://raw.githubusercontent.com/El7amla/${REPO_NAME}/main`;
 
 const TEAM_META = {
-  "Black Tech":       { color:"#a855f7", em:"💻" },
-  "The Pharaohs":     { color:"#eab308", em:"🏺" },
-  "Falcons":          { color:"#3b82f6", em:"🦅" },
-  "Boys":             { color:"#f97316", em:"⚽" },
-  "Royal Authority":  { color:"#ef4444", em:"👑" },
-  "The Masterminds":  { color:"#06b6d4", em:"🧠" },
-  "الزرازير":         { color:"#8b5cf6", em:"🦇" },
-  "الاوديسي":         { color:"#10b981", em:"🌌" }
+
+  "Black Tech": {
+    color:"#a855f7",
+    em:"💻"
+  },
+
+  "The Pharaohs": {
+    color:"#eab308",
+    em:"🏺"
+  },
+
+  "Falcons": {
+    color:"#3b82f6",
+    em:"🦅"
+  },
+
+  "Boys": {
+    color:"#f97316",
+    em:"⚽"
+  },
+
+  "Royal Authority": {
+    color:"#ef4444",
+    em:"👑"
+  },
+
+  "The Masterminds": {
+    color:"#06b6d4",
+    em:"🧠"
+  },
+
+  "الزرازير": {
+    color:"#8b5cf6",
+    em:"🦇"
+  },
+
+  "الاوديسي": {
+    color:"#10b981",
+    em:"🌌"
+  }
+
 };
 
-/* ══ STATE ══ */
+
+/* =========================================================
+   STATE
+========================================================= */
+
 let standingsData = null;
-let fixturesData  = null;
-let khawasData    = null;
-let selectedTeam  = null;
-const TEAMS = Object.keys(TEAM_META);
+let fixturesData = null;
+let khawasData = null;
+let leagueData = null;
+
+let selectedTeam = null;
+let selectedPlayer = null;
+
+let selectedLineupData = null;
+
+let currentGW = 1;
+
+
+/* =========================================================
+   FALLBACK TEAM LIST
+========================================================= */
+
+const FALLBACK_TEAMS = Object.keys(TEAM_META);
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
 
 function escapeHtml(str) {
+
   return String(str ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+
 }
 
-/* ══ INIT ══ */
-async function init() {
-  try {
-    const [standingsRes, fixturesRes, khawasRes] = await Promise.all([
-      fetch(`${RAW}/data/current_standings.json?v=${Date.now()}`),
-      fetch(`${RAW}/data/fixtures.json?v=${Date.now()}`).catch(() => null),
-      fetch(`${RAW}/data/khawas.json?v=${Date.now()}`).catch(() => null)
-    ]);
 
-    if (standingsRes && standingsRes.ok) {
-      standingsData = await standingsRes.json();
-    }
-    if (fixturesRes && fixturesRes.ok) {
-      fixturesData = await fixturesRes.json();
-    }
-    if (khawasRes && khawasRes.ok) {
-      khawasData = await khawasRes.json();
-    }
-  } catch(e) {
-    console.warn("حدث خطأ أثناء جلب الملفات");
-  } finally {
-    if (!standingsData) {
-      standingsData = { current_gw: 1, teams: TEAMS.map(name => ({ name, total: 0 })) };
-    }
-    buildTeamCards();
+/* =========================================================
+   GENERIC FETCH
+========================================================= */
+
+async function fetchJSON(path) {
+
+  const url =
+    `${RAW}/${path}?v=${Date.now()}`;
+
+  const response =
+    await fetch(url, {
+      cache:"no-store"
+    });
+
+  if (!response.ok) {
+    throw new Error(
+      `HTTP ${response.status}: ${path}`
+    );
   }
+
+  return await response.json();
+
 }
 
-/* ══ BUILD TEAM SELECTOR CARDS ══ */
-function buildTeamCards() {
-  const grid = document.getElementById('teams-grid');
-  grid.innerHTML = TEAMS.map(name => {
-    const meta  = TEAM_META[name];
-    const tData = standingsData.teams.find(t => t.name === name) || {};
-    const rankIndex = standingsData.teams.findIndex(t => t.name === name);
-    const rank  = rankIndex >= 0 ? rankIndex + 1 : '-';
-    const rankEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-    const safeName = escapeHtml(name);
 
-    return `
-      <div class="team-card" id="tc-${name.replace(/\s/g,'_')}"
-           onclick="selectTeam('${name}')"
-           style="border-color:${meta.color}44">
-        <div class="team-card-em">${meta.em}</div>
-        <div class="team-card-name" style="color:${meta.color}">${safeName}</div>
-        <div class="team-card-sub">${rankEmoji} · ${tData.total ?? 0} نقطة</div>
-      </div>`;
-  }).join('');
-}
+/* =========================================================
+   INIT
+========================================================= */
 
-/* ══ SELECT TEAM ══ */
-function selectTeam(name) {
-  TEAMS.forEach(t => {
-    const el = document.getElementById(`tc-${t.replace(/\s/g,'_')}`);
-    if (!el) return;
-    const meta = TEAM_META[t];
-    if (t === name) {
-      el.classList.add('active');
-      el.style.borderColor = meta.color;
-      el.style.background  = meta.color + '22';
-      el.style.boxShadow   = `0 0 20px ${meta.color}44`;
-    } else {
-      el.classList.remove('active');
-      el.style.borderColor = meta.color + '44';
-      el.style.background  = '';
-      el.style.boxShadow   = '';
+async function init() {
+
+  try {
+
+    const results =
+      await Promise.allSettled([
+
+        fetchJSON("data/current_standings.json"),
+
+        fetchJSON("data/fixtures.json"),
+
+        fetchJSON("data/khawas.json"),
+
+        fetchJSON("data/league.json")
+
+      ]);
+
+
+    if (results[0].status === "fulfilled") {
+      standingsData = results[0].value;
     }
+
+    if (results[1].status === "fulfilled") {
+      fixturesData = results[1].value;
+    }
+
+    if (results[2].status === "fulfilled") {
+      khawasData = results[2].value;
+    }
+
+    if (results[3].status === "fulfilled") {
+      leagueData = results[3].value;
+    }
+
+
+  } catch (e) {
+
+    console.warn(
+      "حدث خطأ أثناء تحميل بيانات الدوري",
+      e
+    );
+
+  }
+
+
+  if (!standingsData) {
+
+    standingsData = {
+      current_gw:1,
+      teams:[]
+    };
+
+  }
+
+
+  currentGW =
+    Number(standingsData.current_gw || 1);
+
+
+  buildTeamCards();
+
+}
+
+
+/* =========================================================
+   GET LEAGUE TEAMS
+========================================================= */
+
+function getLeagueTeams() {
+
+  /*
+    نحاول قراءة teams من league.json.
+    لو الشكل مختلف نستخدم TEAM_META.
+  */
+
+  if (!leagueData) {
+    return FALLBACK_TEAMS;
+  }
+
+
+  if (Array.isArray(leagueData.teams)) {
+
+    return leagueData.teams
+      .map(t => {
+
+        if (typeof t === "string") {
+          return t;
+        }
+
+        return t.name ||
+               t.team ||
+               t.team_name ||
+               null;
+
+      })
+      .filter(Boolean);
+
+  }
+
+
+  return FALLBACK_TEAMS;
+
+}
+
+
+/* =========================================================
+   GET TEAM PLAYERS
+========================================================= */
+
+function getTeamPlayers(teamName) {
+
+  if (!leagueData) {
+    return [];
+  }
+
+
+  let team = null;
+
+
+  if (Array.isArray(leagueData.teams)) {
+
+    team =
+      leagueData.teams.find(t => {
+
+        if (typeof t === "string") {
+          return t === teamName;
+        }
+
+        return (
+          t.name === teamName ||
+          t.team === teamName ||
+          t.team_name === teamName
+        );
+
+      });
+
+  }
+
+
+  if (!team) {
+    return [];
+  }
+
+
+  const rawPlayers =
+    team.players ||
+    team.managers ||
+    team.members ||
+    team.users ||
+    [];
+
+
+  if (Array.isArray(rawPlayers)) {
+
+    return rawPlayers
+      .map(player => {
+
+        if (typeof player === "string") {
+
+          return {
+            name:player,
+            entry_id:null
+          };
+
+        }
+
+        return {
+          name:
+            player.name ||
+            player.player ||
+            player.manager ||
+            player.username ||
+            "Player",
+
+          entry_id:
+            player.entry_id ??
+            player.entryId ??
+            player.id ??
+            player.team_id ??
+            player.teamId ??
+            null
+        };
+
+      });
+
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================================================
+   BUILD TEAM CARDS
+========================================================= */
+
+function buildTeamCards() {
+
+  const grid =
+    document.getElementById("teams-grid");
+
+
+  const teams =
+    getLeagueTeams();
+
+
+  if (!teams.length) {
+
+    grid.innerHTML = `
+      <div class="state-box">
+        لا توجد فرق متاحة
+      </div>
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML =
+    teams.map(name => {
+
+      const meta =
+        TEAM_META[name] ||
+        {
+          color:"#64748b",
+          em:"⚽"
+        };
+
+
+      const tData =
+        standingsData.teams?.find(
+          t => t.name === name
+        ) || {};
+
+
+      const rankIndex =
+        standingsData.teams?.findIndex(
+          t => t.name === name
+        ) ?? -1;
+
+
+      const rank =
+        rankIndex >= 0
+          ? rankIndex + 1
+          : "-";
+
+
+      const rankEmoji =
+        rank === 1
+          ? "🥇"
+          : rank === 2
+          ? "🥈"
+          : rank === 3
+          ? "🥉"
+          : `#${rank}`;
+
+
+      return `
+
+        <div
+          class="team-card"
+          id="tc-${teamCardId(name)}"
+          onclick="selectTeam(${JSON.stringify(name)})"
+          style="border-color:${meta.color}44"
+        >
+
+          <div class="team-card-em">
+            ${meta.em}
+          </div>
+
+          <div
+            class="team-card-name"
+            style="color:${meta.color}"
+          >
+            ${escapeHtml(name)}
+          </div>
+
+          <div class="team-card-sub">
+            ${rankEmoji}
+            ·
+            ${tData.total ?? 0}
+            نقطة
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   TEAM CARD ID
+========================================================= */
+
+function teamCardId(name) {
+
+  return String(name)
+    .replace(/[^\w\u0600-\u06FF]+/g,"_");
+
+}
+
+
+/* =========================================================
+   SELECT TEAM
+========================================================= */
+
+function selectTeam(name) {
+
+  const teams =
+    getLeagueTeams();
+
+
+  teams.forEach(team => {
+
+    const el =
+      document.getElementById(
+        `tc-${teamCardId(team)}`
+      );
+
+
+    if (!el) {
+      return;
+    }
+
+
+    const meta =
+      TEAM_META[team] ||
+      {
+        color:"#64748b"
+      };
+
+
+    if (team === name) {
+
+      el.classList.add("active");
+
+      el.style.borderColor =
+        meta.color;
+
+      el.style.background =
+        meta.color + "22";
+
+      el.style.boxShadow =
+        `0 0 20px ${meta.color}44`;
+
+    } else {
+
+      el.classList.remove("active");
+
+      el.style.borderColor =
+        meta.color + "44";
+
+      el.style.background = "";
+
+      el.style.boxShadow = "";
+
+    }
+
   });
 
+
   selectedTeam = name;
+
+  selectedPlayer = null;
+
+
+  buildPlayerSelector(name);
+
+
   renderTeamResults(name);
+
 }
 
-/* ══ RENDER RESULTS ══ */
-function renderTeamResults(teamName) {
-  const meta      = TEAM_META[teamName];
-  const currentGW = standingsData.current_gw || 1;
-  const tData    = standingsData.teams.find(t => t.name === teamName) || {};
-  const rank     = standingsData.teams.findIndex(t => t.name === teamName) + 1;
 
-  document.getElementById('tbl-icon').textContent   = meta.em;
-  document.getElementById('tbl-icon').style.background = `linear-gradient(135deg,${meta.color}99,${meta.color})`;
-  document.getElementById('tbl-title').innerHTML =
-    `${escapeHtml(teamName)} — سجل المباريات والخواص <small>Match & Khawas History · حتى الجولة ${currentGW}</small>`;
+/* =========================================================
+   PLAYER SELECTOR
+========================================================= */
 
-  document.getElementById('results-section').style.display = 'block';
+function buildPlayerSelector(teamName) {
 
-  renderSummary(tData, rank, meta, null);
-  fetchAndRenderGWs(teamName, currentGW, meta, tData, rank);
+  const section =
+    document.getElementById(
+      "players-section"
+    );
+
+  const grid =
+    document.getElementById(
+      "players-grid"
+    );
+
+
+  const players =
+    getTeamPlayers(teamName);
+
+
+  if (!players.length) {
+
+    section.style.display = "none";
+
+    hideFPL();
+
+    return;
+  }
+
+
+  section.style.display = "block";
+
+
+  grid.innerHTML =
+    players.map((player,index) => {
+
+      const playerName =
+        player.name || `Player ${index + 1}`;
+
+
+      return `
+
+        <div
+          class="player-card"
+          id="player-${index}"
+          onclick="selectPlayer(${index})"
+        >
+
+          <div class="player-avatar">
+            👤
+          </div>
+
+          <div class="player-info">
+
+            <div class="player-name">
+              ${escapeHtml(playerName)}
+            </div>
+
+            <div class="player-entry">
+              ENTRY:
+              ${escapeHtml(
+                player.entry_id ?? "N/A"
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  /*
+    اختار أول لاعب تلقائيًا
+    حتى تظهر البيانات مباشرة.
+  */
+
+  if (players.length === 1) {
+
+    selectPlayer(0);
+
+  }
+
 }
 
-async function fetchAndRenderGWs(teamName, currentGW, meta, tData, rank) {
-  const tbody = document.getElementById('matches-tbody');
+
+/* =========================================================
+   SELECT PLAYER
+========================================================= */
+
+function selectPlayer(index) {
+
+  if (!selectedTeam) {
+    return;
+  }
+
+
+  const players =
+    getTeamPlayers(selectedTeam);
+
+
+  const player =
+    players[index];
+
+
+  if (!player) {
+    return;
+  }
+
+
+  document
+    .querySelectorAll(".player-card")
+    .forEach(el => {
+      el.classList.remove("active");
+    });
+
+
+  const selected =
+    document.getElementById(
+      `player-${index}`
+    );
+
+
+  if (selected) {
+    selected.classList.add("active");
+  }
+
+
+  selectedPlayer = player;
+
+
+  showFPL();
+
+}
+
+
+/* =========================================================
+   SHOW FPL
+========================================================= */
+
+function showFPL() {
+
+  const section =
+    document.getElementById(
+      "fpl-section"
+    );
+
+
+  section.style.display = "block";
+
+
+  const title =
+    document.getElementById(
+      "fpl-title"
+    );
+
+
+  const subtitle =
+    document.getElementById(
+      "fpl-subtitle"
+    );
+
+
+  title.textContent =
+    `🏟️ ${selectedPlayer.name} — تشكيلة FPL`;
+
+
+  subtitle.textContent =
+    `Entry ID: ${selectedPlayer.entry_id ?? "N/A"}`;
+
+
+  buildGWSelector();
+
+
+  loadSelectedLineup();
+
+}
+
+
+/* =========================================================
+   HIDE FPL
+========================================================= */
+
+function hideFPL() {
+
+  document.getElementById(
+    "fpl-section"
+  ).style.display = "none";
+
+}
+
+
+/* =========================================================
+   BUILD GW SELECTOR
+========================================================= */
+
+function buildGWSelector() {
+
+  const select =
+    document.getElementById(
+      "lineup-gw"
+    );
+
+
+  const previous =
+    Number(select.value || currentGW);
+
+
+  select.innerHTML = "";
+
+
+  for (
+    let gw = 1;
+    gw <= currentGW;
+    gw++
+  ) {
+
+    const option =
+      document.createElement("option");
+
+
+    option.value = gw;
+
+    option.textContent =
+      `GW ${gw}`;
+
+
+    if (gw === previous) {
+      option.selected = true;
+    }
+
+
+    select.appendChild(option);
+
+  }
+
+
+  /*
+    لو الجولة القديمة مش موجودة
+    نختار current GW.
+  */
+
+  if (!select.value) {
+
+    select.value =
+      currentGW;
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD SELECTED LINEUP
+========================================================= */
+
+async function loadSelectedLineup() {
+
+  if (!selectedPlayer) {
+    return;
+  }
+
+
+  const gw =
+    Number(
+      document.getElementById(
+        "lineup-gw"
+      ).value
+    );
+
+
+  if (!gw) {
+    return;
+  }
+
+
+  selectedLineupData = null;
+
+
+  document.getElementById(
+    "formation"
+  ).innerHTML = `
+    <div class="state-box">
+      <div class="spinner"></div>
+      جاري تحميل التشكيلة...
+    </div>
+  `;
+
+
+  document.getElementById(
+    "bench-grid"
+  ).innerHTML = "";
+
 
   try {
-    const gwPromises = [];
-    for (let gw = 1; gw <= currentGW; gw++) {
-      gwPromises.push(
-        fetch(`${RAW}/data/gw_history/gw${gw}.json?v=${Date.now()}`)
-          .then(r => r.ok ? r.json() : null)
-          .catch(() => null)
+
+    const data =
+      await fetchJSON(
+        `data/gw_lineups/gw${gw}.json`
       );
+
+
+    selectedLineupData =
+      extractPlayerLineup(
+        data,
+        selectedPlayer
+      );
+
+
+    if (!selectedLineupData) {
+
+      renderLineupError(
+        `لا توجد تشكيلة مسجلة للاعب ${selectedPlayer.name} في GW${gw}`
+      );
+
+      return;
     }
-    const gwResults = await Promise.all(gwPromises);
 
-    let rows = '';
-    let runTotal = 0, wins = 0, draws = 0, losses = 0;
 
-    for (let i = 0; i < gwResults.length; i++) {
-      const gw   = i + 1;
-      const data = gwResults[i];
+    renderLineup(
+      selectedLineupData,
+      gw
+    );
 
-      // جلب المواجهات ديناميكياً من ملف fixtures.json
-      let matchups = [];
-      if (fixturesData && fixturesData[gw]) {
-        matchups = fixturesData[gw];
-      } else if (fixturesData && fixturesData.rounds && fixturesData.rounds[gw]) {
-        matchups = fixturesData.rounds[gw];
+
+  } catch (error) {
+
+    console.warn(
+      "Lineup loading error:",
+      error
+    );
+
+
+    renderLineupError(
+      `تعذر تحميل بيانات تشكيلة GW${gw}`
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   EXTRACT PLAYER LINEUP
+========================================================= */
+
+function extractPlayerLineup(
+  data,
+  player
+) {
+
+  if (!data) {
+    return null;
+  }
+
+
+  const entryId =
+    String(
+      player.entry_id ?? ""
+    );
+
+
+  /*
+    الشكل المتوقع:
+
+    {
+      "43949": {...}
+    }
+  */
+
+  if (
+    entryId &&
+    data[entryId]
+  ) {
+
+    return normalizeLineup(
+      data[entryId]
+    );
+
+  }
+
+
+  /*
+    لو البيانات داخل players
+  */
+
+  if (
+    data.players &&
+    typeof data.players === "object"
+  ) {
+
+    if (
+      entryId &&
+      data.players[entryId]
+    ) {
+
+      return normalizeLineup(
+        data.players[entryId]
+      );
+
+    }
+
+
+    const found =
+      Object.values(
+        data.players
+      ).find(item =>
+        String(
+          item.entry_id ??
+          item.entryId ??
+          item.id ??
+          ""
+        ) === entryId
+      );
+
+
+    if (found) {
+      return normalizeLineup(found);
+    }
+
+  }
+
+
+  /*
+    لو data عبارة عن array
+  */
+
+  if (Array.isArray(data)) {
+
+    const found =
+      data.find(item =>
+        String(
+          item.entry_id ??
+          item.entryId ??
+          item.id ??
+          ""
+        ) === entryId
+      );
+
+
+    if (found) {
+      return normalizeLineup(found);
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   NORMALIZE LINEUP
+========================================================= */
+
+function normalizeLineup(raw) {
+
+  if (!raw) {
+    return null;
+  }
+
+
+  /*
+    نحاول معرفة الـ XI
+  */
+
+  const starters =
+    raw.starters ||
+    raw.starting_xi ||
+    raw.startingXI ||
+    raw.lineup ||
+    raw.players ||
+    [];
+
+
+  const bench =
+    raw.bench ||
+    raw.subs ||
+    raw.substitutes ||
+    [];
+
+
+  let allPlayers =
+    Array.isArray(starters)
+      ? starters
+      : [];
+
+
+  /*
+    بعض النسخ تخزن players كـ object
+  */
+
+  if (
+    !Array.isArray(allPlayers) &&
+    typeof allPlayers === "object"
+  ) {
+
+    allPlayers =
+      Object.values(allPlayers);
+
+  }
+
+
+  const normalizedStarters =
+    allPlayers.map(
+      normalizePlayer
+    );
+
+
+  const normalizedBench =
+    (
+      Array.isArray(bench)
+        ? bench
+        : Object.values(bench || {})
+    ).map(
+      normalizePlayer
+    );
+
+
+  return {
+
+    formation:
+      raw.formation ||
+      raw.form ||
+      detectFormation(
+        normalizedStarters
+      ),
+
+    starters:
+      normalizedStarters,
+
+    bench:
+      normalizedBench,
+
+    captain:
+      raw.captain ??
+      raw.captain_id ??
+      raw.captainId ??
+      null,
+
+    vice:
+      raw.vice_captain ??
+      raw.viceCaptain ??
+      raw.vc ??
+      raw.vice_captain_id ??
+      null,
+
+    points:
+      Number(
+        raw.points ??
+        raw.total_points ??
+        raw.totalPoints ??
+        0
+      ),
+
+    eventPoints:
+      Number(
+        raw.event_points ??
+        raw.eventPoints ??
+        raw.gw_points ??
+        0
+      ),
+
+    transfers:
+      Number(
+        raw.transfers ??
+        raw.transfer_cost ??
+        0
+      ),
+
+    raw
+
+  };
+
+}
+
+
+/* =========================================================
+   NORMALIZE PLAYER
+========================================================= */
+
+function normalizePlayer(player) {
+
+  if (!player) {
+    return {
+      id:null,
+      name:"Unknown",
+      position:"MID",
+      points:0
+    };
+  }
+
+
+  return {
+
+    id:
+      player.id ??
+      player.element ??
+      player.player_id ??
+      null,
+
+    name:
+      player.name ||
+      player.web_name ||
+      player.player_name ||
+      player.full_name ||
+      "Unknown",
+
+    position:
+      String(
+        player.position ||
+        player.pos ||
+        player.element_type ||
+        "MID"
+      ).toUpperCase(),
+
+    points:
+      Number(
+        player.points ??
+        player.total_points ??
+        player.event_points ??
+        0
+      ),
+
+    isCaptain:
+      Boolean(
+        player.captain ||
+        player.is_captain
+      ),
+
+    isVice:
+      Boolean(
+        player.vice ||
+        player.is_vice ||
+        player.vice_captain
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   DETECT FORMATION
+========================================================= */
+
+function detectFormation(players) {
+
+  let def = 0;
+  let mid = 0;
+  let fwd = 0;
+
+
+  players.forEach(player => {
+
+    const pos =
+      String(
+        player.position
+      ).toUpperCase();
+
+
+    if (
+      pos === "DEF" ||
+      pos === "2"
+    ) {
+      def++;
+    }
+
+    else if (
+      pos === "MID" ||
+      pos === "3"
+    ) {
+      mid++;
+    }
+
+    else if (
+      pos === "FWD" ||
+      pos === "4"
+    ) {
+      fwd++;
+    }
+
+  });
+
+
+  if (
+    def &&
+    mid &&
+    fwd
+  ) {
+
+    return `${def}-${mid}-${fwd}`;
+
+  }
+
+
+  return "4-4-2";
+
+}
+
+
+/* =========================================================
+   PLAYER POSITION
+========================================================= */
+
+function getPositionGroup(player) {
+
+  const pos =
+    String(
+      player.position || ""
+    ).toUpperCase();
+
+
+  if (
+    pos === "GK" ||
+    pos === "1"
+  ) {
+    return "GK";
+  }
+
+
+  if (
+    pos === "DEF" ||
+    pos === "2"
+  ) {
+    return "DEF";
+  }
+
+
+  if (
+    pos === "MID" ||
+    pos === "3"
+  ) {
+    return "MID";
+  }
+
+
+  if (
+    pos === "FWD" ||
+    pos === "4"
+  ) {
+    return "FWD";
+  }
+
+
+  return "MID";
+
+}
+
+
+/* =========================================================
+   RENDER LINEUP
+========================================================= */
+
+function renderLineup(
+  lineup,
+  gw
+) {
+
+  const starters =
+    lineup.starters || [];
+
+
+  const gk =
+    starters.filter(
+      p => getPositionGroup(p) === "GK"
+    );
+
+
+  const def =
+    starters.filter(
+      p => getPositionGroup(p) === "DEF"
+    );
+
+
+  const mid =
+    starters.filter(
+      p => getPositionGroup(p) === "MID"
+    );
+
+
+  const fwd =
+    starters.filter(
+      p => getPositionGroup(p) === "FWD"
+    );
+
+
+  document.getElementById(
+    "formation"
+  ).innerHTML = `
+
+    ${renderPositionRow(
+      "حارس",
+      gk,
+      "gk"
+    )}
+
+    ${renderPositionRow(
+      "دفاع",
+      def,
+      "def"
+    )}
+
+    ${renderPositionRow(
+      "وسط",
+      mid,
+      "mid"
+    )}
+
+    ${renderPositionRow(
+      "هجوم",
+      fwd,
+      "fwd"
+    )}
+
+  `;
+
+
+  renderBench(
+    lineup.bench || []
+  );
+
+
+  renderFPLSummary(
+    lineup,
+    gw
+  );
+
+}
+
+
+/* =========================================================
+   RENDER POSITION ROW
+========================================================= */
+
+function renderPositionRow(
+  label,
+  players,
+  cssClass
+) {
+
+  if (!players.length) {
+    return "";
+  }
+
+
+  return `
+
+    <div>
+
+      <div class="position-label">
+        ${label}
+      </div>
+
+      <div class="position-row">
+
+        ${players.map(
+          player =>
+            renderFPLPlayer(
+              player,
+              cssClass
+            )
+        ).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER PLAYER
+========================================================= */
+
+function renderFPLPlayer(
+  player,
+  cssClass
+) {
+
+  const captain =
+    player.isCaptain ||
+    isSamePlayer(
+      player,
+      selectedLineupData?.captain
+    );
+
+
+  const vice =
+    player.isVice ||
+    isSamePlayer(
+      player,
+      selectedLineupData?.vice
+    );
+
+
+  return `
+
+    <div
+      class="fpl-player ${cssClass}"
+      title="${escapeHtml(player.name)}"
+    >
+
+      ${
+        captain
+          ? `<div class="captain-badge">C</div>`
+          : ""
       }
 
-      const myFix = matchups.find(m => Array.isArray(m) ? m.includes(teamName) : (m.home === teamName || m.away === teamName));
+      ${
+        vice && !captain
+          ? `<div class="vice-badge">V</div>`
+          : ""
+      }
 
-      if (!myFix) continue;
+      <div class="shirt">
+        ⚽
+      </div>
+
+      <div class="fpl-player-name">
+        ${escapeHtml(player.name)}
+      </div>
+
+      <div class="fpl-player-points">
+        ${player.points} pts
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   SAME PLAYER
+========================================================= */
+
+function isSamePlayer(
+  player,
+  id
+) {
+
+  if (
+    id === null ||
+    id === undefined
+  ) {
+    return false;
+  }
+
+
+  return String(
+    player.id
+  ) === String(id);
+
+}
+
+
+/* =========================================================
+   BENCH
+========================================================= */
+
+function renderBench(players) {
+
+  const grid =
+    document.getElementById(
+      "bench-grid"
+    );
+
+
+  if (!players.length) {
+
+    grid.innerHTML = `
+      <div
+        style="
+          grid-column:1/-1;
+          text-align:center;
+          color:var(--text-muted);
+          padding:15px;
+        "
+      >
+        لا توجد بيانات للدكة
+      </div>
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML =
+    players.map(
+      player => `
+
+        <div class="bench-player">
+
+          <div class="shirt">
+            ⚽
+          </div>
+
+          <div class="bench-player-name">
+            ${escapeHtml(player.name)}
+          </div>
+
+          <div class="bench-player-points">
+            ${player.points} pts
+          </div>
+
+        </div>
+
+      `
+    ).join("");
+
+}
+
+
+/* =========================================================
+   FPL SUMMARY
+========================================================= */
+
+function renderFPLSummary(
+  lineup,
+  gw
+) {
+
+  const starters =
+    lineup.starters || [];
+
+
+  const starterPoints =
+    starters.reduce(
+      (sum,p) =>
+        sum + Number(p.points || 0),
+      0
+    );
+
+
+  const benchPoints =
+    (lineup.bench || []).reduce(
+      (sum,p) =>
+        sum + Number(p.points || 0),
+      0
+    );
+
+
+  const eventPoints =
+    lineup.eventPoints ||
+    starterPoints;
+
+
+  const transfers =
+    lineup.transfers || 0;
+
+
+  const captain =
+    starters.find(
+      p =>
+        p.isCaptain ||
+        isSamePlayer(
+          p,
+          lineup.captain
+        )
+    );
+
+
+  const captainPoints =
+    captain
+      ? captain.points * 2
+      : 0;
+
+
+  document.getElementById(
+    "fpl-summary"
+  ).innerHTML = `
+
+    <div class="fpl-stat">
+
+      <div
+        class="fpl-stat-value"
+        style="color:var(--blue-accent)"
+      >
+        ${eventPoints}
+      </div>
+
+      <div class="fpl-stat-label">
+        نقاط الجولة GW${gw}
+      </div>
+
+    </div>
+
+
+    <div class="fpl-stat">
+
+      <div
+        class="fpl-stat-value"
+        style="color:var(--green)"
+      >
+        ${starterPoints}
+      </div>
+
+      <div class="fpl-stat-label">
+        نقاط الأساسيين
+      </div>
+
+    </div>
+
+
+    <div class="fpl-stat">
+
+      <div
+        class="fpl-stat-value"
+        style="color:var(--gold)"
+      >
+        ${captainPoints}
+      </div>
+
+      <div class="fpl-stat-label">
+        نقاط الكابتن
+      </div>
+
+    </div>
+
+
+    <div class="fpl-stat">
+
+      <div
+        class="fpl-stat-value"
+        style="color:var(--text-muted)"
+      >
+        ${benchPoints}
+      </div>
+
+      <div class="fpl-stat-label">
+        نقاط الدكة
+      </div>
+
+    </div>
+
+
+    <div class="fpl-stat">
+
+      <div
+        class="fpl-stat-value"
+        style="color:var(--red)"
+      >
+        -${transfers}
+      </div>
+
+      <div class="fpl-stat-label">
+        خصم Transfers
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   LINEUP ERROR
+========================================================= */
+
+function renderLineupError(message) {
+
+  document.getElementById(
+    "formation"
+  ).innerHTML = `
+
+    <div class="state-box">
+
+      ⚠️
+
+      <div style="margin-top:10px">
+        ${escapeHtml(message)}
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "bench-grid"
+  ).innerHTML = "";
+
+
+  document.getElementById(
+    "fpl-summary"
+  ).innerHTML = "";
+
+}
+
+
+/* =========================================================
+   TEAM RESULTS
+========================================================= */
+
+function renderTeamResults(
+  teamName
+) {
+
+  const meta =
+    TEAM_META[teamName] ||
+    {
+      color:"#64748b",
+      em:"⚽"
+    };
+
+
+  const teamData =
+    standingsData.teams?.find(
+      t => t.name === teamName
+    ) || {};
+
+
+  const rankIndex =
+    standingsData.teams?.findIndex(
+      t => t.name === teamName
+    ) ?? -1;
+
+
+  const rank =
+    rankIndex >= 0
+      ? rankIndex + 1
+      : 0;
+
+
+  document.getElementById(
+    "tbl-icon"
+  ).textContent =
+    meta.em;
+
+
+  document.getElementById(
+    "tbl-icon"
+  ).style.background =
+    `linear-gradient(135deg,${meta.color}99,${meta.color})`;
+
+
+  document.getElementById(
+    "tbl-title"
+  ).innerHTML =
+    `${escapeHtml(teamName)}
+     — سجل المباريات
+     <small>
+       Match History · حتى الجولة ${currentGW}
+     </small>`;
+
+
+  document.getElementById(
+    "results-section"
+  ).style.display =
+    "block";
+
+
+  renderSummary(
+    teamData,
+    rank,
+    meta,
+    null
+  );
+
+
+  fetchAndRenderGWs(
+    teamName,
+    currentGW,
+    meta,
+    teamData,
+    rank
+  );
+
+}
+
+
+/* =========================================================
+   TEAM MATCH HISTORY
+========================================================= */
+
+async function fetchAndRenderGWs(
+  teamName,
+  currentGW,
+  meta,
+  teamData,
+  rank
+) {
+
+  const tbody =
+    document.getElementById(
+      "matches-tbody"
+    );
+
+
+  try {
+
+    const promises = [];
+
+
+    for (
+      let gw = 1;
+      gw <= currentGW;
+      gw++
+    ) {
+
+      promises.push(
+
+        fetch(
+          `${RAW}/data/gw_history/gw${gw}.json?v=${Date.now()}`,
+          {
+            cache:"no-store"
+          }
+        )
+        .then(
+          r =>
+            r.ok
+              ? r.json()
+              : null
+        )
+        .catch(
+          () => null
+        )
+
+      );
+
+    }
+
+
+    const gwResults =
+      await Promise.all(promises);
+
+
+    let rows = "";
+
+    let runTotal = 0;
+
+    let wins = 0;
+
+    let draws = 0;
+
+    let losses = 0;
+
+
+    for (
+      let i = 0;
+      i < gwResults.length;
+      i++
+    ) {
+
+      const gw =
+        i + 1;
+
+
+      const data =
+        gwResults[i];
+
+
+      /*
+        Matchups من fixtures
+      */
+
+      let matchups = [];
+
+
+      if (
+        fixturesData &&
+        fixturesData[gw]
+      ) {
+
+        matchups =
+          fixturesData[gw];
+
+      }
+
+      else if (
+        fixturesData &&
+        fixturesData.rounds &&
+        fixturesData.rounds[gw]
+      ) {
+
+        matchups =
+          fixturesData.rounds[gw];
+
+      }
+
+
+      const myFix =
+        matchups.find(
+          m =>
+            Array.isArray(m)
+              ? m.includes(teamName)
+              :
+                (
+                  m.home === teamName ||
+                  m.away === teamName
+                )
+        );
+
+
+      if (!myFix) {
+        continue;
+      }
+
 
       let opp = "";
+
+
       if (Array.isArray(myFix)) {
-        opp = myFix[0] === teamName ? myFix[1] : myFix[0];
+
+        opp =
+          myFix[0] === teamName
+            ? myFix[1]
+            : myFix[0];
+
       } else {
-        opp = myFix.home === teamName ? myFix.away : myFix.home;
+
+        opp =
+          myFix.home === teamName
+            ? myFix.away
+            : myFix.home;
+
       }
 
-      const oppMeta = TEAM_META[opp] || { em:'⚽', color:'#64748b' };
 
-      let myPts = null, oppPts = null;
-      if (data && data[teamName] && data[opp]) {
-        myPts  = Object.values(data[teamName]).reduce((s,p) => s + p.points, 0);
-        oppPts = Object.values(data[opp]).reduce((s,p) => s + p.points, 0);
+      const oppMeta =
+        TEAM_META[opp] ||
+        {
+          em:"⚽",
+          color:"#64748b"
+        };
+
+
+      let myPts = null;
+
+      let oppPts = null;
+
+
+      if (
+        data &&
+        data[teamName] &&
+        data[opp]
+      ) {
+
+        myPts =
+          Object.values(
+            data[teamName]
+          ).reduce(
+            (s,p) =>
+              s + Number(
+                p.points || 0
+              ),
+            0
+          );
+
+
+        oppPts =
+          Object.values(
+            data[opp]
+          ).reduce(
+            (s,p) =>
+              s + Number(
+                p.points || 0
+              ),
+            0
+          );
+
       }
 
-      let resultClass = '', resultBadge = '', mp = 0;
-      if (myPts !== null && oppPts !== null) {
-        if (myPts > oppPts)       { resultClass='win-row';  resultBadge=`<span class="result-badge rb-win">فوز ✅</span>`;  mp=3; wins++; }
-        else if (myPts === oppPts){ resultClass='draw-row'; resultBadge=`<span class="result-badge rb-draw">تعادل 🟡</span>`; mp=1; draws++; }
-        else                      { resultClass='loss-row'; resultBadge=`<span class="result-badge rb-loss">خسارة ❌</span>`; mp=0; losses++; }
-      } else {
-        resultBadge = `<span class="result-badge" style="opacity:.6">لم تُلعب</span>`;
+
+      let resultClass = "";
+
+      let resultBadge = "";
+
+      let mp = 0;
+
+
+      if (
+        myPts !== null &&
+        oppPts !== null
+      ) {
+
+        if (
+          myPts > oppPts
+        ) {
+
+          resultClass =
+            "win-row";
+
+          resultBadge =
+            `<span class="result-badge rb-win">
+              فوز ✅
+            </span>`;
+
+          mp = 3;
+
+          wins++;
+
+        }
+
+        else if (
+          myPts === oppPts
+        ) {
+
+          resultClass =
+            "draw-row";
+
+          resultBadge =
+            `<span class="result-badge rb-draw">
+              تعادل 🟡
+            </span>`;
+
+          mp = 1;
+
+          draws++;
+
+        }
+
+        else {
+
+          resultClass =
+            "loss-row";
+
+          resultBadge =
+            `<span class="result-badge rb-loss">
+              خسارة ❌
+            </span>`;
+
+          mp = 0;
+
+          losses++;
+
+        }
+
       }
 
-      // قراءة بيانات الخواص
+      else {
+
+        resultBadge =
+          `<span
+             class="result-badge"
+             style="opacity:.6"
+           >
+             لم تُلعب
+           </span>`;
+
+      }
+
+
+      /*
+        Khawas
+      */
+
       let bonusPts = 0;
-      let khawasHtml = '—';
-      
-      if (khawasData && khawasData[gw] && khawasData[gw][teamName]) {
-        const kInfo = khawasData[gw][teamName];
-        const name  = kInfo.name || kInfo.type || 'خاصية';
-        bonusPts    = kInfo.bonus || kInfo.points || 0;
-        
-        khawasHtml = `<span class="bonus-chip" title="بونص: +${bonusPts}">${escapeHtml(name)} ${bonusPts > 0 ? `(+${bonusPts})` : ''}</span>`;
+
+      let khawasHtml = "—";
+
+
+      if (
+        khawasData &&
+        khawasData[gw] &&
+        khawasData[gw][teamName]
+      ) {
+
+        const kInfo =
+          khawasData[gw][teamName];
+
+
+        const name =
+          kInfo.name ||
+          kInfo.type ||
+          "خاصية";
+
+
+        bonusPts =
+          Number(
+            kInfo.bonus ||
+            kInfo.points ||
+            0
+          );
+
+
+        khawasHtml = `
+
+          <span
+            class="bonus-chip"
+            title="بونص: +${bonusPts}"
+          >
+
+            ${escapeHtml(name)}
+
+            ${
+              bonusPts > 0
+                ? `(+${bonusPts})`
+                : ""
+            }
+
+          </span>
+
+        `;
+
       }
 
-      const gwTotal = mp + bonusPts;
-      runTotal += gwTotal;
+
+      const gwTotal =
+        mp + bonusPts;
+
+
+      runTotal +=
+        gwTotal;
+
 
       rows += `
+
         <tr class="${resultClass}">
-          <td><span class="gw-badge">${gw}</span></td>
+
           <td>
-            <div class="opp-cell">
-              <span class="opp-em">${oppMeta.em}</span>
-              <span style="color:${oppMeta.color};font-weight:800">${escapeHtml(opp)}</span>
-            </div>
+            <span class="gw-badge">
+              ${gw}
+            </span>
           </td>
-          <td class="hide-sm">${myPts !== null ? myPts : '—'}</td>
-          <td class="hide-sm">${oppPts !== null ? oppPts : '—'}</td>
-          <td>${resultBadge}</td>
-          <td class="mp-cell">+${mp}</td>
-          <td class="bonus-cell">${khawasHtml}</td>
-          <td style="font-weight:800;color:var(--blue-accent)">${runTotal}</td>
-        </tr>`;
+
+
+          <td>
+
+            <div class="opp-cell">
+
+              <span class="opp-em">
+                ${oppMeta.em}
+              </span>
+
+              <span
+                style="
+                  color:${oppMeta.color};
+                  font-weight:800
+                "
+              >
+                ${escapeHtml(opp)}
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <td class="hide-sm">
+            ${
+              myPts !== null
+                ? myPts
+                : "—"
+            }
+          </td>
+
+
+          <td class="hide-sm">
+            ${
+              oppPts !== null
+                ? oppPts
+                : "—"
+            }
+          </td>
+
+
+          <td>
+            ${resultBadge}
+          </td>
+
+
+          <td class="mp-cell">
+            +${mp}
+          </td>
+
+
+          <td class="bonus-cell">
+            ${khawasHtml}
+          </td>
+
+
+          <td
+            style="
+              font-weight:800;
+              color:var(--blue-accent)
+            "
+          >
+            ${runTotal}
+          </td>
+
+        </tr>
+
+      `;
+
     }
 
-    tbody.innerHTML = rows || `<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--text-muted)">لا توجد بيانات لهذه الجولة</td></tr>`;
-    renderSummary(tData, rank, meta, { wins, draws, losses, runTotal });
 
-  } catch(e) {
-    tbody.innerHTML = `<tr><td colspan="8" style="padding:30px;text-align:center;color:var(--red)">⚠️ تعذر عرض نتائج الجولات الحالية</td></tr>`;
+    tbody.innerHTML =
+      rows ||
+      `
+        <tr>
+          <td
+            colspan="8"
+            style="
+              padding:30px;
+              text-align:center;
+              color:var(--text-muted)
+            "
+          >
+            لا توجد بيانات للمباريات الحالية
+          </td>
+        </tr>
+      `;
+
+
+    renderSummary(
+      teamData,
+      rank,
+      meta,
+      {
+        wins,
+        draws,
+        losses,
+        runTotal
+      }
+    );
+
+
+  } catch (e) {
+
+    console.error(e);
+
+
+    tbody.innerHTML =
+      `
+        <tr>
+
+          <td
+            colspan="8"
+            style="
+              padding:30px;
+              text-align:center;
+              color:var(--red)
+            "
+          >
+            ⚠️ تعذر عرض نتائج الجولات الحالية
+          </td>
+
+        </tr>
+      `;
+
   }
+
 }
 
-function renderSummary(tData, rank, meta, computed) {
-  const rankEmoji = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':(rank > 0 ? `#${rank}` : '-');
-  const w = computed?.wins     ?? tData.won   ?? 0;
-  const d = computed?.draws    ?? tData.draw  ?? 0;
-  const l = computed?.losses   ?? tData.lost  ?? 0;
-  const totalPts = computed?.runTotal ?? tData.total ?? 0;
 
-  document.getElementById('summary-row').innerHTML = `
-    <div class="sum-chip" style="border-color:${meta.color}55">
-      <div class="sum-val" style="color:${meta.color}">${rankEmoji}</div>
-      <div class="sum-lbl">المركز</div>
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function renderSummary(
+  tData,
+  rank,
+  meta,
+  computed
+) {
+
+  const rankEmoji =
+    rank === 1
+      ? "🥇"
+      : rank === 2
+      ? "🥈"
+      : rank === 3
+      ? "🥉"
+      : (
+          rank > 0
+            ? `#${rank}`
+            : "-"
+        );
+
+
+  const w =
+    computed?.wins ??
+    tData.won ??
+    0;
+
+
+  const d =
+    computed?.draws ??
+    tData.draw ??
+    0;
+
+
+  const l =
+    computed?.losses ??
+    tData.lost ??
+    0;
+
+
+  const totalPts =
+    computed?.runTotal ??
+    tData.total ??
+    0;
+
+
+  document.getElementById(
+    "summary-row"
+  ).innerHTML = `
+
+    <div
+      class="sum-chip"
+      style="border-color:${meta.color}55"
+    >
+
+      <div
+        class="sum-val"
+        style="color:${meta.color}"
+      >
+        ${rankEmoji}
+      </div>
+
+      <div class="sum-lbl">
+        المركز
+      </div>
+
     </div>
+
+
     <div class="sum-chip">
-      <div class="sum-val" style="color:var(--green)">${w}</div>
-      <div class="sum-lbl">فوز</div>
+
+      <div
+        class="sum-val"
+        style="color:var(--green)"
+      >
+        ${w}
+      </div>
+
+      <div class="sum-lbl">
+        فوز
+      </div>
+
     </div>
+
+
     <div class="sum-chip">
-      <div class="sum-val" style="color:var(--gold)">${d}</div>
-      <div class="sum-lbl">تعادل</div>
+
+      <div
+        class="sum-val"
+        style="color:var(--gold)"
+      >
+        ${d}
+      </div>
+
+      <div class="sum-lbl">
+        تعادل
+      </div>
+
     </div>
+
+
     <div class="sum-chip">
-      <div class="sum-val" style="color:var(--red)">${l}</div>
-      <div class="sum-lbl">خسارة</div>
+
+      <div
+        class="sum-val"
+        style="color:var(--red)"
+      >
+        ${l}
+      </div>
+
+      <div class="sum-lbl">
+        خسارة
+      </div>
+
     </div>
+
+
     <div class="sum-chip">
-      <div class="sum-val" style="color:var(--blue-accent)">${totalPts}</div>
-      <div class="sum-lbl">إجمالي النقاط</div>
-    </div>`;
+
+      <div
+        class="sum-val"
+        style="color:var(--blue-accent)"
+      >
+        ${totalPts}
+      </div>
+
+      <div class="sum-lbl">
+        إجمالي النقاط
+      </div>
+
+    </div>
+
+  `;
+
 }
+
+
+/* =========================================================
+   START
+========================================================= */
 
 init();
+
 </script>
+
 </body>
 </html>
