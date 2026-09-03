@@ -1,6 +1,6 @@
 {
   "current_gw": 2,
-  "last_updated": "2026-09-03 01:02:59",
+  "last_updated": "2026-09-03 23:12:16",
   "teams": [
     {
       "name": "الزرازير",
@@ -268,5 +268,6 @@
       "winner": "الاوديسي",
       "type": "normal"
     }
-  ]
+  ],
+  "transfer_adjustments": []
 }
