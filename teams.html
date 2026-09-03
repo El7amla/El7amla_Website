@@ -1116,6 +1116,7 @@ const PATHS = {
   fixtures:  ["./fixtures.json", "./data/fixtures.json"],
   league:    ["./league.json", "./data/league.json"],
   chips:     ["./chips.json", "./data/khawas.json", "./data/chips.json"],
+  transfers: ["./data/player_transfers.json"],
   gwHistory: gw => [`./data/gw_history/gw${gw}.json`],
   gwLineups: gw => [`./data/gw_lineups/gw${gw}.json`]
 };
@@ -1142,10 +1143,11 @@ const FALLBACK_TEAMS = Object.keys(TEAM_META);
    STATE
 ========================================================= */
 
-let standingsData = null;
-let fixturesData  = null;
-let chipsData     = null;
-let leagueData    = null;
+let standingsData  = null;
+let fixturesData   = null;
+let chipsData      = null;
+let leagueData     = null;
+let transfersData  = null;
 
 let selectedTeam   = null;
 let selectedPlayer = null;
@@ -1214,21 +1216,25 @@ async function fetchJSONWithFallback(paths) {
 async function init() {
   console.log("El7amla Teams: starting...");
 
-  const [standingsRes, fixturesRes, chipsRes, leagueRes] = await Promise.all([
+  const [standingsRes, fixturesRes, chipsRes, leagueRes, transfersRes] = await Promise.all([
     fetchJSONWithFallback(PATHS.standings),
     fetchJSONWithFallback(PATHS.fixtures),
     fetchJSONWithFallback(PATHS.chips),
-    fetchJSONWithFallback(PATHS.league)
+    fetchJSONWithFallback(PATHS.league),
+    fetchJSONWithFallback(PATHS.transfers)
   ]);
 
-  standingsData = standingsRes || { current_gw: 1, teams: [] };
-  fixturesData  = fixturesRes  || {};
-  chipsData     = chipsRes     || {};
-  leagueData    = leagueRes    || null;
+  standingsData  = standingsRes  || { current_gw: 1, teams: [] };
+  fixturesData   = fixturesRes   || {};
+  chipsData      = chipsRes      || {};
+  leagueData     = leagueRes     || null;
+  transfersData  = transfersRes  || {};
 
   if (!standingsRes) console.error("[teams.html] Could not load current_standings.json — team ranks/points/matches will be limited.");
   if (!fixturesRes)  console.error("[teams.html] Could not load fixtures.json — fixture-based fallbacks will be unavailable.");
   if (!leagueRes)    console.error("[teams.html] Could not load league.json — player lists will be empty (falling back to team names only).");
+  // player_transfers.json is fully optional — a missing/empty file just
+  // means no mid-season player swaps are configured, nothing breaks.
 
   currentGW = Number(standingsData.current_gw || 1);
 
@@ -1443,6 +1449,76 @@ function getTeamPlayers(teamName) {
       };
     })
     .filter(Boolean);
+}
+
+/* =========================================================
+   PLAYER TRANSFERS (mid-season replacements)
+   ─────────────────────────────────────────────────────────
+   data/player_transfers.json is keyed per team:
+     { "TeamName": { "changes": [ { effective_gw, old_player_id,
+                                    old_player_name, new_player_id,
+                                    free_transfers, transfers_made,
+                                    cost_per_transfer } ] } }
+
+   league.json always stores the CURRENT (== new_player_id) id for a
+   slot. Before effective_gw we must show/fetch the OLD player instead,
+   without ever mutating league.json or overwriting real GW1 data.
+========================================================= */
+
+function getTeamTransfers(teamName) {
+  if (!transfersData || typeof transfersData !== "object") return null;
+  const key = Object.keys(transfersData).find(k => teamsEqual(k, teamName));
+  return key ? transfersData[key] : null;
+}
+
+/*
+  Given a player object as stored in league.json ({name, entry_id}) and
+  the GW currently being viewed, resolve:
+    - entry_id: which FPL entry id actually played that GW
+    - name: the display name for that GW (old manager's name pre-swap)
+    - transferInfo: {made, free, charged, cost} ONLY on the exact GW
+      the swap took effect, otherwise null (so it never repeats).
+*/
+function resolvePlayerForGW(teamName, player, gw) {
+  if (!player) return { entry_id: null, name: "Unknown", transferInfo: null };
+
+  const teamTransfers = getTeamTransfers(teamName);
+  if (!teamTransfers || !Array.isArray(teamTransfers.changes)) {
+    return { entry_id: player.entry_id, name: player.name, transferInfo: null };
+  }
+
+  const change = teamTransfers.changes.find(c =>
+    String(c.new_player_id) === String(player.entry_id)
+  );
+
+  if (!change) {
+    return { entry_id: player.entry_id, name: player.name, transferInfo: null };
+  }
+
+  const effectiveGW = Number(change.effective_gw);
+  const gwNum = Number(gw);
+
+  if (gwNum < effectiveGW) {
+    // Before the swap: use the OLD player's real identity.
+    const oldId = change.old_player_id;
+    return {
+      entry_id: oldId ?? null,
+      name: change.old_player_name || (oldId != null ? `${player.name} (اللاعب السابق)` : "لاعب سابق (ID غير مسجل)"),
+      transferInfo: null
+    };
+  }
+
+  // From effective_gw onward: current identity from league.json.
+  let transferInfo = null;
+  if (gwNum === effectiveGW) {
+    const made = Number(change.transfers_made || 0);
+    const free = Number(change.free_transfers || 0);
+    const costEach = Number(change.cost_per_transfer || 4);
+    const charged = Math.max(0, made - free);
+    transferInfo = { made, free, charged, cost: charged * costEach };
+  }
+
+  return { entry_id: player.entry_id, name: player.name, transferInfo };
 }
 
 /* =========================================================
@@ -1681,6 +1757,31 @@ async function loadSelectedLineup() {
   }
   if (bench) bench.innerHTML = "";
 
+  // Resolve WHICH manager actually played this GW for this slot
+  // (handles mid-season replacements via data/player_transfers.json).
+  const resolved = resolvePlayerForGW(selectedTeam, selectedPlayer, gw);
+
+  // Reflect the resolved identity everywhere in the UI immediately,
+  // so the Player Selector itself is GW-sensitive as requested.
+  const title = document.getElementById("fpl-title");
+  const subtitle = document.getElementById("fpl-subtitle");
+  if (title) title.textContent = `🏟️ ${resolved.name} — تشكيلة FPL`;
+  if (subtitle) subtitle.textContent = `Entry ID: ${resolved.entry_id ?? "N/A"}`;
+
+  const activeCard = document.querySelector(".player-card.active");
+  if (activeCard) {
+    const nameEl = activeCard.querySelector(".player-name");
+    const entryEl = activeCard.querySelector(".player-entry");
+    if (nameEl) nameEl.textContent = resolved.name;
+    if (entryEl) entryEl.textContent = `ENTRY: ${resolved.entry_id ?? "N/A"}`;
+  }
+
+  if (resolved.entry_id == null) {
+    console.error(`[teams.html] No FPL entry id available for ${selectedTeam} in GW${gw} — old_player_id is not configured in player_transfers.json yet.`);
+    renderLineupError(`مفيش تشكيلة متاحة لهذه الخانة في GW${gw} — الـ old_player_id لسه مش متسجل في data/player_transfers.json`);
+    return;
+  }
+
   const data = await fetchJSONWithFallback(PATHS.gwLineups(gw));
 
   if (!data) {
@@ -1691,14 +1792,15 @@ async function loadSelectedLineup() {
 
   console.log(`[teams.html] GW${gw} lineup data:`, data);
 
-  const lineup = extractPlayerLineup(data, selectedPlayer, selectedTeam);
+  const lineupPlayer = { name: resolved.name, entry_id: resolved.entry_id };
+  const lineup = extractPlayerLineup(data, lineupPlayer, selectedTeam);
 
   if (!lineup) {
-    renderLineupError(`لا توجد تشكيلة مسجلة للاعب ${selectedPlayer.name} في GW${gw}`);
+    renderLineupError(`لا توجد تشكيلة مسجلة للاعب ${resolved.name} في GW${gw}`);
     return;
   }
 
-  renderLineup(lineup, gw);
+  renderLineup(lineup, gw, resolved.transferInfo);
 }
 
 /* =========================================================
@@ -1861,7 +1963,7 @@ function getPositionGroup(player) {
    RENDER LINEUP
 ========================================================= */
 
-function renderLineup(lineup, gw) {
+function renderLineup(lineup, gw, transferInfo) {
   currentLineup = lineup;
 
   const starters = lineup.starters || [];
@@ -1877,7 +1979,7 @@ function renderLineup(lineup, gw) {
     renderPositionRow("هجوم", fwd, "fwd");
 
   renderBench(lineup.bench || []);
-  renderFPLSummary(lineup, gw);
+  renderFPLSummary(lineup, gw, transferInfo);
 }
 
 /* =========================================================
@@ -1954,7 +2056,7 @@ function renderBench(players) {
    FPL SUMMARY
 ========================================================= */
 
-function renderFPLSummary(lineup, gw) {
+function renderFPLSummary(lineup, gw, transferInfo) {
   const starters = lineup.starters || [];
   const starterPoints = starters.reduce((sum, p) => sum + Number(p.points || 0), 0);
   const benchPoints = (lineup.bench || []).reduce((sum, p) => sum + Number(p.points || 0), 0);
@@ -1963,6 +2065,30 @@ function renderFPLSummary(lineup, gw) {
 
   const captain = starters.find(p => p.isCaptain || isSamePlayer(p, lineup.captain));
   const captainPoints = captain ? captain.points * 2 : 0;
+
+  // Mid-season player-swap transfer cost (from data/player_transfers.json)
+  // — only rendered on the exact GW the swap took effect, per requirement.
+  let transferBlockHtml = "";
+  if (transferInfo) {
+    transferBlockHtml = `
+      <div class="fpl-stat">
+        <div class="fpl-stat-value" style="color:var(--text-primary)">${transferInfo.made}</div>
+        <div class="fpl-stat-label">Transfers</div>
+      </div>
+      <div class="fpl-stat">
+        <div class="fpl-stat-value" style="color:var(--green)">${transferInfo.free}</div>
+        <div class="fpl-stat-label">Free Transfers</div>
+      </div>
+      <div class="fpl-stat">
+        <div class="fpl-stat-value" style="color:var(--gold)">${transferInfo.charged}</div>
+        <div class="fpl-stat-label">Charged Transfers</div>
+      </div>
+      <div class="fpl-stat">
+        <div class="fpl-stat-value" style="color:var(--red)">-${transferInfo.cost}</div>
+        <div class="fpl-stat-label">Transfer Cost</div>
+      </div>
+    `;
+  }
 
   document.getElementById("fpl-summary").innerHTML = `
     <div class="fpl-stat">
@@ -1983,8 +2109,9 @@ function renderFPLSummary(lineup, gw) {
     </div>
     <div class="fpl-stat">
       <div class="fpl-stat-value" style="color:var(--red)">-${transfers}</div>
-      <div class="fpl-stat-label">خصم Transfers</div>
+      <div class="fpl-stat-label">خصم Transfers (FPL)</div>
     </div>
+    ${transferBlockHtml}
   `;
 }
 
