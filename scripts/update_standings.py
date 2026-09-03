@@ -17,6 +17,14 @@
 #   - Keeps existing player standings
 #   - Keeps chips system
 #   - Keeps GW history files
+#   - NEW: supports mid-season player replacements via
+#     data/player_transfers.json (see resolve_player_id_for_gw /
+#     get_transfer_cost_for_gw below). GW1 history for a replaced
+#     slot is preserved using the OLD player id; from the
+#     transfer's effective_gw onward the id already stored in
+#     league.json (== new_player_id) is used. Transfer cost is
+#     applied exactly once, on effective_gw, directly into the
+#     team's points used for match results / standings.
 #
 # Rules:
 #   - Player points counted only on gameweeks their team PLAYED (not BYE)
@@ -77,6 +85,7 @@ REPO_ROOT = BASE_DIR.parent
 LEAGUE_FILE = REPO_ROOT / "league.json"
 FIXTURES_FILE = REPO_ROOT / "fixtures.json"
 CHIPS_FILE = REPO_ROOT / "data" / "chips.json"
+PLAYER_TRANSFERS_FILE = REPO_ROOT / "data" / "player_transfers.json"
 OUTPUT_FILE = REPO_ROOT / "data" / "current_standings.json"
 LINEUPS_DIR = REPO_ROOT / "data" / "gw_lineups"
 
@@ -90,9 +99,6 @@ API_DELAY = 0.8
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; El7amla-Bot/1.0)",
 }
-
-_fpl_players: dict[int, dict] = {}
-_entry_gw_cache: dict[tuple[int, int], dict | None] = {}
 
 _fpl_players: dict[int, dict] = {}
 _entry_gw_cache: dict[tuple[int, int], dict | None] = {}
@@ -343,6 +349,211 @@ def load_chips() -> dict:
     return data
 
 
+def load_player_transfers() -> dict:
+    """
+    Load data/player_transfers.json.
+
+    Structure:
+        {
+          "TeamName": {
+            "changes": [
+              {
+                "effective_gw": 2,
+                "old_player_id": 111,
+                "old_player_name": "Old Manager",   # optional
+                "new_player_id": 222,
+                "free_transfers": 1,
+                "transfers_made": 7,
+                "cost_per_transfer": 4
+              }
+            ]
+          }
+        }
+
+    Returns {} if the file doesn't exist (feature is fully optional —
+    teams with no entry behave exactly as before).
+    """
+
+    if not PLAYER_TRANSFERS_FILE.exists():
+        log.info(
+            "player_transfers.json not found — "
+            "running without mid-season player-swap adjustments"
+        )
+        return {}
+
+    with open(PLAYER_TRANSFERS_FILE, encoding="utf-8") as file:
+        data = json.load(file)
+
+    data.pop("_comment", None)
+
+    return data
+
+
+# ─────────────────────────────────────────────
+# PLAYER TRANSFERS SYSTEM
+# ─────────────────────────────────────────────
+
+def _find_change_for_current_id(
+    team: str,
+    current_id: int,
+    transfers: dict,
+) -> dict | None:
+    """
+    Find the transfer-change record (if any) whose new_player_id matches
+    the id currently stored in league.json for this team/slot.
+    """
+
+    team_transfers = transfers.get(team)
+
+    if not team_transfers:
+        return None
+
+    for change in team_transfers.get("changes", []):
+
+        try:
+            new_id = int(change.get("new_player_id"))
+        except (TypeError, ValueError):
+            continue
+
+        if new_id == int(current_id):
+            return change
+
+    return None
+
+
+def resolve_player_id_for_gw(
+    team: str,
+    current_id: int,
+    gw: int,
+    transfers: dict,
+) -> int | None:
+    """
+    Resolve the FPL entry id to actually use for this team's player slot
+    (identified by the id CURRENTLY stored in league.json) at a given GW.
+
+    Before the change's effective_gw → old_player_id (real historical data,
+    never overwritten).
+    From effective_gw onward → current_id (== new_player_id) unchanged.
+
+    Returns None if the slot's old id is unknown for a GW before the swap
+    (caller must skip fetching rather than invent an id).
+    """
+
+    change = _find_change_for_current_id(team, current_id, transfers)
+
+    if not change:
+        return current_id
+
+    effective_gw = int(change.get("effective_gw", 1))
+
+    if gw < effective_gw:
+        old_id = change.get("old_player_id")
+        return int(old_id) if old_id is not None else None
+
+    return current_id
+
+
+def resolve_player_name_for_gw(
+    team: str,
+    current_name: str,
+    current_id: int,
+    gw: int,
+    transfers: dict,
+) -> str:
+    """
+    Mirror of resolve_player_id_for_gw but for the display name recorded
+    into gw_history / gw_lineups, so historical rows show the real manager
+    who actually played that GW, not the current occupant of the slot.
+    """
+
+    change = _find_change_for_current_id(team, current_id, transfers)
+
+    if not change:
+        return current_name
+
+    effective_gw = int(change.get("effective_gw", 1))
+
+    if gw < effective_gw:
+        return change.get("old_player_name") or f"{current_name} (اللاعب السابق)"
+
+    return current_name
+
+
+def get_transfer_cost_for_gw(
+    team: str,
+    gw: int,
+    transfers: dict,
+) -> int:
+    """
+    Sum of all transfer-cost penalties that apply to `team` on exactly
+    this `gw` (i.e. change["effective_gw"] == gw). Zero for every other
+    GW, so the -24 (or whatever) is never repeated.
+
+        charged_transfers = max(0, transfers_made - free_transfers)
+        transfer_cost = charged_transfers * cost_per_transfer
+    """
+
+    team_transfers = transfers.get(team)
+
+    if not team_transfers:
+        return 0
+
+    total_cost = 0
+
+    for change in team_transfers.get("changes", []):
+
+        if int(change.get("effective_gw", -1)) != int(gw):
+            continue
+
+        made = int(change.get("transfers_made", 0) or 0)
+        free = int(change.get("free_transfers", 0) or 0)
+        cost_each = int(change.get("cost_per_transfer", 4) or 4)
+
+        charged = max(0, made - free)
+        total_cost += charged * cost_each
+
+    return total_cost
+
+
+def get_transfer_details_for_gw(
+    team: str,
+    gw: int,
+    transfers: dict,
+) -> dict | None:
+    """
+    Same as get_transfer_cost_for_gw but returns the full breakdown
+    (used to embed transparency info into current_standings.json).
+    Returns None if nothing applies to this team/gw.
+    """
+
+    team_transfers = transfers.get(team)
+
+    if not team_transfers:
+        return None
+
+    for change in team_transfers.get("changes", []):
+
+        if int(change.get("effective_gw", -1)) != int(gw):
+            continue
+
+        made = int(change.get("transfers_made", 0) or 0)
+        free = int(change.get("free_transfers", 0) or 0)
+        cost_each = int(change.get("cost_per_transfer", 4) or 4)
+        charged = max(0, made - free)
+
+        return {
+            "gw": gw,
+            "team": team,
+            "transfers_made": made,
+            "free_transfers": free,
+            "charged_transfers": charged,
+            "cost_per_transfer": cost_each,
+            "transfer_cost": charged * cost_each,
+        }
+
+    return None
+
+
 # ─────────────────────────────────────────────
 # CHIPS SYSTEM
 # ─────────────────────────────────────────────
@@ -537,6 +748,7 @@ def team_player_points_dict(
     gw: int,
     league: dict,
     cache: dict,
+    transfers: dict,
 ) -> dict | None:
     """
     Return:
@@ -545,14 +757,34 @@ def team_player_points_dict(
             player_name: raw_points
         }
 
-    Uses shared cache.
+    Uses shared cache. Resolves each player's FPL entry id per-GW via
+    player_transfers.json, so a mid-season replacement never overwrites
+    the departing manager's real GW history, and never repeats itself
+    once the new manager is in place.
     """
 
     players = league[team_name]["players"]
 
     result = {}
 
-    for player_name, entry_id in players.items():
+    for player_name, current_id in players.items():
+
+        entry_id = resolve_player_id_for_gw(
+            team_name,
+            current_id,
+            gw,
+            transfers,
+        )
+
+        if entry_id is None:
+            # A transfer is configured for this slot but the OLD id
+            # hasn't been supplied yet — do not fabricate data.
+            log.warning(
+                f"GW{gw}: {team_name} / {player_name} — "
+                f"old_player_id not set in player_transfers.json, "
+                f"skipping this GW for this slot."
+            )
+            return None
 
         key = (
             entry_id,
@@ -593,14 +825,19 @@ def compute_adjusted_team_points(
     gw: int,
     raw_player_pts: dict,
     chips: dict,
+    transfers: dict,
 ) -> int | None:
     """
     Double Player affects team GW points.
+    Transfer cost (from player_transfers.json) is subtracted here too,
+    so it flows into match results / GF / GA / standings — not just
+    display — and only on the exact GW it applies to.
 
     Used for:
       - match result
       - GF
       - GA
+      - standings total
     """
 
     own = raw_player_pts.get(team)
@@ -639,7 +876,18 @@ def compute_adjusted_team_points(
             f"{zeroed} = 0"
         )
 
-    return sum(adjusted.values())
+    total = sum(adjusted.values())
+
+    transfer_cost = get_transfer_cost_for_gw(team, gw, transfers)
+
+    if transfer_cost:
+        log.info(
+            f"GW{gw}: {team} transfer cost applied → -{transfer_cost} "
+            f"(raw {total} → final {total - transfer_cost})"
+        )
+        total -= transfer_cost
+
+    return total
 
 
 # ─────────────────────────────────────────────
@@ -765,10 +1013,14 @@ def calculate_player_standings(
     fixtures: dict,
     league: dict,
     pts_cache: dict,
+    transfers: dict,
 ) -> list[dict]:
     """
-    Sum raw player points only for GWs
-    where the player's team actually played.
+    Sum raw player points only for GWs where the player's team actually
+    played. When a mid-season replacement is configured for a slot, the
+    old and new managers are reported as SEPARATE rows (they are two
+    different real people), each only counting the GWs they actually
+    played.
     """
 
     def team_has_bye(
@@ -791,38 +1043,70 @@ def calculate_player_standings(
 
     for team_name, team_data in league.items():
 
-        for player_name, entry_id in team_data["players"].items():
+        for player_name, current_id in team_data["players"].items():
 
-            total = 0
+            change = _find_change_for_current_id(
+                team_name, current_id, transfers
+            )
 
-            for gw in range(
-                1,
-                current_gw + 1,
-            ):
+            if not change:
 
-                if team_has_bye(
-                    team_name,
-                    gw,
-                ):
-                    continue
+                total = 0
 
-                pts = pts_cache.get(
-                    (
-                        entry_id,
-                        gw,
-                    )
-                )
+                for gw in range(1, current_gw + 1):
 
-                if pts is not None:
-                    total += pts
+                    if team_has_bye(team_name, gw):
+                        continue
 
-            player_totals.append(
-                {
+                    pts = pts_cache.get((current_id, gw))
+
+                    if pts is not None:
+                        total += pts
+
+                player_totals.append({
                     "name": player_name,
                     "team": team_name,
                     "points": total,
-                }
-            )
+                })
+
+                continue
+
+            # Slot has a configured swap — split into two identities.
+            effective_gw = int(change.get("effective_gw", 1))
+            old_id = change.get("old_player_id")
+            old_name = change.get("old_player_name") or f"{player_name} (اللاعب السابق)"
+
+            old_total = 0
+            new_total = 0
+
+            for gw in range(1, current_gw + 1):
+
+                if team_has_bye(team_name, gw):
+                    continue
+
+                if gw < effective_gw:
+                    if old_id is None:
+                        continue
+                    pts = pts_cache.get((int(old_id), gw))
+                    if pts is not None:
+                        old_total += pts
+                else:
+                    pts = pts_cache.get((current_id, gw))
+                    if pts is not None:
+                        new_total += pts
+
+            if old_id is not None:
+                player_totals.append({
+                    "name": old_name,
+                    "team": team_name,
+                    "points": old_total,
+                })
+
+            player_totals.append({
+                "name": player_name,
+                "team": team_name,
+                "points": new_total,
+            })
 
     return sorted(
         player_totals,
@@ -838,6 +1122,7 @@ def write_output(
     team_rows: list,
     player_rows: list,
     matches: list,
+    transfer_adjustments: list,
     current_gw: int,
 ) -> None:
     """
@@ -845,6 +1130,9 @@ def write_output(
 
     NEW:
       matches = all processed match results.
+      transfer_adjustments = transparency log of every transfer-cost
+      deduction actually applied (team, gw, breakdown), so nothing is
+      silently hidden inside the totals.
     """
 
     OUTPUT_FILE.parent.mkdir(
@@ -868,6 +1156,9 @@ def write_output(
 
         # NEW
         "matches": matches,
+
+        # NEW: transparency log for mid-season transfer-cost deductions
+        "transfer_adjustments": transfer_adjustments,
     }
 
     with open(
@@ -897,14 +1188,16 @@ def _run_with_shared_cache(
     league: dict,
     fixtures: dict,
     chips: dict,
-) -> tuple[list, list]:
+    transfers: dict,
+) -> tuple[list, list, list]:
     """
     Calculate team standings and match results.
 
     Returns:
         (
             team_rows,
-            match_results
+            match_results,
+            transfer_adjustments
         )
     """
 
@@ -937,6 +1230,7 @@ def _run_with_shared_cache(
     gw_team_pts = {}
 
     match_results = []
+    transfer_adjustments = []
 
     for gw in range(
         1,
@@ -954,6 +1248,16 @@ def _run_with_shared_cache(
         live_points = get_gw_live_points(gw)
 
         # ─────────────────────────────────
+        # Record any transfer-cost adjustment
+        # that applies to this GW (transparency log)
+        # ─────────────────────────────────
+
+        for team in team_names:
+            details = get_transfer_details_for_gw(team, gw, transfers)
+            if details:
+                transfer_adjustments.append(details)
+
+        # ─────────────────────────────────
         # Raw player points
         # ─────────────────────────────────
 
@@ -967,11 +1271,13 @@ def _run_with_shared_cache(
                     gw,
                     league,
                     _shared_cache,
+                    transfers,
                 )
             )
 
         # ─────────────────────────────────
         # Adjusted team points
+        # (double_player chip + transfer cost)
         # ─────────────────────────────────
 
         gw_team_pts[gw] = {}
@@ -984,11 +1290,15 @@ def _run_with_shared_cache(
                     gw,
                     raw_player_pts,
                     chips,
+                    transfers,
                 )
             )
 
         # ─────────────────────────────────
         # Save GW history
+        # (uses resolved id + resolved name so a replaced
+        # manager's real GW1 data is preserved under their
+        # OWN id, not silently merged into the new manager)
         # ─────────────────────────────────
 
         gw_hist = {}
@@ -997,10 +1307,21 @@ def _run_with_shared_cache(
 
             gw_hist[team] = {}
 
-            for player_name, entry_id in league[team]["players"].items():
+            for player_name, current_id in league[team]["players"].items():
+
+                resolved_id = resolve_player_id_for_gw(
+                    team, current_id, gw, transfers
+                )
+
+                if resolved_id is None:
+                    continue
+
+                resolved_name = resolve_player_name_for_gw(
+                    team, player_name, current_id, gw, transfers
+                )
 
                 key = (
-                    entry_id,
+                    resolved_id,
                     gw,
                 )
 
@@ -1008,8 +1329,8 @@ def _run_with_shared_cache(
 
                 if pts is not None:
 
-                    gw_hist[team][str(entry_id)] = {
-                        "player": player_name,
+                    gw_hist[team][str(resolved_id)] = {
+                        "player": resolved_name,
                         "points": pts,
                     }
 
@@ -1044,24 +1365,46 @@ def _run_with_shared_cache(
 
         # ─────────────────────────────────
         # Save complete FPL lineups
+        # (single pass — resolved id/name per GW)
         # ─────────────────────────────────
+
         gw_lineups = {}
 
         for team in team_names:
+
             gw_lineups[team] = {}
 
-            for manager_name, entry_id in league[team]["players"].items():
-                lineup = get_player_gw_picks(entry_id, gw, live_points)
+            for manager_name, current_id in league[team]["players"].items():
+
+                resolved_id = resolve_player_id_for_gw(
+                    team, current_id, gw, transfers
+                )
+
+                if resolved_id is None:
+                    log.warning(
+                        f"GW{gw}: skipping lineup for {team} / "
+                        f"{manager_name} — old_player_id not configured "
+                        f"in player_transfers.json"
+                    )
+                    continue
+
+                resolved_name = resolve_player_name_for_gw(
+                    team, manager_name, current_id, gw, transfers
+                )
+
+                lineup = get_player_gw_picks(resolved_id, gw, live_points)
 
                 if lineup is None:
                     log.warning(
                         f"GW{gw}: Could not fetch lineup for "
-                        f"{team} / {manager_name} (id={entry_id})"
+                        f"{team} / {resolved_name} (id={resolved_id})"
                     )
                     continue
 
-                lineup["manager"] = manager_name
-                gw_lineups[team][str(entry_id)] = lineup
+                lineup["manager"] = resolved_name
+                gw_lineups[team][str(resolved_id)] = lineup
+
+                time.sleep(API_DELAY)
 
         LINEUPS_DIR.mkdir(parents=True, exist_ok=True)
         lineup_file = LINEUPS_DIR / f"gw{gw}.json"
@@ -1073,31 +1416,6 @@ def _run_with_shared_cache(
                 ensure_ascii=False,
                 indent=2,
             )
-
-        log.info(f"GW{gw}: lineups written → {lineup_file}")
-
-        # ─────────────────────────────────
-        # Save complete FPL lineups
-        # ─────────────────────────────────
-        gw_lineups = {}
-        for team in team_names:
-            gw_lineups[team] = {}
-            for manager_name, entry_id in league[team]["players"].items():
-                lineup = get_player_gw_picks(entry_id, gw, live_points)
-                if lineup is None:
-                    log.warning(
-                        f"GW{gw}: Could not fetch lineup for "
-                        f"{team} / {manager_name} (id={entry_id})"
-                    )
-                    continue
-                lineup["manager"] = manager_name
-                gw_lineups[team][str(entry_id)] = lineup
-                time.sleep(API_DELAY)
-
-        LINEUPS_DIR.mkdir(parents=True, exist_ok=True)
-        lineup_file = LINEUPS_DIR / f"gw{gw}.json"
-        with open(lineup_file, "w", encoding="utf-8") as file:
-            json.dump(gw_lineups, file, ensure_ascii=False, indent=2)
 
         log.info(f"GW{gw}: lineups written → {lineup_file}")
 
@@ -1354,7 +1672,7 @@ def _run_with_shared_cache(
         for team in sorted_teams
     ]
 
-    return team_rows, match_results
+    return team_rows, match_results, transfer_adjustments
 
 
 # ─────────────────────────────────────────────
@@ -1393,6 +1711,7 @@ def main():
     league = load_league()
     fixtures = load_fixtures()
     chips = load_chips()
+    transfers = load_player_transfers()
 
     # ─────────────────────────────────────
     # 3. Respect league season length
@@ -1434,12 +1753,13 @@ def main():
     # 5. Calculate standings + matches
     # ─────────────────────────────────────
 
-    team_rows, match_results = (
+    team_rows, match_results, transfer_adjustments = (
         _run_with_shared_cache(
             current_gw,
             league,
             fixtures,
             chips,
+            transfers,
         )
     )
 
@@ -1457,6 +1777,7 @@ def main():
             fixtures,
             league,
             _shared_cache,
+            transfers,
         )
     )
 
@@ -1468,6 +1789,7 @@ def main():
         team_rows,
         player_rows,
         match_results,
+        transfer_adjustments,
         current_gw,
     )
 
@@ -1475,6 +1797,20 @@ def main():
         f"Match results written: "
         f"{len(match_results)}"
     )
+
+    if transfer_adjustments:
+        log.info(
+            f"Transfer-cost adjustments applied: "
+            f"{len(transfer_adjustments)}"
+        )
+        for adj in transfer_adjustments:
+            log.info(
+                f"  GW{adj['gw']} {adj['team']}: "
+                f"{adj['transfers_made']} made, "
+                f"{adj['free_transfers']} free, "
+                f"{adj['charged_transfers']} charged "
+                f"→ -{adj['transfer_cost']}"
+            )
 
     log.info("═" * 55)
     log.info("Done ✓")
