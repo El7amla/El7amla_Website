@@ -1474,41 +1474,51 @@ function getTeamTransfers(teamName) {
 /*
   Given a player object as stored in league.json ({name, entry_id}) and
   the GW currently being viewed, resolve:
-    - entry_id: which FPL entry id actually played that GW
-    - name: the display name for that GW (old manager's name pre-swap)
+    - entry_id: which FPL entry id was actually used that GW
+    - name: ALWAYS the same person's name — an FPL account migration
+      never changes who someone is, only which underlying FPL entry id
+      their data lives under, so we never rename them.
+    - accountNote: a short note shown only when this slot has an
+      account migration configured, so the person can see "this GW
+      used my old/new FPL account" without the UI implying two
+      different people.
     - transferInfo: {made, free, charged, cost} ONLY on the exact GW
       the swap took effect, otherwise null (so it never repeats).
 */
 function resolvePlayerForGW(teamName, player, gw) {
-  if (!player) return { entry_id: null, name: "Unknown", transferInfo: null };
+  if (!player) return { entry_id: null, name: "Unknown", accountNote: null, transferInfo: null };
 
   const teamTransfers = getTeamTransfers(teamName);
   if (!teamTransfers || !Array.isArray(teamTransfers.changes)) {
-    return { entry_id: player.entry_id, name: player.name, transferInfo: null };
+    return { entry_id: player.entry_id, name: player.name, accountNote: null, transferInfo: null };
   }
 
   const change = teamTransfers.changes.find(c =>
-    String(c.new_player_id) === String(player.entry_id)
+    String(c.new_entry_id) === String(player.entry_id)
   );
 
   if (!change) {
-    return { entry_id: player.entry_id, name: player.name, transferInfo: null };
+    return { entry_id: player.entry_id, name: player.name, accountNote: null, transferInfo: null };
   }
 
   const effectiveGW = Number(change.effective_gw);
   const gwNum = Number(gw);
+  const lastOldGW = effectiveGW - 1;
 
   if (gwNum < effectiveGW) {
-    // Before the swap: use the OLD player's real identity.
-    const oldId = change.old_player_id;
+    // Same person, OLD FPL account for this GW.
+    const oldId = change.old_entry_id;
     return {
       entry_id: oldId ?? null,
-      name: change.old_player_name || (oldId != null ? `${player.name} (اللاعب السابق)` : "لاعب سابق (ID غير مسجل)"),
+      name: player.name,
+      accountNote: oldId != null
+        ? `حساب FPL قديم (اتغيّر بعد الجولة ${lastOldGW})`
+        : "الحساب القديم غير مسجل في player_transfers.json بعد",
       transferInfo: null
     };
   }
 
-  // From effective_gw onward: current identity from league.json.
+  // Same person, NEW/current FPL account from effective_gw onward.
   let transferInfo = null;
   if (gwNum === effectiveGW) {
     const made = Number(change.transfers_made || 0);
@@ -1518,7 +1528,12 @@ function resolvePlayerForGW(teamName, player, gw) {
     transferInfo = { made, free, charged, cost: charged * costEach };
   }
 
-  return { entry_id: player.entry_id, name: player.name, transferInfo };
+  return {
+    entry_id: player.entry_id,
+    name: player.name,
+    accountNote: `حساب FPL جديد (بعد تغيير الحساب في الجولة ${effectiveGW})`,
+    transferInfo
+  };
 }
 
 /* =========================================================
@@ -1765,15 +1780,16 @@ async function loadSelectedLineup() {
   // so the Player Selector itself is GW-sensitive as requested.
   const title = document.getElementById("fpl-title");
   const subtitle = document.getElementById("fpl-subtitle");
+  const subtitleText = `Entry ID: ${resolved.entry_id ?? "N/A"}` + (resolved.accountNote ? ` · ${resolved.accountNote}` : "");
   if (title) title.textContent = `🏟️ ${resolved.name} — تشكيلة FPL`;
-  if (subtitle) subtitle.textContent = `Entry ID: ${resolved.entry_id ?? "N/A"}`;
+  if (subtitle) subtitle.textContent = subtitleText;
 
   const activeCard = document.querySelector(".player-card.active");
   if (activeCard) {
     const nameEl = activeCard.querySelector(".player-name");
     const entryEl = activeCard.querySelector(".player-entry");
     if (nameEl) nameEl.textContent = resolved.name;
-    if (entryEl) entryEl.textContent = `ENTRY: ${resolved.entry_id ?? "N/A"}`;
+    if (entryEl) entryEl.textContent = `ENTRY: ${resolved.entry_id ?? "N/A"}` + (resolved.accountNote ? ` · ${resolved.accountNote}` : "");
   }
 
   if (resolved.entry_id == null) {
