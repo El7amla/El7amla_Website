@@ -353,15 +353,16 @@ def load_player_transfers() -> dict:
     """
     Load data/player_transfers.json.
 
-    Structure:
+    Structure (FPL account migration — SAME person, different FPL
+    entry id mid-season; NOT a different player joining the team):
         {
           "TeamName": {
             "changes": [
               {
+                "person": "Manager Name",       # optional, for docs only
                 "effective_gw": 2,
-                "old_player_id": 111,
-                "old_player_name": "Old Manager",   # optional
-                "new_player_id": 222,
+                "old_entry_id": 111,
+                "new_entry_id": 222,
                 "free_transfers": 1,
                 "transfers_made": 7,
                 "cost_per_transfer": 4
@@ -377,7 +378,7 @@ def load_player_transfers() -> dict:
     if not PLAYER_TRANSFERS_FILE.exists():
         log.info(
             "player_transfers.json not found — "
-            "running without mid-season player-swap adjustments"
+            "running without mid-season FPL account-migration adjustments"
         )
         return {}
 
@@ -399,7 +400,7 @@ def _find_change_for_current_id(
     transfers: dict,
 ) -> dict | None:
     """
-    Find the transfer-change record (if any) whose new_player_id matches
+    Find the account-migration record (if any) whose new_entry_id matches
     the id currently stored in league.json for this team/slot.
     """
 
@@ -411,7 +412,7 @@ def _find_change_for_current_id(
     for change in team_transfers.get("changes", []):
 
         try:
-            new_id = int(change.get("new_player_id"))
+            new_id = int(change.get("new_entry_id"))
         except (TypeError, ValueError):
             continue
 
@@ -431,9 +432,12 @@ def resolve_player_id_for_gw(
     Resolve the FPL entry id to actually use for this team's player slot
     (identified by the id CURRENTLY stored in league.json) at a given GW.
 
-    Before the change's effective_gw → old_player_id (real historical data,
+    This is the SAME real person before and after — only the FPL entry
+    id changes (account migration), never their identity/name.
+
+    Before the change's effective_gw → old_entry_id (real historical data,
     never overwritten).
-    From effective_gw onward → current_id (== new_player_id) unchanged.
+    From effective_gw onward → current_id (== new_entry_id) unchanged.
 
     Returns None if the slot's old id is unknown for a GW before the swap
     (caller must skip fetching rather than invent an id).
@@ -447,7 +451,7 @@ def resolve_player_id_for_gw(
     effective_gw = int(change.get("effective_gw", 1))
 
     if gw < effective_gw:
-        old_id = change.get("old_player_id")
+        old_id = change.get("old_entry_id")
         return int(old_id) if old_id is not None else None
 
     return current_id
@@ -461,20 +465,14 @@ def resolve_player_name_for_gw(
     transfers: dict,
 ) -> str:
     """
-    Mirror of resolve_player_id_for_gw but for the display name recorded
-    into gw_history / gw_lineups, so historical rows show the real manager
-    who actually played that GW, not the current occupant of the slot.
+    The person's display name NEVER changes across an FPL account
+    migration — only the underlying entry id does. This function is
+    kept (rather than removed) so every call site that historically
+    asked "what name should this GW show" keeps working unchanged, but
+    it now always returns the same league.json name — we never rename
+    someone to "(اللاعب السابق)" or similar, because it's the same
+    person, not a different one.
     """
-
-    change = _find_change_for_current_id(team, current_id, transfers)
-
-    if not change:
-        return current_name
-
-    effective_gw = int(change.get("effective_gw", 1))
-
-    if gw < effective_gw:
-        return change.get("old_player_name") or f"{current_name} (اللاعب السابق)"
 
     return current_name
 
@@ -749,6 +747,7 @@ def team_player_points_dict(
     league: dict,
     cache: dict,
     transfers: dict,
+    warnings: list | None = None,
 ) -> dict | None:
     """
     Return:
@@ -761,11 +760,21 @@ def team_player_points_dict(
     player_transfers.json, so a mid-season replacement never overwrites
     the departing manager's real GW history, and never repeats itself
     once the new manager is in place.
+
+    IMPORTANT: unlike the earlier version, this NEVER aborts on the
+    first missing player — it always tries every player in the team so
+    every failure is logged individually (and collected into
+    `warnings`, which ends up in current_standings.json as
+    "build_warnings" for easy debugging without digging through CI
+    logs). It still returns None overall if ANY player's real points
+    are unavailable — we never substitute a fabricated 0, we just make
+    it obvious exactly which player/GW/id is the problem.
     """
 
     players = league[team_name]["players"]
 
     result = {}
+    missing = []
 
     for player_name, current_id in players.items():
 
@@ -779,12 +788,15 @@ def team_player_points_dict(
         if entry_id is None:
             # A transfer is configured for this slot but the OLD id
             # hasn't been supplied yet — do not fabricate data.
-            log.warning(
+            msg = (
                 f"GW{gw}: {team_name} / {player_name} — "
-                f"old_player_id not set in player_transfers.json, "
-                f"skipping this GW for this slot."
+                f"old_player_id not set in player_transfers.json"
             )
-            return None
+            log.warning(msg)
+            if warnings is not None:
+                warnings.append(msg)
+            missing.append(player_name)
+            continue
 
         key = (
             entry_id,
@@ -809,9 +821,26 @@ def team_player_points_dict(
         points = cache[key]
 
         if points is None:
-            return None
+            msg = (
+                f"GW{gw}: {team_name} / {player_name} (id={entry_id}) — "
+                f"FPL API returned no data for this entry/GW "
+                f"(404, private entry, or the id does not exist for that GW). "
+                f"Check https://fantasy.premierleague.com/api/entry/{entry_id}/event/{gw}/picks/ "
+                f"directly to confirm the id is correct."
+            )
+            log.warning(msg)
+            if warnings is not None:
+                warnings.append(msg)
+            missing.append(player_name)
+            continue
 
         result[player_name] = points
+
+    if missing:
+        # At least one real player's data is unavailable for this GW —
+        # do not publish a partial/fabricated team total. The specific
+        # reason for every missing player was already logged above.
+        return None
 
     return result
 
@@ -1017,10 +1046,10 @@ def calculate_player_standings(
 ) -> list[dict]:
     """
     Sum raw player points only for GWs where the player's team actually
-    played. When a mid-season replacement is configured for a slot, the
-    old and new managers are reported as SEPARATE rows (they are two
-    different real people), each only counting the GWs they actually
-    played.
+    played. When an FPL account migration is configured for a slot
+    (data/player_transfers.json), the points from BOTH the old and new
+    entry id are summed under ONE row — it's the same real person, just
+    a different underlying FPL account per GW, never two separate rows.
     """
 
     def team_has_bye(
@@ -1045,67 +1074,32 @@ def calculate_player_standings(
 
         for player_name, current_id in team_data["players"].items():
 
-            change = _find_change_for_current_id(
-                team_name, current_id, transfers
-            )
-
-            if not change:
-
-                total = 0
-
-                for gw in range(1, current_gw + 1):
-
-                    if team_has_bye(team_name, gw):
-                        continue
-
-                    pts = pts_cache.get((current_id, gw))
-
-                    if pts is not None:
-                        total += pts
-
-                player_totals.append({
-                    "name": player_name,
-                    "team": team_name,
-                    "points": total,
-                })
-
-                continue
-
-            # Slot has a configured swap — split into two identities.
-            effective_gw = int(change.get("effective_gw", 1))
-            old_id = change.get("old_player_id")
-            old_name = change.get("old_player_name") or f"{player_name} (اللاعب السابق)"
-
-            old_total = 0
-            new_total = 0
+            total = 0
 
             for gw in range(1, current_gw + 1):
 
                 if team_has_bye(team_name, gw):
                     continue
 
-                if gw < effective_gw:
-                    if old_id is None:
-                        continue
-                    pts = pts_cache.get((int(old_id), gw))
-                    if pts is not None:
-                        old_total += pts
-                else:
-                    pts = pts_cache.get((current_id, gw))
-                    if pts is not None:
-                        new_total += pts
+                # Resolves to old_entry_id before the migration's
+                # effective_gw and to current_id (new_entry_id) from
+                # then on — same person, correct account per GW.
+                resolved_id = resolve_player_id_for_gw(
+                    team_name, current_id, gw, transfers
+                )
 
-            if old_id is not None:
-                player_totals.append({
-                    "name": old_name,
-                    "team": team_name,
-                    "points": old_total,
-                })
+                if resolved_id is None:
+                    continue
+
+                pts = pts_cache.get((resolved_id, gw))
+
+                if pts is not None:
+                    total += pts
 
             player_totals.append({
                 "name": player_name,
                 "team": team_name,
-                "points": new_total,
+                "points": total,
             })
 
     return sorted(
