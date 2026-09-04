@@ -1,15 +1,14 @@
 {
-  "_comment": "Generic mid-season player transfer configuration. Each team can list one or more 'changes'. From GW1 up to (effective_gw - 1) the OLD player id is used when fetching/recording FPL data. From effective_gw onward, the id already stored in league.json (== new_player_id) is used as-is. Transfer cost is applied ONCE, only on effective_gw, directly into that GW's team points used for standings.",
+  "_comment": "Generic mid-season FPL account-migration configuration. This does NOT represent one person leaving and a different person joining — it represents the SAME person ('person') switching to a new FPL entry id mid-season (e.g. their old account became unavailable/was lost). From GW1 up to (effective_gw - 1) the OLD entry id is used when fetching/recording FPL data for this person's slot. From effective_gw onward, the id already stored in league.json (== new_entry_id) is used as-is. Any transfer cost caused by squad differences between the old and new accounts is applied ONCE, only on effective_gw, directly into that GW's team points used for standings. The person's identity/name never changes across the swap — only the underlying FPL entry id does.",
 
   "The Masterminds": {
     "changes": [
       {
+        "person": "Shika",
         "effective_gw": 2,
 
-        "old_player_id": 5145412,
-        "old_player_name": "Shika",
-
-        "new_player_id": 9822516,
+        "old_entry_id": 5145412,
+        "new_entry_id": 9822516,
 
         "free_transfers": 1,
         "transfers_made": 7,
