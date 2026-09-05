@@ -3,28 +3,30 @@
 # El7amla 2v2 Fantasy League — Standings Calculator
 # Fetches FPL data and generates current_standings.json
 #
-# UPDATED:
-#   - Adds match results to current_standings.json
-#   - Each match contains:
-#       gw
-#       home
-#       away
-#       homePts
-#       awayPts
-#       result
-#       winner
-#   - Keeps existing team standings
-#   - Keeps existing player standings
-#   - Keeps chips system
-#   - Keeps GW history files
-#   - NEW: supports mid-season player replacements via
-#     data/player_transfers.json (see resolve_player_id_for_gw /
-#     get_transfer_cost_for_gw below). GW1 history for a replaced
-#     slot is preserved using the OLD player id; from the
-#     transfer's effective_gw onward the id already stored in
-#     league.json (== new_player_id) is used. Transfer cost is
-#     applied exactly once, on effective_gw, directly into the
-#     team's points used for match results / standings.
+# UPDATED (this revision):
+#   - get_current_gw() no longer waits for FPL to mark a gameweek
+#     "finished". It now returns the highest GW whose deadline has
+#     already passed, so a gameweek that is currently being played
+#     (deadline passed, matches live, bonus points not final yet) is
+#     picked up immediately instead of being invisible until FPL
+#     flips finished=true — often days later.
+#   - team_player_points_dict() no longer returns None (and silently
+#     drops) the WHOLE team the moment a single player's FPL data is
+#     unreachable. It now returns (points_dict, missing_list) so a
+#     partial team total is always available, and the caller can
+#     surface exactly which player/GW failed instead of losing the
+#     entire fixture. This is the root-cause fix for the GW1 bug
+#     where Shika's unreachable legacy FPL id (5145412) silently
+#     poisoned and dropped the Royal Authority vs The Masterminds
+#     fixture, Shika's own lineup, and cascaded into a missed
+#     transfer-cost deduction in GW2.
+#   - build_match_result() accepts an `incomplete` dict of
+#     { team: [missing_player_names] } and, when present, marks the
+#     match "type": "incomplete" (or keeps "1v1" but still attaches
+#     "missingPlayers") instead of pretending the score is final.
+#   - data_warnings is now actually collected end-to-end and written
+#     into current_standings.json (previously only documented in
+#     docstrings, never wired into the output payload).
 #
 # Rules:
 #   - Player points counted only on gameweeks their team PLAYED (not BYE)
@@ -150,7 +152,24 @@ def fpl_get(url: str, retries: int = 3) -> dict | None:
 
 
 def get_current_gw() -> int:
-    """Return the latest finished gameweek and cache FPL player metadata."""
+    """
+    Return the gameweek that should currently be displayed/processed.
+
+    FIXED: this previously only returned a GW once FPL marked it
+    "finished", which meant a gameweek that had already started
+    (deadline passed, matches being played live) was completely
+    invisible to this script the entire time it was in progress — the
+    site kept showing the PREVIOUS gameweek as "current" until FPL
+    flipped finished=true, sometimes days after the round actually
+    began.
+
+    New behaviour: a GW counts as "current" once its deadline has
+    passed, regardless of whether FPL has finished processing bonus
+    points or marked it finished. We take the highest GW id whose
+    deadline_time is already in the past. If no GW has started yet
+    (e.g. right before the season begins), we default to GW1 so the
+    rest of the pipeline still has something sensible to work with.
+    """
     data = fpl_get(FPL_BOOTSTRAP)
     if not data:
         raise RuntimeError("Cannot fetch FPL bootstrap — check connectivity")
@@ -170,9 +189,36 @@ def get_current_gw() -> int:
             "position": player.get("element_type"),
         }
 
-    for event in reversed(data.get("events", [])):
-        if event.get("finished"):
-            return event["id"]
+    now = datetime.now(timezone.utc)
+    started_gws = []
+
+    for event in data.get("events", []):
+        deadline = event.get("deadline_time")
+        event_id = event.get("id")
+
+        if not deadline or event_id is None:
+            continue
+
+        try:
+            deadline_dt = datetime.fromisoformat(
+                deadline.replace("Z", "+00:00")
+            )
+        except ValueError:
+            continue
+
+        if deadline_dt <= now:
+            started_gws.append(event_id)
+
+    if started_gws:
+        current = max(started_gws)
+        log.info(
+            f"Gameweek {current}'s deadline has passed — "
+            f"treating it as the current gameweek to process "
+            f"(regardless of FPL's 'finished' flag)"
+        )
+        return current
+
+    log.info("No gameweek deadline has passed yet — defaulting to GW1")
     return 1
 
 
@@ -748,27 +794,34 @@ def team_player_points_dict(
     cache: dict,
     transfers: dict,
     warnings: list | None = None,
-) -> dict | None:
+) -> tuple[dict, list]:
     """
     Return:
 
-        {
-            player_name: raw_points
-        }
+        (
+            { player_name: raw_points, ... },  # players we DID fetch
+            [ missing_player_name, ... ],       # players we could NOT fetch
+        )
 
     Uses shared cache. Resolves each player's FPL entry id per-GW via
     player_transfers.json, so a mid-season replacement never overwrites
     the departing manager's real GW history, and never repeats itself
     once the new manager is in place.
 
-    IMPORTANT: unlike the earlier version, this NEVER aborts on the
-    first missing player — it always tries every player in the team so
-    every failure is logged individually (and collected into
-    `warnings`, which ends up in current_standings.json as
-    "build_warnings" for easy debugging without digging through CI
-    logs). It still returns None overall if ANY player's real points
-    are unavailable — we never substitute a fabricated 0, we just make
-    it obvious exactly which player/GW/id is the problem.
+    FIXED: this used to return None for the ENTIRE team the moment a
+    single player's data was unreachable, which caused the match loop
+    to silently `continue` and drop the whole fixture from `matches`
+    (this is exactly what happened with Shika's unreachable legacy FPL
+    id 5145412 in GW1 — it poisoned and hid the entire Royal Authority
+    vs The Masterminds result).
+
+    Now it ALWAYS returns whatever real points it could fetch for every
+    player it could reach, and separately reports which players it
+    could not — so the caller can compute a partial-but-real team total
+    and flag the gap (via `missing`/`warnings`/`data_warnings` and the
+    match's `missingPlayers` field) instead of losing the whole
+    gameweek. We never fabricate a 0 for a missing player — we simply
+    don't include them in the sum, and make the omission visible.
     """
 
     players = league[team_name]["players"]
@@ -837,12 +890,13 @@ def team_player_points_dict(
         result[player_name] = points
 
     if missing:
-        # At least one real player's data is unavailable for this GW —
-        # do not publish a partial/fabricated team total. The specific
-        # reason for every missing player was already logged above.
-        return None
+        log.warning(
+            f"GW{gw}: {team_name} — partial data only "
+            f"({len(result)} fetched, {len(missing)} missing: "
+            f"{', '.join(missing)})"
+        )
 
-    return result
+    return result, missing
 
 
 # ─────────────────────────────────────────────
@@ -861,6 +915,12 @@ def compute_adjusted_team_points(
     Transfer cost (from player_transfers.json) is subtracted here too,
     so it flows into match results / GF / GA / standings — not just
     display — and only on the exact GW it applies to.
+
+    NOTE: `raw_player_pts[team]` is now always a dict (possibly
+    partial, possibly empty — never None) thanks to the fix in
+    team_player_points_dict(). The `own is None` guard below is kept
+    purely as defensive programming in case this function is ever
+    called with a team key that was never populated at all.
 
     Used for:
       - match result
@@ -961,12 +1021,27 @@ def build_match_result(
     home_pts: int,
     away_pts: int,
     duel_result=None,
+    incomplete: dict | None = None,
 ) -> dict:
     """
     Build a JSON-safe match result.
 
     This is used by standings.html to display
     actual scores instead of only fixtures.
+
+    NEW: `incomplete`, if provided, is
+        { team_name: [missing_player_name, ...] }
+    for any team in this fixture that had one or more players whose
+    real FPL points could not be fetched this GW. When present:
+      - a "normal" match is marked "type": "incomplete" instead of
+        "normal" (the score is still whatever partial points we did
+        collect — never a fabricated full score)
+      - a "1v1" match keeps "type": "1v1" (the duel itself is only
+        ever built from players we DID successfully fetch) but still
+        carries "missingPlayers" so the wider team score is flagged
+      Either way, "missingPlayers" is attached so the frontend/admin
+      tooling can show a clear "data incomplete" indicator instead of
+      silently presenting a partial score as final.
     """
 
     winner = None
@@ -989,7 +1064,7 @@ def build_match_result(
             else "draw"
         )
 
-        return {
+        result_dict = {
             "gw": gw,
             "home": home,
             "away": away,
@@ -1007,6 +1082,11 @@ def build_match_result(
             },
         }
 
+        if incomplete:
+            result_dict["missingPlayers"] = incomplete
+
+        return result_dict
+
     if home_pts > away_pts:
 
         winner = home
@@ -1021,7 +1101,7 @@ def build_match_result(
 
         result_type = "draw"
 
-    return {
+    result_dict = {
         "gw": gw,
         "home": home,
         "away": away,
@@ -1029,8 +1109,13 @@ def build_match_result(
         "awayPts": away_pts,
         "result": result_type,
         "winner": winner,
-        "type": "normal",
+        "type": "incomplete" if incomplete else "normal",
     }
+
+    if incomplete:
+        result_dict["missingPlayers"] = incomplete
+
+    return result_dict
 
 
 # ─────────────────────────────────────────────
@@ -1117,16 +1202,24 @@ def write_output(
     player_rows: list,
     matches: list,
     transfer_adjustments: list,
+    data_warnings: list,
     current_gw: int,
 ) -> None:
     """
     Write current_standings.json.
 
-    NEW:
-      matches = all processed match results.
+      matches = all processed match results (may include
+      "type": "incomplete" entries — see build_match_result).
+
       transfer_adjustments = transparency log of every transfer-cost
       deduction actually applied (team, gw, breakdown), so nothing is
       silently hidden inside the totals.
+
+      data_warnings = every "couldn't fetch this player/GW" warning
+      collected during the run (previously only logged to the CI
+      console — now actually shipped in the JSON so anyone looking at
+      current_standings.json can see exactly what's incomplete and
+      why, without digging through GitHub Actions logs).
     """
 
     OUTPUT_FILE.parent.mkdir(
@@ -1148,11 +1241,11 @@ def write_output(
 
         "players": player_rows,
 
-        # NEW
         "matches": matches,
 
-        # NEW: transparency log for mid-season transfer-cost deductions
         "transfer_adjustments": transfer_adjustments,
+
+        "data_warnings": data_warnings,
     }
 
     with open(
@@ -1183,7 +1276,7 @@ def _run_with_shared_cache(
     fixtures: dict,
     chips: dict,
     transfers: dict,
-) -> tuple[list, list, list]:
+) -> tuple[list, list, list, list]:
     """
     Calculate team standings and match results.
 
@@ -1191,7 +1284,8 @@ def _run_with_shared_cache(
         (
             team_rows,
             match_results,
-            transfer_adjustments
+            transfer_adjustments,
+            data_warnings,
         )
     """
 
@@ -1225,6 +1319,7 @@ def _run_with_shared_cache(
 
     match_results = []
     transfer_adjustments = []
+    data_warnings: list = []
 
     for gw in range(
         1,
@@ -1253,21 +1348,26 @@ def _run_with_shared_cache(
 
         # ─────────────────────────────────
         # Raw player points
+        # (now always a dict per team — never None — plus a parallel
+        # missing_by_team map of anyone we couldn't fetch this GW)
         # ─────────────────────────────────
 
         raw_player_pts = {}
+        missing_by_team = {}
 
         for team in team_names:
 
-            raw_player_pts[team] = (
-                team_player_points_dict(
-                    team,
-                    gw,
-                    league,
-                    _shared_cache,
-                    transfers,
-                )
+            pts, missing = team_player_points_dict(
+                team,
+                gw,
+                league,
+                _shared_cache,
+                transfers,
+                warnings=data_warnings,
             )
+
+            raw_player_pts[team] = pts
+            missing_by_team[team] = missing
 
         # ─────────────────────────────────
         # Adjusted team points
@@ -1446,6 +1546,11 @@ def _run_with_shared_cache(
                 or away_pts is None
             ):
 
+                # This should now only happen if a team key was never
+                # populated at all (e.g. missing from league.json for
+                # this fixture) — a real structural problem, not a
+                # single unreachable FPL account, which no longer
+                # causes this branch to fire.
                 log.warning(
                     f"GW{gw}: Missing points "
                     f"for {home} vs {away} "
@@ -1484,6 +1589,19 @@ def _run_with_shared_cache(
                 raw_player_pts,
             )
 
+            # ─────────────────────────────
+            # Data-completeness flag for
+            # this specific fixture
+            # ─────────────────────────────
+
+            incomplete = {}
+
+            if missing_by_team.get(home):
+                incomplete[home] = missing_by_team[home]
+
+            if missing_by_team.get(away):
+                incomplete[away] = missing_by_team[away]
+
             # Create match result
             match_result = build_match_result(
                 gw,
@@ -1492,6 +1610,7 @@ def _run_with_shared_cache(
                 home_pts,
                 away_pts,
                 duel_result,
+                incomplete=incomplete or None,
             )
 
             match_results.append(
@@ -1627,6 +1746,12 @@ def _run_with_shared_cache(
                     f"→ DRAW"
                 )
 
+            if incomplete:
+                log.warning(
+                    f"GW{gw}: {home} vs {away} recorded with "
+                    f"PARTIAL data — missing: {incomplete}"
+                )
+
     # ─────────────────────────────────────
     # FINAL TOTALS
     # ─────────────────────────────────────
@@ -1666,7 +1791,7 @@ def _run_with_shared_cache(
         for team in sorted_teams
     ]
 
-    return team_rows, match_results, transfer_adjustments
+    return team_rows, match_results, transfer_adjustments, data_warnings
 
 
 # ─────────────────────────────────────────────
@@ -1747,7 +1872,7 @@ def main():
     # 5. Calculate standings + matches
     # ─────────────────────────────────────
 
-    team_rows, match_results, transfer_adjustments = (
+    team_rows, match_results, transfer_adjustments, data_warnings = (
         _run_with_shared_cache(
             current_gw,
             league,
@@ -1784,6 +1909,7 @@ def main():
         player_rows,
         match_results,
         transfer_adjustments,
+        data_warnings,
         current_gw,
     )
 
@@ -1805,6 +1931,17 @@ def main():
                 f"{adj['charged_transfers']} charged "
                 f"→ -{adj['transfer_cost']}"
             )
+
+    if data_warnings:
+        log.warning(
+            f"Data warnings recorded this run: "
+            f"{len(data_warnings)} "
+            f"(also written into current_standings.json.data_warnings)"
+        )
+        for w in data_warnings:
+            log.warning(f"  {w}")
+    else:
+        log.info("No data warnings — all player data fetched cleanly.")
 
     log.info("═" * 55)
     log.info("Done ✓")
