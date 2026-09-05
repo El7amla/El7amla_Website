@@ -2507,6 +2507,198 @@
         }
       ],
       "manager": "Body"
+    },
+    "5145412": {
+      "entry_id": 5145412,
+      "gw": 1,
+      "points": 38,
+      "net_points": 38,
+      "transfer_cost": 0,
+      "bank": 0,
+      "value": 1000,
+      "picks": [
+        {
+          "element": 496,
+          "position": 1,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Kinsky",
+          "first_name": "Antonín",
+          "second_name": "Kinský",
+          "element_type": 1,
+          "points": 2
+        },
+        {
+          "element": 358,
+          "position": 2,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Kerkez",
+          "first_name": "Milos",
+          "second_name": "Kerkez",
+          "element_type": 2,
+          "points": 0
+        },
+        {
+          "element": 10,
+          "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "White",
+          "first_name": "Benjamin",
+          "second_name": "White",
+          "element_type": 2,
+          "points": 11
+        },
+        {
+          "element": 502,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Robertson",
+          "first_name": "Andrew",
+          "second_name": "Robertson",
+          "element_type": 2,
+          "points": 3
+        },
+        {
+          "element": 366,
+          "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Wirtz",
+          "first_name": "Florian",
+          "second_name": "Wirtz",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 427,
+          "position": 6,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": true,
+          "player": "Mbeumo",
+          "first_name": "Bryan",
+          "second_name": "Mbeumo",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 397,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Semenyo",
+          "first_name": "Antoine",
+          "second_name": "Semenyo",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 40,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Rogers",
+          "first_name": "Morgan",
+          "second_name": "Rogers",
+          "element_type": 3,
+          "points": 8
+        },
+        {
+          "element": 527,
+          "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Richarlison",
+          "first_name": "Richarlison",
+          "second_name": "de Andrade",
+          "element_type": 4,
+          "points": 2
+        },
+        {
+          "element": 411,
+          "position": 10,
+          "multiplier": 2,
+          "is_captain": true,
+          "is_vice_captain": false,
+          "player": "Haaland",
+          "first_name": "Erling",
+          "second_name": "Haaland",
+          "element_type": 4,
+          "points": 2
+        },
+        {
+          "element": 379,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Isak",
+          "first_name": "Alexander",
+          "second_name": "Isak",
+          "element_type": 4,
+          "points": 2
+        },
+        {
+          "element": 251,
+          "position": 12,
+          "multiplier": 0,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Lecomte",
+          "first_name": "Benjamin",
+          "second_name": "Lecomte",
+          "element_type": 1,
+          "points": 0
+        },
+        {
+          "element": 259,
+          "position": 13,
+          "multiplier": 0,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Diop",
+          "first_name": "Issa",
+          "second_name": "Diop",
+          "element_type": 2,
+          "points": 2
+        },
+        {
+          "element": 454,
+          "position": 14,
+          "multiplier": 0,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Elanga",
+          "first_name": "Anthony",
+          "second_name": "Elanga",
+          "element_type": 3,
+          "points": 9
+        },
+        {
+          "element": 38,
+          "position": 15,
+          "multiplier": 0,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "A.García",
+          "first_name": "Andrés",
+          "second_name": "García",
+          "element_type": 2,
+          "points": 0
+        }
+      ],
+      "manager": "Shika"
     }
   },
   "Boys": {
