@@ -149,18 +149,30 @@ def fpl_get(url: str, retries: int = 3) -> dict | None:
 
 
 def get_current_gw() -> int:
-    """Return the latest finished gameweek and cache FPL player metadata."""
+    """
+    Return the latest gameweek whose deadline has passed.
+
+    This intentionally does NOT wait for FPL's `finished` flag.
+    As soon as a GW deadline passes and the new GW starts,
+    that GW becomes current so live points can be displayed.
+    """
     data = fpl_get(FPL_BOOTSTRAP)
+
     if not data:
-        raise RuntimeError("Cannot fetch FPL bootstrap — check connectivity")
+        raise RuntimeError(
+            "Cannot fetch FPL bootstrap — check connectivity"
+        )
 
     global _fpl_players
+
     _fpl_players = {}
+
     for player in data.get("elements", []):
         try:
             element_id = int(player["id"])
         except (KeyError, TypeError, ValueError):
             continue
+
         _fpl_players[element_id] = {
             "id": element_id,
             "web_name": player.get("web_name", ""),
@@ -169,11 +181,35 @@ def get_current_gw() -> int:
             "position": player.get("element_type"),
         }
 
-    for event in reversed(data.get("events", [])):
-        if event.get("finished"):
-            return event["id"]
-    return 1
+    now = datetime.now(timezone.utc)
 
+    eligible_events = []
+
+    for event in data.get("events", []):
+        try:
+            gw_id = int(event["id"])
+        except (KeyError, TypeError, ValueError):
+            continue
+
+        deadline_str = event.get("deadline_time")
+
+        if not deadline_str:
+            continue
+
+        try:
+            deadline = datetime.fromisoformat(
+                deadline_str.replace("Z", "+00:00")
+            )
+        except ValueError:
+            continue
+
+        if deadline <= now:
+            eligible_events.append(gw_id)
+
+    if eligible_events:
+        return max(eligible_events)
+
+    return 1
 
 def get_gw_live_points(gw: int) -> dict[int, int]:
     """Return FPL player total points for a completed GW."""
