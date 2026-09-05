@@ -1,9 +1,15 @@
 name: Update Standings
 
 on:
-  # Run daily at 23:00 UTC (1 AM Cairo time)
+  # FIXED: was "0 23 * * *" (once a day, 1 AM Cairo time), which meant
+  # a gameweek that kicked off in the afternoon wouldn't get picked up
+  # until the middle of the night, even after update_standings.py was
+  # fixed to detect in-progress gameweeks. Running every 2 hours means
+  # the site catches up with a live/in-progress gameweek within a
+  # couple of hours of its deadline passing, instead of up to a full
+  # day later.
   schedule:
-    - cron: "0 23 * * *"
+    - cron: "0 */2 * * *"
 
   # Allow manual trigger from GitHub Actions tab
   workflow_dispatch:
