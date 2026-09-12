@@ -55,7 +55,7 @@
           "first_name": "Neco",
           "second_name": "Williams",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 480,
@@ -67,7 +67,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 426,
@@ -91,7 +91,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 127,
@@ -127,7 +127,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 106,
@@ -139,7 +139,7 @@
           "first_name": "Igor Thiago",
           "second_name": "Nascimento Rodrigues",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 529,
@@ -307,7 +307,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 165,
@@ -319,7 +319,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 411,
@@ -429,7 +429,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         },
         {
           "element": 8,
@@ -477,7 +477,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 426,
@@ -501,7 +501,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 411,
@@ -549,7 +549,7 @@
           "first_name": "George",
           "second_name": "Hemmings",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 175,
@@ -573,7 +573,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Nasser"
@@ -657,7 +657,7 @@
           "first_name": "Dominik",
           "second_name": "Szoboszlai",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 427,
@@ -693,7 +693,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 379,
@@ -705,7 +705,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -741,7 +741,7 @@
           "first_name": "George",
           "second_name": "Hemmings",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 423,
@@ -765,7 +765,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         }
       ],
       "manager": "Tawheed"
@@ -851,7 +851,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 40,
@@ -863,7 +863,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 367,
@@ -875,7 +875,7 @@
           "first_name": "Cody",
           "second_name": "Gakpo",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 379,
@@ -887,7 +887,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -911,7 +911,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 497,
@@ -947,7 +947,7 @@
           "first_name": "Issa",
           "second_name": "Diop",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 212,
@@ -959,7 +959,7 @@
           "first_name": "Will",
           "second_name": "Hughes",
           "element_type": 3,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Hussein"
@@ -995,7 +995,7 @@
           "first_name": "Tyrick",
           "second_name": "Mitchell",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 391,
@@ -1043,7 +1043,7 @@
           "first_name": "Dominik",
           "second_name": "Szoboszlai",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 154,
@@ -1055,7 +1055,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 236,
@@ -1091,7 +1091,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 411,
@@ -1139,7 +1139,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         },
         {
           "element": 423,
@@ -1225,7 +1225,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         },
         {
           "element": 426,
@@ -1249,7 +1249,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 154,
@@ -1261,7 +1261,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 557,
@@ -1285,7 +1285,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 411,
@@ -1333,7 +1333,7 @@
           "first_name": "Will",
           "second_name": "Hughes",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 321,
@@ -1429,7 +1429,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 557,
@@ -1453,7 +1453,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 249,
@@ -1489,7 +1489,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 497,
@@ -1513,7 +1513,7 @@
           "first_name": "Regan",
           "second_name": "Slater",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 305,
@@ -1525,7 +1525,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         },
         {
           "element": 175,
@@ -1611,7 +1611,7 @@
           "first_name": "Dominik",
           "second_name": "Szoboszlai",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 426,
@@ -1635,7 +1635,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 454,
@@ -1659,7 +1659,7 @@
           "first_name": "John",
           "second_name": "McGinn",
           "element_type": 3,
-          "points": 0
+          "points": 6
         },
         {
           "element": 411,
@@ -1683,7 +1683,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 111,
@@ -1839,7 +1839,7 @@
           "first_name": "Cody",
           "second_name": "Gakpo",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 165,
@@ -1851,7 +1851,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 346,
@@ -1911,7 +1911,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         },
         {
           "element": 534,
@@ -2009,7 +2009,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 40,
@@ -2021,7 +2021,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 127,
@@ -2045,7 +2045,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 379,
@@ -2057,7 +2057,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -2117,7 +2117,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Amgad"
@@ -2189,7 +2189,7 @@
           "first_name": "Kevin",
           "second_name": "Schade",
           "element_type": 3,
-          "points": 0
+          "points": 15
         },
         {
           "element": 557,
@@ -2213,7 +2213,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 426,
@@ -2237,7 +2237,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 464,
@@ -2297,7 +2297,7 @@
           "first_name": "Issa",
           "second_name": "Diop",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 212,
@@ -2309,7 +2309,7 @@
           "first_name": "Will",
           "second_name": "Hughes",
           "element_type": 3,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Karim Yasser"
@@ -2407,7 +2407,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 427,
@@ -2431,7 +2431,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -2455,7 +2455,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 111,
@@ -2491,7 +2491,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 259,
@@ -2503,7 +2503,7 @@
           "first_name": "Issa",
           "second_name": "Diop",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Body"
@@ -2527,7 +2527,7 @@
           "first_name": "Đorđe",
           "second_name": "Petrović",
           "element_type": 1,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -2587,7 +2587,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 398,
@@ -2611,7 +2611,7 @@
           "first_name": "Florian",
           "second_name": "Wirtz",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 411,
@@ -2635,7 +2635,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 26,
@@ -2695,7 +2695,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Shika"
@@ -2781,7 +2781,7 @@
           "first_name": "Dominik",
           "second_name": "Szoboszlai",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 427,
@@ -2805,7 +2805,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 557,
@@ -2829,7 +2829,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 411,
@@ -2889,7 +2889,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         }
       ],
       "manager": "Ali"
@@ -2973,7 +2973,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 480,
@@ -2985,7 +2985,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 8
         },
         {
           "element": 12,
@@ -3021,7 +3021,7 @@
           "first_name": "João Pedro",
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 0
+          "points": 12
         },
         {
           "element": 401,
@@ -3081,7 +3081,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         }
       ],
       "manager": "Magdy"
