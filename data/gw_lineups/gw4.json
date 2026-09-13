@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 4,
-      "points": 40,
-      "net_points": 40,
+      "points": 55,
+      "net_points": 55,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1001,
@@ -175,7 +175,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 423,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 4,
-      "points": 42,
-      "net_points": 42,
+      "points": 71,
+      "net_points": 71,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1003,
@@ -367,7 +367,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 423,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 4,
-      "points": 53,
-      "net_points": 53,
+      "points": 87,
+      "net_points": 87,
       "transfer_cost": 0,
       "bank": 0,
       "value": 999,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 4,
-      "points": 32,
-      "net_points": 32,
+      "points": 61,
+      "net_points": 61,
       "transfer_cost": 0,
       "bank": 15,
       "value": 1002,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 4,
-      "points": 48,
-      "net_points": 48,
+      "points": 75,
+      "net_points": 75,
       "transfer_cost": 0,
       "bank": 7,
       "value": 1011,
@@ -803,7 +803,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 31,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 4,
-      "points": 43,
-      "net_points": 39,
+      "points": 81,
+      "net_points": 77,
       "transfer_cost": 4,
       "bank": 4,
       "value": 1003,
@@ -1007,7 +1007,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 10,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 4,
-      "points": 67,
-      "net_points": 63,
+      "points": 88,
+      "net_points": 84,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1001,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 4,
-      "points": 39,
-      "net_points": 39,
+      "points": 76,
+      "net_points": 76,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1004,
@@ -1405,7 +1405,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 426,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 4,
-      "points": 53,
-      "net_points": 53,
+      "points": 82,
+      "net_points": 82,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1005,
@@ -1599,7 +1599,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 368,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 4,
-      "points": 36,
-      "net_points": 36,
+      "points": 65,
+      "net_points": 65,
       "transfer_cost": 0,
       "bank": 8,
       "value": 1005,
@@ -1767,7 +1767,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 593,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 4,
-      "points": 54,
-      "net_points": 54,
+      "points": 76,
+      "net_points": 76,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1009,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 4,
-      "points": 64,
-      "net_points": 64,
+      "points": 93,
+      "net_points": 93,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1001,
@@ -2153,7 +2153,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 112,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 4,
-      "points": 48,
-      "net_points": 44,
+      "points": 67,
+      "net_points": 63,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1005,
@@ -2371,7 +2371,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 398,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 4,
-      "points": 39,
-      "net_points": 39,
+      "points": 69,
+      "net_points": 69,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1004,
@@ -2563,7 +2563,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 427,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 4,
-      "points": 53,
-      "net_points": 53,
+      "points": 75,
+      "net_points": 75,
       "transfer_cost": 0,
       "bank": 23,
       "value": 1000,
@@ -2733,7 +2733,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 418,
@@ -2745,7 +2745,7 @@
           "first_name": "Harry",
           "second_name": "Maguire",
           "element_type": 2,
-          "points": 2
+          "points": 1
         },
         {
           "element": 31,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 4,
-      "points": 78,
-      "net_points": 74,
+      "points": 92,
+      "net_points": 88,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1003,
@@ -2937,7 +2937,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 12
+          "points": 11
         },
         {
           "element": 112,
