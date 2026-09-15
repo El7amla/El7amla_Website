@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 4,
-      "points": 72,
-      "net_points": 72,
+      "points": 82,
+      "net_points": 82,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1003,
@@ -214,20 +214,8 @@
           "points": 2
         },
         {
-          "element": 449,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Hall",
-          "first_name": "Lewis",
-          "second_name": "Hall",
-          "element_type": 2,
-          "points": 0
-        },
-        {
           "element": 10,
-          "position": 3,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -236,6 +224,18 @@
           "second_name": "White",
           "element_type": 2,
           "points": 1
+        },
+        {
+          "element": 449,
+          "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Hall",
+          "first_name": "Lewis",
+          "second_name": "Hall",
+          "element_type": 2,
+          "points": 0
         },
         {
           "element": 8,
@@ -250,56 +250,8 @@
           "points": 6
         },
         {
-          "element": 124,
-          "position": 5,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Groß",
-          "first_name": "Pascal",
-          "second_name": "Groß",
-          "element_type": 3,
-          "points": 17
-        },
-        {
-          "element": 557,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": true,
-          "player": "Tzolis",
-          "first_name": "Christos",
-          "second_name": "Tzolis",
-          "element_type": 3,
-          "points": 3
-        },
-        {
-          "element": 427,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Mbeumo",
-          "first_name": "Bryan",
-          "second_name": "Mbeumo",
-          "element_type": 3,
-          "points": 2
-        },
-        {
-          "element": 454,
-          "position": 8,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Elanga",
-          "first_name": "Anthony",
-          "second_name": "Elanga",
-          "element_type": 3,
-          "points": 0
-        },
-        {
           "element": 40,
-          "position": 9,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -310,20 +262,56 @@
           "points": 8
         },
         {
-          "element": 165,
-          "position": 10,
-          "multiplier": 2,
-          "is_captain": true,
+          "element": 427,
+          "position": 6,
+          "multiplier": 1,
+          "is_captain": false,
           "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
+          "player": "Mbeumo",
+          "first_name": "Bryan",
+          "second_name": "Mbeumo",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 557,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": true,
+          "player": "Tzolis",
+          "first_name": "Christos",
+          "second_name": "Tzolis",
+          "element_type": 3,
+          "points": 3
+        },
+        {
+          "element": 124,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Groß",
+          "first_name": "Pascal",
+          "second_name": "Groß",
+          "element_type": 3,
+          "points": 17
+        },
+        {
+          "element": 346,
+          "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Calvert-Lewin",
+          "first_name": "Dominic",
+          "second_name": "Calvert-Lewin",
           "element_type": 4,
-          "points": 12
+          "points": 10
         },
         {
           "element": 411,
-          "position": 11,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -332,6 +320,18 @@
           "second_name": "Haaland",
           "element_type": 4,
           "points": 9
+        },
+        {
+          "element": 165,
+          "position": 11,
+          "multiplier": 2,
+          "is_captain": true,
+          "is_vice_captain": false,
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 12
         },
         {
           "element": 529,
@@ -346,16 +346,16 @@
           "points": 2
         },
         {
-          "element": 346,
+          "element": 454,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calvert-Lewin",
-          "first_name": "Dominic",
-          "second_name": "Calvert-Lewin",
-          "element_type": 4,
-          "points": 10
+          "player": "Elanga",
+          "first_name": "Anthony",
+          "second_name": "Elanga",
+          "element_type": 3,
+          "points": 0
         },
         {
           "element": 391,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 4,
-      "points": 78,
-      "net_points": 78,
+      "points": 92,
+      "net_points": 92,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1004,
@@ -1372,16 +1372,16 @@
           "points": 8
         },
         {
-          "element": 423,
+          "element": 305,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Shaw",
-          "first_name": "Luke",
-          "second_name": "Shaw",
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 14
         },
         {
           "element": 8,
@@ -1456,20 +1456,8 @@
           "points": 8
         },
         {
-          "element": 249,
-          "position": 9,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Barry",
-          "first_name": "Thierno",
-          "second_name": "Barry",
-          "element_type": 4,
-          "points": 2
-        },
-        {
           "element": 411,
-          "position": 10,
+          "position": 9,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -1481,7 +1469,7 @@
         },
         {
           "element": 165,
-          "position": 11,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1490,6 +1478,18 @@
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
           "points": 12
+        },
+        {
+          "element": 249,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Barry",
+          "first_name": "Thierno",
+          "second_name": "Barry",
+          "element_type": 4,
+          "points": 2
         },
         {
           "element": 497,
@@ -1516,16 +1516,16 @@
           "points": 2
         },
         {
-          "element": 305,
+          "element": 423,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
+          "player": "Shaw",
+          "first_name": "Luke",
+          "second_name": "Shaw",
           "element_type": 2,
-          "points": 14
+          "points": 0
         },
         {
           "element": 175,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 4,
-      "points": 83,
-      "net_points": 83,
+      "points": 93,
+      "net_points": 93,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1005,
@@ -1566,20 +1566,8 @@
           "points": 8
         },
         {
-          "element": 31,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Konsa",
-          "first_name": "Ezri",
-          "second_name": "Konsa Ngoyo",
-          "element_type": 2,
-          "points": 6
-        },
-        {
           "element": 8,
-          "position": 3,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1591,7 +1579,7 @@
         },
         {
           "element": 391,
-          "position": 4,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1602,8 +1590,32 @@
           "points": 11
         },
         {
-          "element": 368,
+          "element": 31,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Konsa",
+          "first_name": "Ezri",
+          "second_name": "Konsa Ngoyo",
+          "element_type": 2,
+          "points": 6
+        },
+        {
+          "element": 45,
           "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "McGinn",
+          "first_name": "John",
+          "second_name": "McGinn",
+          "element_type": 3,
+          "points": 6
+        },
+        {
+          "element": 368,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1615,7 +1627,7 @@
         },
         {
           "element": 426,
-          "position": 6,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1627,7 +1639,7 @@
         },
         {
           "element": 40,
-          "position": 7,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1638,28 +1650,16 @@
           "points": 8
         },
         {
-          "element": 454,
-          "position": 8,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Elanga",
-          "first_name": "Anthony",
-          "second_name": "Elanga",
-          "element_type": 3,
-          "points": 0
-        },
-        {
-          "element": 45,
+          "element": 346,
           "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "McGinn",
-          "first_name": "John",
-          "second_name": "McGinn",
-          "element_type": 3,
-          "points": 6
+          "player": "Calvert-Lewin",
+          "first_name": "Dominic",
+          "second_name": "Calvert-Lewin",
+          "element_type": 4,
+          "points": 10
         },
         {
           "element": 411,
@@ -1698,16 +1698,16 @@
           "points": 0
         },
         {
-          "element": 346,
+          "element": 454,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calvert-Lewin",
-          "first_name": "Dominic",
-          "second_name": "Calvert-Lewin",
-          "element_type": 4,
-          "points": 10
+          "player": "Elanga",
+          "first_name": "Anthony",
+          "second_name": "Elanga",
+          "element_type": 3,
+          "points": 0
         },
         {
           "element": 175,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 4,
-      "points": 68,
-      "net_points": 64,
+      "points": 71,
+      "net_points": 67,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1005,
@@ -2338,16 +2338,16 @@
           "points": 2
         },
         {
-          "element": 8,
+          "element": 391,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
+          "player": "Gvardiol",
+          "first_name": "Joško",
+          "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 6
+          "points": 11
         },
         {
           "element": 31,
@@ -2362,16 +2362,16 @@
           "points": 6
         },
         {
-          "element": 391,
+          "element": 8,
           "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Gvardiol",
-          "first_name": "Joško",
-          "second_name": "Gvardiol",
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
           "element_type": 2,
-          "points": 11
+          "points": 6
         },
         {
           "element": 398,
@@ -2386,20 +2386,8 @@
           "points": -2
         },
         {
-          "element": 454,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Elanga",
-          "first_name": "Anthony",
-          "second_name": "Elanga",
-          "element_type": 3,
-          "points": 0
-        },
-        {
           "element": 40,
-          "position": 7,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2411,7 +2399,7 @@
         },
         {
           "element": 427,
-          "position": 8,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2422,20 +2410,20 @@
           "points": 2
         },
         {
-          "element": 379,
-          "position": 9,
+          "element": 557,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Isak",
-          "first_name": "Alexander",
-          "second_name": "Isak",
-          "element_type": 4,
-          "points": 2
+          "player": "Tzolis",
+          "first_name": "Christos",
+          "second_name": "Tzolis",
+          "element_type": 3,
+          "points": 3
         },
         {
           "element": 411,
-          "position": 10,
+          "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": true,
@@ -2447,7 +2435,7 @@
         },
         {
           "element": 165,
-          "position": 11,
+          "position": 10,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -2456,6 +2444,18 @@
           "second_name": "Junqueira de Jesus",
           "element_type": 4,
           "points": 12
+        },
+        {
+          "element": 379,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Isak",
+          "first_name": "Alexander",
+          "second_name": "Isak",
+          "element_type": 4,
+          "points": 2
         },
         {
           "element": 111,
@@ -2470,16 +2470,16 @@
           "points": 0
         },
         {
-          "element": 557,
+          "element": 454,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Tzolis",
-          "first_name": "Christos",
-          "second_name": "Tzolis",
+          "player": "Elanga",
+          "first_name": "Anthony",
+          "second_name": "Elanga",
           "element_type": 3,
-          "points": 3
+          "points": 0
         },
         {
           "element": 586,
