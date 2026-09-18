@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 7,
+      "net_points": 7,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1002,
@@ -103,7 +103,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 427,
@@ -139,7 +139,7 @@
           "first_name": "Igor Thiago",
           "second_name": "Nascimento Rodrigues",
           "element_type": 4,
-          "points": 1
+          "points": 5
         },
         {
           "element": 109,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 2,
+      "net_points": -2,
       "transfer_cost": 4,
       "bank": 6,
       "value": 1005,
@@ -307,7 +307,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 346,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 2,
+      "net_points": -2,
       "transfer_cost": 4,
       "bank": 5,
       "value": 999,
@@ -477,7 +477,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 426,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 2,
+      "net_points": 2,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1002,
@@ -657,7 +657,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 12,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 4,
+      "net_points": 0,
       "transfer_cost": 4,
       "bank": 18,
       "value": 1012,
@@ -851,7 +851,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 40,
@@ -863,7 +863,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 480,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 2,
+      "net_points": 2,
       "transfer_cost": 0,
       "bank": 4,
       "value": 1007,
@@ -1043,7 +1043,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 480,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 2,
+      "net_points": -2,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1002,
@@ -1249,7 +1249,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 557,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 2,
+      "net_points": 2,
       "transfer_cost": 0,
       "bank": 23,
       "value": 1007,
@@ -1429,7 +1429,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 557,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 2,
+      "net_points": 2,
       "transfer_cost": 0,
       "bank": 7,
       "value": 1009,
@@ -1635,7 +1635,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 45,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 4,
+      "net_points": 0,
       "transfer_cost": 4,
       "bank": 20,
       "value": 1012,
@@ -2033,7 +2033,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 40,
@@ -2045,7 +2045,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 167,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 11,
+      "net_points": 11,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1003,
@@ -2189,7 +2189,7 @@
           "first_name": "Kevin",
           "second_name": "Schade",
           "element_type": 3,
-          "points": 1
+          "points": 9
         },
         {
           "element": 236,
@@ -2213,7 +2213,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 426,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 4,
+      "net_points": 4,
       "transfer_cost": 0,
       "bank": 5,
       "value": 1003,
@@ -2383,7 +2383,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 480,
@@ -2407,7 +2407,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 399,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 4,
+      "net_points": 0,
       "transfer_cost": 4,
       "bank": 5,
       "value": 1009,
@@ -2587,7 +2587,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 154,
@@ -2599,7 +2599,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 453,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 5,
-      "points": 0,
-      "net_points": 0,
+      "points": 2,
+      "net_points": 2,
       "transfer_cost": 0,
       "bank": 23,
       "value": 1005,
@@ -2805,7 +2805,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 346,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 5,
-      "points": 0,
-      "net_points": -4,
+      "points": 2,
+      "net_points": -2,
       "transfer_cost": 4,
       "bank": 27,
       "value": 1005,
@@ -2973,7 +2973,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 480,
