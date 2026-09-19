@@ -1647,7 +1647,7 @@
           "first_name": "John",
           "second_name": "McGinn",
           "element_type": 3,
-          "points": 0
+          "points": 6
         },
         {
           "element": 411,
@@ -1755,7 +1755,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 391,
@@ -1949,7 +1949,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 8,
@@ -2165,7 +2165,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 0
+          "points": 6
         },
         {
           "element": 31,
@@ -3081,7 +3081,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "Magdy"
