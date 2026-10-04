@@ -4,7 +4,7 @@ compatibility_date = "2024-09-23"
 
 [vars]
 GITHUB_OWNER = "El7amla"
-GITHUB_REPO = "REPLACE_WITH_ACTUAL_REPO_NAME"
+GITHUB_REPO = "El7amla_WebSite"
 GITHUB_BRANCH = "main"
 
 # Secrets (never put these here — set via `wrangler secret put <NAME>`):
