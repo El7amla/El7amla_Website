@@ -1,0 +1,171 @@
+{
+  "_comment": "Chip activations. Written only by the Worker (worker/src). Single source of truth read by scripts/update_standings.py. First half GW1-19, second half GW20-35.",
+  "Black Tech": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "Falcons": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "The Pharaohs": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "Royal Authority": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "الزرازير": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "الاوديسي": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "The Masterminds": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  },
+  "Boys": {
+    "one_v_one": {
+      "h1": null,
+      "h2": null
+    },
+    "bonus3": {
+      "used": false,
+      "gw": null,
+      "won": null,
+      "status": null
+    },
+    "double_player": {
+      "h1": null,
+      "h2": null
+    },
+    "borrow": {
+      "h1": null,
+      "h2": null
+    },
+    "activeThisGW": null
+  }
+}
