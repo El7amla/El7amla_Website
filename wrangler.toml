@@ -1,0 +1,14 @@
+name = "el7amla-chips"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+
+[vars]
+GITHUB_OWNER = "El7amla"
+GITHUB_REPO = "REPLACE_WITH_ACTUAL_REPO_NAME"
+GITHUB_BRANCH = "main"
+
+# Secrets (never put these here — set via `wrangler secret put <NAME>`):
+#   GITHUB_TOKEN       fine-grained GitHub PAT, contents:read+write on this repo only
+#   SESSION_SECRET     random string (e.g. `openssl rand -hex 32`)
+#   TEAM_CREDENTIALS   JSON blob of { "TeamName": { "salt": "...", "hash": "...", "iterations": 100000 } }
+#   See README.md in this folder for exact commands.
