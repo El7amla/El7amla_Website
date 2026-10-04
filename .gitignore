@@ -1,0 +1,4 @@
+.dev.vars
+.team-credentials.local.json
+node_modules
+.wrangler

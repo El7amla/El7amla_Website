@@ -1,0 +1,16 @@
+name = "el7amla-chips"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+# REQUIRED EDIT: real "owner/repo". While it contains REPLACE the Worker answers config_error.
+GITHUB_REPO = "El7amla/REPLACE_WITH_REPO_NAME"
+GITHUB_BRANCH = "main"
+# Origin only (no path). Comma-separate to also allow local testing. Confirm this is your Pages origin.
+ALLOWED_ORIGIN = "https://el7amla.github.io"
+WORKFLOW_FILE = "update-standings.yml"
+CHIPS_PATH = "data/chips.json"
+LEAGUE_PATH = "league.json"
+FIXTURES_PATH = "fixtures.json"
+
+# Secrets (never in this file): GITHUB_TOKEN, SESSION_SECRET, TEAM_CREDENTIALS

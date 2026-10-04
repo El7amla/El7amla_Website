@@ -1,0 +1,1 @@
+{ "name": "el7amla-chips-worker", "private": true, "type": "module", "scripts": { "test": "node --test test/*.test.js" } }
