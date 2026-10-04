@@ -4,7 +4,7 @@ compatibility_date = "2025-01-01"
 
 [vars]
 # REQUIRED EDIT: real "owner/repo". While it contains REPLACE the Worker answers config_error.
-GITHUB_REPO = "El7amla/REPLACE_WITH_REPO_NAME"
+GITHUB_REPO = "El7amla/El7amla_Website"
 GITHUB_BRANCH = "main"
 # Origin only (no path). Comma-separate to also allow local testing. Confirm this is your Pages origin.
 ALLOWED_ORIGIN = "https://el7amla.github.io"
