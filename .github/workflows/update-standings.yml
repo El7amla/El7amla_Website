@@ -2,13 +2,26 @@ name: Update Standings
 
 on:
   schedule:
-    - cron: "0 */2 * * *"
+    # Backup only. The Cloudflare Worker will trigger this every minute
+    # during matches (next step); this keeps the site fresh if it is down.
+    - cron: "*/10 * * * *"
 
   workflow_dispatch:
+    inputs:
+      full_recompute:
+        description: "Recompute ALL gameweeks from FPL (use if a chip/transfer changed for an old GW)"
+        type: boolean
+        default: false
+
+# Never run two updates at once; a second run waits instead of being cancelled.
+concurrency:
+  group: update-standings
+  cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     permissions:
       contents: write
@@ -17,7 +30,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: main
+          fetch-depth: 20
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,18 +41,9 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      # Make sure the runner starts from the latest main
-      # BEFORE generating any files.
-      - name: Sync with latest main
-        run: |
-          git config user.name "El7amla Bot"
-          git config user.email "bot@el7amla.local"
-
-          git fetch origin main
-          git checkout main
-          git reset --hard origin/main
-
       - name: Run standings updater
+        env:
+          FULL_RECOMPUTE: ${{ inputs.full_recompute && '1' || '0' }}
         run: python scripts/update_standings.py
 
       - name: Commit and push updated standings
@@ -46,12 +51,10 @@ jobs:
           git config user.name "El7amla Bot"
           git config user.email "bot@el7amla.local"
 
-          # Stage generated standings/history/lineups
           git add data/current_standings.json
           git add data/gw_history/
           git add data/gw_lineups/
 
-          # Stop successfully if nothing changed
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
@@ -59,19 +62,16 @@ jobs:
 
           git commit -m "Auto-update standings [skip ci]"
 
-          # Try to push
-          if git push origin main; then
-            echo "Push successful"
-            exit 0
-          fi
+          for i in 1 2 3 4; do
+            if git push origin main; then
+              echo "Push successful"
+              exit 0
+            fi
+            echo "Push failed (attempt $i) — syncing with latest main and retrying..."
+            git fetch --depth=20 origin main
+            git rebase -X theirs origin/main
+            sleep 2
+          done
 
-          echo "Push failed because main changed while the job was running."
-          echo "Syncing with latest main and retrying..."
-
-          git fetch origin main
-
-          # Rebase the generated update on top of the latest main.
-          # For generated files, keep the updater's version if conflicts occur.
-          git rebase -X theirs origin/main
-
-          git push origin main
+          echo "Could not push after retries"
+          exit 1
