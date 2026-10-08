@@ -3,59 +3,45 @@
 # El7amla 2v2 Fantasy League — Standings Calculator
 # Fetches FPL data and generates current_standings.json
 #
-# UPDATED:
-#   - Adds match results to current_standings.json
-#   - Each match contains:
-#       gw
-#       home
-#       away
-#       homePts
-#       awayPts
-#       result
-#       winner
-#   - Keeps existing team standings
-#   - Keeps existing player standings
-#   - Keeps chips system
-#   - Keeps GW history files
-#   - NEW: supports mid-season player replacements via
-#     data/player_transfers.json (see resolve_player_id_for_gw /
-#     get_transfer_cost_for_gw below). GW1 history for a replaced
-#     slot is preserved using the OLD player id; from the
-#     transfer's effective_gw onward the id already stored in
-#     league.json (== new_player_id) is used. Transfer cost is
-#     applied exactly once, on effective_gw, directly into the
-#     team's points used for match results / standings.
+# SPEED-UP VERSION:
+#   - Picks of all managers for a GW are fetched IN PARALLEL.
+#   - Finished gameweeks (older than current_gw - 1) are NOT re-fetched
+#     from FPL if their gw_history / gw_lineups files already exist; their
+#     points are loaded from data/gw_history instead.
+#     Set env FULL_RECOMPUTE=1 to force a full re-fetch of every GW
+#     (needed if a chip/transfer config changed for an old GW).
+#   - current_standings.json is NOT rewritten if nothing changed except
+#     `last_updated` (no empty commits).
+#
+# Features kept:
+#   - Match results in current_standings.json (gw, home, away, homePts,
+#     awayPts, result, winner, type)
+#   - Team standings / player standings
+#   - Chips system (1v1, bonus3, double_player)
+#   - GW history + GW lineups files
+#   - Mid-season FPL account migration via player_transfers.json
+#     (old id before effective_gw, new id after; transfer cost applied
+#     once, on effective_gw)
 #
 # Rules:
 #   - Player points counted only on gameweeks their team PLAYED (not BYE)
-#   - Team match points:
-#         3 = win
-#         1 = draw
-#         0 = loss
-#
+#   - Team match points: 3 = win, 1 = draw, 0 = loss
 #   - NO regular GW bonus.
 #
 # Chips System:
-#   - one_v_one:
-#       2x/season
-#       once per half: GW1-19, GW20-35
-#
-#   - bonus3:
-#       1x/season
-#       If the team wins its fixture that GW,
-#       +3 extra league points.
-#
-#   - double_player:
-#       2x/season
-#       once per half.
+#   - one_v_one: once per half (GW1-19, GW20-35)
+#   - bonus3: once per season, +3 league points if the team wins
+#   - double_player: once per half
 #
 # Final Team Total:
 #     total = matchPts + chipBonus
 
 
 import json
+import os
 import time
 import logging
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -87,13 +73,19 @@ FIXTURES_FILE = REPO_ROOT / "fixtures.json"
 CHIPS_FILE = REPO_ROOT / "data" / "chips.json"
 OUTPUT_FILE = REPO_ROOT / "data" / "current_standings.json"
 LINEUPS_DIR = REPO_ROOT / "data" / "gw_lineups"
+GW_HISTORY_DIR = REPO_ROOT / "data" / "gw_history"
 
 FPL_BASE = "https://fantasy.premierleague.com/api"
 FPL_BOOTSTRAP = f"{FPL_BASE}/bootstrap-static/"
 FPL_PICKS = f"{FPL_BASE}/entry/{{entry_id}}/event/{{gw}}/picks/"
 FPL_EVENT_LIVE = f"{FPL_BASE}/event/{{gw}}/live/"
 
-API_DELAY = 0.8
+# Requests are parallel now, so no per-request sleep is needed.
+API_DELAY = 0.0
+MAX_WORKERS = 6
+
+# Force re-fetching every gameweek (ignore saved gw_history/gw_lineups).
+FULL_RECOMPUTE = os.environ.get("FULL_RECOMPUTE") == "1"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; El7amla-Bot/1.0)",
@@ -211,8 +203,9 @@ def get_current_gw() -> int:
 
     return 1
 
+
 def get_gw_live_points(gw: int) -> dict[int, int]:
-    """Return FPL player total points for a completed GW."""
+    """Return FPL player total points for a GW (live or completed)."""
     data = fpl_get(FPL_EVENT_LIVE.format(gw=gw))
     if not data:
         return {}
@@ -312,6 +305,33 @@ def get_player_gw_points(
     )
 
     return points - transfer_cost
+
+
+def prefetch_gw_picks(gw: int, league: dict, transfers: dict) -> None:
+    """
+    Fetch the picks of every manager for this GW IN PARALLEL and fill
+    _entry_gw_cache, so later calls hit the cache instead of the network.
+    """
+
+    keys = []
+
+    for team, tdata in league.items():
+        for _name, current_id in tdata["players"].items():
+            rid = resolve_player_id_for_gw(team, current_id, gw, transfers)
+            if rid is not None and (rid, gw) not in _entry_gw_cache:
+                keys.append((rid, gw))
+
+    if not keys:
+        return
+
+    def fetch(key):
+        return key, fpl_get(
+            FPL_PICKS.format(entry_id=key[0], gw=key[1])
+        )
+
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        for key, data in executor.map(fetch, keys):
+            _entry_gw_cache[key] = data
 
 
 # ─────────────────────────────────────────────
@@ -595,9 +615,7 @@ def resolve_player_name_for_gw(
     migration — only the underlying entry id does. This function is
     kept (rather than removed) so every call site that historically
     asked "what name should this GW show" keeps working unchanged, but
-    it now always returns the same league.json name — we never rename
-    someone to "(اللاعب السابق)" or similar, because it's the same
-    person, not a different one.
+    it now always returns the same league.json name.
     """
 
     return current_name
@@ -887,14 +905,9 @@ def team_player_points_dict(
     the departing manager's real GW history, and never repeats itself
     once the new manager is in place.
 
-    IMPORTANT: unlike the earlier version, this NEVER aborts on the
-    first missing player — it always tries every player in the team so
-    every failure is logged individually (and collected into
-    `warnings`, which ends up in current_standings.json as
-    "build_warnings" for easy debugging without digging through CI
-    logs). It still returns None overall if ANY player's real points
-    are unavailable — we never substitute a fabricated 0, we just make
-    it obvious exactly which player/GW/id is the problem.
+    Never aborts on the first missing player — every failure is logged
+    individually. Returns None overall if ANY player's real points are
+    unavailable — we never substitute a fabricated 0.
     """
 
     players = league[team_name]["players"]
@@ -912,8 +925,6 @@ def team_player_points_dict(
         )
 
         if entry_id is None:
-            # A transfer is configured for this slot but the OLD id
-            # hasn't been supplied yet — do not fabricate data.
             msg = (
                 f"GW{gw}: {team_name} / {player_name} — "
                 f"old_player_id not set in player_transfers.json"
@@ -942,7 +953,8 @@ def team_player_points_dict(
                 gw,
             )
 
-            time.sleep(API_DELAY)
+            if API_DELAY:
+                time.sleep(API_DELAY)
 
         points = cache[key]
 
@@ -963,12 +975,70 @@ def team_player_points_dict(
         result[player_name] = points
 
     if missing:
-        # At least one real player's data is unavailable for this GW —
-        # do not publish a partial/fabricated team total. The specific
-        # reason for every missing player was already logged above.
         return None
 
     return result
+
+
+# ─────────────────────────────────────────────
+# SKIP LOGIC FOR FINISHED GAMEWEEKS
+# ─────────────────────────────────────────────
+
+def gw_needs_fetch(gw: int, current_gw: int) -> bool:
+    """
+    The current GW and the previous one are always fetched (late matches
+    and bonus points get confirmed after the GW ends). Older GWs are only
+    fetched if their saved files are missing, or FULL_RECOMPUTE=1.
+    """
+
+    if FULL_RECOMPUTE or gw >= current_gw - 1:
+        return True
+
+    return not (
+        (GW_HISTORY_DIR / f"gw{gw}.json").exists()
+        and (LINEUPS_DIR / f"gw{gw}.json").exists()
+    )
+
+
+def load_cached_gw(gw: int, league: dict, transfers: dict) -> bool:
+    """
+    Fill _shared_cache from the saved gw_history/gwN.json.
+    Returns False if the file is missing or incomplete (caller must
+    then fetch the GW from FPL normally).
+    """
+
+    path = GW_HISTORY_DIR / f"gw{gw}.json"
+
+    if not path.exists():
+        return False
+
+    try:
+        with open(path, encoding="utf-8") as file:
+            hist = json.load(file)
+    except (OSError, ValueError):
+        return False
+
+    loaded = {}
+
+    for team, tdata in league.items():
+
+        for _name, current_id in tdata["players"].items():
+
+            rid = resolve_player_id_for_gw(team, current_id, gw, transfers)
+
+            if rid is None:
+                return False
+
+            entry = (hist.get(team) or {}).get(str(rid))
+
+            if entry is None or "points" not in entry:
+                return False
+
+            loaded[(rid, gw)] = entry["points"]
+
+    _shared_cache.update(loaded)
+
+    return True
 
 
 # ─────────────────────────────────────────────
@@ -985,14 +1055,8 @@ def compute_adjusted_team_points(
     """
     Double Player affects team GW points.
     Transfer cost (from player_transfers.json) is subtracted here too,
-    so it flows into match results / GF / GA / standings — not just
-    display — and only on the exact GW it applies to.
-
-    Used for:
-      - match result
-      - GF
-      - GA
-      - standings total
+    so it flows into match results / GF / GA / standings — and only on
+    the exact GW it applies to.
     """
 
     own = raw_player_pts.get(team)
@@ -1091,8 +1155,8 @@ def build_match_result(
     """
     Build a JSON-safe match result.
 
-    This is used by standings.html to display
-    actual scores instead of only fixtures.
+    This is used by the site to display actual scores instead of
+    only fixtures.
     """
 
     winner = None
@@ -1172,10 +1236,9 @@ def calculate_player_standings(
 ) -> list[dict]:
     """
     Sum raw player points only for GWs where the player's team actually
-    played. When an FPL account migration is configured for a slot
-    (data/player_transfers.json), the points from BOTH the old and new
-    entry id are summed under ONE row — it's the same real person, just
-    a different underlying FPL account per GW, never two separate rows.
+    played. When an FPL account migration is configured for a slot,
+    the points from BOTH the old and new entry id are summed under ONE
+    row — it's the same real person.
     """
 
     def team_has_bye(
@@ -1207,9 +1270,6 @@ def calculate_player_standings(
                 if team_has_bye(team_name, gw):
                     continue
 
-                # Resolves to old_entry_id before the migration's
-                # effective_gw and to current_id (new_entry_id) from
-                # then on — same person, correct account per GW.
                 resolved_id = resolve_player_id_for_gw(
                     team_name, current_id, gw, transfers
                 )
@@ -1248,11 +1308,8 @@ def write_output(
     """
     Write current_standings.json.
 
-    NEW:
-      matches = all processed match results.
-      transfer_adjustments = transparency log of every transfer-cost
-      deduction actually applied (team, gw, breakdown), so nothing is
-      silently hidden inside the totals.
+    If nothing changed except `last_updated`, the file is left untouched
+    so no empty commit is produced.
     """
 
     OUTPUT_FILE.parent.mkdir(
@@ -1274,12 +1331,24 @@ def write_output(
 
         "players": player_rows,
 
-        # NEW
         "matches": matches,
 
-        # NEW: transparency log for mid-season transfer-cost deductions
         "transfer_adjustments": transfer_adjustments,
     }
+
+    if OUTPUT_FILE.exists():
+        try:
+            with open(OUTPUT_FILE, encoding="utf-8") as file:
+                old = json.load(file)
+
+            old_cmp = {k: v for k, v in old.items() if k != "last_updated"}
+            new_cmp = {k: v for k, v in payload.items() if k != "last_updated"}
+
+            if old_cmp == new_cmp:
+                log.info("No data change — keeping existing current_standings.json")
+                return
+        except (OSError, ValueError):
+            pass
 
     with open(
         OUTPUT_FILE,
@@ -1363,9 +1432,24 @@ def _run_with_shared_cache(
         )
 
         # ─────────────────────────────────
-        # FPL live player points for this GW
+        # Finished GW with saved files?
+        # → load points from gw_history, no FPL requests.
+        # Otherwise fetch all picks in parallel + live points.
         # ─────────────────────────────────
-        live_points = get_gw_live_points(gw)
+
+        skip_fetch = False
+
+        if not gw_needs_fetch(gw, current_gw):
+            skip_fetch = load_cached_gw(gw, league, transfers)
+
+            if skip_fetch:
+                log.info(f"GW{gw}: loaded from saved history (no FPL requests)")
+
+        live_points: dict[int, int] = {}
+
+        if not skip_fetch:
+            prefetch_gw_picks(gw, league, transfers)
+            live_points = get_gw_live_points(gw)
 
         # ─────────────────────────────────
         # Record any transfer-cost adjustment
@@ -1415,129 +1499,106 @@ def _run_with_shared_cache(
             )
 
         # ─────────────────────────────────
-        # Save GW history
-        # (uses resolved id + resolved name so a replaced
-        # manager's real GW1 data is preserved under their
-        # OWN id, not silently merged into the new manager)
+        # Save GW history + lineups
+        # (only for GWs fetched this run)
         # ─────────────────────────────────
 
-        gw_hist = {}
+        if not skip_fetch:
 
-        for team in team_names:
+            gw_hist = {}
 
-            gw_hist[team] = {}
+            for team in team_names:
 
-            for player_name, current_id in league[team]["players"].items():
+                gw_hist[team] = {}
 
-                resolved_id = resolve_player_id_for_gw(
-                    team, current_id, gw, transfers
-                )
+                for player_name, current_id in league[team]["players"].items():
 
-                if resolved_id is None:
-                    continue
+                    resolved_id = resolve_player_id_for_gw(
+                        team, current_id, gw, transfers
+                    )
 
-                resolved_name = resolve_player_name_for_gw(
-                    team, player_name, current_id, gw, transfers
-                )
+                    if resolved_id is None:
+                        continue
 
-                key = (
-                    resolved_id,
-                    gw,
-                )
+                    resolved_name = resolve_player_name_for_gw(
+                        team, player_name, current_id, gw, transfers
+                    )
 
-                pts = _shared_cache.get(key)
+                    pts = _shared_cache.get((resolved_id, gw))
 
-                if pts is not None:
+                    if pts is not None:
 
-                    gw_hist[team][str(resolved_id)] = {
-                        "player": resolved_name,
-                        "points": pts,
-                    }
+                        gw_hist[team][str(resolved_id)] = {
+                            "player": resolved_name,
+                            "points": pts,
+                        }
 
-        gw_hist_dir = (
-            REPO_ROOT
-            / "data"
-            / "gw_history"
-        )
-
-        gw_hist_dir.mkdir(
-            parents=True,
-            exist_ok=True,
-        )
-
-        gw_hist_file = (
-            gw_hist_dir
-            / f"gw{gw}.json"
-        )
-
-        with open(
-            gw_hist_file,
-            "w",
-            encoding="utf-8",
-        ) as file:
-
-            json.dump(
-                gw_hist,
-                file,
-                ensure_ascii=False,
-                indent=2,
+            GW_HISTORY_DIR.mkdir(
+                parents=True,
+                exist_ok=True,
             )
 
-        # ─────────────────────────────────
-        # Save complete FPL lineups
-        # (single pass — resolved id/name per GW)
-        # ─────────────────────────────────
+            with open(
+                GW_HISTORY_DIR / f"gw{gw}.json",
+                "w",
+                encoding="utf-8",
+            ) as file:
 
-        gw_lineups = {}
-
-        for team in team_names:
-
-            gw_lineups[team] = {}
-
-            for manager_name, current_id in league[team]["players"].items():
-
-                resolved_id = resolve_player_id_for_gw(
-                    team, current_id, gw, transfers
+                json.dump(
+                    gw_hist,
+                    file,
+                    ensure_ascii=False,
+                    indent=2,
                 )
 
-                if resolved_id is None:
-                    log.warning(
-                        f"GW{gw}: skipping lineup for {team} / "
-                        f"{manager_name} — old_player_id not configured "
-                        f"in player_transfers.json"
-                    )
-                    continue
+            gw_lineups = {}
 
-                resolved_name = resolve_player_name_for_gw(
-                    team, manager_name, current_id, gw, transfers
+            for team in team_names:
+
+                gw_lineups[team] = {}
+
+                for manager_name, current_id in league[team]["players"].items():
+
+                    resolved_id = resolve_player_id_for_gw(
+                        team, current_id, gw, transfers
+                    )
+
+                    if resolved_id is None:
+                        log.warning(
+                            f"GW{gw}: skipping lineup for {team} / "
+                            f"{manager_name} — old_player_id not configured "
+                            f"in player_transfers.json"
+                        )
+                        continue
+
+                    resolved_name = resolve_player_name_for_gw(
+                        team, manager_name, current_id, gw, transfers
+                    )
+
+                    lineup = get_player_gw_picks(resolved_id, gw, live_points)
+
+                    if lineup is None:
+                        log.warning(
+                            f"GW{gw}: Could not fetch lineup for "
+                            f"{team} / {resolved_name} (id={resolved_id})"
+                        )
+                        continue
+
+                    lineup["manager"] = resolved_name
+                    gw_lineups[team][str(resolved_id)] = lineup
+
+            LINEUPS_DIR.mkdir(parents=True, exist_ok=True)
+            lineup_file = LINEUPS_DIR / f"gw{gw}.json"
+
+            with open(lineup_file, "w", encoding="utf-8") as file:
+                json.dump(
+                    gw_lineups,
+                    file,
+                    ensure_ascii=False,
+                    indent=2,
                 )
 
-                lineup = get_player_gw_picks(resolved_id, gw, live_points)
-
-                if lineup is None:
-                    log.warning(
-                        f"GW{gw}: Could not fetch lineup for "
-                        f"{team} / {resolved_name} (id={resolved_id})"
-                    )
-                    continue
-
-                lineup["manager"] = resolved_name
-                gw_lineups[team][str(resolved_id)] = lineup
-
-                time.sleep(API_DELAY)
-
-        LINEUPS_DIR.mkdir(parents=True, exist_ok=True)
-        lineup_file = LINEUPS_DIR / f"gw{gw}.json"
-
-        with open(lineup_file, "w", encoding="utf-8") as file:
-            json.dump(
-                gw_lineups,
-                file,
-                ensure_ascii=False,
-                indent=2,
-            )
-
-        log.info(f"GW{gw}: lineups written → {lineup_file}")
+            log.info(f"GW{gw}: lineups written → {lineup_file}")
 
         # ─────────────────────────────────
         # Fixtures
@@ -1610,7 +1671,6 @@ def _run_with_shared_cache(
                 raw_player_pts,
             )
 
-            # Create match result
             match_result = build_match_result(
                 gw,
                 home,
@@ -1805,6 +1865,7 @@ def main():
 
     log.info(
         "El7amla Standings Updater — start"
+        + (" (FULL RECOMPUTE)" if FULL_RECOMPUTE else "")
     )
 
     log.info("═" * 55)
@@ -1916,7 +1977,7 @@ def main():
     )
 
     log.info(
-        f"Match results written: "
+        f"Match results: "
         f"{len(match_results)}"
     )
 
