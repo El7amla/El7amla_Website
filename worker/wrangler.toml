@@ -4,7 +4,7 @@ compatibility_date = "2025-01-01"
 
 [vars]
 # REQUIRED EDIT: real "owner/repo". While it contains REPLACE the Worker answers config_error.
-GITHUB_REPO = "El7amla/El7amla_Website"
+GITHUB_REPO = "El7amla/REPLACE_WITH_REPO_NAME"
 GITHUB_BRANCH = "main"
 # Origin only (no path). Comma-separate to also allow local testing. Confirm this is your Pages origin.
 ALLOWED_ORIGIN = "https://el7amla.github.io"
@@ -14,3 +14,6 @@ LEAGUE_PATH = "league.json"
 FIXTURES_PATH = "fixtures.json"
 
 # Secrets (never in this file): GITHUB_TOKEN, SESSION_SECRET, TEAM_CREDENTIALS
+# Optional, only needed for the "change my password" feature: CF_API_TOKEN, CF_ACCOUNT_ID
+# (CF_WORKER_NAME var below is optional too, only if you rename the Worker away from "name" above)
+# CF_WORKER_NAME = "el7amla-chips"
