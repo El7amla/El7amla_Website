@@ -1,9 +1,10 @@
 import { ApiError } from './errors.js';
-import { verifyTeamPassword } from './auth.js';
+import { verifyTeamPassword, buildCredentialsAfterPasswordChange, MIN_PASSWORD_LENGTH } from './auth.js';
 import { createSession, verifySession, SESSION_TTL_SECONDS } from './session.js';
 import { getUpcomingGW } from './fplDeadline.js';
 import { getJsonFile, putJsonFile, dispatchWorkflow } from './github.js';
 import { applyActivation, chipStatuses, findOpponent, halfOfGW, listActivations, SEASON_GWS } from './chipRules.js';
+import { putWorkerSecret } from './cfSecrets.js';
 
 const json = (body, status, cors) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...cors } });
@@ -71,6 +72,22 @@ async function login(request, env, now) {
   }
   if (!(await verifyTeamPassword(env.TEAM_CREDENTIALS, team, password))) throw new ApiError('bad_credentials', 401);
   return { token: await createSession(env.SESSION_SECRET, team, SESSION_TTL_SECONDS, now), team, expires_in: SESSION_TTL_SECONDS };
+}
+
+async function changePassword(request, team, env, fetchFn) {
+  const { oldPassword, newPassword } = await readJson(request);
+  if (typeof oldPassword !== 'string' || typeof newPassword !== 'string' || newPassword.length < MIN_PASSWORD_LENGTH || newPassword.length > 100) {
+    throw new ApiError('bad_password', 400);
+  }
+  let nextCreds;
+  try {
+    nextCreds = await buildCredentialsAfterPasswordChange(env.TEAM_CREDENTIALS, team, oldPassword, newPassword);
+  } catch (e) {
+    if (e.code === 'wrong_old_password') throw new ApiError('wrong_old_password', 401);
+    throw e;
+  }
+  await putWorkerSecret(env, 'TEAM_CREDENTIALS', JSON.stringify(nextCreds), fetchFn);
+  return { ok: true };
 }
 
 async function state(team, env, fetchFn, now) {
@@ -143,6 +160,10 @@ export async function handle(request, env, deps = {}) {
     if (route === 'POST /chips/activate') {
       const s = await requireSession(request, env, now);
       return json(await activate(request, s.team, env, fetchFn, now), 200, cors);
+    }
+    if (route === 'POST /auth/change-password') {
+      const s = await requireSession(request, env, now);
+      return json(await changePassword(request, s.team, env, fetchFn), 200, cors);
     }
     throw new ApiError('not_found', 404);
   } catch (e) {
