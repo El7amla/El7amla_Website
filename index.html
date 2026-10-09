@@ -1271,17 +1271,9 @@ async function loadData() {
 
 
         /*
-      On first load show current GW.
+      On first load always show current GW.
     */
-
-    if (
-      viewGW < 1 ||
-      viewGW > totalGWs
-    ) {
-
-      viewGW = currentGW;
-
-    }
+    viewGW = currentGW;
 
 
     renderGW(viewGW);
