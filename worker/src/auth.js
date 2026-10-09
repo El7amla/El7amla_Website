@@ -23,16 +23,35 @@ function safeEqual(a, b) {
 }
 
 const DUMMY_SALT = '00'.repeat(16);
+export const MIN_PASSWORD_LENGTH = 8;
+
+export function parseCredentials(credentialsJson) {
+  try {
+    const creds = JSON.parse(credentialsJson || '{}');
+    return creds && typeof creds === 'object' ? creds : {};
+  } catch {
+    return {};
+  }
+}
 
 // credentialsJson: the TEAM_CREDENTIALS secret -> {"Team": {"salt": "...", "hash": "..."}, ...}
 export async function verifyTeamPassword(credentialsJson, team, password) {
-  let creds;
-  try {
-    creds = JSON.parse(credentialsJson);
-  } catch {
-    return false;
-  }
+  const creds = parseCredentials(credentialsJson);
   const entry = Object.prototype.hasOwnProperty.call(creds, team) ? creds[team] : null;
   const computed = await hashPassword(password, entry?.salt || DUMMY_SALT);
   return !!entry && safeEqual(computed, String(entry.hash || ''));
+}
+
+// Returns the full credentials object with `team`'s entry replaced by a fresh salt+hash for
+// newPassword. Throws if oldPassword is wrong. Caller is responsible for persisting the result.
+export async function buildCredentialsAfterPasswordChange(credentialsJson, team, oldPassword, newPassword) {
+  if (!(await verifyTeamPassword(credentialsJson, team, oldPassword))) {
+    const err = new Error('wrong_old_password');
+    err.code = 'wrong_old_password';
+    throw err;
+  }
+  const creds = parseCredentials(credentialsJson);
+  const salt = randomSaltHex();
+  creds[team] = { salt, hash: await hashPassword(newPassword, salt) };
+  return creds;
 }
