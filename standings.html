@@ -385,15 +385,15 @@
 
   async function loadStandings() {
     // استخدام مسارات نسبية مباشرة للـ JSON لتفادي أخطاء روابط الـ URL أو أسماء الريبو المختلفة
-    const standingsUrl = `./data/current_standings.json?v=${Date.now()}`;
-    const khawasUrl    = `./data/khawas.json?v=${Date.now()}`;
+        const standingsUrl = `./data/current_standings.json?v=${Date.now()}`;
+    const chipsUrl     = `./data/chips.json?v=${Date.now()}`;
 
     try {
       const [standingsRes, khawasRes] = await Promise.all([
         fetch(standingsUrl),
-        fetch(khawasUrl).catch(() => null)
+        fetch(chipsUrl).catch(() => null)
       ]);
-
+      
       if (!standingsRes.ok) throw new Error(`HTTP ${standingsRes.status}`);
       const standingsData = await standingsRes.json();
 
