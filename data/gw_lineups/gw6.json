@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 6,
-      "points": 0,
-      "net_points": -4,
+      "points": 44,
+      "net_points": 40,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1000,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 6,
-      "points": 0,
-      "net_points": -4,
+      "points": 42,
+      "net_points": 38,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1008,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 43,
+      "net_points": 43,
       "transfer_cost": 0,
       "bank": 5,
       "value": 1003,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 27,
+      "net_points": 27,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1007,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 42,
+      "net_points": 42,
       "transfer_cost": 0,
       "bank": 48,
       "value": 1016,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 6,
-      "points": 0,
-      "net_points": -4,
+      "points": 46,
+      "net_points": 42,
       "transfer_cost": 4,
       "bank": 2,
       "value": 1007,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 36,
+      "net_points": 36,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1005,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 33,
+      "net_points": 33,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1007,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 57,
+      "net_points": 57,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1008,
@@ -1647,7 +1647,7 @@
           "first_name": "John",
           "second_name": "McGinn",
           "element_type": 3,
-          "points": 9
+          "points": 10
         },
         {
           "element": 124,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 37,
+      "net_points": 37,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1014,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 73,
+      "net_points": 73,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1017,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 50,
+      "net_points": 50,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1000,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 54,
+      "net_points": 54,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1009,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 6,
-      "points": 0,
-      "net_points": -4,
+      "points": 55,
+      "net_points": 51,
       "transfer_cost": 4,
       "bank": 2,
       "value": 1012,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 6,
-      "points": 0,
-      "net_points": 0,
+      "points": 38,
+      "net_points": 38,
       "transfer_cost": 0,
       "bank": 23,
       "value": 1002,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 6,
-      "points": 0,
-      "net_points": -4,
+      "points": 39,
+      "net_points": 35,
       "transfer_cost": 4,
       "bank": 25,
       "value": 1007,
@@ -3081,7 +3081,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 1
+          "points": 3
         }
       ],
       "manager": "Magdy"
