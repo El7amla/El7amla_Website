@@ -128,7 +128,14 @@
   },
   "The Masterminds": {
     "one_v_one": {
-      "h1": null,
+      "h1": {
+        "gw": 6,
+        "status": "used",
+        "activatedAt": "2026-10-10T07:16:34.893Z",
+        "myPlayer": "Shika",
+        "oppTeam": "Black Tech",
+        "oppPlayer": "Elfiky"
+      },
       "h2": null
     },
     "bonus3": {
@@ -145,7 +152,10 @@
       "h1": null,
       "h2": null
     },
-    "activeThisGW": null
+    "activeThisGW": {
+      "key": "one_v_one",
+      "gw": 6
+    }
   },
   "Boys": {
     "one_v_one": {
