@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 6,
-      "points": 51,
-      "net_points": 47,
+      "points": 53,
+      "net_points": 49,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1000,
@@ -127,7 +127,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 569,
@@ -573,7 +573,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "Nasser"
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 6,
-      "points": 39,
-      "net_points": 39,
+      "points": 41,
+      "net_points": 41,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1007,
@@ -705,7 +705,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -753,7 +753,7 @@
           "first_name": "Jay",
           "second_name": "Dasilva",
           "element_type": 2,
-          "points": 0
+          "points": 5
         },
         {
           "element": 605,
@@ -959,7 +959,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "Hussein"
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 6,
-      "points": 69,
-      "net_points": 65,
+      "points": 71,
+      "net_points": 67,
       "transfer_cost": 4,
       "bank": 2,
       "value": 1007,
@@ -1079,7 +1079,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 165,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 6,
-      "points": 44,
-      "net_points": 44,
+      "points": 46,
+      "net_points": 46,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1005,
@@ -1273,7 +1273,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 569,
@@ -1333,7 +1333,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 6
         },
         {
           "element": 321,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 6,
-      "points": 51,
-      "net_points": 51,
+      "points": 53,
+      "net_points": 53,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1007,
@@ -1489,7 +1489,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -1537,7 +1537,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "Mahmoud"
@@ -1731,7 +1731,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "M.Yasser"
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 6,
-      "points": 49,
-      "net_points": 49,
+      "points": 51,
+      "net_points": 51,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1014,
@@ -1863,7 +1863,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 6,
-      "points": 56,
-      "net_points": 56,
+      "points": 60,
+      "net_points": 60,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1000,
@@ -2189,7 +2189,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 427,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 6,
-      "points": 70,
-      "net_points": 70,
+      "points": 72,
+      "net_points": 72,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1009,
@@ -2431,7 +2431,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 6,
-      "points": 67,
-      "net_points": 63,
+      "points": 69,
+      "net_points": 65,
       "transfer_cost": 4,
       "bank": 2,
       "value": 1012,
@@ -2611,7 +2611,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 12,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 6,
-      "points": 53,
-      "net_points": 49,
+      "points": 55,
+      "net_points": 51,
       "transfer_cost": 4,
       "bank": 25,
       "value": 1007,
@@ -3033,7 +3033,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
