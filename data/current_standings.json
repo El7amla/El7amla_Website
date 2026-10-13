@@ -1,6 +1,6 @@
 {
   "current_gw": 6,
-  "last_updated": "2026-10-12 23:35:23",
+  "last_updated": "2026-10-13 11:10:34",
   "teams": [
     {
       "name": "The Pharaohs",
@@ -36,9 +36,9 @@
       "won": 4,
       "draw": 0,
       "lost": 2,
-      "gf": 780,
+      "gf": 785,
       "ga": 688,
-      "gd": 92,
+      "gd": 97,
       "matchPts": 12,
       "bonus": 0,
       "chipBonus": 0,
@@ -50,9 +50,9 @@
       "won": 4,
       "draw": 0,
       "lost": 2,
-      "gf": 821,
-      "ga": 744,
-      "gd": 77,
+      "gf": 825,
+      "ga": 745,
+      "gd": 80,
       "matchPts": 12,
       "bonus": 0,
       "chipBonus": 0,
@@ -92,9 +92,9 @@
       "won": 1,
       "draw": 0,
       "lost": 5,
-      "gf": 697,
-      "ga": 849,
-      "gd": -152,
+      "gf": 698,
+      "ga": 853,
+      "gd": -155,
       "matchPts": 3,
       "bonus": 0,
       "chipBonus": 0,
@@ -107,8 +107,8 @@
       "draw": 0,
       "lost": 6,
       "gf": 714,
-      "ga": 813,
-      "gd": -99,
+      "ga": 818,
+      "gd": -104,
       "matchPts": 0,
       "bonus": 0,
       "chipBonus": 0,
@@ -129,12 +129,12 @@
     {
       "name": "M.Yasser",
       "team": "الزرازير",
-      "points": 408
+      "points": 412
     },
     {
       "name": "Karim Yasser",
       "team": "الاوديسي",
-      "points": 399
+      "points": 403
     },
     {
       "name": "Body",
@@ -164,7 +164,7 @@
     {
       "name": "Abolmagd",
       "team": "الزرازير",
-      "points": 372
+      "points": 373
     },
     {
       "name": "Omar",
@@ -174,7 +174,7 @@
     {
       "name": "Ali",
       "team": "Boys",
-      "points": 359
+      "points": 360
     },
     {
       "name": "Elfiky",
@@ -419,8 +419,8 @@
       "gw": 6,
       "home": "Boys",
       "away": "الاوديسي",
-      "homePts": 106,
-      "awayPts": 143,
+      "homePts": 107,
+      "awayPts": 147,
       "result": "away_win",
       "winner": "الاوديسي",
       "type": "normal"
@@ -430,7 +430,7 @@
       "home": "Falcons",
       "away": "الزرازير",
       "homePts": 98,
-      "awayPts": 119,
+      "awayPts": 124,
       "result": "away_win",
       "winner": "الزرازير",
       "type": "normal"

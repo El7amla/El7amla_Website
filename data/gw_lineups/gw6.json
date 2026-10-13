@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 6,
-      "points": 68,
-      "net_points": 68,
+      "points": 72,
+      "net_points": 72,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1008,
@@ -1566,8 +1566,20 @@
           "points": 9
         },
         {
-          "element": 8,
+          "element": 305,
           "position": 2,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
+          "element_type": 2,
+          "points": 1
+        },
+        {
+          "element": 8,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1579,7 +1591,7 @@
         },
         {
           "element": 391,
-          "position": 3,
+          "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1590,56 +1602,20 @@
           "points": 4
         },
         {
-          "element": 305,
-          "position": 4,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
-          "element_type": 2,
-          "points": 1
-        },
-        {
-          "element": 368,
+          "element": 31,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Szoboszlai",
-          "first_name": "Dominik",
-          "second_name": "Szoboszlai",
-          "element_type": 3,
-          "points": 0
-        },
-        {
-          "element": 426,
-          "position": 6,
-          "multiplier": 2,
-          "is_captain": true,
-          "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 1
-        },
-        {
-          "element": 40,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Rogers",
-          "first_name": "Morgan",
-          "second_name": "Rogers",
-          "element_type": 3,
-          "points": 9
+          "player": "Konsa",
+          "first_name": "Ezri",
+          "second_name": "Konsa Ngoyo",
+          "element_type": 2,
+          "points": 4
         },
         {
           "element": 45,
-          "position": 8,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1651,7 +1627,7 @@
         },
         {
           "element": 124,
-          "position": 9,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1660,6 +1636,30 @@
           "second_name": "Groß",
           "element_type": 3,
           "points": 6
+        },
+        {
+          "element": 426,
+          "position": 8,
+          "multiplier": 2,
+          "is_captain": true,
+          "is_vice_captain": false,
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
+          "element_type": 3,
+          "points": 1
+        },
+        {
+          "element": 40,
+          "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Rogers",
+          "first_name": "Morgan",
+          "second_name": "Rogers",
+          "element_type": 3,
+          "points": 9
         },
         {
           "element": 411,
@@ -1698,16 +1698,16 @@
           "points": 0
         },
         {
-          "element": 31,
+          "element": 368,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Konsa",
-          "first_name": "Ezri",
-          "second_name": "Konsa Ngoyo",
-          "element_type": 2,
-          "points": 4
+          "player": "Szoboszlai",
+          "first_name": "Dominik",
+          "second_name": "Szoboszlai",
+          "element_type": 3,
+          "points": 0
         },
         {
           "element": 346,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 6,
-      "points": 51,
-      "net_points": 51,
+      "points": 52,
+      "net_points": 52,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1014,
@@ -1758,32 +1758,8 @@
           "points": 2
         },
         {
-          "element": 31,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Konsa",
-          "first_name": "Ezri",
-          "second_name": "Konsa Ngoyo",
-          "element_type": 2,
-          "points": 4
-        },
-        {
-          "element": 233,
-          "position": 3,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Mykolenko",
-          "first_name": "Vitalii",
-          "second_name": "Mykolenko",
-          "element_type": 2,
-          "points": 0
-        },
-        {
           "element": 8,
-          "position": 4,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1794,20 +1770,32 @@
           "points": 9
         },
         {
-          "element": 12,
-          "position": 5,
+          "element": 31,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": true,
-          "player": "Saka",
-          "first_name": "Bukayo",
-          "second_name": "Saka",
-          "element_type": 3,
-          "points": 2
+          "is_vice_captain": false,
+          "player": "Konsa",
+          "first_name": "Ezri",
+          "second_name": "Konsa Ngoyo",
+          "element_type": 2,
+          "points": 4
+        },
+        {
+          "element": 305,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
+          "element_type": 2,
+          "points": 1
         },
         {
           "element": 427,
-          "position": 6,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1818,20 +1806,8 @@
           "points": 8
         },
         {
-          "element": 268,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "King",
-          "first_name": "Josh",
-          "second_name": "King",
-          "element_type": 3,
-          "points": 2
-        },
-        {
           "element": 480,
-          "position": 8,
+          "position": 6,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -1842,8 +1818,44 @@
           "points": 2
         },
         {
-          "element": 165,
+          "element": 12,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": true,
+          "player": "Saka",
+          "first_name": "Bukayo",
+          "second_name": "Saka",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 268,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "King",
+          "first_name": "Josh",
+          "second_name": "King",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 411,
           "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Haaland",
+          "first_name": "Erling",
+          "second_name": "Haaland",
+          "element_type": 4,
+          "points": 6
+        },
+        {
+          "element": 165,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1855,7 +1867,7 @@
         },
         {
           "element": 464,
-          "position": 10,
+          "position": 11,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1864,18 +1876,6 @@
           "second_name": "Wissa",
           "element_type": 4,
           "points": 2
-        },
-        {
-          "element": 411,
-          "position": 11,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Haaland",
-          "first_name": "Erling",
-          "second_name": "Haaland",
-          "element_type": 4,
-          "points": 6
         },
         {
           "element": 496,
@@ -1902,16 +1902,16 @@
           "points": 13
         },
         {
-          "element": 305,
+          "element": 233,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
+          "player": "Mykolenko",
+          "first_name": "Vitalii",
+          "second_name": "Mykolenko",
           "element_type": 2,
-          "points": 1
+          "points": 0
         },
         {
           "element": 391,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 6,
-      "points": 60,
-      "net_points": 60,
+      "points": 64,
+      "net_points": 64,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1000,
@@ -2144,14 +2144,14 @@
           "points": 9
         },
         {
-          "element": 258,
+          "element": 449,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Castagne",
-          "first_name": "Timothy",
-          "second_name": "Castagne",
+          "player": "Hall",
+          "first_name": "Lewis",
+          "second_name": "Hall",
           "element_type": 2,
           "points": 0
         },
@@ -2168,44 +2168,20 @@
           "points": 9
         },
         {
-          "element": 449,
+          "element": 391,
           "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Hall",
-          "first_name": "Lewis",
-          "second_name": "Hall",
+          "player": "Gvardiol",
+          "first_name": "Joško",
+          "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
-        },
-        {
-          "element": 453,
-          "position": 5,
-          "multiplier": 2,
-          "is_captain": true,
-          "is_vice_captain": false,
-          "player": "Barnes",
-          "first_name": "Harvey",
-          "second_name": "Barnes",
-          "element_type": 3,
-          "points": 2
-        },
-        {
-          "element": 427,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Mbeumo",
-          "first_name": "Bryan",
-          "second_name": "Mbeumo",
-          "element_type": 3,
-          "points": 8
+          "points": 4
         },
         {
           "element": 40,
-          "position": 7,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2217,13 +2193,37 @@
         },
         {
           "element": 12,
-          "position": 8,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": true,
           "player": "Saka",
           "first_name": "Bukayo",
           "second_name": "Saka",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 427,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Mbeumo",
+          "first_name": "Bryan",
+          "second_name": "Mbeumo",
+          "element_type": 3,
+          "points": 8
+        },
+        {
+          "element": 453,
+          "position": 8,
+          "multiplier": 2,
+          "is_captain": true,
+          "is_vice_captain": false,
+          "player": "Barnes",
+          "first_name": "Harvey",
+          "second_name": "Barnes",
           "element_type": 3,
           "points": 2
         },
@@ -2240,20 +2240,8 @@
           "points": 1
         },
         {
-          "element": 165,
-          "position": 10,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 12
-        },
-        {
           "element": 411,
-          "position": 11,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2262,6 +2250,18 @@
           "second_name": "Haaland",
           "element_type": 4,
           "points": 6
+        },
+        {
+          "element": 165,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 12
         },
         {
           "element": 496,
@@ -2276,16 +2276,16 @@
           "points": 3
         },
         {
-          "element": 391,
+          "element": 258,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Gvardiol",
-          "first_name": "Joško",
-          "second_name": "Gvardiol",
+          "player": "Castagne",
+          "first_name": "Timothy",
+          "second_name": "Castagne",
           "element_type": 2,
-          "points": 4
+          "points": 0
         },
         {
           "element": 286,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 6,
-      "points": 55,
-      "net_points": 55,
+      "points": 56,
+      "net_points": 56,
       "transfer_cost": 0,
       "bank": 23,
       "value": 1002,
@@ -2760,32 +2760,20 @@
           "points": 4
         },
         {
-          "element": 15,
+          "element": 305,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Ødegaard",
-          "first_name": "Martin",
-          "second_name": "Ødegaard",
-          "element_type": 3,
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
+          "element_type": 2,
           "points": 1
         },
         {
-          "element": 368,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Szoboszlai",
-          "first_name": "Dominik",
-          "second_name": "Szoboszlai",
-          "element_type": 3,
-          "points": 0
-        },
-        {
           "element": 427,
-          "position": 7,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2797,7 +2785,7 @@
         },
         {
           "element": 40,
-          "position": 8,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2808,20 +2796,20 @@
           "points": 9
         },
         {
-          "element": 346,
-          "position": 9,
+          "element": 15,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calvert-Lewin",
-          "first_name": "Dominic",
-          "second_name": "Calvert-Lewin",
-          "element_type": 4,
-          "points": 2
+          "player": "Ødegaard",
+          "first_name": "Martin",
+          "second_name": "Ødegaard",
+          "element_type": 3,
+          "points": 1
         },
         {
           "element": 165,
-          "position": 10,
+          "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": true,
@@ -2833,7 +2821,7 @@
         },
         {
           "element": 411,
-          "position": 11,
+          "position": 10,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -2842,6 +2830,18 @@
           "second_name": "Haaland",
           "element_type": 4,
           "points": 6
+        },
+        {
+          "element": 346,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Calvert-Lewin",
+          "first_name": "Dominic",
+          "second_name": "Calvert-Lewin",
+          "element_type": 4,
+          "points": 2
         },
         {
           "element": 497,
@@ -2856,16 +2856,16 @@
           "points": 0
         },
         {
-          "element": 305,
+          "element": 368,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
-          "element_type": 2,
-          "points": 1
+          "player": "Szoboszlai",
+          "first_name": "Dominik",
+          "second_name": "Szoboszlai",
+          "element_type": 3,
+          "points": 0
         },
         {
           "element": 534,
