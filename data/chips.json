@@ -6,10 +6,11 @@
       "h2": null
     },
     "bonus3": {
-      "used": false,
-      "gw": null,
+      "used": true,
+      "gw": 7,
       "won": null,
-      "status": null
+      "status": "used",
+      "activatedAt": "2026-10-17T00:01:59.970Z"
     },
     "double_player": {
       "h1": null,
@@ -19,7 +20,10 @@
       "h1": null,
       "h2": null
     },
-    "activeThisGW": null
+    "activeThisGW": {
+      "key": "bonus3",
+      "gw": 7
+    }
   },
   "Falcons": {
     "one_v_one": {
