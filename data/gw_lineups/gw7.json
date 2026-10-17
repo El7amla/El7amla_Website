@@ -127,7 +127,7 @@
           "first_name": "Nicolas",
           "second_name": "Jackson",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -367,7 +367,7 @@
           "first_name": "Lewis",
           "second_name": "Hall",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 423,
@@ -705,7 +705,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 411,
@@ -1007,7 +1007,7 @@
           "first_name": "Lewis",
           "second_name": "Hall",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 391,
@@ -1067,7 +1067,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 346,
@@ -1273,7 +1273,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 569,
@@ -1489,7 +1489,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 497,
@@ -1647,7 +1647,7 @@
           "first_name": "John",
           "second_name": "McGinn",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 124,
@@ -1851,7 +1851,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 411,
@@ -2105,7 +2105,7 @@
           "first_name": "Lewis",
           "second_name": "Hall",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 167,
@@ -2177,7 +2177,7 @@
           "first_name": "Lewis",
           "second_name": "Hall",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 286,
@@ -2285,7 +2285,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 279,
@@ -2479,7 +2479,7 @@
           "first_name": "Yoane",
           "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 305,
@@ -2611,7 +2611,7 @@
           "first_name": "Harvey",
           "second_name": "Barnes",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 12,
@@ -3033,7 +3033,7 @@
           "first_name": "Nicolas",
           "second_name": "Jackson",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -3081,7 +3081,7 @@
           "first_name": "Tyrone",
           "second_name": "Mings",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "Magdy"
