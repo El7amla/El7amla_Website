@@ -306,7 +306,7 @@
 
       const khawasBonus = calculateKhawasBonus(khawasData, t.name);
       const matchPts    = t.matchPts ?? t.points ?? 0;
-      const baseBonus   = t.bonus ?? 0;
+      const baseBonus   = (t.chipBonus ?? 0) + (t.bonus ?? 0);
       const totalBonus  = baseBonus + khawasBonus;
       const totalPts    = t.total ?? (matchPts + totalBonus);
 
