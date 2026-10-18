@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 7,
-      "points": 34,
-      "net_points": 34,
+      "points": 55,
+      "net_points": 55,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1001,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 7,
-      "points": 47,
-      "net_points": 47,
+      "points": 70,
+      "net_points": 70,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1014,
@@ -235,7 +235,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 391,
@@ -295,7 +295,7 @@
           "first_name": "Bukayo",
           "second_name": "Saka",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 236,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 7,
-      "points": 30,
-      "net_points": 30,
+      "points": 65,
+      "net_points": 65,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1002,
@@ -417,7 +417,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 305,
@@ -441,7 +441,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 68,
@@ -465,7 +465,7 @@
           "first_name": "Bukayo",
           "second_name": "Saka",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 154,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 7,
-      "points": 36,
-      "net_points": 32,
+      "points": 55,
+      "net_points": 51,
       "transfer_cost": 4,
       "bank": 8,
       "value": 1007,
@@ -609,7 +609,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 8,
@@ -621,7 +621,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 176,
@@ -669,7 +669,7 @@
           "first_name": "Bukayo",
           "second_name": "Saka",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 286,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 7,
-      "points": 34,
-      "net_points": 34,
+      "points": 63,
+      "net_points": 63,
       "transfer_cost": 0,
       "bank": 31,
       "value": 1019,
@@ -815,7 +815,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 8,
@@ -827,7 +827,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 15,
@@ -839,7 +839,7 @@
           "first_name": "Martin",
           "second_name": "Ødegaard",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 154,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 7,
-      "points": 36,
-      "net_points": 36,
+      "points": 73,
+      "net_points": 73,
       "transfer_cost": 0,
       "bank": 4,
       "value": 1011,
@@ -983,7 +983,7 @@
           "first_name": "David",
           "second_name": "Raya Martín",
           "element_type": 1,
-          "points": 1
+          "points": 9
         },
         {
           "element": 115,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 7,
-      "points": 32,
-      "net_points": 32,
+      "points": 67,
+      "net_points": 67,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1005,
@@ -1177,7 +1177,7 @@
           "first_name": "David",
           "second_name": "Raya Martín",
           "element_type": 1,
-          "points": 1
+          "points": 9
         },
         {
           "element": 115,
@@ -1201,7 +1201,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 593,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 7,
-      "points": 31,
-      "net_points": 31,
+      "points": 50,
+      "net_points": 50,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1008,
@@ -1393,7 +1393,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 391,
@@ -1441,7 +1441,7 @@
           "first_name": "Martin",
           "second_name": "Ødegaard",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 12,
@@ -1453,7 +1453,7 @@
           "first_name": "Bukayo",
           "second_name": "Saka",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 249,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 7,
-      "points": 44,
-      "net_points": 44,
+      "points": 81,
+      "net_points": 81,
       "transfer_cost": 0,
       "bank": 16,
       "value": 1012,
@@ -1575,7 +1575,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 391,
@@ -1599,7 +1599,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 68,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 7,
-      "points": 33,
-      "net_points": 33,
+      "points": 61,
+      "net_points": 61,
       "transfer_cost": 0,
       "bank": 24,
       "value": 1016,
@@ -1779,7 +1779,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 8,
@@ -1791,7 +1791,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 427,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 7,
-      "points": 32,
-      "net_points": 32,
+      "points": 64,
+      "net_points": 64,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1022,
@@ -1961,7 +1961,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 115,
@@ -1985,7 +1985,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 15,
@@ -1997,7 +1997,7 @@
           "first_name": "Martin",
           "second_name": "Ødegaard",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 127,
@@ -2117,7 +2117,7 @@
           "first_name": "Liam",
           "second_name": "Delap",
           "element_type": 4,
-          "points": 1
+          "points": 2
         }
       ],
       "manager": "Amgad"
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 7,
-      "points": 49,
-      "net_points": 49,
+      "points": 76,
+      "net_points": 76,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1008,
@@ -2165,7 +2165,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 449,
@@ -2225,7 +2225,7 @@
           "first_name": "Bukayo",
           "second_name": "Saka",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 138,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 7,
-      "points": 38,
-      "net_points": 38,
+      "points": 66,
+      "net_points": 66,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1014,
@@ -2347,7 +2347,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 31,
@@ -2359,7 +2359,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 391,
@@ -2503,7 +2503,7 @@
           "first_name": "Neco",
           "second_name": "Williams",
           "element_type": 2,
-          "points": 0
+          "points": 3
         }
       ],
       "manager": "Body"
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 7,
-      "points": 32,
-      "net_points": 32,
+      "points": 63,
+      "net_points": 63,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1015,
@@ -2539,7 +2539,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 115,
@@ -2623,7 +2623,7 @@
           "first_name": "Bukayo",
           "second_name": "Saka",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 411,
@@ -2647,7 +2647,7 @@
           "first_name": "Liam",
           "second_name": "Delap",
           "element_type": 4,
-          "points": 1
+          "points": 2
         },
         {
           "element": 111,
@@ -2683,7 +2683,7 @@
           "first_name": "Neco",
           "second_name": "Williams",
           "element_type": 2,
-          "points": 0
+          "points": 3
         },
         {
           "element": 586,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 7,
-      "points": 32,
-      "net_points": 32,
+      "points": 69,
+      "net_points": 69,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1003,
@@ -2757,7 +2757,7 @@
           "first_name": "Ezri",
           "second_name": "Konsa Ngoyo",
           "element_type": 2,
-          "points": 3
+          "points": 9
         },
         {
           "element": 124,
@@ -2865,7 +2865,7 @@
           "first_name": "Martin",
           "second_name": "Ødegaard",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 418,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 7,
-      "points": 39,
-      "net_points": 39,
+      "points": 59,
+      "net_points": 59,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1004,
@@ -2925,7 +2925,7 @@
           "first_name": "Riccardo",
           "second_name": "Calafiori",
           "element_type": 2,
-          "points": 1
+          "points": 6
         },
         {
           "element": 390,
@@ -2985,7 +2985,7 @@
           "first_name": "Martin",
           "second_name": "Ødegaard",
           "element_type": 3,
-          "points": 1
+          "points": 3
         },
         {
           "element": 399,
