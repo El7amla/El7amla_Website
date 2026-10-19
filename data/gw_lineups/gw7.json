@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 7,
-      "points": 55,
-      "net_points": 55,
+      "points": 57,
+      "net_points": 57,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1001,
@@ -19,7 +19,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 1
+          "points": 2
         },
         {
           "element": 387,
@@ -187,7 +187,7 @@
           "first_name": "Ben",
           "second_name": "Davies",
           "element_type": 2,
-          "points": 0
+          "points": 7
         }
       ],
       "manager": "Elfiky"
@@ -633,7 +633,7 @@
           "first_name": "Jay",
           "second_name": "Dasilva",
           "element_type": 2,
-          "points": 1
+          "points": 0
         },
         {
           "element": 426,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 7,
-      "points": 61,
-      "net_points": 61,
+      "points": 63,
+      "net_points": 63,
       "transfer_cost": 0,
       "bank": 24,
       "value": 1016,
@@ -1755,7 +1755,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 1
+          "points": 2
         },
         {
           "element": 391,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 7,
-      "points": 64,
-      "net_points": 64,
+      "points": 66,
+      "net_points": 66,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1022,
@@ -1949,7 +1949,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 1
+          "points": 2
         },
         {
           "element": 8,
@@ -2273,7 +2273,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 1
+          "points": 2
         },
         {
           "element": 453,
@@ -3069,7 +3069,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 1
+          "points": 4
         },
         {
           "element": 33,

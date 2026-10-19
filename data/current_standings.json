@@ -1,6 +1,6 @@
 {
   "current_gw": 7,
-  "last_updated": "2026-10-18 18:58:06",
+  "last_updated": "2026-10-19 22:57:44",
   "teams": [
     {
       "name": "الزرازير",
@@ -8,9 +8,9 @@
       "won": 5,
       "draw": 0,
       "lost": 2,
-      "gf": 927,
+      "gf": 929,
       "ga": 805,
-      "gd": 122,
+      "gd": 124,
       "matchPts": 15,
       "bonus": 0,
       "chipBonus": 0,
@@ -23,8 +23,8 @@
       "draw": 0,
       "lost": 2,
       "gf": 937,
-      "ga": 844,
-      "gd": 93,
+      "ga": 846,
+      "gd": 91,
       "matchPts": 15,
       "bonus": 0,
       "chipBonus": 0,
@@ -36,9 +36,9 @@
       "won": 5,
       "draw": 0,
       "lost": 2,
-      "gf": 965,
+      "gf": 967,
       "ga": 881,
-      "gd": 84,
+      "gd": 86,
       "matchPts": 15,
       "bonus": 0,
       "chipBonus": 0,
@@ -51,8 +51,8 @@
       "draw": 0,
       "lost": 2,
       "gf": 872,
-      "ga": 844,
-      "gd": 28,
+      "ga": 846,
+      "gd": 26,
       "matchPts": 15,
       "bonus": 0,
       "chipBonus": 0,
@@ -78,9 +78,9 @@
       "won": 2,
       "draw": 0,
       "lost": 5,
-      "gf": 860,
+      "gf": 862,
       "ga": 909,
-      "gd": -49,
+      "gd": -47,
       "matchPts": 6,
       "bonus": 0,
       "chipBonus": 0,
@@ -93,8 +93,8 @@
       "draw": 0,
       "lost": 5,
       "gf": 826,
-      "ga": 978,
-      "gd": -152,
+      "ga": 980,
+      "gd": -154,
       "matchPts": 6,
       "bonus": 0,
       "chipBonus": 0,
@@ -129,7 +129,7 @@
     {
       "name": "Amgad",
       "team": "الاوديسي",
-      "points": 486
+      "points": 488
     },
     {
       "name": "Karim Yasser",
@@ -164,7 +164,7 @@
     {
       "name": "Abolmagd",
       "team": "الزرازير",
-      "points": 434
+      "points": 436
     },
     {
       "name": "Omar",
@@ -184,7 +184,7 @@
     {
       "name": "Elfiky",
       "team": "Black Tech",
-      "points": 408
+      "points": 410
     },
     {
       "name": "Magdy",
@@ -449,7 +449,7 @@
       "gw": 7,
       "home": "Black Tech",
       "away": "Boys",
-      "homePts": 125,
+      "homePts": 127,
       "awayPts": 128,
       "result": "away_win",
       "winner": "Boys",
@@ -470,7 +470,7 @@
       "home": "The Pharaohs",
       "away": "الاوديسي",
       "homePts": 136,
-      "awayPts": 140,
+      "awayPts": 142,
       "result": "away_win",
       "winner": "الاوديسي",
       "type": "normal"
@@ -480,7 +480,7 @@
       "home": "Royal Authority",
       "away": "الزرازير",
       "homePts": 117,
-      "awayPts": 142,
+      "awayPts": 144,
       "result": "away_win",
       "winner": "الزرازير",
       "type": "normal"
