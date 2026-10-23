@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 17,
+      "net_points": 17,
       "transfer_cost": 0,
       "bank": 17,
       "value": 1002,
@@ -55,7 +55,7 @@
           "first_name": "Daniel",
           "second_name": "Muñoz Mejía",
           "element_type": 2,
-          "points": 6
+          "points": 7
         },
         {
           "element": 469,
@@ -79,7 +79,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 426,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 4,
+      "net_points": 4,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1004,
@@ -429,7 +429,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 8,
@@ -477,7 +477,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 154,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 8,
-      "points": 0,
-      "net_points": -4,
+      "points": 2,
+      "net_points": -2,
       "transfer_cost": 4,
       "bank": 7,
       "value": 1008,
@@ -669,7 +669,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 68,
@@ -753,7 +753,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 282,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 4,
+      "net_points": 4,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1020,
@@ -875,7 +875,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 569,
@@ -947,7 +947,7 @@
           "first_name": "Issa",
           "second_name": "Diop",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 175,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 8,
+      "net_points": 8,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1016,
@@ -1151,7 +1151,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         }
       ],
       "manager": "Ahmed Nour"
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 4,
+      "net_points": 4,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1008,
@@ -1213,7 +1213,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 426,
@@ -1237,7 +1237,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 154,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 8,
-      "points": 0,
-      "net_points": -4,
+      "points": 4,
+      "net_points": 0,
       "transfer_cost": 4,
       "bank": 13,
       "value": 1008,
@@ -1381,7 +1381,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 8,
@@ -1453,7 +1453,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 569,
@@ -1707,7 +1707,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 124,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 4,
+      "net_points": 4,
       "transfer_cost": 0,
       "bank": 24,
       "value": 1019,
@@ -1827,7 +1827,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 124,
@@ -1911,7 +1911,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 233,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 8,
-      "points": 0,
-      "net_points": -4,
+      "points": 2,
+      "net_points": -2,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1027,
@@ -2045,7 +2045,7 @@
           "first_name": "Liam",
           "second_name": "Delap",
           "element_type": 4,
-          "points": 1
+          "points": 2
         },
         {
           "element": 165,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 4,
+      "net_points": 4,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1012,
@@ -2237,7 +2237,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 165,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 8,
+      "net_points": 8,
       "transfer_cost": 0,
       "bank": 5,
       "value": 1019,
@@ -2491,7 +2491,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": 2
         },
         {
           "element": 249,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 8,
+      "net_points": 8,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1020,
@@ -2671,7 +2671,7 @@
           "first_name": "Liam",
           "second_name": "Delap",
           "element_type": 4,
-          "points": 1
+          "points": 2
         },
         {
           "element": 391,
