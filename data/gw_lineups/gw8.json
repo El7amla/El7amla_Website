@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 8,
-      "points": 17,
-      "net_points": 17,
+      "points": 20,
+      "net_points": 20,
       "transfer_cost": 0,
       "bank": 17,
       "value": 1002,
@@ -103,7 +103,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 627,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 11,
+      "net_points": 11,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1020,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 8,
-      "points": 4,
-      "net_points": 4,
+      "points": 37,
+      "net_points": 37,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1004,
@@ -489,7 +489,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 426,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 8,
-      "points": 2,
-      "net_points": -2,
+      "points": 37,
+      "net_points": 33,
       "transfer_cost": 4,
       "bank": 7,
       "value": 1008,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 8,
-      "points": 4,
-      "net_points": 4,
+      "points": 34,
+      "net_points": 34,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1020,
@@ -851,7 +851,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 40,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 8,
-      "points": 8,
-      "net_points": 8,
+      "points": 31,
+      "net_points": 31,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1016,
@@ -1043,7 +1043,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 124,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 8,
-      "points": 4,
-      "net_points": 4,
+      "points": 37,
+      "net_points": 37,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1008,
@@ -1249,7 +1249,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 68,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 8,
-      "points": 4,
-      "net_points": 0,
+      "points": 28,
+      "net_points": 24,
       "transfer_cost": 4,
       "bank": 13,
       "value": 1008,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 29,
+      "net_points": 29,
       "transfer_cost": 0,
       "bank": 16,
       "value": 1018,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 8,
-      "points": 4,
-      "net_points": 4,
+      "points": 30,
+      "net_points": 30,
       "transfer_cost": 0,
       "bank": 24,
       "value": 1019,
@@ -1887,7 +1887,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 5
+          "points": 9
         },
         {
           "element": 268,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 8,
-      "points": 2,
-      "net_points": -2,
+      "points": 36,
+      "net_points": 32,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1027,
@@ -1949,7 +1949,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 5
+          "points": 9
         },
         {
           "element": 8,
@@ -2021,7 +2021,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 40,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 8,
-      "points": 4,
-      "net_points": 4,
+      "points": 22,
+      "net_points": 22,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1012,
@@ -2273,7 +2273,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 5
+          "points": 9
         },
         {
           "element": 286,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 8,
-      "points": 8,
-      "net_points": 8,
+      "points": 40,
+      "net_points": 40,
       "transfer_cost": 0,
       "bank": 5,
       "value": 1019,
@@ -2383,7 +2383,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 68,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 8,
-      "points": 8,
-      "net_points": 8,
+      "points": 18,
+      "net_points": 18,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1020,
@@ -2599,7 +2599,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 453,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 37,
+      "net_points": 37,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1008,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 8,
-      "points": 0,
-      "net_points": 0,
+      "points": 41,
+      "net_points": 41,
       "transfer_cost": 0,
       "bank": 15,
       "value": 1010,
@@ -2961,7 +2961,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": -1
         },
         {
           "element": 124,
@@ -3069,7 +3069,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 1
+          "points": 7
         },
         {
           "element": 33,
