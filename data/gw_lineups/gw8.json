@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 8,
-      "points": 20,
-      "net_points": 20,
+      "points": 38,
+      "net_points": 38,
       "transfer_cost": 0,
       "bank": 17,
       "value": 1002,
@@ -22,16 +22,16 @@
           "points": 9
         },
         {
-          "element": 8,
+          "element": 201,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
+          "player": "Muñoz",
+          "first_name": "Daniel",
+          "second_name": "Muñoz Mejía",
           "element_type": 2,
-          "points": 1
+          "points": 7
         },
         {
           "element": 391,
@@ -46,20 +46,8 @@
           "points": 1
         },
         {
-          "element": 201,
-          "position": 4,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Muñoz",
-          "first_name": "Daniel",
-          "second_name": "Muñoz Mejía",
-          "element_type": 2,
-          "points": 7
-        },
-        {
           "element": 469,
-          "position": 5,
+          "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -68,6 +56,18 @@
           "second_name": "Williams",
           "element_type": 2,
           "points": 8
+        },
+        {
+          "element": 8,
+          "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
+          "element_type": 2,
+          "points": 1
         },
         {
           "element": 480,
@@ -82,20 +82,8 @@
           "points": 2
         },
         {
-          "element": 426,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": true,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 0
-        },
-        {
           "element": 154,
-          "position": 8,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -107,7 +95,7 @@
         },
         {
           "element": 627,
-          "position": 9,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -118,16 +106,28 @@
           "points": 6
         },
         {
-          "element": 165,
-          "position": 10,
-          "multiplier": 2,
-          "is_captain": true,
+          "element": 127,
+          "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
           "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
+          "player": "Gomez",
+          "first_name": "Diego",
+          "second_name": "Gómez Amarilla",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 464,
+          "position": 10,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Wissa",
+          "first_name": "Yoane",
+          "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 569,
@@ -154,28 +154,28 @@
           "points": 2
         },
         {
-          "element": 464,
+          "element": 426,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Wissa",
-          "first_name": "Yoane",
-          "second_name": "Wissa",
-          "element_type": 4,
-          "points": 1
+          "is_vice_captain": true,
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
+          "element_type": 3,
+          "points": 0
         },
         {
-          "element": 127,
+          "element": 165,
           "position": 14,
           "multiplier": 0,
-          "is_captain": false,
+          "is_captain": true,
           "is_vice_captain": false,
-          "player": "Gomez",
-          "first_name": "Diego",
-          "second_name": "Gómez Amarilla",
-          "element_type": 3,
-          "points": 2
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 423,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 8,
-      "points": 11,
-      "net_points": 11,
+      "points": 46,
+      "net_points": 46,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1020,
@@ -226,20 +226,8 @@
           "points": 1
         },
         {
-          "element": 8,
-          "position": 3,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
-          "element_type": 2,
-          "points": 1
-        },
-        {
           "element": 391,
-          "position": 4,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -250,8 +238,32 @@
           "points": 1
         },
         {
-          "element": 40,
+          "element": 8,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
+          "element_type": 2,
+          "points": 1
+        },
+        {
+          "element": 449,
           "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Hall",
+          "first_name": "Lewis",
+          "second_name": "Hall",
+          "element_type": 2,
+          "points": 5
+        },
+        {
+          "element": 40,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -262,8 +274,20 @@
           "points": 1
         },
         {
+          "element": 627,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Barcola",
+          "first_name": "Bradley",
+          "second_name": "Barcola",
+          "element_type": 3,
+          "points": 6
+        },
+        {
           "element": 286,
-          "position": 6,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -275,7 +299,7 @@
         },
         {
           "element": 124,
-          "position": 7,
+          "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -286,20 +310,20 @@
           "points": 0
         },
         {
-          "element": 627,
-          "position": 8,
-          "multiplier": 1,
+          "element": 411,
+          "position": 10,
+          "multiplier": 2,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Barcola",
-          "first_name": "Bradley",
-          "second_name": "Barcola",
-          "element_type": 3,
-          "points": 6
+          "is_vice_captain": true,
+          "player": "Haaland",
+          "first_name": "Erling",
+          "second_name": "Haaland",
+          "element_type": 4,
+          "points": 8
         },
         {
           "element": 346,
-          "position": 9,
+          "position": 11,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -308,30 +332,6 @@
           "second_name": "Calvert-Lewin",
           "element_type": 4,
           "points": 2
-        },
-        {
-          "element": 165,
-          "position": 10,
-          "multiplier": 2,
-          "is_captain": true,
-          "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
-        },
-        {
-          "element": 411,
-          "position": 11,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": true,
-          "player": "Haaland",
-          "first_name": "Erling",
-          "second_name": "Haaland",
-          "element_type": 4,
-          "points": 8
         },
         {
           "element": 412,
@@ -346,16 +346,16 @@
           "points": 1
         },
         {
-          "element": 449,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
-          "is_captain": false,
+          "is_captain": true,
           "is_vice_captain": false,
-          "player": "Hall",
-          "first_name": "Lewis",
-          "second_name": "Hall",
-          "element_type": 2,
-          "points": 5
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 236,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 8,
-      "points": 37,
-      "net_points": 37,
+      "points": 52,
+      "net_points": 52,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1004,
@@ -408,20 +408,8 @@
           "points": 2
         },
         {
-          "element": 31,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Konsa",
-          "first_name": "Ezri",
-          "second_name": "Konsa Ngoyo",
-          "element_type": 2,
-          "points": 14
-        },
-        {
           "element": 305,
-          "position": 3,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -432,20 +420,8 @@
           "points": 2
         },
         {
-          "element": 8,
-          "position": 4,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
-          "element_type": 2,
-          "points": 1
-        },
-        {
           "element": 175,
-          "position": 5,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -456,8 +432,44 @@
           "points": 2
         },
         {
-          "element": 68,
+          "element": 31,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Konsa",
+          "first_name": "Ezri",
+          "second_name": "Konsa Ngoyo",
+          "element_type": 2,
+          "points": 14
+        },
+        {
+          "element": 8,
+          "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
+          "element_type": 2,
+          "points": 1
+        },
+        {
+          "element": 94,
           "position": 6,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Schade",
+          "first_name": "Kevin",
+          "second_name": "Schade",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 68,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -469,7 +481,7 @@
         },
         {
           "element": 480,
-          "position": 7,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": true,
@@ -481,7 +493,7 @@
         },
         {
           "element": 154,
-          "position": 8,
+          "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -492,27 +504,15 @@
           "points": -1
         },
         {
-          "element": 426,
-          "position": 9,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 0
-        },
-        {
-          "element": 94,
+          "element": 249,
           "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Schade",
-          "first_name": "Kevin",
-          "second_name": "Schade",
-          "element_type": 3,
+          "player": "Barry",
+          "first_name": "Thierno",
+          "second_name": "Barry",
+          "element_type": 4,
           "points": 2
         },
         {
@@ -540,16 +540,16 @@
           "points": 0
         },
         {
-          "element": 249,
+          "element": 426,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Barry",
-          "first_name": "Thierno",
-          "second_name": "Barry",
-          "element_type": 4,
-          "points": 2
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
+          "element_type": 3,
+          "points": 0
         },
         {
           "element": 552,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 8,
-      "points": 37,
-      "net_points": 33,
+      "points": 56,
+      "net_points": 52,
       "transfer_cost": 4,
       "bank": 7,
       "value": 1008,
@@ -600,8 +600,20 @@
           "points": 3
         },
         {
-          "element": 31,
+          "element": 176,
           "position": 2,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Dasilva",
+          "first_name": "Jay",
+          "second_name": "Dasilva",
+          "element_type": 2,
+          "points": 2
+        },
+        {
+          "element": 31,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -613,7 +625,7 @@
         },
         {
           "element": 8,
-          "position": 3,
+          "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -624,28 +636,16 @@
           "points": 1
         },
         {
-          "element": 176,
-          "position": 4,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Dasilva",
-          "first_name": "Jay",
-          "second_name": "Dasilva",
-          "element_type": 2,
-          "points": 2
-        },
-        {
-          "element": 426,
+          "element": 305,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 0
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
+          "element_type": 2,
+          "points": 2
         },
         {
           "element": 40,
@@ -672,8 +672,20 @@
           "points": 2
         },
         {
-          "element": 68,
+          "element": 286,
           "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Belloumi",
+          "first_name": "Mohamed",
+          "second_name": "Belloumi",
+          "element_type": 3,
+          "points": 4
+        },
+        {
+          "element": 68,
+          "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -684,32 +696,8 @@
           "points": 10
         },
         {
-          "element": 165,
-          "position": 9,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
-        },
-        {
-          "element": 464,
-          "position": 10,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Wissa",
-          "first_name": "Yoane",
-          "second_name": "Wissa",
-          "element_type": 4,
-          "points": 1
-        },
-        {
           "element": 411,
-          "position": 11,
+          "position": 10,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -718,6 +706,18 @@
           "second_name": "Haaland",
           "element_type": 4,
           "points": 8
+        },
+        {
+          "element": 464,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Wissa",
+          "first_name": "Yoane",
+          "second_name": "Wissa",
+          "element_type": 4,
+          "points": 1
         },
         {
           "element": 497,
@@ -732,28 +732,28 @@
           "points": 0
         },
         {
-          "element": 286,
+          "element": 426,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Belloumi",
-          "first_name": "Mohamed",
-          "second_name": "Belloumi",
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 4
+          "points": 0
         },
         {
-          "element": 305,
+          "element": 165,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
-          "element_type": 2,
-          "points": 2
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 282,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 8,
-      "points": 34,
-      "net_points": 34,
+      "points": 40,
+      "net_points": 40,
       "transfer_cost": 0,
       "bank": 9,
       "value": 1020,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 8,
-      "points": 31,
-      "net_points": 31,
+      "points": 50,
+      "net_points": 50,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1016,
@@ -986,20 +986,8 @@
           "points": 7
         },
         {
-          "element": 469,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "N.Williams",
-          "first_name": "Neco",
-          "second_name": "Williams",
-          "element_type": 2,
-          "points": 8
-        },
-        {
           "element": 449,
-          "position": 3,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1008,6 +996,18 @@
           "second_name": "Hall",
           "element_type": 2,
           "points": 5
+        },
+        {
+          "element": 469,
+          "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "N.Williams",
+          "first_name": "Neco",
+          "second_name": "Williams",
+          "element_type": 2,
+          "points": 8
         },
         {
           "element": 391,
@@ -1046,20 +1046,8 @@
           "points": -1
         },
         {
-          "element": 124,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Groß",
-          "first_name": "Pascal",
-          "second_name": "Groß",
-          "element_type": 3,
-          "points": 0
-        },
-        {
           "element": 453,
-          "position": 8,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1070,8 +1058,32 @@
           "points": 8
         },
         {
-          "element": 346,
+          "element": 124,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Groß",
+          "first_name": "Pascal",
+          "second_name": "Groß",
+          "element_type": 3,
+          "points": 0
+        },
+        {
+          "element": 236,
           "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Dewsbury-Hall",
+          "first_name": "Kiernan",
+          "second_name": "Dewsbury-Hall",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 346,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1080,18 +1092,6 @@
           "second_name": "Calvert-Lewin",
           "element_type": 4,
           "points": 2
-        },
-        {
-          "element": 165,
-          "position": 10,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": true,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
         },
         {
           "element": 411,
@@ -1118,16 +1118,16 @@
           "points": 0
         },
         {
-          "element": 236,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Dewsbury-Hall",
-          "first_name": "Kiernan",
-          "second_name": "Dewsbury-Hall",
-          "element_type": 3,
-          "points": 2
+          "is_vice_captain": true,
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 204,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 8,
-      "points": 37,
-      "net_points": 37,
+      "points": 66,
+      "net_points": 66,
       "transfer_cost": 0,
       "bank": 3,
       "value": 1008,
@@ -1180,20 +1180,8 @@
           "points": 7
         },
         {
-          "element": 115,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "De Cuyper",
-          "first_name": "Maxim",
-          "second_name": "De Cuyper",
-          "element_type": 2,
-          "points": 1
-        },
-        {
           "element": 31,
-          "position": 3,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1205,7 +1193,7 @@
         },
         {
           "element": 305,
-          "position": 4,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1216,16 +1204,28 @@
           "points": 2
         },
         {
-          "element": 426,
+          "element": 115,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "De Cuyper",
+          "first_name": "Maxim",
+          "second_name": "De Cuyper",
+          "element_type": 2,
+          "points": 1
+        },
+        {
+          "element": 593,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 0
+          "player": "Dedić",
+          "first_name": "Amar",
+          "second_name": "Dedic",
+          "element_type": 2,
+          "points": 11
         },
         {
           "element": 480,
@@ -1312,16 +1312,16 @@
           "points": 0
         },
         {
-          "element": 593,
+          "element": 426,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Dedić",
-          "first_name": "Amar",
-          "second_name": "Dedic",
-          "element_type": 2,
-          "points": 11
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
+          "element_type": 3,
+          "points": 0
         },
         {
           "element": 175,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 8,
-      "points": 28,
-      "net_points": 24,
+      "points": 33,
+      "net_points": 29,
       "transfer_cost": 4,
       "bank": 13,
       "value": 1008,
@@ -1408,16 +1408,16 @@
           "points": 1
         },
         {
-          "element": 426,
+          "element": 290,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
+          "player": "Slater",
+          "first_name": "Regan",
+          "second_name": "Slater",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 40,
@@ -1456,20 +1456,8 @@
           "points": 2
         },
         {
-          "element": 569,
-          "position": 9,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Gonzalo",
-          "first_name": "Gonzalo",
-          "second_name": "García",
-          "element_type": 4,
-          "points": 2
-        },
-        {
           "element": 411,
-          "position": 10,
+          "position": 9,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -1481,7 +1469,7 @@
         },
         {
           "element": 464,
-          "position": 11,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1490,6 +1478,18 @@
           "second_name": "Wissa",
           "element_type": 4,
           "points": 1
+        },
+        {
+          "element": 569,
+          "position": 11,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Gonzalo",
+          "first_name": "Gonzalo",
+          "second_name": "García",
+          "element_type": 4,
+          "points": 2
         },
         {
           "element": 497,
@@ -1504,16 +1504,16 @@
           "points": 0
         },
         {
-          "element": 290,
+          "element": 426,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Slater",
-          "first_name": "Regan",
-          "second_name": "Slater",
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 2
+          "points": 0
         },
         {
           "element": 175,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 8,
-      "points": 29,
-      "net_points": 29,
+      "points": 44,
+      "net_points": 44,
       "transfer_cost": 0,
       "bank": 16,
       "value": 1018,
@@ -1578,8 +1578,20 @@
           "points": 1
         },
         {
-          "element": 391,
+          "element": 175,
           "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "van Ewijk",
+          "first_name": "Milan",
+          "second_name": "van Ewijk",
+          "element_type": 2,
+          "points": 2
+        },
+        {
+          "element": 391,
+          "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1591,7 +1603,7 @@
         },
         {
           "element": 31,
-          "position": 4,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1602,20 +1614,20 @@
           "points": 14
         },
         {
-          "element": 175,
-          "position": 5,
+          "element": 305,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "van Ewijk",
-          "first_name": "Milan",
-          "second_name": "van Ewijk",
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
           "element_type": 2,
           "points": 2
         },
         {
           "element": 68,
-          "position": 6,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1624,18 +1636,6 @@
           "second_name": "Tavernier",
           "element_type": 3,
           "points": 10
-        },
-        {
-          "element": 426,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 0
         },
         {
           "element": 40,
@@ -1650,8 +1650,20 @@
           "points": 1
         },
         {
-          "element": 411,
+          "element": 124,
           "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Groß",
+          "first_name": "Pascal",
+          "second_name": "Groß",
+          "element_type": 3,
+          "points": 0
+        },
+        {
+          "element": 411,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": true,
@@ -1660,18 +1672,6 @@
           "second_name": "Haaland",
           "element_type": 4,
           "points": 8
-        },
-        {
-          "element": 165,
-          "position": 10,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
         },
         {
           "element": 346,
@@ -1698,27 +1698,27 @@
           "points": 0
         },
         {
-          "element": 305,
+          "element": 426,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
-          "element_type": 2,
-          "points": 2
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
+          "element_type": 3,
+          "points": 0
         },
         {
-          "element": 124,
+          "element": 165,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Groß",
-          "first_name": "Pascal",
-          "second_name": "Groß",
-          "element_type": 3,
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
           "points": 0
         },
         {
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 8,
-      "points": 30,
-      "net_points": 30,
+      "points": 41,
+      "net_points": 41,
       "transfer_cost": 0,
       "bank": 24,
       "value": 1019,
@@ -1758,14 +1758,14 @@
           "points": 3
         },
         {
-          "element": 391,
+          "element": 8,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Gvardiol",
-          "first_name": "Joško",
-          "second_name": "Gvardiol",
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
           "element_type": 2,
           "points": 1
         },
@@ -1782,14 +1782,14 @@
           "points": 14
         },
         {
-          "element": 8,
+          "element": 391,
           "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
+          "player": "Gvardiol",
+          "first_name": "Joško",
+          "second_name": "Gvardiol",
           "element_type": 2,
           "points": 1
         },
@@ -1806,20 +1806,8 @@
           "points": 2
         },
         {
-          "element": 40,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Rogers",
-          "first_name": "Morgan",
-          "second_name": "Rogers",
-          "element_type": 3,
-          "points": 1
-        },
-        {
           "element": 480,
-          "position": 7,
+          "position": 6,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -1831,7 +1819,7 @@
         },
         {
           "element": 124,
-          "position": 8,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -1842,16 +1830,28 @@
           "points": 0
         },
         {
-          "element": 464,
+          "element": 40,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Rogers",
+          "first_name": "Morgan",
+          "second_name": "Rogers",
+          "element_type": 3,
+          "points": 1
+        },
+        {
+          "element": 268,
           "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Wissa",
-          "first_name": "Yoane",
-          "second_name": "Wissa",
-          "element_type": 4,
-          "points": 1
+          "player": "King",
+          "first_name": "Josh",
+          "second_name": "King",
+          "element_type": 3,
+          "points": 6
         },
         {
           "element": 411,
@@ -1866,16 +1866,16 @@
           "points": 8
         },
         {
-          "element": 165,
+          "element": 464,
           "position": 11,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
+          "player": "Wissa",
+          "first_name": "Yoane",
+          "second_name": "Wissa",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 496,
@@ -1890,16 +1890,16 @@
           "points": 9
         },
         {
-          "element": 268,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "King",
-          "first_name": "Josh",
-          "second_name": "King",
-          "element_type": 3,
-          "points": 6
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 305,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 8,
-      "points": 36,
-      "net_points": 32,
+      "points": 71,
+      "net_points": 67,
       "transfer_cost": 4,
       "bank": 1,
       "value": 1027,
@@ -1988,44 +1988,20 @@
           "points": 1
         },
         {
-          "element": 68,
+          "element": 449,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Tavernier",
-          "first_name": "Marcus",
-          "second_name": "Tavernier",
-          "element_type": 3,
-          "points": 10
-        },
-        {
-          "element": 399,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Cherki",
-          "first_name": "Rayan",
-          "second_name": "Cherki",
-          "element_type": 3,
-          "points": 0
-        },
-        {
-          "element": 154,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Palmer",
-          "first_name": "Cole",
-          "second_name": "Palmer",
-          "element_type": 3,
-          "points": -1
+          "player": "Hall",
+          "first_name": "Lewis",
+          "second_name": "Hall",
+          "element_type": 2,
+          "points": 5
         },
         {
           "element": 40,
-          "position": 8,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2036,8 +2012,44 @@
           "points": 1
         },
         {
-          "element": 167,
+          "element": 399,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Cherki",
+          "first_name": "Rayan",
+          "second_name": "Cherki",
+          "element_type": 3,
+          "points": 0
+        },
+        {
+          "element": 68,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Tavernier",
+          "first_name": "Marcus",
+          "second_name": "Tavernier",
+          "element_type": 3,
+          "points": 10
+        },
+        {
+          "element": 154,
           "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Palmer",
+          "first_name": "Cole",
+          "second_name": "Palmer",
+          "element_type": 3,
+          "points": -1
+        },
+        {
+          "element": 167,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2048,21 +2060,9 @@
           "points": 2
         },
         {
-          "element": 165,
-          "position": 10,
-          "multiplier": 2,
-          "is_captain": true,
-          "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
-        },
-        {
           "element": 411,
           "position": 11,
-          "multiplier": 1,
+          "multiplier": 2,
           "is_captain": false,
           "is_vice_captain": true,
           "player": "Haaland",
@@ -2084,16 +2084,16 @@
           "points": 10
         },
         {
-          "element": 449,
+          "element": 165,
           "position": 13,
           "multiplier": 1,
-          "is_captain": false,
+          "is_captain": true,
           "is_vice_captain": false,
-          "player": "Hall",
-          "first_name": "Lewis",
-          "second_name": "Hall",
-          "element_type": 2,
-          "points": 5
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 127,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 8,
-      "points": 22,
-      "net_points": 22,
+      "points": 41,
+      "net_points": 41,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1012,
@@ -2156,8 +2156,20 @@
           "points": 1
         },
         {
-          "element": 8,
+          "element": 449,
           "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Hall",
+          "first_name": "Lewis",
+          "second_name": "Hall",
+          "element_type": 2,
+          "points": 5
+        },
+        {
+          "element": 8,
+          "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2169,7 +2181,7 @@
         },
         {
           "element": 258,
-          "position": 4,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2180,44 +2192,8 @@
           "points": 7
         },
         {
-          "element": 449,
-          "position": 5,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Hall",
-          "first_name": "Lewis",
-          "second_name": "Hall",
-          "element_type": 2,
-          "points": 5
-        },
-        {
-          "element": 453,
-          "position": 6,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Barnes",
-          "first_name": "Harvey",
-          "second_name": "Barnes",
-          "element_type": 3,
-          "points": 8
-        },
-        {
-          "element": 399,
-          "position": 7,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": true,
-          "player": "Cherki",
-          "first_name": "Rayan",
-          "second_name": "Cherki",
-          "element_type": 3,
-          "points": 0
-        },
-        {
           "element": 40,
-          "position": 8,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2229,7 +2205,7 @@
         },
         {
           "element": 480,
-          "position": 9,
+          "position": 7,
           "multiplier": 2,
           "is_captain": true,
           "is_vice_captain": false,
@@ -2240,16 +2216,40 @@
           "points": 2
         },
         {
-          "element": 165,
+          "element": 399,
+          "position": 8,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": true,
+          "player": "Cherki",
+          "first_name": "Rayan",
+          "second_name": "Cherki",
+          "element_type": 3,
+          "points": 0
+        },
+        {
+          "element": 453,
+          "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Barnes",
+          "first_name": "Harvey",
+          "second_name": "Barnes",
+          "element_type": 3,
+          "points": 8
+        },
+        {
+          "element": 286,
           "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
+          "player": "Belloumi",
+          "first_name": "Mohamed",
+          "second_name": "Belloumi",
+          "element_type": 3,
+          "points": 4
         },
         {
           "element": 411,
@@ -2276,16 +2276,16 @@
           "points": 9
         },
         {
-          "element": 286,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Belloumi",
-          "first_name": "Mohamed",
-          "second_name": "Belloumi",
-          "element_type": 3,
-          "points": 4
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 138,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 8,
-      "points": 40,
-      "net_points": 40,
+      "points": 50,
+      "net_points": 50,
       "transfer_cost": 0,
       "bank": 5,
       "value": 1019,
@@ -2338,16 +2338,16 @@
           "points": 8
         },
         {
-          "element": 8,
+          "element": 469,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
+          "player": "N.Williams",
+          "first_name": "Neco",
+          "second_name": "Williams",
           "element_type": 2,
-          "points": 1
+          "points": 8
         },
         {
           "element": 31,
@@ -2362,40 +2362,40 @@
           "points": 14
         },
         {
-          "element": 469,
+          "element": 8,
           "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "N.Williams",
-          "first_name": "Neco",
-          "second_name": "Williams",
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
           "element_type": 2,
-          "points": 8
+          "points": 1
         },
         {
-          "element": 154,
+          "element": 391,
           "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Palmer",
-          "first_name": "Cole",
-          "second_name": "Palmer",
-          "element_type": 3,
-          "points": -1
+          "player": "Gvardiol",
+          "first_name": "Joško",
+          "second_name": "Gvardiol",
+          "element_type": 2,
+          "points": 1
         },
         {
-          "element": 68,
+          "element": 124,
           "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Tavernier",
-          "first_name": "Marcus",
-          "second_name": "Tavernier",
+          "player": "Groß",
+          "first_name": "Pascal",
+          "second_name": "Groß",
           "element_type": 3,
-          "points": 10
+          "points": 0
         },
         {
           "element": 40,
@@ -2410,21 +2410,21 @@
           "points": 1
         },
         {
-          "element": 124,
+          "element": 154,
           "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Groß",
-          "first_name": "Pascal",
-          "second_name": "Groß",
+          "player": "Palmer",
+          "first_name": "Cole",
+          "second_name": "Palmer",
           "element_type": 3,
-          "points": 0
+          "points": -1
         },
         {
           "element": 399,
           "position": 9,
-          "multiplier": 1,
+          "multiplier": 2,
           "is_captain": false,
           "is_vice_captain": true,
           "player": "Cherki",
@@ -2434,16 +2434,16 @@
           "points": 0
         },
         {
-          "element": 165,
+          "element": 68,
           "position": 10,
-          "multiplier": 2,
-          "is_captain": true,
+          "multiplier": 1,
+          "is_captain": false,
           "is_vice_captain": false,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
+          "player": "Tavernier",
+          "first_name": "Marcus",
+          "second_name": "Tavernier",
+          "element_type": 3,
+          "points": 10
         },
         {
           "element": 411,
@@ -2470,16 +2470,16 @@
           "points": 0
         },
         {
-          "element": 391,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
-          "is_captain": false,
+          "is_captain": true,
           "is_vice_captain": false,
-          "player": "Gvardiol",
-          "first_name": "Joško",
-          "second_name": "Gvardiol",
-          "element_type": 2,
-          "points": 1
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 305,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 8,
-      "points": 18,
-      "net_points": 18,
+      "points": 49,
+      "net_points": 49,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1020,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 8,
-      "points": 37,
-      "net_points": 37,
+      "points": 51,
+      "net_points": 51,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1008,
@@ -2760,20 +2760,8 @@
           "points": 14
         },
         {
-          "element": 15,
-          "position": 5,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Ødegaard",
-          "first_name": "Martin",
-          "second_name": "Ødegaard",
-          "element_type": 3,
-          "points": 3
-        },
-        {
           "element": 399,
-          "position": 6,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2785,7 +2773,7 @@
         },
         {
           "element": 427,
-          "position": 7,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2797,7 +2785,7 @@
         },
         {
           "element": 40,
-          "position": 8,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2809,7 +2797,7 @@
         },
         {
           "element": 68,
-          "position": 9,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2820,16 +2808,28 @@
           "points": 10
         },
         {
-          "element": 165,
+          "element": 15,
+          "position": 9,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Ødegaard",
+          "first_name": "Martin",
+          "second_name": "Ødegaard",
+          "element_type": 3,
+          "points": 3
+        },
+        {
+          "element": 346,
           "position": 10,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": true,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
+          "is_vice_captain": false,
+          "player": "Calvert-Lewin",
+          "first_name": "Dominic",
+          "second_name": "Calvert-Lewin",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 411,
@@ -2856,16 +2856,16 @@
           "points": 0
         },
         {
-          "element": 346,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Calvert-Lewin",
-          "first_name": "Dominic",
-          "second_name": "Calvert-Lewin",
+          "is_vice_captain": true,
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
           "element_type": 4,
-          "points": 2
+          "points": 0
         },
         {
           "element": 418,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 8,
-      "points": 41,
-      "net_points": 41,
+      "points": 46,
+      "net_points": 46,
       "transfer_cost": 0,
       "bank": 15,
       "value": 1010,
@@ -2928,20 +2928,8 @@
           "points": 1
         },
         {
-          "element": 390,
-          "position": 3,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Rúben",
-          "first_name": "Rúben",
-          "second_name": "dos Santos Gato Alves Dias",
-          "element_type": 2,
-          "points": 1
-        },
-        {
           "element": 115,
-          "position": 4,
+          "position": 3,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2952,8 +2940,32 @@
           "points": 1
         },
         {
-          "element": 154,
+          "element": 390,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Rúben",
+          "first_name": "Rúben",
+          "second_name": "dos Santos Gato Alves Dias",
+          "element_type": 2,
+          "points": 1
+        },
+        {
+          "element": 399,
           "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Cherki",
+          "first_name": "Rayan",
+          "second_name": "Cherki",
+          "element_type": 3,
+          "points": 0
+        },
+        {
+          "element": 154,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2965,7 +2977,7 @@
         },
         {
           "element": 124,
-          "position": 6,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2977,7 +2989,7 @@
         },
         {
           "element": 261,
-          "position": 7,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2988,44 +3000,20 @@
           "points": 3
         },
         {
-          "element": 399,
-          "position": 8,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Cherki",
-          "first_name": "Rayan",
-          "second_name": "Cherki",
-          "element_type": 3,
-          "points": 0
-        },
-        {
-          "element": 165,
+          "element": 286,
           "position": 9,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": true,
-          "player": "João Pedro",
-          "first_name": "João Pedro",
-          "second_name": "Junqueira de Jesus",
-          "element_type": 4,
-          "points": 0
-        },
-        {
-          "element": 411,
-          "position": 10,
-          "multiplier": 2,
-          "is_captain": true,
           "is_vice_captain": false,
-          "player": "Haaland",
-          "first_name": "Erling",
-          "second_name": "Haaland",
-          "element_type": 4,
-          "points": 8
+          "player": "Belloumi",
+          "first_name": "Mohamed",
+          "second_name": "Belloumi",
+          "element_type": 3,
+          "points": 4
         },
         {
           "element": 166,
-          "position": 11,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -3034,6 +3022,18 @@
           "second_name": "Jackson",
           "element_type": 4,
           "points": 13
+        },
+        {
+          "element": 411,
+          "position": 11,
+          "multiplier": 2,
+          "is_captain": true,
+          "is_vice_captain": false,
+          "player": "Haaland",
+          "first_name": "Erling",
+          "second_name": "Haaland",
+          "element_type": 4,
+          "points": 8
         },
         {
           "element": 497,
@@ -3048,16 +3048,16 @@
           "points": 0
         },
         {
-          "element": 286,
+          "element": 165,
           "position": 13,
           "multiplier": 0,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Belloumi",
-          "first_name": "Mohamed",
-          "second_name": "Belloumi",
-          "element_type": 3,
-          "points": 4
+          "is_vice_captain": true,
+          "player": "João Pedro",
+          "first_name": "João Pedro",
+          "second_name": "Junqueira de Jesus",
+          "element_type": 4,
+          "points": 0
         },
         {
           "element": 112,
