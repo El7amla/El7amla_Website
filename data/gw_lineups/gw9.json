@@ -31,7 +31,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 566,
@@ -43,7 +43,7 @@
           "first_name": "António João",
           "second_name": "Pereira de Albuquerque Tavares da Silva",
           "element_type": 2,
-          "points": 0
+          "points": 8
         },
         {
           "element": 4,
@@ -67,7 +67,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 68,
@@ -79,7 +79,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 398,
@@ -91,7 +91,7 @@
           "first_name": "Phil",
           "second_name": "Foden",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 40,
@@ -103,7 +103,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 79,
@@ -115,7 +115,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -127,7 +127,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 166,
@@ -163,7 +163,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 124,
@@ -175,7 +175,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 305,
@@ -187,7 +187,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Elfiky"
@@ -211,7 +211,7 @@
           "first_name": "Konstantinos",
           "second_name": "Tzolakis",
           "element_type": 1,
-          "points": 0
+          "points": 1
         },
         {
           "element": 502,
@@ -223,7 +223,7 @@
           "first_name": "Andrew",
           "second_name": "Robertson",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 449,
@@ -259,7 +259,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 286,
@@ -271,7 +271,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 68,
@@ -283,7 +283,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 398,
@@ -295,7 +295,7 @@
           "first_name": "Phil",
           "second_name": "Foden",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 379,
@@ -319,7 +319,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -331,7 +331,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 1,
@@ -355,7 +355,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 31,
@@ -379,7 +379,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 9
         }
       ],
       "manager": "Saady"
@@ -405,7 +405,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 11
         },
         {
           "element": 31,
@@ -429,7 +429,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -453,7 +453,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 480,
@@ -465,7 +465,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 154,
@@ -477,7 +477,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 426,
@@ -489,7 +489,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 94,
@@ -501,7 +501,7 @@
           "first_name": "Kevin",
           "second_name": "Schade",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 249,
@@ -525,7 +525,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -549,7 +549,7 @@
           "first_name": "Brian",
           "second_name": "Brobbey",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 586,
@@ -561,7 +561,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 3
         },
         {
           "element": 175,
@@ -573,7 +573,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 4
         }
       ],
       "manager": "Nasser"
@@ -597,7 +597,7 @@
           "first_name": "Konstantinos",
           "second_name": "Tzolakis",
           "element_type": 1,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -621,7 +621,7 @@
           "first_name": "Ryan",
           "second_name": "Giles",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 176,
@@ -633,7 +633,7 @@
           "first_name": "Jay",
           "second_name": "Dasilva",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 426,
@@ -645,7 +645,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 40,
@@ -657,7 +657,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 480,
@@ -669,7 +669,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 68,
@@ -681,7 +681,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 286,
@@ -693,7 +693,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 249,
@@ -717,7 +717,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -753,7 +753,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 464,
@@ -791,7 +791,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 11
         },
         {
           "element": 391,
@@ -803,7 +803,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 31,
@@ -851,7 +851,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 40,
@@ -863,7 +863,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 480,
@@ -875,7 +875,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 166,
@@ -899,7 +899,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 106,
@@ -911,7 +911,7 @@
           "first_name": "Igor Thiago",
           "second_name": "Nascimento Rodrigues",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 497,
@@ -935,7 +935,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 259,
@@ -947,7 +947,7 @@
           "first_name": "Issa",
           "second_name": "Diop",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 175,
@@ -959,7 +959,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 4
         }
       ],
       "manager": "Hussein"
@@ -995,7 +995,7 @@
           "first_name": "Neco",
           "second_name": "Williams",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 449,
@@ -1019,7 +1019,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 427,
@@ -1043,7 +1043,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 236,
@@ -1079,7 +1079,7 @@
           "first_name": "Dominic",
           "second_name": "Calvert-Lewin",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 79,
@@ -1091,7 +1091,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -1103,7 +1103,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -1127,7 +1127,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 204,
@@ -1139,7 +1139,7 @@
           "first_name": "Tyrick",
           "second_name": "Mitchell",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 305,
@@ -1151,7 +1151,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Ahmed Nour"
@@ -1189,7 +1189,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 9
         },
         {
           "element": 593,
@@ -1213,7 +1213,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 426,
@@ -1225,7 +1225,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 480,
@@ -1237,7 +1237,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 154,
@@ -1249,7 +1249,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 68,
@@ -1261,7 +1261,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 453,
@@ -1297,7 +1297,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -1333,7 +1333,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 321,
@@ -1369,7 +1369,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 11
         },
         {
           "element": 305,
@@ -1381,7 +1381,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -1405,7 +1405,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 426,
@@ -1417,7 +1417,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 40,
@@ -1429,7 +1429,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 15,
@@ -1453,7 +1453,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 79,
@@ -1465,7 +1465,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -1477,7 +1477,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 166,
@@ -1513,7 +1513,7 @@
           "first_name": "Regan",
           "second_name": "Slater",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 175,
@@ -1525,7 +1525,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 423,
@@ -1563,7 +1563,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 11
         },
         {
           "element": 8,
@@ -1587,7 +1587,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 175,
@@ -1599,7 +1599,7 @@
           "first_name": "Milan",
           "second_name": "van Ewijk",
           "element_type": 2,
-          "points": 0
+          "points": 4
         },
         {
           "element": 68,
@@ -1611,7 +1611,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 426,
@@ -1623,7 +1623,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 1
+          "points": 2
         },
         {
           "element": 40,
@@ -1635,7 +1635,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 45,
@@ -1659,7 +1659,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 79,
@@ -1671,7 +1671,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 166,
@@ -1707,7 +1707,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 31,
@@ -1731,7 +1731,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         }
       ],
       "manager": "M.Yasser"
@@ -1767,7 +1767,7 @@
           "first_name": "James",
           "second_name": "Hill",
           "element_type": 2,
-          "points": 0
+          "points": 6
         },
         {
           "element": 87,
@@ -1779,7 +1779,7 @@
           "first_name": "Kristoffer",
           "second_name": "Ajer",
           "element_type": 2,
-          "points": 0
+          "points": 8
         },
         {
           "element": 112,
@@ -1791,7 +1791,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 40,
@@ -1803,7 +1803,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 68,
@@ -1815,7 +1815,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 512,
@@ -1827,7 +1827,7 @@
           "first_name": "Mohammed",
           "second_name": "Kudus",
           "element_type": 3,
-          "points": 0
+          "points": 6
         },
         {
           "element": 286,
@@ -1839,7 +1839,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 94,
@@ -1851,7 +1851,7 @@
           "first_name": "Kevin",
           "second_name": "Schade",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 166,
@@ -1875,7 +1875,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 572,
@@ -1887,7 +1887,7 @@
           "first_name": "Konstantinos",
           "second_name": "Tzolakis",
           "element_type": 1,
-          "points": 0
+          "points": 1
         },
         {
           "element": 249,
@@ -1923,7 +1923,7 @@
           "first_name": "John",
           "second_name": "Egan",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Abolmagd"
@@ -1949,7 +1949,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 0
+          "points": 1
         },
         {
           "element": 449,
@@ -1985,7 +1985,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 115,
@@ -1997,7 +1997,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 9
         },
         {
           "element": 127,
@@ -2009,7 +2009,7 @@
           "first_name": "Diego",
           "second_name": "Gómez Amarilla",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 68,
@@ -2021,7 +2021,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 154,
@@ -2033,7 +2033,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 40,
@@ -2045,7 +2045,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 166,
@@ -2069,7 +2069,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 385,
@@ -2081,7 +2081,7 @@
           "first_name": "James",
           "second_name": "Trafford",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 399,
@@ -2093,7 +2093,7 @@
           "first_name": "Rayan",
           "second_name": "Cherki",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -2117,7 +2117,7 @@
           "first_name": "Liam",
           "second_name": "Delap",
           "element_type": 4,
-          "points": 0
+          "points": 2
         }
       ],
       "manager": "Amgad"
@@ -2141,7 +2141,7 @@
           "first_name": "Antonín",
           "second_name": "Kinský",
           "element_type": 1,
-          "points": 0
+          "points": 1
         },
         {
           "element": 391,
@@ -2153,7 +2153,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 449,
@@ -2177,7 +2177,7 @@
           "first_name": "Semi",
           "second_name": "Ajayi",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 286,
@@ -2189,7 +2189,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 453,
@@ -2213,7 +2213,7 @@
           "first_name": "Rayan",
           "second_name": "Cherki",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 40,
@@ -2225,7 +2225,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 480,
@@ -2237,7 +2237,7 @@
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 166,
@@ -2261,7 +2261,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 109,
@@ -2273,7 +2273,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 11
         },
         {
           "element": 8,
@@ -2297,7 +2297,7 @@
           "first_name": "Charalampos",
           "second_name": "Kostoulas",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 258,
@@ -2347,7 +2347,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 31,
@@ -2371,7 +2371,7 @@
           "first_name": "Neco",
           "second_name": "Williams",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 154,
@@ -2383,7 +2383,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 68,
@@ -2395,7 +2395,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 40,
@@ -2407,7 +2407,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 124,
@@ -2419,7 +2419,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 399,
@@ -2431,7 +2431,7 @@
           "first_name": "Rayan",
           "second_name": "Cherki",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 166,
@@ -2455,7 +2455,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 111,
@@ -2491,7 +2491,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -2527,7 +2527,7 @@
           "first_name": "Đorđe",
           "second_name": "Petrović",
           "element_type": 1,
-          "points": 0
+          "points": 6
         },
         {
           "element": 391,
@@ -2539,7 +2539,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 115,
@@ -2551,7 +2551,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 9
         },
         {
           "element": 469,
@@ -2563,7 +2563,7 @@
           "first_name": "Neco",
           "second_name": "Williams",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 68,
@@ -2575,7 +2575,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 40,
@@ -2587,7 +2587,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 154,
@@ -2599,7 +2599,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 286,
@@ -2611,7 +2611,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 79,
@@ -2623,7 +2623,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -2635,7 +2635,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 379,
@@ -2695,7 +2695,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 3
         }
       ],
       "manager": "Shika"
@@ -2733,7 +2733,7 @@
           "first_name": "Joško",
           "second_name": "Gvardiol",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 112,
@@ -2745,7 +2745,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 31,
@@ -2769,7 +2769,7 @@
           "first_name": "Mohammed",
           "second_name": "Kudus",
           "element_type": 3,
-          "points": 0
+          "points": 6
         },
         {
           "element": 399,
@@ -2781,7 +2781,7 @@
           "first_name": "Rayan",
           "second_name": "Cherki",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 427,
@@ -2805,7 +2805,7 @@
           "first_name": "Morgan",
           "second_name": "Rogers",
           "element_type": 3,
-          "points": 9
+          "points": 8
         },
         {
           "element": 68,
@@ -2817,7 +2817,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 79,
@@ -2829,7 +2829,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -2841,7 +2841,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 497,
@@ -2865,7 +2865,7 @@
           "first_name": "Dominic",
           "second_name": "Calvert-Lewin",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 115,
@@ -2877,7 +2877,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 9
         },
         {
           "element": 534,
@@ -2889,7 +2889,7 @@
           "first_name": "Trai",
           "second_name": "Hume",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Ali"
@@ -2925,7 +2925,7 @@
           "first_name": "Jan Paul",
           "second_name": "van Hecke",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 33,
@@ -2949,7 +2949,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 9
         },
         {
           "element": 154,
@@ -2961,7 +2961,7 @@
           "first_name": "Cole",
           "second_name": "Palmer",
           "element_type": 3,
-          "points": 1
+          "points": 8
         },
         {
           "element": 124,
@@ -2973,7 +2973,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 2
         },
         {
           "element": 68,
@@ -2985,7 +2985,7 @@
           "first_name": "Marcus",
           "second_name": "Tavernier",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 399,
@@ -2997,7 +2997,7 @@
           "first_name": "Rayan",
           "second_name": "Cherki",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 79,
@@ -3009,7 +3009,7 @@
           "first_name": "Francisco Evanilson",
           "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 0
+          "points": 9
         },
         {
           "element": 411,
@@ -3021,7 +3021,7 @@
           "first_name": "Erling",
           "second_name": "Haaland",
           "element_type": 4,
-          "points": 0
+          "points": 2
         },
         {
           "element": 166,
@@ -3057,7 +3057,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 5
         },
         {
           "element": 390,
@@ -3069,7 +3069,7 @@
           "first_name": "Rúben",
           "second_name": "dos Santos Gato Alves Dias",
           "element_type": 2,
-          "points": 0
+          "points": 2
         },
         {
           "element": 8,
