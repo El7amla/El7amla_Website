@@ -1,6 +1,6 @@
 {
   "current_gw": 9,
-  "last_updated": "2026-11-02 23:55:17",
+  "last_updated": "2026-11-03 12:17:12",
   "teams": [
     {
       "name": "الزرازير",
@@ -9,8 +9,8 @@
       "draw": 0,
       "lost": 3,
       "gf": 1144,
-      "ga": 1037,
-      "gd": 107,
+      "ga": 1038,
+      "gd": 106,
       "matchPts": 18,
       "bonus": 0,
       "chipBonus": 0,
@@ -36,9 +36,9 @@
       "won": 6,
       "draw": 0,
       "lost": 3,
-      "gf": 1140,
+      "gf": 1141,
       "ga": 1052,
-      "gd": 88,
+      "gd": 89,
       "matchPts": 18,
       "bonus": 0,
       "chipBonus": 0,
@@ -78,9 +78,9 @@
       "won": 3,
       "draw": 0,
       "lost": 6,
-      "gf": 1051,
+      "gf": 1052,
       "ga": 1204,
-      "gd": -153,
+      "gd": -152,
       "matchPts": 9,
       "bonus": 0,
       "chipBonus": 0,
@@ -93,8 +93,8 @@
       "draw": 0,
       "lost": 7,
       "gf": 1057,
-      "ga": 1131,
-      "gd": -74,
+      "ga": 1132,
+      "gd": -75,
       "matchPts": 6,
       "bonus": 0,
       "chipBonus": 0,
@@ -147,13 +147,13 @@
       "points": 563
     },
     {
-      "name": "Ali",
-      "team": "Boys",
-      "points": 548
-    },
-    {
       "name": "Abolmagd",
       "team": "الزرازير",
+      "points": 547
+    },
+    {
+      "name": "Ali",
+      "team": "Boys",
       "points": 547
     },
     {
@@ -162,14 +162,14 @@
       "points": 544
     },
     {
-      "name": "Omar",
-      "team": "Royal Authority",
+      "name": "Ahmed Nour",
+      "team": "The Pharaohs",
       "points": 538
     },
     {
-      "name": "Ahmed Nour",
-      "team": "The Pharaohs",
-      "points": 537
+      "name": "Omar",
+      "team": "Royal Authority",
+      "points": 538
     },
     {
       "name": "Shika",
@@ -189,7 +189,7 @@
     {
       "name": "Magdy",
       "team": "Boys",
-      "points": 503
+      "points": 505
     },
     {
       "name": "Tawheed",
@@ -529,7 +529,7 @@
       "gw": 9,
       "home": "The Pharaohs",
       "away": "Black Tech",
-      "homePts": 113,
+      "homePts": 114,
       "awayPts": 107,
       "result": "home_win",
       "winner": "The Pharaohs",
@@ -549,7 +549,7 @@
       "gw": 9,
       "home": "Boys",
       "away": "الزرازير",
-      "homePts": 123,
+      "homePts": 124,
       "awayPts": 130,
       "result": "away_win",
       "winner": "الزرازير",

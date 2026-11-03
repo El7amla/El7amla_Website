@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 9,
-      "points": 44,
-      "net_points": 40,
+      "points": 45,
+      "net_points": 41,
       "transfer_cost": 4,
       "bank": 20,
       "value": 1015,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 9,
-      "points": 69,
-      "net_points": 65,
+      "points": 68,
+      "net_points": 64,
       "transfer_cost": 4,
       "bank": 12,
       "value": 1007,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 9,
-      "points": 62,
-      "net_points": 58,
+      "points": 64,
+      "net_points": 60,
       "transfer_cost": 4,
       "bank": 18,
       "value": 1011,
@@ -2916,32 +2916,8 @@
           "points": 2
         },
         {
-          "element": 112,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Van Hecke",
-          "first_name": "Jan Paul",
-          "second_name": "van Hecke",
-          "element_type": 2,
-          "points": 15
-        },
-        {
-          "element": 33,
-          "position": 3,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Mings",
-          "first_name": "Tyrone",
-          "second_name": "Mings",
-          "element_type": 2,
-          "points": 0
-        },
-        {
           "element": 115,
-          "position": 4,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2952,8 +2928,44 @@
           "points": 9
         },
         {
-          "element": 154,
+          "element": 112,
+          "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Van Hecke",
+          "first_name": "Jan Paul",
+          "second_name": "van Hecke",
+          "element_type": 2,
+          "points": 15
+        },
+        {
+          "element": 390,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Rúben",
+          "first_name": "Rúben",
+          "second_name": "dos Santos Gato Alves Dias",
+          "element_type": 2,
+          "points": 2
+        },
+        {
+          "element": 399,
           "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Cherki",
+          "first_name": "Rayan",
+          "second_name": "Cherki",
+          "element_type": 3,
+          "points": 1
+        },
+        {
+          "element": 154,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2965,7 +2977,7 @@
         },
         {
           "element": 124,
-          "position": 6,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2977,7 +2989,7 @@
         },
         {
           "element": 68,
-          "position": 7,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2988,26 +3000,14 @@
           "points": 3
         },
         {
-          "element": 399,
-          "position": 8,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Cherki",
-          "first_name": "Rayan",
-          "second_name": "Cherki",
-          "element_type": 3,
-          "points": 1
-        },
-        {
-          "element": 79,
+          "element": 166,
           "position": 9,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": true,
-          "player": "Evanilson",
-          "first_name": "Francisco Evanilson",
-          "second_name": "de Lima Barbosa",
+          "is_vice_captain": false,
+          "player": "N.Jackson",
+          "first_name": "Nicolas",
+          "second_name": "Jackson",
           "element_type": 4,
           "points": 9
         },
@@ -3024,14 +3024,14 @@
           "points": 2
         },
         {
-          "element": 166,
+          "element": 79,
           "position": 11,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "N.Jackson",
-          "first_name": "Nicolas",
-          "second_name": "Jackson",
+          "is_vice_captain": true,
+          "player": "Evanilson",
+          "first_name": "Francisco Evanilson",
+          "second_name": "de Lima Barbosa",
           "element_type": 4,
           "points": 9
         },
@@ -3060,16 +3060,16 @@
           "points": 5
         },
         {
-          "element": 390,
+          "element": 33,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Rúben",
-          "first_name": "Rúben",
-          "second_name": "dos Santos Gato Alves Dias",
+          "player": "Mings",
+          "first_name": "Tyrone",
+          "second_name": "Mings",
           "element_type": 2,
-          "points": 2
+          "points": 0
         },
         {
           "element": 8,
