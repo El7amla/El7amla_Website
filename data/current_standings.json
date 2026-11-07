@@ -1,6 +1,6 @@
 {
   "current_gw": 10,
-  "last_updated": "2026-11-06 21:30:26",
+  "last_updated": "2026-11-07 01:08:06",
   "teams": [
     {
       "name": "The Pharaohs",
@@ -8,8 +8,8 @@
       "won": 7,
       "draw": 0,
       "lost": 3,
-      "gf": 1141,
-      "ga": 1044,
+      "gf": 1150,
+      "ga": 1053,
       "gd": 97,
       "matchPts": 21,
       "bonus": 0,
@@ -17,18 +17,18 @@
       "total": 21
     },
     {
-      "name": "الاوديسي",
+      "name": "The Masterminds",
       "played": 10,
-      "won": 6,
-      "draw": 1,
+      "won": 7,
+      "draw": 0,
       "lost": 3,
-      "gf": 1182,
-      "ga": 1085,
-      "gd": 97,
-      "matchPts": 19,
+      "gf": 1096,
+      "ga": 1069,
+      "gd": 27,
+      "matchPts": 21,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 19
+      "total": 21
     },
     {
       "name": "الزرازير",
@@ -36,8 +36,8 @@
       "won": 6,
       "draw": 0,
       "lost": 4,
-      "gf": 1136,
-      "ga": 1038,
+      "gf": 1145,
+      "ga": 1047,
       "gd": 98,
       "matchPts": 18,
       "bonus": 0,
@@ -45,14 +45,14 @@
       "total": 18
     },
     {
-      "name": "The Masterminds",
+      "name": "الاوديسي",
       "played": 10,
       "won": 6,
       "draw": 0,
       "lost": 4,
-      "gf": 1071,
-      "ga": 1066,
-      "gd": 5,
+      "gf": 1182,
+      "ga": 1103,
+      "gd": 79,
       "matchPts": 18,
       "bonus": 0,
       "chipBonus": 0,
@@ -73,18 +73,18 @@
       "total": 15
     },
     {
-      "name": "Boys",
+      "name": "Falcons",
       "played": 10,
-      "won": 4,
+      "won": 3,
       "draw": 0,
-      "lost": 6,
+      "lost": 7,
       "gf": 1052,
-      "ga": 1200,
-      "gd": -148,
-      "matchPts": 12,
+      "ga": 1122,
+      "gd": -70,
+      "matchPts": 9,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 12
+      "total": 9
     },
     {
       "name": "Black Tech",
@@ -101,18 +101,18 @@
       "total": 9
     },
     {
-      "name": "Falcons",
+      "name": "Boys",
       "played": 10,
-      "won": 2,
-      "draw": 1,
+      "won": 3,
+      "draw": 0,
       "lost": 7,
-      "gf": 1034,
-      "ga": 1122,
-      "gd": -88,
-      "matchPts": 7,
+      "gf": 1055,
+      "ga": 1225,
+      "gd": -170,
+      "matchPts": 9,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 7
+      "total": 9
     }
   ],
   "players": [
@@ -129,7 +129,17 @@
     {
       "name": "M.Yasser",
       "team": "الزرازير",
-      "points": 593
+      "points": 594
+    },
+    {
+      "name": "Body",
+      "team": "The Masterminds",
+      "points": 576
+    },
+    {
+      "name": "Nasser",
+      "team": "Falcons",
+      "points": 575
     },
     {
       "name": "Karim Yasser",
@@ -137,18 +147,18 @@
       "points": 562
     },
     {
-      "name": "Body",
-      "team": "The Masterminds",
-      "points": 560
-    },
-    {
-      "name": "Nasser",
-      "team": "Falcons",
-      "points": 559
+      "name": "Abolmagd",
+      "team": "الزرازير",
+      "points": 551
     },
     {
       "name": "Ali",
       "team": "Boys",
+      "points": 550
+    },
+    {
+      "name": "Ahmed Nour",
+      "team": "The Pharaohs",
       "points": 547
     },
     {
@@ -157,19 +167,9 @@
       "points": 544
     },
     {
-      "name": "Abolmagd",
-      "team": "الزرازير",
-      "points": 543
-    },
-    {
-      "name": "Ahmed Nour",
-      "team": "The Pharaohs",
-      "points": 538
-    },
-    {
       "name": "Shika",
       "team": "The Masterminds",
-      "points": 535
+      "points": 544
     },
     {
       "name": "Omar",
@@ -194,7 +194,7 @@
     {
       "name": "Tawheed",
       "team": "Falcons",
-      "points": 475
+      "points": 477
     }
   ],
   "matches": [
@@ -579,8 +579,8 @@
       "gw": 10,
       "home": "The Pharaohs",
       "away": "الزرازير",
-      "homePts": 0,
-      "awayPts": -8,
+      "homePts": 9,
+      "awayPts": 1,
       "result": "home_win",
       "winner": "The Pharaohs",
       "type": "normal"
@@ -589,20 +589,20 @@
       "gw": 10,
       "home": "Falcons",
       "away": "الاوديسي",
-      "homePts": -4,
+      "homePts": 14,
       "awayPts": -4,
-      "result": "draw",
-      "winner": null,
+      "result": "home_win",
+      "winner": "Falcons",
       "type": "normal"
     },
     {
       "gw": 10,
       "home": "Boys",
       "away": "The Masterminds",
-      "homePts": 0,
-      "awayPts": -4,
-      "result": "home_win",
-      "winner": "Boys",
+      "homePts": 3,
+      "awayPts": 21,
+      "result": "away_win",
+      "winner": "The Masterminds",
       "type": "normal"
     }
   ],

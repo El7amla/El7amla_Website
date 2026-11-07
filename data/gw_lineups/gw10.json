@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 10,
-      "points": 0,
-      "net_points": -4,
+      "points": 16,
+      "net_points": 12,
       "transfer_cost": 4,
       "bank": 0,
       "value": 1007,
@@ -513,7 +513,7 @@
           "first_name": "Thierno",
           "second_name": "Barry",
           "element_type": 4,
-          "points": 13
+          "points": 16
         },
         {
           "element": 411,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 10,
-      "points": 0,
-      "net_points": 0,
+      "points": 2,
+      "net_points": 2,
       "transfer_cost": 0,
       "bank": 29,
       "value": 1013,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 10,
-      "points": 0,
-      "net_points": 0,
+      "points": 9,
+      "net_points": 9,
       "transfer_cost": 0,
       "bank": 10,
       "value": 1016,
@@ -1055,7 +1055,7 @@
           "first_name": "Kiernan",
           "second_name": "Dewsbury-Hall",
           "element_type": 3,
-          "points": 2
+          "points": 9
         },
         {
           "element": 53,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 10,
-      "points": 0,
-      "net_points": -4,
+      "points": 1,
+      "net_points": -3,
       "transfer_cost": 4,
       "bank": 4,
       "value": 1024,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 10,
-      "points": 0,
-      "net_points": -4,
+      "points": 8,
+      "net_points": 4,
       "transfer_cost": 4,
       "bank": 10,
       "value": 1015,
@@ -1767,7 +1767,7 @@
           "first_name": "Vitalii",
           "second_name": "Mykolenko",
           "element_type": 2,
-          "points": 6
+          "points": 8
         },
         {
           "element": 31,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 10,
-      "points": 0,
-      "net_points": -4,
+      "points": 16,
+      "net_points": 12,
       "transfer_cost": 4,
       "bank": 6,
       "value": 1024,
@@ -2431,7 +2431,7 @@
           "first_name": "Thierno",
           "second_name": "Barry",
           "element_type": 4,
-          "points": 13
+          "points": 16
         },
         {
           "element": 166,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 10,
-      "points": 0,
-      "net_points": 0,
+      "points": 9,
+      "net_points": 9,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1026,
@@ -2611,7 +2611,7 @@
           "first_name": "Kiernan",
           "second_name": "Dewsbury-Hall",
           "element_type": 3,
-          "points": 2
+          "points": 9
         },
         {
           "element": 79,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 10,
-      "points": 0,
-      "net_points": 0,
+      "points": 3,
+      "net_points": 3,
       "transfer_cost": 0,
       "bank": 12,
       "value": 1013,
