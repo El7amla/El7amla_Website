@@ -187,7 +187,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         }
       ],
       "manager": "Elfiky"
@@ -561,7 +561,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         },
         {
           "element": 175,
@@ -1151,7 +1151,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         }
       ],
       "manager": "Ahmed Nour"
@@ -1333,7 +1333,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         },
         {
           "element": 175,
@@ -1381,7 +1381,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         },
         {
           "element": 8,
@@ -1923,7 +1923,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         }
       ],
       "manager": "Abolmagd"
@@ -2491,7 +2491,7 @@
           "first_name": "Leif",
           "second_name": "Davis",
           "element_type": 2,
-          "points": 1
+          "points": -1
         },
         {
           "element": 115,
