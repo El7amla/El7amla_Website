@@ -3,8 +3,8 @@
     "43949": {
       "entry_id": 43949,
       "gw": 10,
-      "points": 21,
-      "net_points": 21,
+      "points": 62,
+      "net_points": 62,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1005,
@@ -195,8 +195,8 @@
     "3492393": {
       "entry_id": 3492393,
       "gw": 10,
-      "points": 19,
-      "net_points": 19,
+      "points": 66,
+      "net_points": 66,
       "transfer_cost": 0,
       "bank": 22,
       "value": 1017,
@@ -389,8 +389,8 @@
     "1102089": {
       "entry_id": 1102089,
       "gw": 10,
-      "points": 45,
-      "net_points": 41,
+      "points": 64,
+      "net_points": 60,
       "transfer_cost": 4,
       "bank": 0,
       "value": 1007,
@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 10,
-      "points": 16,
-      "net_points": 16,
+      "points": 59,
+      "net_points": 59,
       "transfer_cost": 0,
       "bank": 29,
       "value": 1013,
@@ -775,8 +775,8 @@
     "1338459": {
       "entry_id": 1338459,
       "gw": 10,
-      "points": 29,
-      "net_points": 29,
+      "points": 63,
+      "net_points": 63,
       "transfer_cost": 0,
       "bank": 13,
       "value": 1022,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 10,
-      "points": 29,
-      "net_points": 29,
+      "points": 54,
+      "net_points": 54,
       "transfer_cost": 0,
       "bank": 10,
       "value": 1016,
@@ -1161,8 +1161,8 @@
     "4638841": {
       "entry_id": 4638841,
       "gw": 10,
-      "points": 29,
-      "net_points": 25,
+      "points": 52,
+      "net_points": 48,
       "transfer_cost": 4,
       "bank": 23,
       "value": 1013,
@@ -1353,8 +1353,8 @@
     "4648250": {
       "entry_id": 4648250,
       "gw": 10,
-      "points": 23,
-      "net_points": 23,
+      "points": 60,
+      "net_points": 60,
       "transfer_cost": 0,
       "bank": 4,
       "value": 1005,
@@ -1547,8 +1547,8 @@
     "92255": {
       "entry_id": 92255,
       "gw": 10,
-      "points": 21,
-      "net_points": 17,
+      "points": 88,
+      "net_points": 84,
       "transfer_cost": 4,
       "bank": 4,
       "value": 1024,
@@ -1739,8 +1739,8 @@
     "1421188": {
       "entry_id": 1421188,
       "gw": 10,
-      "points": 26,
-      "net_points": 22,
+      "points": 70,
+      "net_points": 66,
       "transfer_cost": 4,
       "bank": 10,
       "value": 1015,
@@ -1933,8 +1933,8 @@
     "749755": {
       "entry_id": 749755,
       "gw": 10,
-      "points": 18,
-      "net_points": 18,
+      "points": 60,
+      "net_points": 60,
       "transfer_cost": 0,
       "bank": 1,
       "value": 1033,
@@ -2125,8 +2125,8 @@
     "778545": {
       "entry_id": 778545,
       "gw": 10,
-      "points": 24,
-      "net_points": 20,
+      "points": 44,
+      "net_points": 40,
       "transfer_cost": 4,
       "bank": 36,
       "value": 1012,
@@ -2319,8 +2319,8 @@
     "1697319": {
       "entry_id": 1697319,
       "gw": 10,
-      "points": 48,
-      "net_points": 44,
+      "points": 81,
+      "net_points": 77,
       "transfer_cost": 4,
       "bank": 6,
       "value": 1024,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 10,
-      "points": 19,
-      "net_points": 19,
+      "points": 51,
+      "net_points": 51,
       "transfer_cost": 0,
       "bank": 2,
       "value": 1026,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 10,
-      "points": 30,
-      "net_points": 30,
+      "points": 52,
+      "net_points": 52,
       "transfer_cost": 0,
       "bank": 12,
       "value": 1013,
@@ -2897,8 +2897,8 @@
     "7652885": {
       "entry_id": 7652885,
       "gw": 10,
-      "points": 20,
-      "net_points": 20,
+      "points": 62,
+      "net_points": 62,
       "transfer_cost": 0,
       "bank": 18,
       "value": 1016,
@@ -2916,32 +2916,8 @@
           "points": 3
         },
         {
-          "element": 112,
-          "position": 2,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Van Hecke",
-          "first_name": "Jan Paul",
-          "second_name": "van Hecke",
-          "element_type": 2,
-          "points": 4
-        },
-        {
-          "element": 33,
-          "position": 3,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Mings",
-          "first_name": "Tyrone",
-          "second_name": "Mings",
-          "element_type": 2,
-          "points": 0
-        },
-        {
           "element": 115,
-          "position": 4,
+          "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2952,8 +2928,44 @@
           "points": 6
         },
         {
-          "element": 154,
+          "element": 112,
+          "position": 3,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Van Hecke",
+          "first_name": "Jan Paul",
+          "second_name": "van Hecke",
+          "element_type": 2,
+          "points": 4
+        },
+        {
+          "element": 390,
+          "position": 4,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Rúben",
+          "first_name": "Rúben",
+          "second_name": "dos Santos Gato Alves Dias",
+          "element_type": 2,
+          "points": 1
+        },
+        {
+          "element": 399,
           "position": 5,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "Cherki",
+          "first_name": "Rayan",
+          "second_name": "Cherki",
+          "element_type": 3,
+          "points": 9
+        },
+        {
+          "element": 154,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2965,7 +2977,7 @@
         },
         {
           "element": 124,
-          "position": 6,
+          "position": 7,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2977,7 +2989,7 @@
         },
         {
           "element": 68,
-          "position": 7,
+          "position": 8,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -2988,28 +3000,16 @@
           "points": 3
         },
         {
-          "element": 399,
-          "position": 8,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "Cherki",
-          "first_name": "Rayan",
-          "second_name": "Cherki",
-          "element_type": 3,
-          "points": 9
-        },
-        {
-          "element": 79,
+          "element": 166,
           "position": 9,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": true,
-          "player": "Evanilson",
-          "first_name": "Francisco Evanilson",
-          "second_name": "de Lima Barbosa",
+          "is_vice_captain": false,
+          "player": "N.Jackson",
+          "first_name": "Nicolas",
+          "second_name": "Jackson",
           "element_type": 4,
-          "points": 9
+          "points": 11
         },
         {
           "element": 411,
@@ -3024,16 +3024,16 @@
           "points": 2
         },
         {
-          "element": 166,
+          "element": 79,
           "position": 11,
           "multiplier": 1,
           "is_captain": false,
-          "is_vice_captain": false,
-          "player": "N.Jackson",
-          "first_name": "Nicolas",
-          "second_name": "Jackson",
+          "is_vice_captain": true,
+          "player": "Evanilson",
+          "first_name": "Francisco Evanilson",
+          "second_name": "de Lima Barbosa",
           "element_type": 4,
-          "points": 11
+          "points": 9
         },
         {
           "element": 497,
@@ -3060,16 +3060,16 @@
           "points": 0
         },
         {
-          "element": 390,
+          "element": 33,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Rúben",
-          "first_name": "Rúben",
-          "second_name": "dos Santos Gato Alves Dias",
+          "player": "Mings",
+          "first_name": "Tyrone",
+          "second_name": "Mings",
           "element_type": 2,
-          "points": 1
+          "points": 0
         },
         {
           "element": 8,
