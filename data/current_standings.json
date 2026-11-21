@@ -1,114 +1,114 @@
 {
-  "current_gw": 10,
-  "last_updated": "2026-11-09 19:56:22",
+  "current_gw": 11,
+  "last_updated": "2026-11-21 16:26:05",
   "teams": [
     {
       "name": "الزرازير",
-      "played": 10,
+      "played": 11,
       "won": 7,
-      "draw": 0,
+      "draw": 1,
       "lost": 3,
       "gf": 1294,
       "ga": 1155,
       "gd": 139,
-      "matchPts": 21,
+      "matchPts": 22,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 21
+      "total": 22
     },
     {
       "name": "The Masterminds",
-      "played": 10,
+      "played": 11,
       "won": 7,
-      "draw": 0,
+      "draw": 1,
       "lost": 3,
       "gf": 1203,
       "ga": 1180,
       "gd": 23,
+      "matchPts": 22,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 22
+    },
+    {
+      "name": "الاوديسي",
+      "played": 11,
+      "won": 7,
+      "draw": 0,
+      "lost": 4,
+      "gf": 1286,
+      "ga": 1204,
+      "gd": 82,
       "matchPts": 21,
       "bonus": 0,
       "chipBonus": 0,
       "total": 21
     },
     {
-      "name": "الاوديسي",
-      "played": 10,
-      "won": 6,
-      "draw": 0,
-      "lost": 4,
-      "gf": 1286,
-      "ga": 1208,
-      "gd": 78,
-      "matchPts": 18,
-      "bonus": 0,
-      "chipBonus": 0,
-      "total": 18
-    },
-    {
       "name": "The Pharaohs",
-      "played": 10,
+      "played": 11,
       "won": 6,
-      "draw": 0,
+      "draw": 1,
       "lost": 4,
       "gf": 1258,
       "ga": 1202,
       "gd": 56,
-      "matchPts": 18,
+      "matchPts": 19,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 18
+      "total": 19
     },
     {
       "name": "Royal Authority",
-      "played": 10,
+      "played": 11,
       "won": 5,
       "draw": 0,
-      "lost": 5,
-      "gf": 1170,
+      "lost": 6,
+      "gf": 1166,
       "ga": 1176,
-      "gd": -6,
+      "gd": -10,
       "matchPts": 15,
       "bonus": 0,
       "chipBonus": 0,
       "total": 15
     },
     {
-      "name": "Black Tech",
-      "played": 10,
-      "won": 3,
+      "name": "Boys",
+      "played": 11,
+      "won": 4,
       "draw": 0,
+      "lost": 7,
+      "gf": 1166,
+      "ga": 1328,
+      "gd": -162,
+      "matchPts": 12,
+      "bonus": 0,
+      "chipBonus": 0,
+      "total": 12
+    },
+    {
+      "name": "Black Tech",
+      "played": 11,
+      "won": 3,
+      "draw": 1,
       "lost": 7,
       "gf": 1185,
       "ga": 1240,
       "gd": -55,
-      "matchPts": 9,
+      "matchPts": 10,
       "bonus": 0,
       "chipBonus": 0,
-      "total": 9
+      "total": 10
     },
     {
       "name": "Falcons",
-      "played": 10,
+      "played": 11,
       "won": 3,
       "draw": 0,
-      "lost": 7,
-      "gf": 1157,
+      "lost": 8,
+      "gf": 1153,
       "ga": 1226,
-      "gd": -69,
-      "matchPts": 9,
-      "bonus": 0,
-      "chipBonus": 0,
-      "total": 9
-    },
-    {
-      "name": "Boys",
-      "played": 10,
-      "won": 3,
-      "draw": 0,
-      "lost": 7,
-      "gf": 1166,
-      "ga": 1332,
-      "gd": -166,
+      "gd": -73,
       "matchPts": 9,
       "bonus": 0,
       "chipBonus": 0,
@@ -167,11 +167,6 @@
       "points": 592
     },
     {
-      "name": "Omar",
-      "team": "Royal Authority",
-      "points": 586
-    },
-    {
       "name": "Shika",
       "team": "The Masterminds",
       "points": 586
@@ -180,6 +175,11 @@
       "name": "Mahmoud",
       "team": "Royal Authority",
       "points": 584
+    },
+    {
+      "name": "Omar",
+      "team": "Royal Authority",
+      "points": 582
     },
     {
       "name": "Elfiky",
@@ -194,7 +194,7 @@
     {
       "name": "Tawheed",
       "team": "Falcons",
-      "points": 534
+      "points": 530
     }
   ],
   "matches": [
@@ -603,6 +603,46 @@
       "awayPts": 128,
       "result": "away_win",
       "winner": "The Masterminds",
+      "type": "normal"
+    },
+    {
+      "gw": 11,
+      "home": "الزرازير",
+      "away": "Black Tech",
+      "homePts": 0,
+      "awayPts": 0,
+      "result": "draw",
+      "winner": null,
+      "type": "normal"
+    },
+    {
+      "gw": 11,
+      "home": "Royal Authority",
+      "away": "الاوديسي",
+      "homePts": -4,
+      "awayPts": 0,
+      "result": "away_win",
+      "winner": "الاوديسي",
+      "type": "normal"
+    },
+    {
+      "gw": 11,
+      "home": "The Pharaohs",
+      "away": "The Masterminds",
+      "homePts": 0,
+      "awayPts": 0,
+      "result": "draw",
+      "winner": null,
+      "type": "normal"
+    },
+    {
+      "gw": 11,
+      "home": "Falcons",
+      "away": "Boys",
+      "homePts": -4,
+      "awayPts": 0,
+      "result": "away_win",
+      "winner": "Boys",
       "type": "normal"
     }
   ],
