@@ -79,7 +79,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 68,
@@ -175,7 +175,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 7
         },
         {
           "element": 305,
@@ -235,7 +235,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 31,
@@ -271,7 +271,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 68,
@@ -307,7 +307,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 79,
@@ -343,7 +343,7 @@
           "first_name": "Konstantinos",
           "second_name": "Tzolakis",
           "element_type": 1,
-          "points": 0
+          "points": 10
         },
         {
           "element": 449,
@@ -367,7 +367,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 7
         },
         {
           "element": 32,
@@ -405,7 +405,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 31,
@@ -501,7 +501,7 @@
           "first_name": "Yasin",
           "second_name": "Ayari",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 379,
@@ -513,7 +513,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 411,
@@ -597,7 +597,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 8,
@@ -645,7 +645,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 40,
@@ -729,7 +729,7 @@
           "first_name": "Konstantinos",
           "second_name": "Tzolakis",
           "element_type": 1,
-          "points": 0
+          "points": 10
         },
         {
           "element": 286,
@@ -741,7 +741,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 7
         },
         {
           "element": 305,
@@ -765,7 +765,7 @@
           "first_name": "Ryan",
           "second_name": "Giles",
           "element_type": 2,
-          "points": 0
+          "points": 1
         }
       ],
       "manager": "Tawheed"
@@ -791,7 +791,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 112,
@@ -887,7 +887,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 166,
@@ -1031,7 +1031,7 @@
           "first_name": "Bryan",
           "second_name": "Mbeumo",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 154,
@@ -1079,7 +1079,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 79,
@@ -1189,7 +1189,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 175,
@@ -1297,7 +1297,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 497,
@@ -1369,7 +1369,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 175,
@@ -1513,7 +1513,7 @@
           "first_name": "Regan",
           "second_name": "Slater",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 305,
@@ -1599,7 +1599,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 68,
@@ -1623,7 +1623,7 @@
           "first_name": "Bruno",
           "second_name": "Borges Fernandes",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 40,
@@ -1647,7 +1647,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 411,
@@ -1695,7 +1695,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 45,
@@ -1803,7 +1803,7 @@
           "first_name": "Bryan",
           "second_name": "Mbeumo",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 40,
@@ -1839,7 +1839,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 379,
@@ -1851,7 +1851,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 411,
@@ -1887,7 +1887,7 @@
           "first_name": "Konstantinos",
           "second_name": "Tzolakis",
           "element_type": 1,
-          "points": 0
+          "points": 10
         },
         {
           "element": 268,
@@ -1985,7 +1985,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 127,
@@ -1997,7 +1997,7 @@
           "first_name": "Diego",
           "second_name": "Gómez Amarilla",
           "element_type": 3,
-          "points": 0
+          "points": 3
         },
         {
           "element": 68,
@@ -2237,7 +2237,7 @@
           "first_name": "Charalampos",
           "second_name": "Kostoulas",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 166,
@@ -2273,7 +2273,7 @@
           "first_name": "Bart",
           "second_name": "Verbruggen",
           "element_type": 1,
-          "points": 0
+          "points": 2
         },
         {
           "element": 286,
@@ -2285,7 +2285,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 7
         },
         {
           "element": 449,
@@ -2309,7 +2309,7 @@
           "first_name": "Semi",
           "second_name": "Ajayi",
           "element_type": 2,
-          "points": 0
+          "points": 6
         }
       ],
       "manager": "Karim Yasser"
@@ -2347,7 +2347,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 31,
@@ -2419,7 +2419,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 399,
@@ -2551,7 +2551,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 8,
@@ -2647,7 +2647,7 @@
           "first_name": "Alexander",
           "second_name": "Isak",
           "element_type": 4,
-          "points": 0
+          "points": 1
         },
         {
           "element": 111,
@@ -2671,7 +2671,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 7
         },
         {
           "element": 469,
@@ -2695,7 +2695,7 @@
           "first_name": "Nobel",
           "second_name": "Mendy",
           "element_type": 2,
-          "points": 0
+          "points": 5
         }
       ],
       "manager": "Shika"
@@ -2733,7 +2733,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 112,
@@ -2793,7 +2793,7 @@
           "first_name": "Bryan",
           "second_name": "Mbeumo",
           "element_type": 3,
-          "points": 0
+          "points": 1
         },
         {
           "element": 68,
@@ -2949,7 +2949,7 @@
           "first_name": "Maxim",
           "second_name": "De Cuyper",
           "element_type": 2,
-          "points": 0
+          "points": 1
         },
         {
           "element": 154,
@@ -2973,7 +2973,7 @@
           "first_name": "Pascal",
           "second_name": "Groß",
           "element_type": 3,
-          "points": 0
+          "points": 4
         },
         {
           "element": 68,
@@ -3057,7 +3057,7 @@
           "first_name": "Mohamed",
           "second_name": "Belloumi",
           "element_type": 3,
-          "points": 0
+          "points": 7
         },
         {
           "element": 390,
