@@ -1,6 +1,6 @@
 {
   "current_gw": 11,
-  "last_updated": "2026-11-24 06:22:51",
+  "last_updated": "2026-11-24 18:00:33",
   "teams": [
     {
       "name": "The Masterminds",
@@ -93,8 +93,8 @@
       "draw": 0,
       "lost": 7,
       "gf": 1236,
-      "ga": 1393,
-      "gd": -157,
+      "ga": 1394,
+      "gd": -158,
       "matchPts": 12,
       "bonus": 0,
       "chipBonus": 0,
@@ -106,9 +106,9 @@
       "won": 3,
       "draw": 0,
       "lost": 8,
-      "gf": 1218,
+      "gf": 1219,
       "ga": 1296,
-      "gd": -78,
+      "gd": -77,
       "matchPts": 9,
       "bonus": 0,
       "chipBonus": 0,
@@ -194,7 +194,7 @@
     {
       "name": "Tawheed",
       "team": "Falcons",
-      "points": 559
+      "points": 560
     }
   ],
   "matches": [
@@ -639,7 +639,7 @@
       "gw": 11,
       "home": "Falcons",
       "away": "Boys",
-      "homePts": 61,
+      "homePts": 62,
       "awayPts": 70,
       "result": "away_win",
       "winner": "Boys",

@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 11,
-      "points": 29,
-      "net_points": 25,
+      "points": 30,
+      "net_points": 26,
       "transfer_cost": 4,
       "bank": 8,
       "value": 1013,
@@ -600,14 +600,14 @@
           "points": 2
         },
         {
-          "element": 8,
+          "element": 305,
           "position": 2,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Calafiori",
-          "first_name": "Riccardo",
-          "second_name": "Calafiori",
+          "player": "Davis",
+          "first_name": "Leif",
+          "second_name": "Davis",
           "element_type": 2,
           "points": 1
         },
@@ -624,32 +624,20 @@
           "points": 1
         },
         {
-          "element": 176,
+          "element": 8,
           "position": 4,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Dasilva",
-          "first_name": "Jay",
-          "second_name": "Dasilva",
+          "player": "Calafiori",
+          "first_name": "Riccardo",
+          "second_name": "Calafiori",
           "element_type": 2,
-          "points": 0
-        },
-        {
-          "element": 426,
-          "position": 5,
-          "multiplier": 1,
-          "is_captain": false,
-          "is_vice_captain": false,
-          "player": "B.Fernandes",
-          "first_name": "Bruno",
-          "second_name": "Borges Fernandes",
-          "element_type": 3,
-          "points": 2
+          "points": 1
         },
         {
           "element": 40,
-          "position": 6,
+          "position": 5,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -661,13 +649,25 @@
         },
         {
           "element": 480,
-          "position": 7,
+          "position": 6,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
           "player": "Gibbs-White",
           "first_name": "Morgan",
           "second_name": "Gibbs-White",
+          "element_type": 3,
+          "points": 2
+        },
+        {
+          "element": 426,
+          "position": 7,
+          "multiplier": 1,
+          "is_captain": false,
+          "is_vice_captain": false,
+          "player": "B.Fernandes",
+          "first_name": "Bruno",
+          "second_name": "Borges Fernandes",
           "element_type": 3,
           "points": 2
         },
@@ -684,20 +684,8 @@
           "points": 8
         },
         {
-          "element": 166,
-          "position": 9,
-          "multiplier": 2,
-          "is_captain": true,
-          "is_vice_captain": false,
-          "player": "N.Jackson",
-          "first_name": "Nicolas",
-          "second_name": "Jackson",
-          "element_type": 4,
-          "points": 2
-        },
-        {
           "element": 249,
-          "position": 10,
+          "position": 9,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": false,
@@ -709,13 +697,25 @@
         },
         {
           "element": 411,
-          "position": 11,
+          "position": 10,
           "multiplier": 1,
           "is_captain": false,
           "is_vice_captain": true,
           "player": "Haaland",
           "first_name": "Erling",
           "second_name": "Haaland",
+          "element_type": 4,
+          "points": 2
+        },
+        {
+          "element": 166,
+          "position": 11,
+          "multiplier": 2,
+          "is_captain": true,
+          "is_vice_captain": false,
+          "player": "N.Jackson",
+          "first_name": "Nicolas",
+          "second_name": "Jackson",
           "element_type": 4,
           "points": 2
         },
@@ -744,16 +744,16 @@
           "points": 7
         },
         {
-          "element": 305,
+          "element": 176,
           "position": 14,
           "multiplier": 0,
           "is_captain": false,
           "is_vice_captain": false,
-          "player": "Davis",
-          "first_name": "Leif",
-          "second_name": "Davis",
+          "player": "Dasilva",
+          "first_name": "Jay",
+          "second_name": "Dasilva",
           "element_type": 2,
-          "points": 1
+          "points": 0
         },
         {
           "element": 282,
