@@ -581,8 +581,8 @@
     "4696525": {
       "entry_id": 4696525,
       "gw": 11,
-      "points": 27,
-      "net_points": 23,
+      "points": 29,
+      "net_points": 25,
       "transfer_cost": 4,
       "bank": 8,
       "value": 1013,
@@ -967,8 +967,8 @@
     "3915093": {
       "entry_id": 3915093,
       "gw": 11,
-      "points": 22,
-      "net_points": 22,
+      "points": 24,
+      "net_points": 24,
       "transfer_cost": 0,
       "bank": 10,
       "value": 1014,
@@ -2511,8 +2511,8 @@
     "9822516": {
       "entry_id": 9822516,
       "gw": 11,
-      "points": 47,
-      "net_points": 47,
+      "points": 49,
+      "net_points": 49,
       "transfer_cost": 0,
       "bank": 6,
       "value": 1028,
@@ -2705,8 +2705,8 @@
     "7999563": {
       "entry_id": 7999563,
       "gw": 11,
-      "points": 32,
-      "net_points": 32,
+      "points": 33,
+      "net_points": 33,
       "transfer_cost": 0,
       "bank": 0,
       "value": 1014,

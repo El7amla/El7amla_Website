@@ -1,6 +1,6 @@
 {
   "current_gw": 11,
-  "last_updated": "2026-11-23 02:37:42",
+  "last_updated": "2026-11-24 06:22:51",
   "teams": [
     {
       "name": "The Masterminds",
@@ -8,8 +8,8 @@
       "won": 8,
       "draw": 0,
       "lost": 3,
-      "gf": 1286,
-      "ga": 1242,
+      "gf": 1288,
+      "ga": 1244,
       "gd": 44,
       "matchPts": 24,
       "bonus": 0,
@@ -50,8 +50,8 @@
       "won": 6,
       "draw": 0,
       "lost": 5,
-      "gf": 1320,
-      "ga": 1285,
+      "gf": 1322,
+      "ga": 1287,
       "gd": 35,
       "matchPts": 18,
       "bonus": 0,
@@ -92,9 +92,9 @@
       "won": 4,
       "draw": 0,
       "lost": 7,
-      "gf": 1235,
-      "ga": 1391,
-      "gd": -156,
+      "gf": 1236,
+      "ga": 1393,
+      "gd": -157,
       "matchPts": 12,
       "bonus": 0,
       "chipBonus": 0,
@@ -106,9 +106,9 @@
       "won": 3,
       "draw": 0,
       "lost": 8,
-      "gf": 1216,
-      "ga": 1295,
-      "gd": -79,
+      "gf": 1218,
+      "ga": 1296,
+      "gd": -78,
       "matchPts": 9,
       "bonus": 0,
       "chipBonus": 0,
@@ -159,12 +159,12 @@
     {
       "name": "Shika",
       "team": "The Masterminds",
-      "points": 633
+      "points": 635
     },
     {
       "name": "Ali",
       "team": "Boys",
-      "points": 631
+      "points": 632
     },
     {
       "name": "Elfiky",
@@ -177,14 +177,14 @@
       "points": 617
     },
     {
+      "name": "Ahmed Nour",
+      "team": "The Pharaohs",
+      "points": 616
+    },
+    {
       "name": "Mahmoud",
       "team": "Royal Authority",
       "points": 615
-    },
-    {
-      "name": "Ahmed Nour",
-      "team": "The Pharaohs",
-      "points": 614
     },
     {
       "name": "Magdy",
@@ -194,7 +194,7 @@
     {
       "name": "Tawheed",
       "team": "Falcons",
-      "points": 557
+      "points": 559
     }
   ],
   "matches": [
@@ -629,8 +629,8 @@
       "gw": 11,
       "home": "The Pharaohs",
       "away": "The Masterminds",
-      "homePts": 62,
-      "awayPts": 83,
+      "homePts": 64,
+      "awayPts": 85,
       "result": "away_win",
       "winner": "The Masterminds",
       "type": "normal"
@@ -639,8 +639,8 @@
       "gw": 11,
       "home": "Falcons",
       "away": "Boys",
-      "homePts": 59,
-      "awayPts": 69,
+      "homePts": 61,
+      "awayPts": 70,
       "result": "away_win",
       "winner": "Boys",
       "type": "normal"
